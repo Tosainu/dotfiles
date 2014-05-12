@@ -1,0 +1,6 @@
+#!/bin/bash
+
+profile=`netctl-auto current`
+quality=`cat /proc/net/wireless | awk 'NR==3 {print $3}' | sed 's/\.//'`
+
+echo "<span>$profile $quality</span>"

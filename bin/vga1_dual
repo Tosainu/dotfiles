@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+vga1=`xrandr | grep VGA1 | awk '{print $2}'`
+
+if [ "$vga1" = 'connected' ]
+then
+  xrandr --output HDMI1 --off --output VIRTUAL1 --off --output DP1 --off --output eDP1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA1 --mode 1920x1080 --pos 1920x0 --rotate normal
+else
+  xrandr --output HDMI1 --off --output VIRTUAL1 --off --output DP1 --off --output eDP1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA1 --off
+fi

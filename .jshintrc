@@ -1,0 +1,15 @@
+{
+  "camelcase" : true,
+  "curly"     : true,
+  "eqeqeq"    : true,
+  "indent"    : 2,
+  "strict"    : true,
+  "undef"     : true,
+  "unused"    : true,
+
+  "debug"     : true,
+
+  "browser"   : true,
+  "devel"     : true,
+  "node"      : true
+}

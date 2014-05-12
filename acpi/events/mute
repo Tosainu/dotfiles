@@ -1,0 +1,2 @@
+event=button/mute
+action=/usr/bin/amixer set Master toggle

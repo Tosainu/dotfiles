@@ -1,0 +1,2 @@
+event=sony/hotkey SNY5001:00 00000001 0000000c
+action=/etc/acpi/handlers/touchpad

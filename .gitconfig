@@ -1,0 +1,12 @@
+[user]
+	email = tosainu.maple@gmail.com
+	name = Tosainu
+[push]
+	default = matching
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+[github]
+	user = Tosainu
+[color]
+	ui = true
