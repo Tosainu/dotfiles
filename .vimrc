@@ -43,8 +43,9 @@ NeoBundle 'sk1418/last256', {
 NeoBundleLazy 'Shougo/neocomplete.vim', {
       \   'autoload': {'insert' : '1'}
       \ }
-NeoBundleLazy 'Rip-Rip/clang_complete', {
-      \   'autoload': {'filetypes': ['c', 'cpp']}
+NeoBundleLazy 'osyo-manga/vim-marching', {
+      \   'depends': ['Shougo/vimproc', 'osyo-manga/vim-reunions'],
+      \   'autoload': {'filetypes': 'cpp'}
       \ }
 NeoBundleLazy 'mattn/emmet-vim', {
       \   'autoload': {'filetypes': ['html', 'xhtml', 'css']}
@@ -187,7 +188,7 @@ nnoremap :tn :<C-u>tabnew<Space>
 "}}}
 
 " for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{
-autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/*
+autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/*,/usr/include/boost
 autocmd MyVimrc FileType cpp inoremap <buffer><expr>; <SID>expand_namespace()
 
 function! s:expand_namespace()
@@ -338,6 +339,13 @@ let g:user_emmet_leader_key = '<C-e>'
 let g:jscomplete_use = ['dom']
 "}}}
 
+" marching {{{
+let g:marching_clang_command="/usr/bin/clang"
+let g:marching_clang_command_option="-std=c++11"
+let g:marching_enable_neocomplete = 1
+let g:marching_backend = "sync_clang_command"
+"}}}
+
 " Neocomplete {{{
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
@@ -360,14 +368,5 @@ let g:neocomplete#force_overwrite_completefunc = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
-let g:neocomplete#force_omni_input_patterns.c   = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
 let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-"}}}
-
-" clang_complete {{{
-let g:clang_complete_auto = 0
-let g:clang_auto_select = 0
-let g:clang_use_library=1
-let g:clang_debug=1
-let g:clang_user_options = '-std=c++11'
 "}}}
