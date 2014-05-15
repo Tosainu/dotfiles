@@ -109,8 +109,10 @@ set ambiwidth=double
 " Display
 set cursorline number ruler showmatch
 set laststatus=2 showtabline=2
+set scrolloff=4
 set title
 set showcmd
+set ttyfast
 
 " Scheme
 syntax enable
