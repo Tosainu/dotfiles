@@ -54,6 +54,8 @@ NeoBundleLazy 'mattn/jscomplete-vim', {
       \   'autoload': {'filetypes': 'javascript'}
       \ }
 
+NeoBundle "Shougo/neosnippet.vim"
+
 " Languages
 NeoBundleLazy 'vim-jp/cpp-vim', {
       \   'autoload': {'filetypes': 'cpp'}
@@ -360,7 +362,6 @@ endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><CR>     pumvisible() ? neocomplete#close_popup() : "<CR>"
 inoremap <expr><C-g>    neocomplete#undo_completion()
 inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -372,3 +373,25 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 "}}}
+
+" neosnippet {{{
+let g:neosnippet#disable_runtime_snippets = {
+      \   "_": 1,
+      \ }
+let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+imap <expr><CR> !pumvisible() ? "\<CR>" :
+      \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
+      \ neocomplete#close_popup()
+imap <expr><TAB> !pumvisible() ?
+      \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : "\<Tab>"
+      \ : "\<C-n>"
+smap <expr><TAB> neosnippet#jumpable() ?
+      \ "\<Plug>(neosnippet_jump)"
+      \ : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+" }}}

@@ -1,0 +1,39 @@
+snippet include
+alias   #inc, #include
+  #include <${1:iostream}>${0}
+
+snippet include2
+alias   #inc2, #include2
+  #include "${1}"${0}
+
+snippet int main
+abbr    int main {}
+  int main() {
+    ${0}
+  }
+
+snippet class
+abbr    class {}
+  class ${1:#:name} {
+    ${2}
+  };
+
+snippet template
+abbr    template <T>
+  template<typename ${1:T}> 
+
+snippet static_cast
+abbr    static_cast<>()
+  static_cast<${1}>(${2})${0}
+
+snippet reinterpret_cast
+abbr    reinterpret_cast<>()
+  reinterpret_cast<${1}>(${2})${0}
+
+snippet const_cast
+abbr    const_cast<>()
+  const_cast<${1}>(${2})${0}
+
+snippet dynamic_cast
+abbr    dynamic_cast<>()
+  dynamic_cast<${1}>(${2})${0}
