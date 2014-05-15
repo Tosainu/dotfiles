@@ -141,7 +141,7 @@ set timeoutlen=500
 set updatetime=200
 
 " show tabs
-set list listchars=tab:»-,trail:-,eol:↲,nbsp:%
+set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 
 " undo
 if has('persistent_undo')
@@ -250,9 +250,9 @@ nmap <Space>r <Plug>(quickrun)
 "}}}
 
 " vim-gitgutter {{{
-let g:gitgutter_sign_added = '✚'
-let g:gitgutter_sign_modified = '➜'
-let g:gitgutter_sign_removed = '✘'
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
 "}}}
 
 " lightline.vim {{{
