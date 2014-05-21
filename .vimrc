@@ -105,6 +105,7 @@ filetype plugin indent on
 " Encoding
 set encoding=utf-8
 set fileencoding=utf=8
+set fileencodings=ucs-bom,utf-8,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
 set fileformats=unix,dos,mac
 set ambiwidth=double
 
@@ -115,6 +116,7 @@ set scrolloff=4
 set title
 set showcmd
 set ttyfast
+set vb t_vb=
 
 " Scheme
 syntax enable
@@ -135,10 +137,10 @@ set expandtab smarttab
 set tabstop=2 shiftwidth=2 backspace=2
 
 " Commandline
-set wildmenu wildmode=longest:full,full
+set wildmenu wildignorecase wildmode=list:full
 
 " History
-set history=20
+set history=100
 
 " timeout
 set timeoutlen=500
@@ -219,7 +221,7 @@ autocmd MyVimrc FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 " http://deris.hatenablog.jp/entry/2013/05/02/192415
 nnoremap [unite]    <Nop>
 nmap     <Space>u [unite]
-nnoremap <silent> [unite]f :<C-u>UniteWithCurrentDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
