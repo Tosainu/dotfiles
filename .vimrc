@@ -192,7 +192,7 @@ nnoremap :tn :<C-u>tabnew<Space>
 "}}}
 
 " for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{
-autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/*,/usr/include/boost
+autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/v1,/usr/include/boost
 autocmd MyVimrc FileType cpp inoremap <buffer><expr>; <SID>expand_namespace()
 
 function! s:expand_namespace()
@@ -324,7 +324,7 @@ let g:syntastic_mode_map = {
       \ }
 let g:syntastic_c_compiler    = 'clang'
 let g:syntastic_cpp_compiler  = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++ -lc++abi'
 let g:syntastic_javascript_jshint_conf = '~/.jshintrc'
 "}}}
 
@@ -344,10 +344,10 @@ let g:jscomplete_use = ['dom']
 "}}}
 
 " marching {{{
-let g:marching_clang_command="/usr/bin/clang"
-let g:marching_clang_command_option="-std=c++11"
+let g:marching_clang_command = '/usr/bin/clang'
+let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
 let g:marching_enable_neocomplete = 1
-let g:marching_backend = "sync_clang_command"
+let g:marching_enable_refresh_always = 1
 "}}}
 
 " Neocomplete {{{
