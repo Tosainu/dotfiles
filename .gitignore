@@ -1,0 +1,9 @@
+*.swp
+*.bak
+*.log
+*.out
+*.o
+*.sql
+.git/
+node_modules/
+privateconfig.json
