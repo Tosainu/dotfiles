@@ -87,6 +87,9 @@ NeoBundleLazy 'tpope/vim-markdown', {
 NeoBundleLazy 'sudar/vim-arduino-syntax', {
       \   'autoload': {'filename_patterns': '.*\.ino'}
       \ }
+NeoBundleLazy 'nginx.vim', {
+      \   'autoload': {'filetypes': 'nginx'}
+      \ }
 
 " quickrun
 NeoBundle 'thinca/vim-quickrun'
@@ -160,6 +163,7 @@ autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "
 
 " filetypes
 autocmd MyVimrc BufNewFile,BufRead *.{md,markdown} set filetype=markdown
+autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
 
 " No Auto Comment.
 autocmd MyVimrc FileType * setlocal formatoptions-=ro
