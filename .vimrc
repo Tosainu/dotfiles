@@ -187,14 +187,13 @@ vnoremap <Left>  <Nop>
 vnoremap <Right> <Nop>
 
 " change window size
-nnoremap <silent> <S-Up> <C-W>-
-nnoremap <silent> <S-Down> <C-W>+
-nnoremap <silent> <S-Left> <C-W><
-nnoremap <silent> <S-Right> <C-W>>
+nnoremap <S-Up>    <C-W>-
+nnoremap <S-Down>  <C-W>+
+nnoremap <S-Left>  <C-W><
+nnoremap <S-Right> <C-W>>
 
 " off highlight <ESC> * 2
-nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
-nnoremap :tn :<C-u>tabnew<Space>
+nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
 "}}}
 
 " for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{
