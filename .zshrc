@@ -116,4 +116,5 @@ alias mkdir='nocorrect mkdir'
 alias vi='vim'
 alias sl="ruby ~/.local/bin/sl/sl.rb"
 
+alias -s rb='ruby'
 alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
