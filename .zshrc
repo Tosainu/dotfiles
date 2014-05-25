@@ -108,6 +108,14 @@ bindkey "^[OH"  beginning-of-line
 bindkey "^[OF"  end-of-line
 bindkey "^[[3~" delete-char
 
+## functions 
+# move to git root
+function gr() {
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    cd `git rev-parse --show-toplevel`
+  fi
+}
+
 ## Aliases
 alias cp='nocorrect cp -i -v'
 alias mv='nocorrect mv -i -v'
