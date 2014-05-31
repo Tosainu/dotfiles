@@ -165,6 +165,16 @@ autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "
 autocmd MyVimrc BufNewFile,BufRead *.{md,markdown} set filetype=markdown
 autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
 
+let g:markdown_fenced_languages = [
+      \   'c',
+      \   'cpp',
+      \   'css',
+      \   'html',
+      \   'javascript',
+      \   'ruby',
+      \   'vim',
+      \ ]
+
 " No Auto Comment.
 autocmd MyVimrc FileType * setlocal formatoptions-=ro
 "}}}
