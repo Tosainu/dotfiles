@@ -303,7 +303,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Mysettings
-    awful.key({ modkey,           }, "]",     function () awful.util.spawn("thunar") end),
+    awful.key({ modkey,           }, "]",     function () awful.util.spawn("nautilus") end),
     awful.key({ modkey,           }, "\\",    function () awful.util.spawn("chromium") end),
     awful.key({ modkey,           }, "/",     function () awful.util.spawn("gimp") end),
     awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Pictures/ 2>/dev/null'") end)
