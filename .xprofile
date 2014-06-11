@@ -1,6 +1,6 @@
 #!/bin/sh
 
-xmodmap ~/.Xmodmap
+#xmodmap ~/.Xmodmap
 
 # disable 3rd button
 xinput set-button-map 10 1 0 3 4 5 6 7 8 9 10 11 12
@@ -14,5 +14,6 @@ syndaemon -k -i 1 &
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
+export DefaultIMModule=fcitx
 fcitx&
 xbacklight -set 10
