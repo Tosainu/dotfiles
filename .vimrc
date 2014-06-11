@@ -98,6 +98,9 @@ NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {
       \   'autoload': {'filetypes': 'markdown'}
       \ }
 
+NeoBundleLazy 'rhysd/vim-clang-format', {
+      \ 'autoload' : {'filetypes' : ['c', 'cpp', 'objc']}
+      \ }
 " joke plugins
 " NeoBundle 'modsound/gips-vim.git'
 
@@ -120,6 +123,7 @@ set title
 set showcmd
 set ttyfast
 set vb t_vb=
+set switchbuf=useopen
 
 " Scheme
 syntax enable
@@ -207,7 +211,7 @@ nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
 "}}}
 
 " for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{
-autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/v1,/usr/include/boost
+autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
 autocmd MyVimrc FileType cpp inoremap <buffer><expr>; <SID>expand_namespace()
 
 function! s:expand_namespace()
@@ -256,7 +260,7 @@ let g:quickrun_config = {
       \   },
       \   'cpp': {
       \     'command': 'clang++',
-      \     'cmdopt': '-std=c++11 -Wall -Wextra'
+      \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra'
       \   },
       \   'markdown': {
       \     'type': 'markdown/gfm',
@@ -368,6 +372,7 @@ let g:marching_enable_refresh_always = 1
 " Neocomplete {{{
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
@@ -409,4 +414,12 @@ smap <expr><TAB> neosnippet#jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+" }}}
+
+" clang-format {{{
+let g:clang_format#style_options = {
+      \   'AccessModifierOffset' : -2,
+      \   'ColumnLimit' : 128,
+      \   'Standard' : 'C++11',
+      \ }
 " }}}
