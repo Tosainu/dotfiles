@@ -373,9 +373,7 @@ let g:jscomplete_use = ['dom']
 " marching {{{
 let g:marching_clang_command = '/usr/bin/clang'
 let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
-let g:marching_backend = 'sync_clang_command'
 let g:marching_enable_neocomplete = 1
-let g:marching_enable_refresh_always = 1
 "}}}
 
 " Neocomplete {{{
