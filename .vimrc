@@ -20,8 +20,6 @@ NeoBundle 'Shougo/vimproc', {
       \     'mac' : 'make -f make_mac.mak'
       \   }
       \ }
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vinarise.vim'
@@ -33,6 +31,9 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundleLazy 'rhysd/vim-clang-format', {
+      \ 'autoload': {'filetypes': ['c', 'cpp']}
+      \ }
 
 " Scheme
 NeoBundle 'sk1418/last256', {
@@ -41,6 +42,9 @@ NeoBundle 'sk1418/last256', {
 
 " Completetion
 NeoBundleLazy 'Shougo/neocomplete.vim', {
+      \   'autoload': {'insert' : '1'}
+      \ }
+NeoBundleLazy "Shougo/neosnippet.vim", {
       \   'autoload': {'insert' : '1'}
       \ }
 NeoBundleLazy 'osyo-manga/vim-marching', {
@@ -53,8 +57,6 @@ NeoBundleLazy 'mattn/emmet-vim', {
 NeoBundleLazy 'mattn/jscomplete-vim', {
       \   'autoload': {'filetypes': 'javascript'}
       \ }
-
-NeoBundle "Shougo/neosnippet.vim"
 
 " Languages
 NeoBundleLazy 'vim-jp/cpp-vim', {
@@ -98,9 +100,14 @@ NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {
       \   'autoload': {'filetypes': 'markdown'}
       \ }
 
-NeoBundleLazy 'rhysd/vim-clang-format', {
-      \ 'autoload' : {'filetypes' : ['c', 'cpp']}
+" unite
+NeoBundleLazy "Shougo/unite.vim", {
+      \   'autoload': {'commands': ["Unite"]}
       \ }
+NeoBundle 'rhysd/unite-codic.vim', {
+      \   'depends': ['Shougo/unite.vim', 'koron/codic-vim'],
+      \ }
+
 " joke plugins
 " NeoBundle 'modsound/gips-vim.git'
 
@@ -244,6 +251,7 @@ nnoremap <silent> [unite]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
 nnoremap <silent> [unite]b :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> [unite]c :<C-u>Unite codic<CR>
 "}}
 
 " vimfiler {{{
