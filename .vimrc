@@ -268,7 +268,7 @@ let g:quickrun_config = {
       \   },
       \   'cpp': {
       \     'command': 'clang++',
-      \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra'
+      \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra -lboost_system -lpthread'
       \   },
       \   'markdown': {
       \     'type': 'markdown/gfm',
