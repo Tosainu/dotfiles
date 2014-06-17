@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-mute=`amixer get Master | grep \% | grep -c off`
-if [ "$mute" -eq 0 ]
-then
-	amixer sset Master mute
-else
-	amixer sset Master unmute
-fi

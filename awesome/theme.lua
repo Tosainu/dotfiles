@@ -4,10 +4,10 @@
 
 theme = {}
 
-theme.font          = "sans 8"
+theme.font          = "Migu 2M 9"
 
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#495362"
+theme.bg_focus      = "#444444"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -17,7 +17,7 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.border_width  = 1
+theme.border_width  = 0
 theme.border_normal = "#222222"
 theme.border_focus  = "#222222"
 theme.border_marked = "#222222"

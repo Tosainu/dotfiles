@@ -10,8 +10,6 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
--- Volume Widget
-require("volume")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -40,7 +38,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/home/myon/.config/awesome/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -112,32 +110,118 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibox
--- Create a textclock widget
-mytextclock = awful.widget.textclock("%a, %b. %d, %Y %H:%M ", 60)
+-- Widgets {{{
+-- clock
+mytextclock = awful.widget.textclock("%a, %b %d %Y, %H:%M:%S ", 1)
 
--- Create a battery widget
-battery = wibox.widget.textbox()
+-- battery
 function getBatteryStatus()
-  local fd= io.popen("~/.local/bin/batteryStatus")
-  local status = fd:read()
-  fd:close()
-  return status
+  local fcapacity = io.open("/sys/class/power_supply/BAT1/capacity")
+  local fstatus = io.open("/sys/class/power_supply/BAT1/status")
+  local capacity = fcapacity:read()
+  local status = fstatus:read()
+  fcapacity:close()
+  fstatus:close()
+
+  capacity = tonumber(capacity)
+
+  if capacity > 15 and capacity <= 30 then
+    capacity = "<span color=\"#ffe100\">" .. string.format("%3d", capacity) .. "%</span>"
+  elseif capacity <= 15 then
+    capacity = "<span color=\"#ff3000\">" .. string.format("%3d", capacity) .. "%</span>"
+  else
+    capacity = string.format("%3d", capacity) .. "%"
+  end
+
+  if status == "Charging" then
+    return "<b>Bat</b> " .. capacity .. " C"
+  elseif status == "Discharging" then
+    return "<b>Bat</b> " .. capacity .. " D"
+  else
+    return "<b>Bat</b> " .. capacity .. " F"
+  end
 end
 
--- Create a wifi widget
-wifi = wibox.widget.textbox()
-function getWifiStatus()
-  local fd= io.popen("~/.local/bin/wifiinfo")
-  local status = fd:read()
-  fd:close()
-  return status
+battery = wibox.widget.textbox()
+battery:set_markup(getBatteryStatus())
+
+-- temp
+function getCPUTemp()
+  local ftemp = io.popen("sensors -u | grep temp1_input | awk '{print $2}'")
+  local temperature = ftemp:read("*all")
+  ftemp:close()
+
+  temperature = tonumber(temperature)
+
+  if temperature >= 70 and temperature < 80 then
+    return "<b>CPU</b> <span color=\"#ffe100\">" .. string.format("%3d", temperature) .. "°C</span>"
+  elseif temperature >= 80 then
+    return "<b>CPU</b> <span color=\"#ff3000\">" .. string.format("%3d", temperature) .. "°C</span>"
+  else
+    return "<b>CPU</b> " .. string.format("%3d", temperature) .. "°C"
+  end
 end
+
+temp = wibox.widget.textbox()
+temp:set_markup(getCPUTemp())
+
+-- volume
+function getVolume()
+  local fstatus = io.popen("amixer -M sget Master")
+  local status = fstatus:read("*all")
+  fstatus:close()
+
+  local volume = string.match(status, "(%d?%d?%d)%%")
+  volume = string.format("%3d", volume)
+
+  status = string.match(status, "%[(o[^%]]*)%]")
+
+  if string.find(status, "on", 1, true) then
+    return "<b>Vol</b> " .. volume .. "%"
+  else
+    return "<b>Vol</b> " .. volume .. "M"
+  end
+end
+
+volume = wibox.widget.textbox()
+volume:set_markup(getVolume())
+
+-- wifi
+function getWifiStatus()
+  local fprofile = io.popen("netctl-auto current")
+  local fquality = io.popen("cat /proc/net/wireless | awk 'NR==3 {print $3}'")
+  local profile = fprofile:read()
+  local quality = fquality:read()
+  fprofile:close()
+  fquality:close()
+
+  return "<b>WLAN</b> " .. profile .. " " .. string.format("%3d", string.gsub(quality, "[.]", ""))
+end
+
+wifi = wibox.widget.textbox()
+wifi:set_markup(getWifiStatus())
+
+-- refresh widgets
+widgetTimer = timer({timeout = 5})
+widgetTimer:connect_signal("timeout", function()
+  wifi:set_markup(getWifiStatus())
+  battery:set_markup(getBatteryStatus())
+  temp:set_markup(getCPUTemp())
+end)
+widgetTimer:start()
+
+volumeTimer = timer({ timeout = 0.2 })
+volumeTimer:connect_signal("timeout", function ()
+  volume:set_markup(getVolume())
+end)
+volumeTimer:start()
 
 -- Separator
 separator = wibox.widget.textbox()
-separator:set_text(" | ")
+separator:set_markup("<span color=\"#777777\"> | </span>")
+-- }}}
 
+-- {{{ Wibox
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -218,9 +302,11 @@ for s = 1, screen.count() do
     right_layout:add(separator)
     right_layout:add(wifi)
     right_layout:add(separator)
-    right_layout:add(volume_widget)
+    right_layout:add(temp)
     right_layout:add(separator)
     right_layout:add(battery)
+    right_layout:add(separator)
+    right_layout:add(volume)
     right_layout:add(separator)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -233,11 +319,6 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 end
--- }}}
-
--- {{{ Mouse bindings
-root.buttons(awful.util.table.join(
-awful.button({ }, 3, function () mymainmenu:toggle() end)))
 -- }}}
 
 -- {{{ Key bindings
@@ -477,18 +558,3 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
-
-batteryTimer = timer({timeout = 30})
-batteryTimer:connect_signal("timeout", function()
-  battery:set_markup(getBatteryStatus())
-end)
-batteryTimer:start()
-battery:set_markup(getBatteryStatus())
-
-wifiTimer = timer({timeout = 5})
-wifiTimer:connect_signal("timeout", function()
-  wifi:set_markup(getWifiStatus())
-end)
-wifiTimer:start()
-wifi:set_markup(getWifiStatus())
