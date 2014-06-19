@@ -12,17 +12,16 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
+" require
 NeoBundleFetch 'Shougo/neobundle.vim'
-
 NeoBundle 'Shougo/vimproc', {
       \   'build': {
       \     'unix': 'make -f make_unix.mak',
       \     'mac' : 'make -f make_mac.mak'
       \   }
       \ }
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/vinarise.vim'
+
+" tools
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'scrooloose/syntastic'
@@ -31,13 +30,55 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundleLazy 'Shougo/vinarise.vim', {
+      \   'autoload': {'commands': ['Vinarise']}
+      \ }
 NeoBundleLazy 'rhysd/vim-clang-format', {
-      \ 'autoload': {'filetypes': ['c', 'cpp']}
+      \   'autoload': {
+      \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
+      \     'filetypes': ['c', 'cpp']
+      \   }
       \ }
 
-" Scheme
-NeoBundle 'sk1418/last256', {
-      \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
+" unite
+NeoBundleLazy "Shougo/unite.vim", {
+      \   'autoload': {'commands': ["Unite"]}
+      \ }
+NeoBundleLazy 'Shougo/vimfiler', {
+      \   'depends': 'Shougo/unite.vim',
+      \   'autoload': {
+      \     'commands': [
+      \       {'name': 'VimFiler', 'complete' : 'customlist,vimfiler#complete'},
+      \       'VimFilerExplorer',
+      \       'Edit', 'Read', 'Source', 'Write'
+      \     ],
+      \     'mappings': ['<Plug>(vimfiler_'],
+      \     'explorer': 1,
+      \   }
+      \ }
+NeoBundleLazy 'Shougo/neomru.vim', {
+      \   'depends': 'Shougo/unite.vim',
+      \   'autoload': {'unite_sources': ['neomru/directory', 'neomru/file']}
+      \ }
+NeoBundleLazy 'rhysd/unite-codic.vim', {
+      \   'depends': ['Shougo/unite.vim', 'koron/codic-vim'],
+      \   'autoload': {'unite_sources': ['codic']}
+      \ }
+
+" quickrun
+NeoBundleLazy 'thinca/vim-quickrun', {
+      \   'autoload': {
+      \     'commands': ['QuickRun'],
+      \     'mappings': ['<Plug>(quickrun)'],
+      \   }
+      \ }
+NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {
+      \   'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim'],
+      \   'autoload': {
+      \     'commands': ['QuickRun'],
+      \     'mappings': ['<Plug>(quickrun'],
+      \     'filetypes': ['markdown']
+      \   }
       \ }
 
 " Completetion
@@ -45,6 +86,7 @@ NeoBundleLazy 'Shougo/neocomplete.vim', {
       \   'autoload': {'insert' : '1'}
       \ }
 NeoBundleLazy "Shougo/neosnippet.vim", {
+      \   'depends': 'Shougo/neocomplete.vim',
       \   'autoload': {'insert' : '1'}
       \ }
 NeoBundleLazy 'osyo-manga/vim-marching', {
@@ -56,6 +98,11 @@ NeoBundleLazy 'mattn/emmet-vim', {
       \ }
 NeoBundleLazy 'mattn/jscomplete-vim', {
       \   'autoload': {'filetypes': 'javascript'}
+      \ }
+
+" Scheme
+NeoBundle 'sk1418/last256', {
+      \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
       \ }
 
 " Languages
@@ -92,24 +139,6 @@ NeoBundleLazy 'sudar/vim-arduino-syntax', {
 NeoBundleLazy 'nginx.vim', {
       \   'autoload': {'filetypes': 'nginx'}
       \ }
-
-" quickrun
-NeoBundle 'thinca/vim-quickrun'
-NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {
-      \   'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim'],
-      \   'autoload': {'filetypes': 'markdown'}
-      \ }
-
-" unite
-NeoBundleLazy "Shougo/unite.vim", {
-      \   'autoload': {'commands': ["Unite"]}
-      \ }
-NeoBundle 'rhysd/unite-codic.vim', {
-      \   'depends': ['Shougo/unite.vim', 'koron/codic-vim'],
-      \ }
-
-" joke plugins
-" NeoBundle 'modsound/gips-vim.git'
 
 filetype plugin indent on
 "}}}
@@ -247,7 +276,7 @@ nnoremap [unite]    <Nop>
 nmap     <Space>u [unite]
 nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]h :<C-u>Unite file_mru<CR>
+nnoremap <silent> [unite]h :<C-u>Unite neomru/file<CR>
 nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
 nnoremap <silent> [unite]b :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
