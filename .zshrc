@@ -129,4 +129,5 @@ alias vi='vim'
 alias sl="ruby ~/.local/bin/sl/sl.rb"
 
 alias -s rb='ruby'
+alias -s {html,htm,xhtml}=chromium
 alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
