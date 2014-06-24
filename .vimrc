@@ -244,6 +244,9 @@ nnoremap <S-Right> <C-W>>
 
 " off highlight <ESC> * 2
 nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
+
+" fcitx
+autocmd MyVimrc InsertLeave * call system('fcitx-remote -c')
 "}}}
 
 " for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{

@@ -10,17 +10,11 @@ syndaemon -k -i 1 &
 # load dual screen setting
 ~/.local/bin/vga1_dual
 
-# # fcitx
-# export GTK_IM_MODULE=fcitx
-# export QT_IM_MODULE=fcitx
-# export XMODIFIERS="@im=fcitx"
-# export DefaultIMModule=fcitx
-# fcitx&
-# uim
-export XMODIFIERS="@im=uim"
-export GTK_IM_MODULE="uim"
-export QT_IM_MODULE='uim'
-export DefaultIMModule='uim'
-uim-xim &
-uim-toolbar-gtk-systray &
+# fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+export DefaultIMModule=fcitx
+fcitx&
+
 xbacklight -set 10
