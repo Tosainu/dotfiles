@@ -152,7 +152,9 @@ set fileformats=unix,dos,mac
 set ambiwidth=double
 
 " Display
-set cursorline number ruler showmatch
+set cursorline number ruler
+set matchpairs+=<:>
+let loaded_matchparen = 1
 set laststatus=2 showtabline=2
 set scrolloff=4
 set title
