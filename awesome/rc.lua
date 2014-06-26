@@ -194,6 +194,14 @@ function getWifiStatus()
   fprofile:close()
   fquality:close()
 
+  if quality == nil then
+    quality = 0
+  end
+
+  if profile == nil then
+    profile = ""
+  end
+
   return "<b>WLAN</b> " .. profile .. " " .. string.format("%3d", string.gsub(quality, "[.]", ""))
 end
 
