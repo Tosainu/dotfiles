@@ -158,7 +158,6 @@ let loaded_matchparen = 1
 set laststatus=2 showtabline=2
 set scrolloff=4
 set title
-set showcmd
 set ttyfast
 set vb t_vb=
 set switchbuf=useopen
@@ -178,8 +177,12 @@ set ignorecase smartcase incsearch hlsearch wrapscan
 
 " Indent
 set autoindent cindent
+set cinoptions& cinoptions+=g0,m1
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 backspace=2
+
+" disable auto comment.
+autocmd MyVimrc FileType * setlocal formatoptions-=ro
 
 " Commandline
 set wildmenu wildignorecase wildmode=list:full
@@ -194,8 +197,18 @@ set updatetime=200
 " show tabs
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 
-" undo
+" tempfiles
+set nobackup
+
+if ! isdirectory($HOME.'/.vim/swap')
+  call mkdir($HOME.'/.vim/swap', 'p')
+endif
+set directory=~/.vim/swap
+
 if has('persistent_undo')
+  if ! isdirectory($HOME.'/.vim/undo')
+    call mkdir($HOME.'/.vim/undo', 'p')
+  endif
   set undodir=~/.vim/undo
   set undofile
 endif
@@ -216,9 +229,6 @@ let g:markdown_fenced_languages = [
       \   'ruby',
       \   'vim',
       \ ]
-
-" No Auto Comment.
-autocmd MyVimrc FileType * setlocal formatoptions-=ro
 "}}}
 
 " keybind {{{
@@ -381,7 +391,7 @@ endfunction
 " syntastic {{{
 let g:syntastic_mode_map = {
       \   'mode': 'active',
-      \   'passive_filetypes': ['tex']
+      \   'passive_filetypes': ['cpp', 'tex']
       \ }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
