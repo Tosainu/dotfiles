@@ -90,7 +90,7 @@ NeoBundleLazy "Shougo/neosnippet.vim", {
       \   'autoload': {'insert' : '1'}
       \ }
 NeoBundleLazy 'osyo-manga/vim-marching', {
-      \   'depends': ['Shougo/vimproc', 'osyo-manga/vim-reunions'],
+      \   'depends': ['Shougo/vimproc'],
       \   'autoload': {'filetypes': 'cpp'}
       \ }
 NeoBundleLazy 'mattn/emmet-vim', {
