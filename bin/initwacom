@@ -1,0 +1,4 @@
+xsetwacom --set "Wacom Intuos4 6x9 cursor" MapToOutput eDP1
+xsetwacom --set "Wacom Intuos4 6x9 stylus" MapToOutput eDP1
+xsetwacom --set "Wacom Intuos4 6x9 pad" MapToOutput eDP1
+xsetwacom --set "Wacom Intuos4 6x9 eraser" MapToOutput eDP1
