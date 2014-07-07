@@ -11,6 +11,12 @@ syndaemon -k -i 0.5 -d
 # load dual screen setting
 ~/.local/bin/vga1_dual
 
+# QtApp Style
+export QT_STYLE_OVERRIDE=gtk
+
+# DESKTOP_ENVIRONMENT
+export DE=gnome
+
 # fcitx
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
