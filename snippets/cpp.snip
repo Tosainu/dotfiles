@@ -6,9 +6,33 @@ snippet include2
 alias   #inc2, #include2
   #include "${1}"${0}
 
-snippet int main
-abbr    int main {}
+snippet int_main
+abbr    int main() {}
   int main() {
+    ${0}
+  }
+
+snippet int_main_args
+abbr    int main(int argc, char* argv[]) {}
+  int main(int argc, char* argv[]) {
+    ${0}
+  }
+
+snippet     if
+abbr        if () {}
+  if (${1}) {
+    ${0}
+  }
+
+snippet     for
+abbr        for (;;) {}
+  for (${1:int i = 0}; ${2}; ${3:++i}) {
+    ${0}
+  }
+
+snippet     for_range
+abbr        for (:) {}
+  for (${1:auto&& }${2:var}: ${3:container}) {
     ${0}
   }
 
