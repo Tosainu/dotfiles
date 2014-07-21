@@ -1,6 +1,6 @@
 #!/bin/sh
-bl_dev=/sys/class/backlight/sony
-step=5
+bl_dev=/sys/class/backlight/acpi_video0
+step=1
 
 case $1 in
   -) echo $(($(< $bl_dev/brightness) - $step)) >$bl_dev/brightness;;
