@@ -10,3 +10,6 @@ export REPORTTIME=5
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.1.0/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
+# nvm
+export NVM_DIR="/home/myon/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
