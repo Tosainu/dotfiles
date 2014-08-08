@@ -280,22 +280,34 @@ endfunction
 "}}}
 
 " Unite.vim {{{
-call unite#custom_default_action('file', 'tabopen')
+let g:unite_source_history_yank_enable = 1
 
-" close <ESC> * 2
-autocmd MyVimrc FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-autocmd MyVimrc FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+" always open new tab
+call unite#custom_default_action('file', 'tabopen')
+" show dotfiles
+call unite#custom#source('file', 'matchers', 'matcher_default')
 
 " http://deris.hatenablog.jp/entry/2013/05/02/192415
 nnoremap [unite]    <Nop>
 nmap     <Space>u [unite]
 nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [Unite]y :<C-u>Unite history/yank<CR>
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]h :<C-u>Unite neomru/file<CR>
 nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
 nnoremap <silent> [unite]b :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> [unite]s :<C-u>Unite source<CR>
 nnoremap <silent> [unite]c :<C-u>Unite codic<CR>
+
+autocmd MyVimrc FileType unite call s:unite_myconfig()
+function! s:unite_myconfig()
+  " close <ESC> * 2
+  nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+  inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+endfunction
 "}}
 
 " vimfiler {{{
