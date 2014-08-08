@@ -31,7 +31,7 @@ setopt globdots
 setopt numeric_glob_sort
 setopt complete_aliases
 setopt complete_in_word
-zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args' # complement process ids  
 zstyle ':completion:*' menu select=2                  # highlight completion menu
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'   # ignorecase
