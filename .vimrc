@@ -232,6 +232,8 @@ let g:markdown_fenced_languages = [
 "}}}
 
 " keybind {{{
+let mapleader = ","
+
 " disable arrow keys
 noremap <Up>    <Nop>
 noremap <Down>  <Nop>
@@ -261,9 +263,19 @@ nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
 autocmd MyVimrc InsertLeave * call system('fcitx-remote -c')
 "}}}
 
-" for C++ (http://rhysd.hatenablog.com/entry/2013/12/10/233201) {{{
-autocmd MyVimrc FileType cpp setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
-autocmd MyVimrc FileType cpp inoremap <buffer><expr>; <SID>expand_namespace()
+" C++ settings
+autocmd MyVimrc FileType cpp call s:cpp_myconfig()
+function! s:cpp_myconfig()
+  " include path
+  setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
+
+  " expand namespace
+  inoremap <buffer><expr>; <SID>expand_namespace()
+
+  " clangformat
+  nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+  vnoremap <buffer><Leader>cf :ClangFormat<CR>
+endfunction
 
 function! s:expand_namespace()
   let s = getline('.')[0:col('.')-1]
