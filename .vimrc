@@ -30,6 +30,7 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'Shougo/vinarise.vim', {
       \   'autoload': {'commands': ['Vinarise']}
       \ }
@@ -183,6 +184,9 @@ set tabstop=2 shiftwidth=2 backspace=2
 
 " disable auto comment.
 autocmd MyVimrc FileType * setlocal formatoptions-=ro
+
+" use japanese-help first
+set helplang=ja,en
 
 " Commandline
 set wildmenu wildignorecase wildmode=list:full
