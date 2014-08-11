@@ -24,6 +24,7 @@ NeoBundle 'Shougo/vimproc', {
 " tools
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle "osyo-manga/vim-over"
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
