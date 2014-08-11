@@ -1,16 +1,191 @@
+scriptencoding utf-8
+
+" basic settings {{{
+set nocompatible
+
+" vimrc augroup
 augroup MyVimrc
   autocmd!
 augroup END
 
-set nocompatible
+" encoding
+set encoding=utf-8
+set fileencoding=utf=8
+set fileencodings=ucs-bom,utf-8,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
+set fileformats=unix,dos,mac
+set ambiwidth=double
 
-" NeoBundle {{{
-filetype off
+" show cursorline
+set cursorline
+" show line number
+set number
+" show ruler
+set ruler
+" always show statusline
+set laststatus=2
+" always show tabline
+set showtabline=2
+" margin during dcrolling
+set scrolloff=5
+" disable beep
+set vb t_vb=
+" not be redrawn while executing commands
+set lazyredraw
+" use fast terminal connection
+set ttyfast
+" show title
+set title
+" hide startup messages
+set shortmess& shortmess+=I
+" show tabs
+set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
+" commandline
+set wildmenu wildignorecase wildmode=list:full
+
+" add <> to matchpairs
+set matchpairs+=<:>
+" history
+set history=100
+" use japanese-help first
+set helplang=ja,en
+
+" indent
+set autoindent cindent
+" use <SPACE> instead of <TAB>
+set expandtab smarttab
+set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
+
+" smartcase search
+set ignorecase smartcase
+" incremental search
+set incsearch
+" highlight results
+set hlsearch
+" searches wrap around
+set wrapscan
+
+" disable auto comment
+autocmd MyVimrc BufEnter * setlocal formatoptions-=ro
+
+" timeout
+set timeoutlen=500
+set updatetime=200
+
+" no backup files
+set nobackup
+
+" swapfile
+if ! isdirectory($HOME.'/.vim/swap')
+  call mkdir($HOME.'/.vim/swap', 'p')
+endif
+set directory=~/.vim/swap
+
+" undofile
+if has('persistent_undo')
+  if ! isdirectory($HOME.'/.vim/undo')
+    call mkdir($HOME.'/.vim/undo', 'p')
+  endif
+  set undodir=~/.vim/undo
+  set undofile
+endif
+
+" open last position
+autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+" filetypes
+autocmd MyVimrc BufNewFile,BufRead *.{md,markdown} set filetype=markdown
+autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
+
+" markdown
+let g:markdown_fenced_languages = [
+      \   'c',
+      \   'cpp',
+      \   'css',
+      \   'html',
+      \   'javascript',
+      \   'ruby',
+      \   'vim',
+      \ ]
+" }}}
+
+" keybind {{{
+let mapleader = ","
+
+" disable arrow keys
+noremap <Up>    <Nop>
+noremap <Down>  <Nop>
+noremap <Left>  <Nop>
+noremap <Right> <Nop>
+inoremap <Up>    <Nop>
+inoremap <Down>  <Nop>
+inoremap <Left>  <Nop>
+inoremap <Right> <Nop>
+vnoremap <Up>    <Nop>
+vnoremap <Down>  <Nop>
+vnoremap <Left>  <Nop>
+vnoremap <Right> <Nop>
+
+" change window size
+nnoremap <S-Up>    <C-W>-
+nnoremap <S-Down>  <C-W>+
+nnoremap <S-Left>  <C-W><
+nnoremap <S-Right> <C-W>>
+
+" off highlight <ESC> * 2
+nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
+
+" fcitx
+autocmd MyVimrc InsertLeave * call system('fcitx-remote -c')
+" }}}
+
+" C++ settings {{{
+autocmd MyVimrc FileType cpp call s:cpp_myconfig()
+function! s:cpp_myconfig()
+  set cinoptions& cinoptions+=g0,m1
+
+  " include path
+  setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
+
+  " expand namespace
+  inoremap <buffer><expr>; <SID>expand_namespace()
+
+  " clangformat
+  nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+  vnoremap <buffer><Leader>cf :ClangFormat<CR>
+endfunction
+
+function! s:expand_namespace()
+  let s = getline('.')[0:col('.')-1]
+  if s =~# '\<b;$'
+    return "\<BS>oost::"
+  elseif s =~# '\<s;$'
+    return "\<BS>td::"
+  elseif s =~# '\<d;$'
+    return "\<BS>etail::"
+  else
+    return ';'
+  endif
+endfunction
+" }}}
+
+" neobundle {{{
+" install neobundle (https://github.com/rhysd/dotfiles/blob/master/vimrc#L758-L768)
+if ! isdirectory(expand('~/.vim/bundle'))
+  echon "Installing neobundle.vim..."
+  silent call mkdir(expand('~/.vim/bundle'), 'p')
+  silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
+  echo "done."
+  if v:shell_error
+    echoerr "neobundle.vim installation has failed!"
+    finish
+  endif
+endif
 
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
-  call neobundle#rc(expand('~/.vim/bundle/'))
 endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
 
 " require
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -83,7 +258,7 @@ NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {
       \   }
       \ }
 
-" Completetion
+" completetion
 NeoBundleLazy 'Shougo/neocomplete.vim', {
       \   'autoload': {'insert' : '1'}
       \ }
@@ -107,7 +282,7 @@ NeoBundle 'sk1418/last256', {
       \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
       \ }
 
-" Languages
+" languages
 NeoBundleLazy 'vim-jp/cpp-vim', {
       \   'autoload': {'filetypes': 'cpp'}
       \ }
@@ -143,160 +318,23 @@ NeoBundleLazy 'nginx.vim', {
       \ }
 
 filetype plugin indent on
-"}}}
 
-" BasicSettings {{{
-" Encoding
-set encoding=utf-8
-set fileencoding=utf=8
-set fileencodings=ucs-bom,utf-8,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
-set fileformats=unix,dos,mac
-set ambiwidth=double
+" check bundles
+NeoBundleCheck
+" }}}
 
-" Display
-set cursorline number ruler
-set matchpairs+=<:>
-let loaded_matchparen = 1
-set laststatus=2 showtabline=2
-set scrolloff=4
-set title
-set ttyfast
-set vb t_vb=
-set switchbuf=useopen
-
-" Scheme
+" colorscheme {{{
 syntax enable
 if $TERM == 'linux'
+  " use slate when can't use 256-color
   colorscheme slate
-  set background=dark
 else
   set t_Co=256
   colorscheme last256
 endif
+" }}}
 
-" Search
-set ignorecase smartcase incsearch hlsearch wrapscan
-
-" Indent
-set autoindent cindent
-set cinoptions& cinoptions+=g0,m1
-set expandtab smarttab
-set tabstop=2 shiftwidth=2 backspace=2
-
-" disable auto comment.
-autocmd MyVimrc FileType * setlocal formatoptions-=ro
-
-" use japanese-help first
-set helplang=ja,en
-
-" Commandline
-set wildmenu wildignorecase wildmode=list:full
-
-" History
-set history=100
-
-" timeout
-set timeoutlen=500
-set updatetime=200
-
-" show tabs
-set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-
-" tempfiles
-set nobackup
-
-if ! isdirectory($HOME.'/.vim/swap')
-  call mkdir($HOME.'/.vim/swap', 'p')
-endif
-set directory=~/.vim/swap
-
-if has('persistent_undo')
-  if ! isdirectory($HOME.'/.vim/undo')
-    call mkdir($HOME.'/.vim/undo', 'p')
-  endif
-  set undodir=~/.vim/undo
-  set undofile
-endif
-
-" open last position
-autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-
-" filetypes
-autocmd MyVimrc BufNewFile,BufRead *.{md,markdown} set filetype=markdown
-autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
-
-let g:markdown_fenced_languages = [
-      \   'c',
-      \   'cpp',
-      \   'css',
-      \   'html',
-      \   'javascript',
-      \   'ruby',
-      \   'vim',
-      \ ]
-"}}}
-
-" keybind {{{
-let mapleader = ","
-
-" disable arrow keys
-noremap <Up>    <Nop>
-noremap <Down>  <Nop>
-noremap <Left>  <Nop>
-noremap <Right> <Nop>
-
-inoremap <Up>    <Nop>
-inoremap <Down>  <Nop>
-inoremap <Left>  <Nop>
-inoremap <Right> <Nop>
-
-vnoremap <Up>    <Nop>
-vnoremap <Down>  <Nop>
-vnoremap <Left>  <Nop>
-vnoremap <Right> <Nop>
-
-" change window size
-nnoremap <S-Up>    <C-W>-
-nnoremap <S-Down>  <C-W>+
-nnoremap <S-Left>  <C-W><
-nnoremap <S-Right> <C-W>>
-
-" off highlight <ESC> * 2
-nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
-
-" fcitx
-autocmd MyVimrc InsertLeave * call system('fcitx-remote -c')
-"}}}
-
-" C++ settings
-autocmd MyVimrc FileType cpp call s:cpp_myconfig()
-function! s:cpp_myconfig()
-  " include path
-  setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
-
-  " expand namespace
-  inoremap <buffer><expr>; <SID>expand_namespace()
-
-  " clangformat
-  nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-  vnoremap <buffer><Leader>cf :ClangFormat<CR>
-endfunction
-
-function! s:expand_namespace()
-  let s = getline('.')[0:col('.')-1]
-  if s =~# '\<b;$'
-    return "\<BS>oost::"
-  elseif s =~# '\<s;$'
-    return "\<BS>td::"
-  elseif s =~# '\<d;$'
-    return "\<BS>etail::"
-  else
-    return ';'
-  endif
-endfunction
-"}}}
-
-" Unite.vim {{{
+" unite.vim {{{
 let g:unite_source_history_yank_enable = 1
 
 " always open new tab
@@ -325,14 +363,19 @@ function! s:unite_myconfig()
 
   imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
 endfunction
-"}}
+" }}}
 
 " vimfiler {{{
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
-"}}}
+" }}}
 
 " quickrun {{{
+" disable <Leader>r>
+let g:quickrun_no_default_key_mappings = 1
+" run <Space>r
+nmap <Space>r <Plug>(quickrun)
+
 let g:quickrun_config = {
       \   '_': {
       \     'outputter/buffer/split': ':botright',
@@ -348,16 +391,13 @@ let g:quickrun_config = {
       \     'outputter': 'browser'
       \   }
       \ }
-
-" run <Space>r
-nmap <Space>r <Plug>(quickrun)
-"}}}
+" }}}
 
 " vim-gitgutter {{{
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
-"}}}
+" }}}
 
 " lightline.vim {{{
 let g:lightline = {
@@ -415,7 +455,7 @@ function! MyGitGutter()
   endfor
   return join(ret, ' ')
 endfunction
-"}}}
+" }}}
 
 " syntastic {{{
 let g:syntastic_mode_map = {
@@ -425,34 +465,34 @@ let g:syntastic_mode_map = {
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs = 0
-let g:syntastic_c_compiler    = 'clang'
-let g:syntastic_cpp_compiler  = 'clang++'
+let g:syntastic_c_compiler = 'clang'
+let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++ -lc++abi'
 let g:syntastic_javascript_jshint_conf = '~/.jshintrc'
-"}}}
+" }}}
 
 " vim-textmanip {{{
 xmap <C-j> <Plug>(textmanip-move-down)
 xmap <C-k> <Plug>(textmanip-move-up)
 xmap <C-h> <Plug>(textmanip-move-left)
 xmap <C-l> <Plug>(textmanip-move-right)
-"}}}
+" }}}
 
 " emmet-vim {{{
 let g:user_emmet_leader_key = '<C-e>'
-"}}}
+" }}}
 
 " jscomplete-vim {{{
 let g:jscomplete_use = ['dom']
-"}}}
+" }}}
 
 " marching {{{
 let g:marching_clang_command = '/usr/bin/clang'
 let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
 let g:marching_enable_neocomplete = 1
-"}}}
+" }}}
 
-" Neocomplete {{{
+" neocomplete and neosniooet {{{
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_auto_delimiter = 1
@@ -464,24 +504,24 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-g>    neocomplete#undo_completion()
-inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-" Enable heavy omni completion
+" enable heavy omni completion
 let g:neocomplete#force_overwrite_completefunc = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-"}}}
 
-" neosnippet {{{
+" neosnippet
 let g:neosnippet#disable_runtime_snippets = {
       \   "_": 1,
       \ }
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+" keybinds
+inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-g>    neocomplete#undo_completion()
+inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 imap <expr><CR> !pumvisible() ? "\<CR>" :
       \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
@@ -493,7 +533,7 @@ smap <expr><TAB> neosnippet#jumpable() ?
       \ "\<Plug>(neosnippet_jump)"
       \ : "\<TAB>"
 
-" For snippet_complete marker.
+" for snippet_complete marker
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
