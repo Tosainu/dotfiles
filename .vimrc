@@ -241,6 +241,10 @@ NeoBundleLazy 'rhysd/unite-codic.vim', {
       \   'depends': ['Shougo/unite.vim', 'koron/codic-vim'],
       \   'autoload': {'unite_sources': ['codic']}
       \ }
+NeoBundleLazy 'ujihisa/unite-colorscheme', {
+      \   'depends': 'Shougo/unite.vim',
+      \   'autoload': {'unite_sources': ['colorscheme']}
+      \ }
 
 " quickrun
 NeoBundleLazy 'thinca/vim-quickrun', {
@@ -278,6 +282,7 @@ NeoBundleLazy 'mattn/jscomplete-vim', {
       \ }
 
 " Scheme
+NeoBundle 'chriskempson/vim-tomorrow-theme'
 NeoBundle 'sk1418/last256', {
       \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
       \ }
@@ -330,7 +335,10 @@ if $TERM == 'linux'
   colorscheme slate
 else
   set t_Co=256
-  colorscheme last256
+  colorscheme Tomorrow-Night-Bright
+
+  " transparent background
+  highlight Normal ctermbg=none
 endif
 " }}}
 
