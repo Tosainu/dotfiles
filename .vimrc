@@ -282,7 +282,6 @@ NeoBundleLazy 'mattn/jscomplete-vim', {
       \ }
 
 " Scheme
-NeoBundle 'chriskempson/vim-tomorrow-theme'
 NeoBundle 'sk1418/last256', {
       \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
       \ }
@@ -335,7 +334,7 @@ if $TERM == 'linux'
   colorscheme slate
 else
   set t_Co=256
-  colorscheme Tomorrow-Night-Bright
+  colorscheme last256
 
   " transparent background
   highlight Normal ctermbg=none
