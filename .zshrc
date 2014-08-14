@@ -8,6 +8,7 @@ setopt no_beep
 setopt nonomatch
 setopt notify
 setopt print_eight_bit
+setopt cdable_vars
 
 ## Color
 autoload -U colors; colors
@@ -133,3 +134,7 @@ alias sl="ruby ~/.local/bin/sl/sl.rb"
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
 alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
+
+hash -d c=~/codes/
+hash -d t=/tmp/
+hash -d a=/var/abs/
