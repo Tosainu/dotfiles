@@ -29,8 +29,6 @@ set showtabline=2
 set scrolloff=5
 " disable beep
 set vb t_vb=
-" not be redrawn while executing commands
-set lazyredraw
 " use fast terminal connection
 set ttyfast
 " show title
