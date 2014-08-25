@@ -1,3 +1,26 @@
+## PATH
+# locale
+export LANG=en_US.UTF-8
+# charcode
+export KCODE=u
+# Editor
+export EDITOR="vim"
+# reporttime
+export REPORTTIME=5
+
+typeset -U path PATH
+
+path=(
+  ~/.local/bin(N-/)
+  ~/.gem/ruby/2.1.0/bin(N-/)
+  ~/.cabal/bin(N-/)
+  $path
+)
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 ## Basic
 setopt auto_cd
 setopt auto_pushd
