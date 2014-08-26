@@ -1,14 +1,8 @@
-## PATH
-# locale
-export LANG=en_US.UTF-8
-# charcode
-export KCODE=u
-# Editor
+### Variables
 export EDITOR="vim"
-# reporttime
+export KCODE=u
+export LANG=en_US.UTF-8
 export REPORTTIME=5
-
-typeset -U path PATH
 
 path=(
   ~/.local/bin(N-/)
@@ -17,64 +11,83 @@ path=(
   $path
 )
 
+# remove duplicate path
+typeset -Ua path cdpath fpath manpath
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-## Basic
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
+### Keybind
+bindkey -v
+bindkey '^[[Z'  reverse-menu-complete
+bindkey "^[OH"  beginning-of-line
+bindkey "^[OF"  end-of-line
+bindkey "^[[3~" delete-char
+
+### Basic
 setopt correct
-setopt multios
-setopt no_beep
-setopt nonomatch
-setopt notify
-setopt print_eight_bit
-setopt cdable_vars
-
-## Color
-autoload -U colors; colors
-if [ -e ~/.zsh/dircolors-wombat_like/.dircolors.wombat_like ]; then
-  eval `dircolors ~/.zsh/dircolors-wombat_like/.dircolors.wombat_like`
-fi
-
-## Complement
-if [ -e /usr/share/zsh/site-functions ]; then
-  fpath=(/usr/share/zsh/site-functions $fpath)
-fi
-
-autoload -U compinit; compinit
-setopt list_packed
-setopt mark_dirs
-setopt equals
-setopt magic_equal_subst
-setopt brace_ccl
 setopt extended_glob
 setopt globdots
-setopt numeric_glob_sort
-setopt complete_aliases
-setopt complete_in_word
-zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
-zstyle ':completion:*:processes' command 'ps x -o pid,s,args' # complement process ids  
-zstyle ':completion:*' menu select=2                  # highlight completion menu
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'   # ignorecase
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # set colors
-zstyle ':completion:*' use-cache true                 # use cache
+setopt ignore_eof
+setopt mark_dirs
+setopt no_beep
+setopt noautoremoveslash
+setopt print_eight_bit
 
-## History
+### Directory
+setopt auto_cd
+setopt auto_pushd
+setopt cdable_vars
+setopt pushd_ignore_dups
+
+# move to git root
+function gr() {
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    cd `git rev-parse --show-toplevel`
+  fi
+}
+
+### History
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
 setopt extended_history
-setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt inc_append_history
+bindkey '^P'    history-beginning-search-backward
+bindkey '^N'    history-beginning-search-forward
+
+# show all histories
 function history-all { history -E 1 }
 
-## Prompt
-# http://qiita.com/hash/items/325cffc755fc1ff91928
+### Complement
+autoload -U compinit; compinit
+setopt list_packed
+setopt magic_equal_subst
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
+# complement process ids
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+# highlight completion menu
+zstyle ':completion:*' menu select=2
+# ignorecase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# set colors
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# use cache
+zstyle ':completion:*' use-cache true
+
+### Color
+autoload -U colors; colors
+export LS_COLORS='no=00;38;5;252:rs=0:di=01;38;5;111:ln=01;38;5;113:mh=00:pi=48;5;241;38;5;192;01:so=48;5;241;38;5;192;01:do=48;5;241;38;5;192;01:bd=48;5;241;38;5;177;01:cd=48;5;241;38;5;177;01:or=48;5;236;38;5;196:su=48;5;209;38;5;235:sg=48;5;192;38;5;235:ca=30;41:tw=48;5;113;38;5;235:ow=48;5;113;38;5;111:st=48;5;111;38;5;235:ex=01;38;5;209:*#=00;38;5;246:*~=00;38;5;246:*.o=00;38;5;246:*.swp=00;38;5;246:'
+
+# syntax highlighting
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+fi
+
+### Prompt
 setopt prompt_subst
 
 autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
@@ -107,11 +120,11 @@ function git-current-branch {
 }
 
 PROMPT=$'
-[${?}] %{\e[38;5;197m%}[${SHELL}] %{\e[38;5;220m%}[${USER}@${HOST%%.*}] %{\e[38;5;076m%}[%~]%{\e[0m%} `git-current-branch` 
+[${?}] %{\e[38;5;197m%}[${SHELL}] %{\e[38;5;220m%}[${USER}@${HOST%%.*}] %{\e[38;5;076m%}[%~]%{\e[0m%} `git-current-branch`
 %(!.#.$) '
 RPROMPT='%D{%b %d, %Y %H:%M:%S}'
 
-## Title user@hostname ($SHELL)
+### Title
 case "${TERM}" in
   kterm*|xterm*|)
     precmd() {
@@ -120,29 +133,7 @@ case "${TERM}" in
     ;;
 esac
 
-## syntax highlighting
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-fi
-
-## keybind
-bindkey -v
-bindkey '^P'    history-beginning-search-backward
-bindkey '^N'    history-beginning-search-forward
-bindkey '^[[Z'  reverse-menu-complete
-bindkey "^[OH"  beginning-of-line
-bindkey "^[OF"  end-of-line
-bindkey "^[[3~" delete-char
-
-## functions 
-# move to git root
-function gr() {
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    cd `git rev-parse --show-toplevel`
-  fi
-}
-
-## Aliases
+### Aliases
 alias cp='nocorrect cp -i -v'
 alias mv='nocorrect mv -i -v'
 alias ls='ls --color=auto -F'
