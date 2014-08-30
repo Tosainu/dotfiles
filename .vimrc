@@ -474,6 +474,7 @@ let g:syntastic_c_compiler = 'clang'
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++ -lc++abi'
 let g:syntastic_javascript_jshint_conf = '~/.jshintrc'
+let g:syntastic_java_javac_classpath = '/opt/android-sdk/platforms/android-15/android.jar'
 " }}}
 
 " vim-textmanip {{{
