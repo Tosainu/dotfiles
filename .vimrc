@@ -451,32 +451,32 @@ if neobundle#tap('unite.vim')
         \   'autoload': {'commands': ["Unite"]}
         \ })
 
+  let g:unite_source_file_mru_limit=200
   let g:unite_source_history_yank_enable = 1
 
   " always open new tab
   call unite#custom_default_action('file', 'tabopen')
   " show dotfiles
-  call unite#custom#source('file', 'matchers', 'matcher_default')
+  call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
 
   " keybinds
-  nnoremap [unite]    <Nop>
+  nnoremap [unite]  <Nop>
   nmap     <Space>u [unite]
-  nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-  nnoremap <silent> [Unite]y :<C-u>Unite history/yank<CR>
-  nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-  nnoremap <silent> [unite]h :<C-u>Unite neomru/file<CR>
-  nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
-  nnoremap <silent> [unite]b :<C-u>Unite bookmark<CR>
-  nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
-  nnoremap <silent> [unite]s :<C-u>Unite source<CR>
-  nnoremap <silent> [unite]c :<C-u>Unite codic<CR>
+  nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir file -buffer-name=files<CR>
+  nnoremap <silent> [unite]r :<C-u>Unite file_rec/git -buffer-name=repository<CR>
+  nnoremap <silent> [unite]n :<C-u>Unite file/new -start-insert -buffer-name=newfile<CR>
+  nnoremap <silent> [unite]s :<C-u>Unite line -start-insert -buffer-name=search<CR>
+  nnoremap <silent> [unite]b :<C-u>Unite buffer -buffer-name=buffer<CR>
+  nnoremap <silent> [unite]t :<C-u>Unite tab -buffer-name=tab<CR>
+  nnoremap <silent> [unite]y :<C-u>Unite history/yank -buffer-name=yank<CR>
 
   autocmd MyVimrc FileType unite call s:unite_myconfig()
   function! s:unite_myconfig()
     " close <ESC> * 2
-    nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+    nmap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
+    imap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
 
-    imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+    imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
   endfunction
 
   call neobundle#untap()
@@ -486,8 +486,10 @@ endif
 " neomru.vim {{{
 if neobundle#tap('neomru.vim')
   call neobundle#config({
-        \   'autoload': {'unite_sources': ['neomru/directory', 'neomru/file']}
+        \   'autoload': {'unite_sources': 'file_mru'}
         \ })
+
+  nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
 
   call neobundle#untap()
 endif
@@ -498,6 +500,8 @@ if neobundle#tap('unite-codic.vim')
   call neobundle#config({
         \   'autoload': {'unite_sources': ['codic']}
         \ })
+
+  nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
 
   call neobundle#untap()
 endif
