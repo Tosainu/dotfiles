@@ -239,9 +239,9 @@ endif
 NeoBundleLazy 'mattn/emmet-vim'
 
 " colorscheme
-NeoBundle 'sk1418/last256', {
-      \   'rev':  '48fb3d10c42c7a07cf6683c3e90fe9d9c8bd3131'
-      \ }
+NeoBundle 'Tosainu/last256'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 " languages
 NeoBundleLazy 'vim-jp/cpp-vim'
