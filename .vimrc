@@ -122,7 +122,9 @@ nnoremap <S-Right> <C-W>>
 nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
 
 " fcitx
-autocmd MyVimrc InsertLeave * call system('fcitx-remote -c')
+if executable('fcitx-remote')
+  autocmd MyVimrc InsertLeave * call vimproc#system('fcitx-remote -c')
+endif
 " }}}
 
 " C++ settings {{{
