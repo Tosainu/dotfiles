@@ -112,6 +112,12 @@ vnoremap <Down>  <Nop>
 vnoremap <Left>  <Nop>
 vnoremap <Right> <Nop>
 
+" swap j/k gj/gk
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
