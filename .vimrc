@@ -25,7 +25,7 @@ set ruler
 set laststatus=2
 " always show tabline
 set showtabline=2
-" margin during dcrolling
+" margin during scrolling
 set scrolloff=5
 " disable beep
 set vb t_vb=
