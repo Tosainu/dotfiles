@@ -134,12 +134,19 @@ case "${TERM}" in
 esac
 
 ### Aliases
-alias cp='nocorrect cp -i -v'
-alias mv='nocorrect mv -i -v'
-alias ls='ls --color=auto -F'
+case $OSTYPE in
+darwin*)
+  alias ls='ls -G'
+  ;;
+linux*)
+  alias ls='ls --color=auto -F'
+  ;;
+esac
 alias la='ls -A'
 alias ll='ls -l'
 alias lla='ls -Al'
+alias cp='nocorrect cp -i -v'
+alias mv='nocorrect mv -i -v'
 alias du='du -h'
 alias mkdir='nocorrect mkdir'
 alias vi='vim'
