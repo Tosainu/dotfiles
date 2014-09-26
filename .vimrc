@@ -212,7 +212,6 @@ NeoBundle 'Shougo/vimproc', {
 
 " tools
 NeoBundle 'itchyny/lightline.vim', {'depends': 'airblade/vim-gitgutter'}
-NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
@@ -221,6 +220,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'Shougo/vimfiler'
+NeoBundleLazy 'osyo-manga/vim-over'
 NeoBundleLazy 'rhysd/vim-clang-format'
 if has('python3')
   NeoBundleLazy 'Shougo/vinarise.vim'
@@ -421,6 +421,16 @@ if neobundle#tap('vimfiler')
     " hide <ESC> * 2
     nmap <buffer> <ESC><ESC> <Plug>(vimfiler_hide)
   endfunction
+
+  call neobundle#untap()
+endif
+" }}}
+
+" vim-over {{{
+if neobundle#tap('vim-over')
+  call neobundle#config({
+        \   'autoload': {'commands': ['OverCommandLine']}
+        \ })
 
   call neobundle#untap()
 endif
