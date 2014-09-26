@@ -145,8 +145,7 @@ function! s:cpp_myconfig()
   inoremap <buffer><expr>; <SID>expand_namespace()
 
   " clangformat
-  nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-  vnoremap <buffer><Leader>cf :ClangFormat<CR>
+  map <buffer><Leader>cf <Plug>(operator-clang-format)
 endfunction
 
 function! s:expand_namespace()
@@ -245,6 +244,9 @@ if (has('lua') && (v:version > 703 || (v:version == 703 && has('patch885'))))
   NeoBundleLazy 'osyo-manga/vim-marching', {'depends': ['Shougo/vimproc']}
 endif
 NeoBundleLazy 'mattn/emmet-vim'
+
+" Operator
+NeoBundle 'kana/vim-operator-user'
 
 " colorscheme
 NeoBundle 'Tosainu/last256'
