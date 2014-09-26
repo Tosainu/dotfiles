@@ -471,7 +471,14 @@ endif
 " unite.vim {{{
 if neobundle#tap('unite.vim')
   call neobundle#config({
-        \   'autoload': {'commands': ["Unite"]}
+        \   'autoload': {
+        \     'commands': [{
+        \       'name': 'Unite',
+        \         'complete': 'customlist,unite#complete_source'
+        \       },
+        \       'UniteWithCursorWord', 'UniteWithInput'
+        \     ]
+        \   }
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
