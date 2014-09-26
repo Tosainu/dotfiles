@@ -50,6 +50,7 @@ set helplang=ja,en
 " folding
 set foldmethod=marker
 set foldlevel=99
+set nofoldenable
 
 " indent
 set autoindent cindent
@@ -406,21 +407,23 @@ if neobundle#tap('vimfiler')
         \   }
         \ })
 
-  let g:vimfiler_as_default_explorer = 1
-  let g:vimfiler_safe_mode_by_default = 0
-  " open in new tab
-  let g:vimfiler_edit_action = 'tabopen'
-  " ignore patern
-  let g:vimfiler_ignore_pattern = '\(^\.git\|\.[ao]\|\.out\|\.bin\)$'
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:vimfiler_as_default_explorer = 1
+    let g:vimfiler_safe_mode_by_default = 0
+    " open in new tab
+    let g:vimfiler_edit_action = 'tabopen'
+    " ignore patern
+    let g:vimfiler_ignore_pattern = '\(^\.git\|\.[ao]\|\.out\|\.bin\)$'
+
+    autocmd MyVimrc FileType vimfiler call s:vimfiler_myconfig()
+    function! s:vimfiler_myconfig()
+      " hide <ESC> * 2
+      nmap <buffer> <ESC><ESC> <Plug>(vimfiler_hide)
+    endfunction
+  endfunction
 
   " open Vimfiler
   nmap <silent> <Leader>vf :<C-u>VimFilerExplorer<CR>
-
-  autocmd MyVimrc FileType vimfiler call s:vimfiler_myconfig()
-  function! s:vimfiler_myconfig()
-    " hide <ESC> * 2
-    nmap <buffer> <ESC><ESC> <Plug>(vimfiler_hide)
-  endfunction
 
   call neobundle#untap()
 endif
@@ -471,13 +474,24 @@ if neobundle#tap('unite.vim')
         \   'autoload': {'commands': ["Unite"]}
         \ })
 
-  let g:unite_source_file_mru_limit=200
-  let g:unite_source_history_yank_enable = 1
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:unite_source_file_mru_limit=200
+    let g:unite_source_history_yank_enable = 1
 
-  " always open new tab
-  call unite#custom_default_action('file', 'tabopen')
-  " show dotfiles
-  call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
+    " always open new tab
+    call unite#custom_default_action('file', 'tabopen')
+    " show dotfiles
+    call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
+
+    autocmd MyVimrc FileType unite call s:unite_myconfig()
+    function! s:unite_myconfig()
+      " close <ESC> * 2
+      nmap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
+      imap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
+
+      imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
+    endfunction
+  endfunction
 
   " keybinds
   nnoremap [unite]  <Nop>
@@ -489,15 +503,6 @@ if neobundle#tap('unite.vim')
   nnoremap <silent> [unite]b :<C-u>Unite buffer -buffer-name=buffer<CR>
   nnoremap <silent> [unite]t :<C-u>Unite tab -buffer-name=tab<CR>
   nnoremap <silent> [unite]y :<C-u>Unite history/yank -buffer-name=yank<CR>
-
-  autocmd MyVimrc FileType unite call s:unite_myconfig()
-  function! s:unite_myconfig()
-    " close <ESC> * 2
-    nmap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
-    imap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
-
-    imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
-  endfunction
 
   call neobundle#untap()
 endif
@@ -546,23 +551,25 @@ if neobundle#tap('vim-quickrun')
         \   }
         \ })
 
-  let g:quickrun_config = {
-        \   '_': {
-        \     'outputter/buffer/split': ':botright',
-        \     'outputter/buffer/into':  1,
-        \     'outputter/buffer/close_on_empty': 1
-        \   },
-        \   'cpp': {
-        \     'command': 'clang++',
-        \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra -lboost_system -lpthread'
-        \   },
-        \   'markdown': {
-        \     'type': 'markdown/gfm',
-        \     'outputter': 'browser'
-        \   }
-        \ }
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:quickrun_no_default_key_mappings = 1
 
-  let g:quickrun_no_default_key_mappings = 1
+    let g:quickrun_config = get(g:, 'quickrun_config', {})
+    let g:quickrun_config._ = {
+          \     'outputter/buffer/split': ':botright',
+          \     'outputter/buffer/into':  1,
+          \     'outputter/buffer/close_on_empty': 1
+          \   }
+    let g:quickrun_config.cpp = {
+          \     'command': 'clang++',
+          \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra -lboost_system -lpthread'
+          \   }
+    let g:quickrun_config.markdown = {
+          \     'type': 'markdown/gfm',
+          \     'outputter': 'browser'
+          \   }
+  endfunction
+
   nnoremap <silent> <Space>r  :<C-u>QuickRun<CR>
 
   call neobundle#untap()
@@ -574,7 +581,7 @@ if neobundle#tap('vim-quickrun-markdown-gfm')
   call neobundle#config({
         \   'autoload': {
         \     'commands': ['QuickRun'],
-        \     'mappings': ['<Plug>(quickrun'],
+        \     'mappings': ['<Plug>(quickrun)'],
         \     'filetypes': ['markdown']
         \   }
         \ })
@@ -586,7 +593,7 @@ endif
 " neocomplete.vim {{{
 if neobundle#tap('neocomplete.vim')
   call neobundle#config({
-        \   'autoload': {'insert' : '1'}
+        \   'autoload': {'insert': '1'}
         \ })
 
   let g:neocomplete#enable_at_startup = 1
@@ -654,7 +661,9 @@ if neobundle#tap('emmet-vim')
         \   'autoload': {'filetypes': ['html', 'xhtml', 'eruby', 'css']}
         \ })
 
-  let g:user_emmet_leader_key = '<C-e>'
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:user_emmet_leader_key = '<C-e>'
+  endfunction
 
   call neobundle#untap()
 endif
@@ -666,7 +675,9 @@ if neobundle#tap('jscomplete-vim')
         \   'autoload': {'filetypes': 'javascript'}
         \ })
 
-  let g:jscomplete_use = ['dom']
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:jscomplete_use = ['dom']
+  endfunction
 
   call neobundle#untap()
 endif
@@ -678,9 +689,11 @@ if neobundle#tap('vim-marching')
         \   'autoload': {'filetypes': 'cpp'}
         \ })
 
-  let g:marching_clang_command = '/usr/bin/clang'
-  let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
-  let g:marching_enable_neocomplete = 1
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:marching_clang_command = '/usr/bin/clang'
+    let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
+    let g:marching_enable_neocomplete = 1
+  endfunction
 
   call neobundle#untap()
 endif
@@ -711,8 +724,6 @@ if neobundle#tap('vim2hs')
   call neobundle#config({
         \   'autoload': {'filetypes': 'haskell'}
         \ })
-
-  set nofoldenable
 
   call neobundle#untap()
 endif
