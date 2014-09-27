@@ -74,7 +74,11 @@ local layouts = {
 -- {{{ Wallpaper
 if beautiful.wallpaper then
   for s = 1, screen.count() do
-    gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    if screen[s].workarea.height > screen[s].workarea.width then
+      gears.wallpaper.centered(beautiful.wallpaper_vertical, s)
+    else
+      gears.wallpaper.centered(beautiful.wallpaper, s)
+    end
   end
 end
 -- }}}
