@@ -99,8 +99,8 @@ mymainmenu = awful.menu({ items = {
   { "awesome",  myawesomemenu, beautiful.awesome_icon },
   { "terminal", terminal },
   { "logout",   awesome.quit },
-  { "reboot",   "/sbin/shutdown -r now" },
-  { "halt",     "/sbin/shutdown -h now" } }
+  { "reboot",   "systemctl reboot" },
+  { "halt",     "systemctl poweroff" } }
 })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
