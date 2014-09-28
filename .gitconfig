@@ -1,12 +1,16 @@
 [user]
-	email = tosainu.maple@gmail.com
-	name = Tosainu
+  email = tosainu.maple@gmail.com
+  name = Tosainu
 [push]
-	default = matching
+  default = matching
 [core]
-	editor = vim
-	excludesfile = ~/.gitignore
+  editor = vim
+  excludesfile = ~/.gitignore
 [github]
-	user = Tosainu
+  user = Tosainu
 [color]
-	ui = true
+  ui = true
+[pager]
+  log  = /usr/share/git/diff-highlight/diff-highlight | less
+  show = /usr/share/git/diff-highlight/diff-highlight | less
+  diff = /usr/share/git/diff-highlight/diff-highlight | less
