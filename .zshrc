@@ -8,6 +8,7 @@ path=(
   ~/.local/bin(N-/)
   ~/.gem/ruby/2.1.0/bin(N-/)
   ~/.cabal/bin(N-/)
+  ~/.go/bin(N-/)
   $path
 )
 
@@ -17,6 +18,9 @@ typeset -Ua path cdpath fpath manpath
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# golang
+export GOPATH=~/.go
 
 ### Keybind
 bindkey -v
