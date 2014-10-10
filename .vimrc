@@ -184,6 +184,9 @@ endfunction
 " }}}
 
 " neobundle {{{
+" Skip initialization for vim-tiny or vim-small
+if !1 | finish | endif
+
 " install neobundle (https://github.com/rhysd/dotfiles/blob/master/vimrc#L758-L768)
 if ! isdirectory(expand('~/.vim/bundle'))
   echon "Installing neobundle.vim..."
@@ -200,7 +203,7 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " require
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -265,6 +268,8 @@ NeoBundleLazy 'JavaScript-syntax'
 NeoBundleLazy 'pangloss/vim-javascript'
 NeoBundleLazy 'sudar/vim-arduino-syntax'
 NeoBundleLazy 'nginx.vim'
+
+call neobundle#end()
 
 filetype plugin indent on
 
