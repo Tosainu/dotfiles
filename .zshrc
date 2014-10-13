@@ -169,6 +169,7 @@ alias du='du -h'
 alias mkdir='nocorrect mkdir'
 alias vi='vim'
 alias sl="ruby ~/.local/bin/sl/sl.rb"
+alias gl='cd $(ghq list -p | peco)'
 
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
