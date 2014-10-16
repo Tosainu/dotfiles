@@ -8,6 +8,9 @@
   excludesfile = ~/.gitignore
 [github]
   user = Tosainu
+[url "git@github.com:"]
+  pushinsteadof = "git://github.com/"
+  pushinsteadof = "https://github.com/"
 [color]
   ui = true
 [pager]
