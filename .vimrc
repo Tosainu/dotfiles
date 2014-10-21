@@ -39,6 +39,8 @@ set shortmess& shortmess+=I
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 " commandline
 set wildmenu wildignorecase wildmode=list:full
+" separator style
+set fillchars+=vert:\ 
 
 " add <> to matchpairs
 set matchpairs+=<:>
