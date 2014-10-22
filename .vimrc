@@ -183,6 +183,8 @@ function! s:markdown_myconfig()
         \   'vim',
         \ ]
 endfunction
+
+autocmd MyVimrc BufNewFile,BufRead *.{slim} set filetype=slim
 " }}}
 
 " neobundle {{{
@@ -268,8 +270,10 @@ NeoBundleLazy 'hail2u/vim-css3-syntax'
 NeoBundleLazy 'othree/html5.vim'
 NeoBundleLazy 'JavaScript-syntax'
 NeoBundleLazy 'pangloss/vim-javascript'
+NeoBundleLazy 'slim-template/vim-slim'
 NeoBundleLazy 'sudar/vim-arduino-syntax'
 NeoBundleLazy 'nginx.vim'
+
 
 call neobundle#end()
 
@@ -787,6 +791,16 @@ endif
 if neobundle#tap('vim-javascript')
   call neobundle#config({
         \   'autoload': {'filetypes': 'javascript'}
+        \ })
+
+  call neobundle#untap()
+endif
+" }}}
+
+" vim-slim {{{
+if neobundle#tap('vim-slim')
+  call neobundle#config({
+        \   'autoload': {'filetypes': 'slim'}
         \ })
 
   call neobundle#untap()
