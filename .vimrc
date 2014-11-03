@@ -235,7 +235,7 @@ if has('python3')
 endif
 
 " unite
-NeoBundleLazy 'Shougo/unite.vim', {'depends' : 'Shougo/vimproc'}
+NeoBundleLazy 'Shougo/unite.vim', {'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'Shougo/neomru.vim', {'depends': 'Shougo/unite.vim'}
 NeoBundleLazy 'rhysd/unite-codic.vim', {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
 NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
@@ -273,7 +273,6 @@ NeoBundleLazy 'pangloss/vim-javascript'
 NeoBundleLazy 'slim-template/vim-slim'
 NeoBundleLazy 'sudar/vim-arduino-syntax'
 NeoBundleLazy 'nginx.vim'
-
 
 call neobundle#end()
 
@@ -521,6 +520,7 @@ if neobundle#tap('unite.vim')
   nnoremap <silent> [unite]b :<C-u>Unite buffer -buffer-name=buffer<CR>
   nnoremap <silent> [unite]t :<C-u>Unite tab -buffer-name=tab<CR>
   nnoremap <silent> [unite]y :<C-u>Unite history/yank -buffer-name=yank<CR>
+  nnoremap <silent> [unite]R :<C-u>UniteResume<CR>
 
   call neobundle#untap()
 endif
