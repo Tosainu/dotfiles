@@ -1,9 +1,9 @@
 snippet include
-alias   #inc, #include
+abbr   #include <iostream>
   #include <${1:iostream}>${0}
 
 snippet include2
-alias   #inc2, #include2
+abbr   #include "mylib.h"
   #include "${1}"${0}
 
 snippet int_main
@@ -12,26 +12,45 @@ abbr    int main() {}
     ${0}
   }
 
-snippet int_main_args
-abbr    int main(int argc, char* argv[]) {}
-  int main(int argc, char* argv[]) {
+snippet auto_main
+abbr    auto main() -> int {}
+  auto main() -> int {
     ${0}
   }
 
-snippet     if
-abbr        if () {}
+snippet int_main_args
+abbr    int main(int argc, char **argv) {}
+  int main(int argc, char **argv) {
+    ${0}
+  }
+
+snippet auto_main_args
+abbr    auto main(int argc, char **argv) -> int {}
+  auto main(int argc, char **argv) -> int {
+    ${0}
+  }
+
+snippet hello_world
+  #include <iostream>
+
+  auto main() -> int {
+    std::cout << "Hello, World!" << std::endl;${0}
+  }
+
+snippet if
+abbr    if () {}
   if (${1}) {
     ${0}
   }
 
-snippet     for
-abbr        for (;;) {}
+snippet for
+abbr    for (;;) {}
   for (${1:int i = 0}; ${2}; ${3:++i}) {
     ${0}
   }
 
-snippet     for_range
-abbr        for (:) {}
+snippet for_range
+abbr    for (:) {}
   for (${1:auto&& }${2:var}: ${3:container}) {
     ${0}
   }
@@ -43,8 +62,8 @@ abbr    class {}
   };
 
 snippet template
-abbr    template <T>
-  template<${1:typename T}>${0}
+abbr    template <typename T>
+  template <${1:typename T}>${0}
 
 snippet static_cast
 abbr    static_cast<>()
