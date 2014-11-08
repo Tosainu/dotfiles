@@ -653,7 +653,10 @@ endif
 " neosnippet.vim {{{
 if neobundle#tap('neosnippet.vim')
   call neobundle#config({
-        \   'autoload': {'insert' : '1'}
+        \   'autoload': {
+        \     'insert' : '1',
+        \     'filename_patterns': '.*\.snip'
+        \   }
         \ })
 
   let g:neosnippet#disable_runtime_snippets = {
