@@ -220,6 +220,7 @@ NeoBundle 'Shougo/vimproc', {
 
 " tools
 NeoBundle 'itchyny/lightline.vim', {'depends': 'airblade/vim-gitgutter'}
+NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
@@ -367,6 +368,16 @@ if neobundle#tap('vim-gitgutter')
   let g:gitgutter_sign_removed = '-'
 
   let g:gitgutter_max_signs = 1000
+
+  call neobundle#untap()
+endif
+" }}}
+
+" clever-f.vim {{{
+if neobundle#tap('clever-f.vim')
+  let g:clever_f_across_no_line = 1
+  let g:clever_f_smart_case = 1
+  let g:clever_f_use_migemo = 1
 
   call neobundle#untap()
 endif
