@@ -282,15 +282,22 @@ filetype plugin indent on
 
 " colorscheme {{{
 syntax enable
-if $TERM == 'linux'
-  " use slate when can't use 256-color
-  colorscheme slate
-else
-  set t_Co=256
-  colorscheme last256
+if !has('gui_running')
+  if $TERM =~# '^xterm'
+    " color mode
+    set t_Co=256
 
-  " transparent background
-  highlight Normal ctermbg=none
+    try
+      colorscheme last256
+    catch
+      colorscheme slate
+    endtry
+
+    " transparent background
+    highlight Normal ctermbg=none
+  else
+    colorscheme default
+  endif
 endif
 " }}}
 
