@@ -278,9 +278,6 @@ NeoBundleLazy 'nginx.vim'
 call neobundle#end()
 
 filetype plugin indent on
-
-" check bundles
-NeoBundleCheck
 " }}}
 
 " colorscheme {{{
@@ -835,6 +832,13 @@ if neobundle#tap('nginx.vim')
         \ })
 
   call neobundle#untap()
+endif
+" }}}
+
+" check plugin installation {{{
+NeoBundleCheck
+if !has('vim_starting')
+  call neobundle#call_hook('on_source')
 endif
 " }}}
 
