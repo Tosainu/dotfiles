@@ -230,7 +230,9 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'Shougo/vimfiler'
 NeoBundleLazy 'osyo-manga/vim-over'
-NeoBundleLazy 'rhysd/vim-clang-format'
+if executable('clang')
+  NeoBundleLazy 'rhysd/vim-clang-format'
+endif
 if has('python3')
   NeoBundleLazy 'Shougo/vinarise.vim'
 endif
@@ -246,13 +248,15 @@ NeoBundleLazy 'thinca/vim-quickrun'
 NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim']}
 
 " completetion
-if (has('lua') && (v:version > 703 || (v:version == 703 && has('patch885'))))
+NeoBundleLazy 'mattn/emmet-vim'
+if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
   NeoBundleLazy 'Shougo/neocomplete.vim'
   NeoBundleLazy "Shougo/neosnippet.vim", {'depends': 'Shougo/neocomplete.vim'}
   NeoBundleLazy 'mattn/jscomplete-vim'
+endif
+if executable('clang')
   NeoBundleLazy 'osyo-manga/vim-marching', {'depends': ['Shougo/vimproc']}
 endif
-NeoBundleLazy 'mattn/emmet-vim'
 
 " Operator
 NeoBundle 'kana/vim-operator-user'
@@ -728,7 +732,10 @@ if neobundle#tap('vim-marching')
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:marching_clang_command = '/usr/bin/clang'
     let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
-    let g:marching_enable_neocomplete = 1
+
+    if neobundle#is_installed('neocomplete.vim')
+      let g:marching_enable_neocomplete = 1
+    endif
   endfunction
 
   call neobundle#untap()
