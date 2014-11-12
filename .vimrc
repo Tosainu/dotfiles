@@ -595,7 +595,10 @@ if neobundle#tap('vim-quickrun')
     let g:quickrun_config._ = {
           \     'outputter/buffer/split': ':botright',
           \     'outputter/buffer/into':  1,
-          \     'outputter/buffer/close_on_empty': 1
+          \     'outputter/buffer/close_on_empty': 1,
+          \     'outputter/error': 'quickfix',
+          \     'outputter/error/success': 'buffer',
+          \     'outputter': 'error'
           \   }
     let g:quickrun_config.cpp = {
           \     'command': 'clang++',
@@ -608,6 +611,7 @@ if neobundle#tap('vim-quickrun')
   endfunction
 
   nnoremap <silent> <Space>r  :<C-u>QuickRun<CR>
+  nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
   call neobundle#untap()
 endif
