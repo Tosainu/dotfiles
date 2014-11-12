@@ -80,14 +80,14 @@ set updatetime=200
 set nobackup
 
 " swapfile
-if ! isdirectory($HOME.'/.vim/swap')
+if !isdirectory($HOME.'/.vim/swap')
   call mkdir($HOME.'/.vim/swap', 'p')
 endif
 set directory=~/.vim/swap
 
 " undofile
 if has('persistent_undo')
-  if ! isdirectory($HOME.'/.vim/undo')
+  if !isdirectory($HOME.'/.vim/undo')
     call mkdir($HOME.'/.vim/undo', 'p')
   endif
   set undodir=~/.vim/undo
@@ -192,7 +192,7 @@ autocmd MyVimrc BufNewFile,BufRead *.{slim} set filetype=slim
 if !1 | finish | endif
 
 " install neobundle (https://github.com/rhysd/dotfiles/blob/master/vimrc#L758-L768)
-if ! isdirectory(expand('~/.vim/bundle'))
+if !isdirectory(expand('~/.vim/bundle'))
   echon "Installing neobundle.vim..."
   silent call mkdir(expand('~/.vim/bundle'), 'p')
   silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
@@ -345,8 +345,8 @@ if neobundle#tap('lightline.vim')
   endfunction
 
   function! MyGitGutter()
-    if ! exists('*GitGutterGetHunkSummary')
-          \ || ! get(g:, 'gitgutter_enabled', 0)
+    if !exists('*GitGutterGetHunkSummary')
+          \ || !get(g:, 'gitgutter_enabled', 0)
           \ || winwidth('.') <= 90
       return ''
     endif
