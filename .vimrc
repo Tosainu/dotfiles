@@ -136,7 +136,8 @@ if executable('fcitx-remote')
 endif
 " }}}
 
-" C++ settings {{{
+" filetypes {{{
+" C++
 autocmd MyVimrc FileType cpp call s:cpp_myconfig()
 function! s:cpp_myconfig()
   set cinoptions& cinoptions+=g0,m1
@@ -163,10 +164,6 @@ function! s:expand_namespace()
     return ';'
   endif
 endfunction
-" }}}
-
-" filetypes {{{
-autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
 
 " markdown
 autocmd MyVimrc BufNewFile,BufRead *.{md,mkd,markdown} call s:markdown_myconfig()
@@ -184,7 +181,17 @@ function! s:markdown_myconfig()
         \ ]
 endfunction
 
+" slim
 autocmd MyVimrc BufNewFile,BufRead *.{slim} set filetype=slim
+
+" nginx
+autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
+
+" quickfix
+autocmd MyVimrc FileType qf nnoremap <buffer><silent> q :<C-u>cclose<CR>
+
+" help
+autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " neobundle {{{
