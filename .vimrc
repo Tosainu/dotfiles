@@ -605,7 +605,8 @@ if neobundle#tap('vim-quickrun')
           \     'outputter/buffer/close_on_empty': 1,
           \     'outputter/error': 'quickfix',
           \     'outputter/error/success': 'buffer',
-          \     'outputter': 'error'
+          \     'outputter': 'error',
+          \     'runner': 'vimproc',
           \   }
     let g:quickrun_config.cpp = {
           \     'command': 'clang++',
