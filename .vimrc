@@ -46,6 +46,8 @@ set fillchars+=vert:\
 set matchpairs+=<:>
 " history
 set history=100
+" backspace
+set backspace=indent,eol,start
 " use japanese-help first
 set helplang=ja,en
 
