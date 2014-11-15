@@ -238,6 +238,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'Shougo/vimfiler'
+NeoBundleLazy 'koron/nyancat-vim'
 NeoBundleLazy 'osyo-manga/vim-over'
 if executable('clang')
   NeoBundleLazy 'rhysd/vim-clang-format'
@@ -462,6 +463,16 @@ if neobundle#tap('vimfiler')
 
   " open Vimfiler
   nmap <silent> <Leader>vf :<C-u>VimFilerExplorer<CR>
+
+  call neobundle#untap()
+endif
+" }}}
+
+" nyancat-vim {{{
+if neobundle#tap('nyancat-vim')
+  call neobundle#config({
+        \   'autoload': {'commands': ['Nyancat', 'Nyancat2']}
+        \ })
 
   call neobundle#untap()
 endif
