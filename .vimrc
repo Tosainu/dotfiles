@@ -237,6 +237,7 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'Shougo/vimfiler'
 NeoBundleLazy 'koron/nyancat-vim'
 NeoBundleLazy 'osyo-manga/vim-over'
@@ -426,6 +427,18 @@ if neobundle#tap('vim-textmanip')
   xmap <C-k> <Plug>(textmanip-move-up)
   xmap <C-h> <Plug>(textmanip-move-left)
   xmap <C-l> <Plug>(textmanip-move-right)
+
+  call neobundle#untap()
+endif
+" }}}
+
+" switch.vim {{{
+if neobundle#tap('switch.vim')
+  call neobundle#config({
+        \   'autoload': {'commands': ['Switch']}
+        \ })
+
+  nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 
   call neobundle#untap()
 endif
