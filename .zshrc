@@ -157,7 +157,7 @@ darwin*)
   alias ls='ls -G'
   ;;
 linux*)
-  alias ls='ls --color=auto -F'
+  alias ls='ls --color=auto -F --group-directories-first'
   ;;
 esac
 alias la='ls -A'
