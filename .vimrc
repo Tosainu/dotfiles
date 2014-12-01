@@ -1,8 +1,6 @@
 scriptencoding utf-8
 
 " basic settings {{{
-set nocompatible
-
 " vimrc augroup
 augroup MyVimrc
   autocmd!
