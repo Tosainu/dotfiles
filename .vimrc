@@ -127,8 +127,8 @@ nnoremap <S-Down>  <C-W>+
 nnoremap <S-Left>  <C-W><
 nnoremap <S-Right> <C-W>>
 
-" off highlight <ESC> * 2
-nmap <silent> <Esc><Esc> :<C-u>nohlsearch<CR><Esc>
+" redraw screen and remove highlighting
+nnoremap <silent> <C-L> :<C-u>nohlsearch<CR><C-L>
 
 " fcitx
 if executable('fcitx-remote')
