@@ -464,12 +464,6 @@ if neobundle#tap('vimfiler')
     let g:vimfiler_edit_action = 'tabopen'
     " ignore patern
     let g:vimfiler_ignore_pattern = '\(^\.git\|\.[ao]\|\.out\|\.bin\)$'
-
-    autocmd MyVimrc FileType vimfiler call s:vimfiler_myconfig()
-    function! s:vimfiler_myconfig()
-      " hide <ESC> * 2
-      nmap <buffer> <ESC><ESC> <Plug>(vimfiler_hide)
-    endfunction
   endfunction
 
   " open Vimfiler
@@ -552,10 +546,6 @@ if neobundle#tap('unite.vim')
 
     autocmd MyVimrc FileType unite call s:unite_myconfig()
     function! s:unite_myconfig()
-      " close <ESC> * 2
-      nmap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
-      imap <silent><buffer> <ESC><ESC> <Plug>(unite_exit)
-
       imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
     endfunction
   endfunction
