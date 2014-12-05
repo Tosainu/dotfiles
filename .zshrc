@@ -42,7 +42,6 @@ setopt print_eight_bit
 ### Directory
 setopt auto_cd
 setopt auto_pushd
-setopt cdable_vars
 setopt pushd_ignore_dups
 
 # move to git root
@@ -95,6 +94,30 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # use cache
 zstyle ':completion:*' use-cache true
+
+### cdr
+[ ! -e "${XDG_CACHE_HOME:-$HOME/.cache}/shell" ] && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/shell"
+
+autoload -U chpwd_recent_dirs cdr add-zsh-hook; add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':completion:*:*:cdr:*:*' menu selection
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 64
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-pushd true
+zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
+
+function open_cdr {
+  if [[ -z "$BUFFER" ]]; then
+    BUFFER="cdr "
+    CURSOR=$#BUFFER
+    zle expand-or-complete
+  else 
+    BUFFER=$BUFFER";"
+    CURSOR=$#BUFFER
+  fi
+}
+zle -N open_cdr
+bindkey ";" open_cdr
 
 ### Color
 autoload -U colors; colors
@@ -176,7 +199,3 @@ alias webrick="ruby -rwebrick -e 'WEBrick::HTTPServer.new({:DocumentRoot => \"./
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
 alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
-
-hash -d c=~/codes/
-hash -d t=/tmp/
-hash -d a=/var/abs/
