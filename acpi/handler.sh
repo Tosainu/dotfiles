@@ -2,7 +2,6 @@
 # Default acpi script that takes an entry for all actions
 
 case "$1" in
-case "$1" in
     button/power)
         case "$2" in
             PBTN|PWRF)
