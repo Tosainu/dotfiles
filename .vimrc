@@ -121,6 +121,12 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
+" keep the middle of the screen when searching
+nnoremap n nzvzz
+nnoremap N Nzvzz
+nnoremap * *zvzz
+nnoremap # *zvzz
+
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
