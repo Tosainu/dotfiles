@@ -731,7 +731,7 @@ endif
 " emmet-vim {{{
 if neobundle#tap('emmet-vim')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['html', 'xhtml', 'eruby', 'css']}
+        \   'autoload': {'filetypes': ['html', 'eruby', 'css', 'scss']}
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
@@ -788,7 +788,7 @@ endif
 " vim-ruby {{{
 if neobundle#tap('vim-ruby')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['ruby', 'eruby']}
+        \   'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}
         \ })
 
   call neobundle#untap()
@@ -808,7 +808,7 @@ endif
 " vim-css-color {{{
 if neobundle#tap('vim-css-color')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['css', 'eruby', 'html', 'xhtml']}
+        \   'autoload': {'filetypes': ['css', 'scss']}
         \ })
 
   call neobundle#untap()
@@ -818,7 +818,7 @@ endif
 " vim-css3-syntax {{{
 if neobundle#tap('vim-css3-syntax')
   call neobundle#config({
-        \   'autoload': {'filetypes': 'css'}
+        \   'autoload': {'filetypes': ['css', 'scss']}
         \ })
 
   call neobundle#untap()
@@ -828,7 +828,7 @@ endif
 " html5.vim {{{
 if neobundle#tap('html5.vim')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['eruby', 'html', 'xhtml']}
+        \   'autoload': {'filetypes': ['eruby', 'slim', 'html']}
         \ })
 
   call neobundle#untap()
