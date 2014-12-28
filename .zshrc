@@ -129,41 +129,34 @@ if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]; the
 fi
 
 ### Prompt
-setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr '%F{red}'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}'
+zstyle ':vcs_info:*' formats '%u%c%b'
+zstyle ':vcs_info:*' actionformats '%u%c%b|%a'
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
-autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
-function git-current-branch {
-  local name st color gitdir action
-  if [[ "$PWD" =~ '/¥.git(/.*)?$' ]]; then
-    return
+function +vi-git-untracked() {
+  if command git status --porcelain 2> /dev/null \
+    | awk '{print $1}' \
+    | command grep -F '??' > /dev/null 2>&1 ; then
+    hook_com[unstaged]+='%F{yellow}'
   fi
-
-  name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
-  if [[ -z $name ]]; then
-    return
-  fi
-
-  gitdir=`git rev-parse --git-dir 2> /dev/null`
-  action=`VCS_INFO_git_getaction "$gitdir"` && action="($action)"
-  st=`git status 2> /dev/null`
-
-  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    color='%{\e[38;5;117m%}'
-  elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
-    color='%{\e[38;5;220m%}'
-  elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
-    color='%B%{\e[38;5;197m%}'
-  else
-    color='%{\e[38;5;197m%}'
-  fi
-
-  echo "${color}[${name}${action}]%{\e[0m%}%b"
 }
 
+function update_vcs_info() {
+  psvar=()
+  vcs_info
+  [[ -n $vcs_info_msg_0_ ]] && echo $vcs_info_msg_0_
+}
+
+setopt prompt_subst
 PROMPT=$'
-[${?}] %{\e[38;5;197m%}[${SHELL}] %{\e[38;5;220m%}[${USER}@${HOST%%.*}] %{\e[38;5;076m%}[%~]%{\e[0m%} `git-current-branch`
-%(!.#.$) '
-RPROMPT='%D{%b %d, %Y %H:%M:%S}'
+%{$fg_bold[yellow]%}%n@%m %{$fg_bold[green]%}%~%{$reset_color%} %{$fg_bold[blue]%}`update_vcs_info`%{$reset_color%}
+%(?,,%{$fg_bold[red]%}%?%{$reset_color%} )❯ '
+RPROMPT='%D{%H:%M:%S}'
 
 ### Title
 case "${TERM}" in
