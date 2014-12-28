@@ -101,7 +101,7 @@ zstyle ':completion:*' use-cache true
 autoload -U chpwd_recent_dirs cdr add-zsh-hook; add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':completion:*:*:cdr:*:*' menu selection
 zstyle ':completion:*' recent-dirs-insert both
-zstyle ':chpwd:*' recent-dirs-max 64
+zstyle ':chpwd:*' recent-dirs-max 32
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-pushd true
 zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
@@ -112,12 +112,11 @@ function open_cdr {
     CURSOR=$#BUFFER
     zle expand-or-complete
   else 
-    BUFFER=$BUFFER";"
-    CURSOR=$#BUFFER
+    zle expand-or-complete
   fi
 }
 zle -N open_cdr
-bindkey ";" open_cdr
+bindkey "^I" open_cdr
 
 ### Color
 autoload -U colors; colors
