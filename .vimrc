@@ -224,7 +224,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 " require
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
+NeoBundle 'Shougo/vimproc.vim', {
       \   'build': {
       \     'unix': 'make -f make_unix.mak',
       \     'mac' : 'make -f make_mac.mak'
@@ -253,7 +253,7 @@ if has('python3')
 endif
 
 " unite
-NeoBundleLazy 'Shougo/unite.vim', {'depends': 'Shougo/vimproc'}
+NeoBundleLazy 'Shougo/unite.vim', {'depends': 'Shougo/vimproc.vim'}
 NeoBundleLazy 'Shougo/neomru.vim', {'depends': 'Shougo/unite.vim'}
 NeoBundleLazy 'rhysd/unite-codic.vim', {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
 NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
@@ -270,7 +270,7 @@ if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
   NeoBundleLazy 'mattn/jscomplete-vim'
 endif
 if executable('clang')
-  NeoBundleLazy 'osyo-manga/vim-marching', {'depends': ['Shougo/vimproc']}
+  NeoBundleLazy 'osyo-manga/vim-marching', {'depends': ['Shougo/vimproc.vim']}
 endif
 
 " Operator
