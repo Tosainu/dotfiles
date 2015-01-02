@@ -258,7 +258,7 @@ NeoBundleLazy 'rhysd/unite-codic.vim', {'depends': ['Shougo/unite.vim', 'koron/c
 NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
 
 " quickrun
-NeoBundleLazy 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim']}
 
 " completetion
@@ -587,35 +587,68 @@ endif
 
 " vim-quickrun {{{
 if neobundle#tap('vim-quickrun')
-  call neobundle#config({
-        \   'autoload': {
-        \     'commands': ['QuickRun'],
-        \     'mappings': ['<Plug>(quickrun)'],
-        \   }
-        \ })
+  let g:quickrun_no_default_key_mappings = 1
 
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:quickrun_no_default_key_mappings = 1
+  let g:quickrun_config = get(g:, 'quickrun_config', {})
+  let g:quickrun_config._ = {
+        \   'outputter/buffer/split': ':botright',
+        \   'outputter/buffer/into':  1,
+        \   'outputter/buffer/close_on_empty': 1,
+        \   'outputter/error': 'quickfix',
+        \   'outputter/error/success': 'buffer',
+        \   'outputter': 'error',
+        \   'runner': 'vimproc',
+        \ }
 
-    let g:quickrun_config = get(g:, 'quickrun_config', {})
-    let g:quickrun_config._ = {
-          \     'outputter/buffer/split': ':botright',
-          \     'outputter/buffer/into':  1,
-          \     'outputter/buffer/close_on_empty': 1,
-          \     'outputter/error': 'quickfix',
-          \     'outputter/error/success': 'buffer',
-          \     'outputter': 'error',
-          \     'runner': 'vimproc',
-          \   }
-    let g:quickrun_config.cpp = {
-          \     'command': 'clang++',
-          \     'cmdopt': '-std=c++11 -stdlib=libc++ -lc++abi -Wall -Wextra -lboost_system -lpthread'
-          \   }
-    let g:quickrun_config.markdown = {
-          \     'type': 'markdown/gfm',
-          \     'outputter': 'browser'
-          \   }
-  endfunction
+  let g:quickrun_config.cpp = {
+        \   'command':    'clang++',
+        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread',
+        \ }
+
+  let g:quickrun_config.markdown = {
+        \   'type':       'markdown/gfm',
+        \   'outputter':  'browser',
+        \ }
+
+  " syntax checking
+  let g:quickrun_config['syntax/c'] = {
+        \   'command':    'clang',
+        \   'cmdopt':     '-Wall -Wextra',
+        \   'exec':       '%c %o -fsyntax-only %s:p',
+        \ }
+  autocmd MyVimrc BufWritePost *.c QuickRun -type syntax/c
+
+  let g:quickrun_config['syntax/cpp'] = {
+        \   'command':    'clang++',
+        \   'cmdopt':     '-std=c++1y -Wall -Wextra',
+        \   'exec':       '%c %o -fsyntax-only %s:p',
+        \ }
+
+  let g:quickrun_config['syntax/ruby'] = {
+        \   'command':    'ruby',
+        \   'exec':       '%c -c %s:p %o',
+        \ }
+  autocmd MyVimrc BufWritePost *.rb QuickRun -type syntax/ruby
+
+  if executable('jshint')
+    let g:quickrun_config['syntax/javascript'] = {
+          \   'command':      'jshint',
+          \   'exec':         '%c %o %s:p',
+          \   'errorformat':  '%f: line %l\, col %c\, %m',
+          \ }
+
+    autocmd MyVimrc BufWritePost *.js QuickRun -type syntax/javascript
+  endif
+
+  if executable('sass')
+    let g:quickrun_config['syntax/scss'] = {
+          \   'command':      'sass',
+          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
+          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
+          \ }
+
+    autocmd MyVimrc BufWritePost *.scss QuickRun -type syntax/scss
+  endif
 
   nnoremap <silent> <Space>r  :<C-u>QuickRun<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
