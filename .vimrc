@@ -234,7 +234,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 " tools
 NeoBundle 'itchyny/lightline.vim', {'depends': 'airblade/vim-gitgutter'}
 NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'scrooloose/syntastic'
 NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
 NeoBundle 'tomtom/tcomment_vim'
@@ -332,7 +331,6 @@ if neobundle#tap('lightline.vim')
         \       ['readonly', 'filename', 'modified']
         \     ],
         \     'right': [
-        \       ['lineinfo', 'syntastic'],
         \       ['percent'],
         \       ['fileformat', 'fileencoding', 'filetype'],
         \       ['gitgutter', 'fugitive']
@@ -342,8 +340,7 @@ if neobundle#tap('lightline.vim')
         \     'readonly': 'MyReadonly',
         \     'modified': 'MyModified',
         \     'fugitive': 'MyFugitive',
-        \     'gitgutter': 'MyGitGutter',
-        \     'syntastic': 'SyntasticStatuslineFlag'
+        \     'gitgutter': 'MyGitGutter'
         \   }
         \ }
 
@@ -401,25 +398,6 @@ if neobundle#tap('clever-f.vim')
   let g:clever_f_across_no_line = 1
   let g:clever_f_smart_case = 1
   let g:clever_f_use_migemo = 1
-
-  call neobundle#untap()
-endif
-" }}}
-
-" syntastic {{{
-if neobundle#tap('syntastic')
-  let g:syntastic_mode_map = {
-        \   'mode': 'active',
-        \   'passive_filetypes': ['cpp', 'tex']
-        \ }
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_enable_signs = 0
-  let g:syntastic_c_compiler = 'clang'
-  let g:syntastic_cpp_compiler = 'clang++'
-  let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++ -lc++abi'
-  let g:syntastic_javascript_jshint_args = '--config ~/.jshintrc'
-  let g:syntastic_java_javac_classpath = '/opt/android-sdk/platforms/android-15/android.jar'
 
   call neobundle#untap()
 endif
