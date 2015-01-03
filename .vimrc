@@ -146,7 +146,7 @@ endif
 " C++
 autocmd MyVimrc FileType cpp call s:cpp_myconfig()
 function! s:cpp_myconfig()
-  set cinoptions& cinoptions+=g0,m1
+  setlocal cinoptions& cinoptions+=g0,m1
 
   " include path
   setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
@@ -172,10 +172,8 @@ function! s:expand_namespace()
 endfunction
 
 " markdown
-autocmd MyVimrc BufNewFile,BufRead *.{md,mkd,markdown} call s:markdown_myconfig()
+autocmd MyVimrc FileType markdown call s:markdown_myconfig()
 function! s:markdown_myconfig()
-  set filetype=markdown
-
   let g:markdown_fenced_languages = [
         \   'c',
         \   'cpp',
@@ -188,10 +186,10 @@ function! s:markdown_myconfig()
 endfunction
 
 " slim
-autocmd MyVimrc BufNewFile,BufRead *.{slim} set filetype=slim
+autocmd MyVimrc BufNewFile,BufRead *.{slim} setlocal filetype=slim
 
 " nginx
-autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* set filetype=nginx
+autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* setlocal filetype=nginx
 
 " quickfix
 autocmd MyVimrc FileType qf nnoremap <buffer><silent> q :<C-u>cclose<CR>
