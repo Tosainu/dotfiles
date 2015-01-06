@@ -6,9 +6,9 @@ export REPORTTIME=5
 
 path=(
   ~/.local/bin(N-/)
-  ~/.gem/ruby/2.1.0/bin(N-/)
   ~/.cabal/bin(N-/)
   ~/.go/bin(N-/)
+  `ruby -e 'print Gem.user_dir'`/bin(N-/)
   $path
 )
 
