@@ -149,7 +149,22 @@ function! s:cpp_myconfig()
   setlocal cinoptions& cinoptions+=g0,m1
 
   " include path
-  setlocal path+=/usr/include/c++/v1,/usr/include/boost,/usr/include/qt
+  let s:incpath = [
+        \   '/usr/include/boost',
+        \   '/usr/include/c++/v1',
+        \   '/usr/include/qt/QtCore',
+        \   '/usr/include/qt/QtWidgets',
+        \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
+        \ ]
+
+  let s:tmp = ''
+  for p in s:incpath
+    if isdirectory(p)
+      let s:tmp .= ',' .  p
+    endif
+  endfor
+
+  execute 'setlocal path+=' . s:tmp
 
   " expand namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
@@ -600,7 +615,7 @@ if neobundle#tap('vim-quickrun')
 
   let g:quickrun_config.cpp = {
         \   'command':    'clang++',
-        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread',
+        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ }
 
   let g:quickrun_config.markdown = {
@@ -773,7 +788,7 @@ if neobundle#tap('vim-marching')
 
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:marching_clang_command = '/usr/bin/clang'
-    let g:marching_clang_command_option = '-std=c++11 -stdlib=libc++ -lc++abi'
+    let g:marching_clang_command_option = '-std=c++1y'
 
     if neobundle#is_installed('neocomplete.vim')
       let g:marching_enable_neocomplete = 1
