@@ -245,7 +245,9 @@ NeoBundle 'Shougo/vimproc.vim', {
       \ }
 
 " tools
-NeoBundle 'itchyny/lightline.vim', {'depends': 'airblade/vim-gitgutter'}
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'jceb/vim-hier'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
@@ -272,6 +274,7 @@ NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
 
 " quickrun
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim']}
 
 " completetion
@@ -623,50 +626,54 @@ if neobundle#tap('vim-quickrun')
         \   'outputter':  'browser',
         \ }
 
-  " syntax checking
-  let g:quickrun_config['syntax/c'] = {
-        \   'command':    'clang',
-        \   'cmdopt':     '-Wall -Wextra',
-        \   'exec':       '%c %o -fsyntax-only %s:p',
-        \ }
-  autocmd MyVimrc BufWritePost *.c QuickRun -type syntax/c
-
-  let g:quickrun_config['syntax/cpp'] = {
+  " vim-watchdogs
+  let g:quickrun_config['watchdogs_checker/clang++'] = {
         \   'command':    'clang++',
-        \   'cmdopt':     '-std=c++1y -Wall -Wextra',
-        \   'exec':       '%c %o -fsyntax-only %s:p',
+        \   'exec':       '%c %o -std=c++1y -fsyntax-only %s:p',
         \ }
-
-  let g:quickrun_config['syntax/ruby'] = {
-        \   'command':    'ruby',
-        \   'exec':       '%c -c %s:p %o',
+  let g:quickrun_config['cpp/watchdogs_checker'] = {
+        \   'type':       'watchdogs_checker/clang++',
         \ }
-  autocmd MyVimrc BufWritePost *.rb QuickRun -type syntax/ruby
-
-  if executable('jshint')
-    let g:quickrun_config['syntax/javascript'] = {
-          \   'command':      'jshint',
-          \   'exec':         '%c %o %s:p',
-          \   'errorformat':  '%f: line %l\, col %c\, %m',
-          \ }
-
-    autocmd MyVimrc BufWritePost *.js QuickRun -type syntax/javascript
-  endif
 
   if executable('sass')
-    let g:quickrun_config['syntax/scss'] = {
+    let g:quickrun_config['watchdogs_checker/sass'] = {
           \   'command':      'sass',
           \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
           \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
           \ }
+    let g:quickrun_config['sass/watchdogs_checker'] = {
+          \   'type':         'watchdogs_checker/sass',
+          \ }
 
-    autocmd MyVimrc BufWritePost *.scss QuickRun -type syntax/scss
+    let g:quickrun_config['watchdogs_checker/scss'] = {
+          \   'command':      'sass',
+          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
+          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
+          \ }
+    let g:quickrun_config['scss/watchdogs_checker'] = {
+          \   'type':         'watchdogs_checker/scss',
+          \ }
   endif
 
   nnoremap <silent> <Space>r  :<C-u>QuickRun<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
   call neobundle#untap()
+endif
+" }}}
+
+" vim-watchdogs {{{
+if neobundle#tap('vim-watchdogs')
+  let g:watchdogs_check_BufWritePost_enables = {
+        \   'c':          1,
+        \   'javascript': 1,
+        \   'lua':        1,
+        \   'ruby':       1,
+        \   'sass':       1,
+        \   'scss':       1,
+        \ }
+
+  call watchdogs#setup(g:quickrun_config)
 endif
 " }}}
 
