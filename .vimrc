@@ -1,6 +1,9 @@
 scriptencoding utf-8
 
 " basic settings {{{
+" skip when vim-tiny or vim-small
+if !1 | finish | endif
+
 " vimrc augroup
 augroup MyVimrc
   autocmd!
@@ -9,10 +12,10 @@ augroup END
 " encoding
 set encoding=utf-8
 set fileencoding=utf=8
-set fileencodings=ucs-bom,utf-8,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
+set fileencodings=utf-8,cp932,euc-jp
 set fileformats=unix,dos,mac
-set ambiwidth=double
 
+set ambiwidth=double
 " show cursorline
 set cursorline
 " show line number
@@ -69,9 +72,6 @@ set hlsearch
 " searches wrap around
 set wrapscan
 
-" disable auto comment
-autocmd MyVimrc BufEnter * setlocal formatoptions-=ro
-
 " timeout
 set timeoutlen=500
 set updatetime=200
@@ -86,14 +86,14 @@ endif
 set directory=~/.vim/swap
 
 " undofile
-if has('persistent_undo')
-  if !isdirectory($HOME.'/.vim/undo')
-    call mkdir($HOME.'/.vim/undo', 'p')
-  endif
-  set undodir=~/.vim/undo
-  set undofile
+if !isdirectory($HOME.'/.vim/undo')
+  call mkdir($HOME.'/.vim/undo', 'p')
 endif
+set undodir=~/.vim/undo
+set undofile
 
+" disable auto comment
+autocmd MyVimrc BufEnter * setlocal formatoptions-=ro
 " open last position
 autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 " }}}
@@ -144,8 +144,8 @@ endif
 
 " filetypes {{{
 " C++
-autocmd MyVimrc FileType cpp call s:cpp_myconfig()
-function! s:cpp_myconfig()
+autocmd MyVimrc FileType cpp call s:cpp_config()
+function! s:cpp_config()
   setlocal cinoptions& cinoptions+=g0,m1
 
   " include path
@@ -168,27 +168,26 @@ function! s:cpp_myconfig()
 
   " expand namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
+  function! s:expand_namespace()
+    let s = getline('.')[0:col('.')-1]
+    if s =~# '\<b;$'
+      return "\<BS>oost::"
+    elseif s =~# '\<s;$'
+      return "\<BS>td::"
+    elseif s =~# '\<d;$'
+      return "\<BS>etail::"
+    else
+      return ';'
+    endif
+  endfunction
 
   " clangformat
   map <buffer><Leader>cf <Plug>(operator-clang-format)
 endfunction
 
-function! s:expand_namespace()
-  let s = getline('.')[0:col('.')-1]
-  if s =~# '\<b;$'
-    return "\<BS>oost::"
-  elseif s =~# '\<s;$'
-    return "\<BS>td::"
-  elseif s =~# '\<d;$'
-    return "\<BS>etail::"
-  else
-    return ';'
-  endif
-endfunction
-
 " markdown
-autocmd MyVimrc FileType markdown call s:markdown_myconfig()
-function! s:markdown_myconfig()
+autocmd MyVimrc FileType markdown call s:markdown_config()
+function! s:markdown_config()
   let g:markdown_fenced_languages = [
         \   'c',
         \   'cpp',
@@ -196,36 +195,28 @@ function! s:markdown_myconfig()
         \   'html',
         \   'javascript',
         \   'ruby',
+        \   'scss',
         \   'vim',
         \ ]
 endfunction
 
-" slim
-autocmd MyVimrc BufNewFile,BufRead *.{slim} setlocal filetype=slim
-
-" nginx
-autocmd MyVimrc BufRead,BufNewFile /etc/nginx/* setlocal filetype=nginx
-
 " quickfix
-autocmd MyVimrc FileType qf nnoremap <buffer><silent> q :<C-u>cclose<CR>
-
+autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
 autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " neobundle {{{
-" Skip initialization for vim-tiny or vim-small
-if !1 | finish | endif
-
-" install neobundle (https://github.com/rhysd/dotfiles/blob/master/vimrc#L758-L768)
+" install neobundle
 if !isdirectory(expand('~/.vim/bundle'))
   echon "Installing neobundle.vim..."
   silent call mkdir(expand('~/.vim/bundle'), 'p')
   silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
-  echo "done."
   if v:shell_error
     echoerr "neobundle.vim installation has failed!"
     finish
+  elseif
+    echo "done."
   endif
 endif
 
@@ -244,74 +235,73 @@ NeoBundle 'Shougo/vimproc.vim', {
       \   }
       \ }
 
-" tools
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
+
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
+
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 't9md/vim-foldtext'
 NeoBundle 't9md/vim-textmanip'
 NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
+
 NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'Shougo/vimfiler'
 NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
 NeoBundleLazy 'koron/nyancat-vim'
+NeoBundleLazy 'mattn/emmet-vim'
 NeoBundleLazy 'osyo-manga/vim-over'
+
+if has('lua')
+  NeoBundleLazy 'Shougo/neocomplete.vim'
+  NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
+endif
+
 if executable('clang')
+  NeoBundleLazy 'osyo-manga/vim-marching'
   NeoBundleLazy 'rhysd/vim-clang-format'
 endif
-if has('python3')
+
+if has('python') || has('python3')
   NeoBundleLazy 'Shougo/vinarise.vim'
 endif
 
-" unite
-NeoBundleLazy 'Shougo/unite.vim', {'depends': 'Shougo/vimproc.vim'}
-NeoBundleLazy 'Shougo/neomru.vim', {'depends': 'Shougo/unite.vim'}
-NeoBundleLazy 'rhysd/unite-codic.vim', {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
-NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
-
-" quickrun
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
-
-" completetion
-NeoBundleLazy 'mattn/emmet-vim'
-if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
-  NeoBundleLazy 'Shougo/neocomplete.vim'
-  NeoBundleLazy "Shougo/neosnippet.vim", {'depends': 'Shougo/neocomplete.vim'}
-  NeoBundleLazy 'mattn/jscomplete-vim'
-endif
-if executable('clang')
-  NeoBundleLazy 'osyo-manga/vim-marching', {'depends': ['Shougo/vimproc.vim']}
-endif
-
-" Operator
+" operator
 NeoBundle 'kana/vim-operator-user'
 
 " colorscheme
 NeoBundle 'Tosainu/last256'
-NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'w0ng/vim-hybrid'
+
+" unite
+NeoBundleLazy 'Shougo/unite.vim'
+NeoBundleLazy 'Shougo/neomru.vim',        {'depends': 'Shougo/unite.vim'}
+NeoBundleLazy 'rhysd/unite-codic.vim',    {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
+NeoBundleLazy 'ujihisa/unite-colorscheme',{'depends': 'Shougo/unite.vim'}
 
 " languages
-NeoBundleLazy 'vim-jp/cpp-vim'
-NeoBundleLazy 'vim-ruby/vim-ruby'
-NeoBundleLazy 'dag/vim2hs'
-NeoBundleLazy 'ap/vim-css-color'
-NeoBundleLazy 'hail2u/vim-css3-syntax'
-NeoBundleLazy 'othree/html5.vim'
-NeoBundleLazy 'JavaScript-syntax'
-NeoBundleLazy 'pangloss/vim-javascript'
-NeoBundleLazy 'slim-template/vim-slim'
-NeoBundleLazy 'sudar/vim-arduino-syntax'
-NeoBundleLazy 'nginx.vim'
+NeoBundleLazy 'sudar/vim-arduino-syntax', {'autoload': {'filetypes': 'arduino'}}
+NeoBundleLazy 'vim-jp/cpp-vim',           {'autoload': {'filetypes': 'cpp'}}
+NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
+NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
+NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
+NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filetypes': 'slim'}}
+NeoBundleLazy 'nginx.vim',                {'autoload': {'filetypes': 'nginx'}}
+NeoBundleLazy 'ap/vim-css-color',         {'autoload': {'filetypes': ['css', 'scss']}}
+NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'scss']}}
+NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
+NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
 
 call neobundle#end()
 
 filetype plugin indent on
+
+NeoBundleCheck
 " }}}
 
 " colorscheme {{{
@@ -337,6 +327,14 @@ endif
 
 " plugins config {{{
 
+" vim-gitgutter {{{
+if neobundle#tap('vim-gitgutter')
+  let g:gitgutter_max_signs = 1000
+
+  call neobundle#untap()
+endif
+" }}}
+
 " lightline.vim {{{
 if neobundle#tap('lightline.vim')
   let g:lightline = {
@@ -344,35 +342,35 @@ if neobundle#tap('lightline.vim')
         \   'active': {
         \     'left': [
         \       ['mode'],
-        \       ['readonly', 'filename', 'modified']
+        \       ['readonly', 'filename', 'modified'],
         \     ],
         \     'right': [
         \       ['percent'],
         \       ['fileformat', 'fileencoding', 'filetype'],
-        \       ['gitgutter', 'fugitive']
+        \       ['gitgutter', 'fugitive'],
         \     ]
         \   },
         \   'component_function': {
-        \     'readonly': 'MyReadonly',
-        \     'modified': 'MyModified',
-        \     'fugitive': 'MyFugitive',
-        \     'gitgutter': 'MyGitGutter'
+        \     'readonly':   'LightlineReadonly',
+        \     'modified':   'LightlineModified',
+        \     'fugitive':   'LightlineFugitive',
+        \     'gitgutter':  'LightlineGitGutter',
         \   }
         \ }
 
-  function! MyModified()
+  function! LightlineModified()
     return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
   endfunction
 
-  function! MyReadonly()
+  function! LightlineReadonly()
     return &ft !~? 'help\|vimfiler' && &ro ? 'RO' : ''
   endfunction
 
-  function! MyFugitive()
+  function! LightlineFugitive()
     return exists('*fugitive#head') ? fugitive#head() : ''
   endfunction
 
-  function! MyGitGutter()
+  function! LightlineGitGutter()
     if !exists('*GitGutterGetHunkSummary')
           \ || !get(g:, 'gitgutter_enabled', 0)
           \ || winwidth('.') <= 90
@@ -397,15 +395,78 @@ if neobundle#tap('lightline.vim')
 endif
 " }}}
 
-" vim-gitgutter {{{
-if neobundle#tap('vim-gitgutter')
-  let g:gitgutter_sign_added = '+'
-  let g:gitgutter_sign_modified = '~'
-  let g:gitgutter_sign_removed = '-'
+" vim-quickrun {{{
+if neobundle#tap('vim-quickrun')
+  let g:quickrun_no_default_key_mappings = 1
 
-  let g:gitgutter_max_signs = 1000
+  let g:quickrun_config = get(g:, 'quickrun_config', {})
+  let g:quickrun_config._ = {
+        \   'outputter/buffer/split': ':botright',
+        \   'outputter/buffer/into':  1,
+        \   'outputter/buffer/close_on_empty': 1,
+        \   'outputter/error': 'quickfix',
+        \   'outputter/error/success': 'buffer',
+        \   'outputter': 'error',
+        \   'runner': 'vimproc',
+        \ }
+
+  let g:quickrun_config.cpp = {
+        \   'command':    'clang++',
+        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
+        \ }
+
+  let g:quickrun_config.markdown = {
+        \   'outputter':  'null',
+        \ }
+
+  " vim-watchdogs
+  let g:quickrun_config['watchdogs_checker/clang++'] = {
+        \   'command':    'clang++',
+        \   'exec':       '%c %o -std=c++1y -fsyntax-only %s:p',
+        \ }
+  let g:quickrun_config['cpp/watchdogs_checker'] = {
+        \   'type':       'watchdogs_checker/clang++',
+        \ }
+
+  if executable('sass')
+    let g:quickrun_config['watchdogs_checker/sass'] = {
+          \   'command':      'sass',
+          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
+          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
+          \ }
+    let g:quickrun_config['sass/watchdogs_checker'] = {
+          \   'type':         'watchdogs_checker/sass',
+          \ }
+
+    let g:quickrun_config['watchdogs_checker/scss'] = {
+          \   'command':      'sass',
+          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
+          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
+          \ }
+    let g:quickrun_config['scss/watchdogs_checker'] = {
+          \   'type':         'watchdogs_checker/scss',
+          \ }
+  endif
+
+  nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
+  nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
   call neobundle#untap()
+endif
+" }}}
+
+" vim-watchdogs {{{
+if neobundle#tap('vim-watchdogs')
+  let g:watchdogs_check_BufWritePost_enables = {
+        \   'c':          1,
+        \   'javascript': 1,
+        \   'lua':        1,
+        \   'ruby':       1,
+        \   'sass':       1,
+        \   'scss':       1,
+        \ }
+
+  call watchdogs#setup(g:quickrun_config)
 endif
 " }}}
 
@@ -497,6 +558,20 @@ if neobundle#tap('nyancat-vim')
 endif
 " }}}
 
+" emmet-vim {{{
+if neobundle#tap('emmet-vim')
+  call neobundle#config({
+        \   'autoload': {'filetypes': ['html', 'eruby', 'css', 'scss', 'slim']}
+        \ })
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:user_emmet_leader_key = '<C-e>'
+  endfunction
+
+  call neobundle#untap()
+endif
+" }}}
+
 " vim-over {{{
 if neobundle#tap('vim-over')
   call neobundle#config({
@@ -507,11 +582,87 @@ if neobundle#tap('vim-over')
 endif
 " }}}
 
-" vinarise.vim {{{
-if neobundle#tap('vinarise.vim')
+" neocomplete.vim {{{
+if neobundle#tap('neocomplete.vim')
   call neobundle#config({
-        \   'autoload': {'commands': ['Vinarise']}
+        \   'autoload': {'insert': '1'}
         \ })
+
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_auto_delimiter = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 2
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+  " enable heavy omni completion
+  let g:neocomplete#force_overwrite_completefunc = 1
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+  " keybinds
+  inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><C-g>    neocomplete#undo_completion()
+  inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+  call neobundle#untap()
+endif
+" }}}
+
+" neosnippet.vim {{{
+if neobundle#tap('neosnippet.vim')
+  call neobundle#config({
+        \   'autoload': {
+        \     'insert' : '1',
+        \     'filename_patterns': '.*\.snip'
+        \   }
+        \ })
+
+  let g:neosnippet#disable_runtime_snippets = {
+        \   "_": 1,
+        \ }
+  let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+  " keybinds
+  imap <expr><CR> !pumvisible() ? "\<CR>" :
+        \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
+        \ neocomplete#close_popup()
+  imap <expr><TAB> !pumvisible() ?
+        \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : "\<Tab>"
+        \ : "\<C-n>"
+  smap <expr><TAB> neosnippet#jumpable() ?
+        \ "\<Plug>(neosnippet_jump)"
+        \ : "\<TAB>"
+
+  " for snippet_complete marker
+  if has('conceal')
+    set conceallevel=2 concealcursor=i
+  endif
+
+  call neobundle#untap()
+endif
+" }}}
+
+" vim-marching {{{
+if neobundle#tap('vim-marching')
+  call neobundle#config({
+        \   'autoload': {'filetypes': 'cpp'}
+        \ })
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:marching_clang_command_option = '-std=c++1y'
+
+    if neobundle#is_installed('neocomplete.vim')
+      let g:marching_enable_neocomplete = 1
+    endif
+  endfunction
 
   call neobundle#untap()
 endif
@@ -531,6 +682,16 @@ if neobundle#tap('vim-clang-format')
         \   'ColumnLimit' : 128,
         \   'Standard' : 'C++11',
         \ }
+
+  call neobundle#untap()
+endif
+" }}}
+
+" vinarise.vim {{{
+if neobundle#tap('vinarise.vim')
+  call neobundle#config({
+        \   'autoload': {'commands': ['Vinarise']}
+        \ })
 
   call neobundle#untap()
 endif
@@ -615,325 +776,8 @@ if neobundle#tap('unite-colorscheme')
 endif
 " }}}
 
-" vim-quickrun {{{
-if neobundle#tap('vim-quickrun')
-  let g:quickrun_no_default_key_mappings = 1
-
-  let g:quickrun_config = get(g:, 'quickrun_config', {})
-  let g:quickrun_config._ = {
-        \   'outputter/buffer/split': ':botright',
-        \   'outputter/buffer/into':  1,
-        \   'outputter/buffer/close_on_empty': 1,
-        \   'outputter/error': 'quickfix',
-        \   'outputter/error/success': 'buffer',
-        \   'outputter': 'error',
-        \   'runner': 'vimproc',
-        \ }
-
-  let g:quickrun_config.cpp = {
-        \   'command':    'clang++',
-        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
-        \ }
-
-  let g:quickrun_config.markdown = {
-        \   'outputter':     'null',
-        \ }
-
-  " vim-watchdogs
-  let g:quickrun_config['watchdogs_checker/clang++'] = {
-        \   'command':    'clang++',
-        \   'exec':       '%c %o -std=c++1y -fsyntax-only %s:p',
-        \ }
-  let g:quickrun_config['cpp/watchdogs_checker'] = {
-        \   'type':       'watchdogs_checker/clang++',
-        \ }
-
-  if executable('sass')
-    let g:quickrun_config['watchdogs_checker/sass'] = {
-          \   'command':      'sass',
-          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
-          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
-          \ }
-    let g:quickrun_config['sass/watchdogs_checker'] = {
-          \   'type':         'watchdogs_checker/sass',
-          \ }
-
-    let g:quickrun_config['watchdogs_checker/scss'] = {
-          \   'command':      'sass',
-          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
-          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
-          \ }
-    let g:quickrun_config['scss/watchdogs_checker'] = {
-          \   'type':         'watchdogs_checker/scss',
-          \ }
-  endif
-
-  nnoremap <silent> <Space>r  :<C-u>QuickRun<CR>
-  nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-watchdogs {{{
-if neobundle#tap('vim-watchdogs')
-  let g:watchdogs_check_BufWritePost_enables = {
-        \   'c':          1,
-        \   'javascript': 1,
-        \   'lua':        1,
-        \   'ruby':       1,
-        \   'sass':       1,
-        \   'scss':       1,
-        \ }
-
-  call watchdogs#setup(g:quickrun_config)
-endif
-" }}}
-
-" vim-quickrun-markdown-gfm {{{
-if neobundle#tap('vim-quickrun-markdown-gfm')
-  call neobundle#config({
-        \   'autoload': {
-        \     'commands': ['QuickRun'],
-        \     'mappings': ['<Plug>(quickrun)'],
-        \     'filetypes': ['markdown']
-        \   }
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" neocomplete.vim {{{
-if neobundle#tap('neocomplete.vim')
-  call neobundle#config({
-        \   'autoload': {'insert': '1'}
-        \ })
-
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_auto_delimiter = 1
-  let g:neocomplete#sources#syntax#min_keyword_length = 2
-  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-  " enable heavy omni completion
-  let g:neocomplete#force_overwrite_completefunc = 1
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
-  let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
-  " keybinds
-  inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><C-g>    neocomplete#undo_completion()
-  inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-  call neobundle#untap()
-endif
-" }}}
-
-" neosnippet.vim {{{
-if neobundle#tap('neosnippet.vim')
-  call neobundle#config({
-        \   'autoload': {
-        \     'insert' : '1',
-        \     'filename_patterns': '.*\.snip'
-        \   }
-        \ })
-
-  let g:neosnippet#disable_runtime_snippets = {
-        \   "_": 1,
-        \ }
-  let g:neosnippet#snippets_directory='~/.vim/snippets'
-
-  " keybinds
-  imap <expr><CR> !pumvisible() ? "\<CR>" :
-        \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
-        \ neocomplete#close_popup()
-  imap <expr><TAB> !pumvisible() ?
-        \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : "\<Tab>"
-        \ : "\<C-n>"
-  smap <expr><TAB> neosnippet#jumpable() ?
-        \ "\<Plug>(neosnippet_jump)"
-        \ : "\<TAB>"
-
-  " for snippet_complete marker
-  if has('conceal')
-    set conceallevel=2 concealcursor=i
-  endif
-
-  call neobundle#untap()
-endif
-" }}}
-
-" emmet-vim {{{
-if neobundle#tap('emmet-vim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': ['html', 'eruby', 'css', 'scss']}
-        \ })
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:user_emmet_leader_key = '<C-e>'
-  endfunction
-
-  call neobundle#untap()
-endif
-" }}}
-
-" jscomplete-vim {{{
-if neobundle#tap('jscomplete-vim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'javascript'}
-        \ })
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:jscomplete_use = ['dom']
-  endfunction
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-marching {{{
-if neobundle#tap('vim-marching')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'cpp'}
-        \ })
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:marching_clang_command = '/usr/bin/clang'
-    let g:marching_clang_command_option = '-std=c++1y'
-
-    if neobundle#is_installed('neocomplete.vim')
-      let g:marching_enable_neocomplete = 1
-    endif
-  endfunction
-
-  call neobundle#untap()
-endif
-" }}}
-
-" cpp-vim {{{
-if neobundle#tap('cpp-vim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'cpp'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-ruby {{{
-if neobundle#tap('vim-ruby')
-  call neobundle#config({
-        \   'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim2hs {{{
-if neobundle#tap('vim2hs')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'haskell'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-css-color {{{
-if neobundle#tap('vim-css-color')
-  call neobundle#config({
-        \   'autoload': {'filetypes': ['css', 'scss']}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-css3-syntax {{{
-if neobundle#tap('vim-css3-syntax')
-  call neobundle#config({
-        \   'autoload': {'filetypes': ['css', 'scss']}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" html5.vim {{{
-if neobundle#tap('html5.vim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': ['eruby', 'slim', 'html']}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" JavaScript-syntax {{{
-if neobundle#tap('JavaScript-syntax')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'javascript'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-javascript {{{
-if neobundle#tap('vim-javascript')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'javascript'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-slim {{{
-if neobundle#tap('vim-slim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'slim'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-arduino-syntax {{{
-if neobundle#tap('vim-arduino-syntax')
-  call neobundle#config({
-        \   'autoload': {'filename_patterns': '.*\.ino'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" nginx.vim {{{
-if neobundle#tap('nginx.vim')
-  call neobundle#config({
-        \   'autoload': {'filetypes': 'javascript'}
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
-" check plugin installation {{{
-NeoBundleCheck
 if !has('vim_starting')
   call neobundle#call_hook('on_source')
 endif
-" }}}
 
 " }}}
