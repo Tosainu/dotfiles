@@ -415,6 +415,13 @@ if neobundle#tap('vim-quickrun')
         \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ }
 
+  let g:quickrun_config.make = {
+        \   'command':    'make',
+        \   'exec':       '%c %o',
+        \   'cmdopt':     '-j',
+        \   'outputter':  'quickfix',
+        \ }
+
   let g:quickrun_config.markdown = {
         \   'outputter':  'null',
         \ }
@@ -449,6 +456,8 @@ if neobundle#tap('vim-quickrun')
   endif
 
   nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
+  nnoremap <silent> <Space>mb :<C-u>QuickRun -type make<CR>
+  nnoremap <silent> <Space>mc :<C-u>make clean<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
   call neobundle#untap()
