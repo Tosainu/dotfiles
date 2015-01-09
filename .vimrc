@@ -257,6 +257,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'Shougo/vimfiler'
+NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
 NeoBundleLazy 'koron/nyancat-vim'
 NeoBundleLazy 'osyo-manga/vim-over'
 if executable('clang')
@@ -275,7 +276,6 @@ NeoBundleLazy 'ujihisa/unite-colorscheme', {'depends': 'Shougo/unite.vim'}
 " quickrun
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
-NeoBundleLazy 'superbrothers/vim-quickrun-markdown-gfm', {'depends': ['mattn/webapi-vim', 'thinca/vim-quickrun', 'tyru/open-browser.vim']}
 
 " completetion
 NeoBundleLazy 'mattn/emmet-vim'
@@ -473,6 +473,20 @@ if neobundle#tap('vimfiler')
 endif
 " }}}
 
+" previm {{{
+if neobundle#tap('previm')
+  call neobundle#config({
+        \   'autoload': {'filetypes': 'markdown'}
+        \ })
+
+  let g:previm_enable_realtime = 1
+
+  nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
+
+  call neobundle#untap()
+endif
+" }}}
+
 " nyancat-vim {{{
 if neobundle#tap('nyancat-vim')
   call neobundle#config({
@@ -622,8 +636,7 @@ if neobundle#tap('vim-quickrun')
         \ }
 
   let g:quickrun_config.markdown = {
-        \   'type':       'markdown/gfm',
-        \   'outputter':  'browser',
+        \   'outputter':     'null',
         \ }
 
   " vim-watchdogs
