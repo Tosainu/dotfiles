@@ -537,7 +537,7 @@ if neobundle#tap('vimfiler')
   endfunction
 
   " open Vimfiler
-  nmap <silent> <Leader>vf :<C-u>VimFilerExplorer<CR>
+  nmap <silent> <Leader>vf :<C-u>VimFilerExplorer -winwidth=25<CR>
 
   call neobundle#untap()
 endif
