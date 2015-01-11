@@ -42,6 +42,8 @@ set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 set wildmenu wildignorecase wildmode=list:full
 " separator style
 set fillchars+=vert:\ 
+" launch file in tab
+set switchbuf+=usetab,newtab
 
 " add <> to matchpairs
 set matchpairs+=<:>
