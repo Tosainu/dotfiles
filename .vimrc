@@ -419,7 +419,7 @@ if neobundle#tap('vim-quickrun')
 
   let g:quickrun_config.make = {
         \   'command':    'make',
-        \   'exec':       '%c %o',
+        \   'exec':       '%c %o %a',
         \   'cmdopt':     '-j',
         \   'outputter':  'quickfix',
         \ }
@@ -459,7 +459,7 @@ if neobundle#tap('vim-quickrun')
 
   nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
   nnoremap <silent> <Space>mb :<C-u>QuickRun -type make<CR>
-  nnoremap <silent> <Space>mc :<C-u>make clean<CR>
+  nnoremap <silent> <Space>mc :<C-u>QuickRun -type make -args clean<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
   call neobundle#untap()
