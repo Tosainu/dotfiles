@@ -302,8 +302,6 @@ NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'e
 call neobundle#end()
 
 filetype plugin indent on
-
-NeoBundleCheck
 " }}}
 
 " colorscheme {{{
@@ -786,6 +784,8 @@ if neobundle#tap('unite-colorscheme')
   call neobundle#untap()
 endif
 " }}}
+
+NeoBundleCheck
 
 if !has('vim_starting')
   call neobundle#call_hook('on_source')
