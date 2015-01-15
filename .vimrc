@@ -127,7 +127,7 @@ nnoremap gk k
 nnoremap n nzvzz
 nnoremap N Nzvzz
 nnoremap * *zvzz
-nnoremap # *zvzz
+nnoremap # #zvzz
 
 " change window size
 nnoremap <S-Up>    <C-W>-
