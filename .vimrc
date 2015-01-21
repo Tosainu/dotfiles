@@ -345,6 +345,7 @@ if neobundle#tap('lightline.vim')
         \       ['readonly', 'filename', 'modified'],
         \     ],
         \     'right': [
+        \       ['lineinfo'],
         \       ['percent'],
         \       ['fileformat', 'fileencoding', 'filetype'],
         \       ['gitgutter', 'fugitive'],
