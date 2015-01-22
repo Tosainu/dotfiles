@@ -253,24 +253,16 @@ NeoBundle 'vim-jp/vimdoc-ja'
 
 NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'Shougo/vimfiler'
+NeoBundleLazy 'Shougo/vinarise.vim'
 NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
 NeoBundleLazy 'koron/nyancat-vim'
 NeoBundleLazy 'mattn/emmet-vim'
 NeoBundleLazy 'osyo-manga/vim-over'
 
-if has('lua')
-  NeoBundleLazy 'Shougo/neocomplete.vim'
-  NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
-endif
-
-if executable('clang')
-  NeoBundleLazy 'osyo-manga/vim-marching'
-  NeoBundleLazy 'rhysd/vim-clang-format'
-endif
-
-if has('python') || has('python3')
-  NeoBundleLazy 'Shougo/vinarise.vim'
-endif
+NeoBundleLazy 'Shougo/neocomplete.vim'
+NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
+NeoBundleLazy 'osyo-manga/vim-marching'
+NeoBundleLazy 'rhysd/vim-clang-format'
 
 " operator
 NeoBundle 'kana/vim-operator-user'
@@ -518,6 +510,17 @@ if neobundle#tap('vimfiler')
 endif
 " }}}
 
+" vinarise.vim {{{
+if neobundle#tap('vinarise.vim')
+  call neobundle#config({
+        \   'autoload': {'commands': ['Vinarise']},
+        \   'disabled': !has('python') && !has('python3'),
+        \ })
+
+  call neobundle#untap()
+endif
+" }}}
+
 " previm {{{
 if neobundle#tap('previm')
   call neobundle#config({
@@ -569,7 +572,8 @@ endif
 " neocomplete.vim {{{
 if neobundle#tap('neocomplete.vim')
   call neobundle#config({
-        \   'autoload': {'insert': '1'}
+        \   'autoload': {'insert': '1'},
+        \   'disabled': !has('lua'),
         \ })
 
   let g:neocomplete#enable_at_startup = 1
@@ -637,7 +641,8 @@ endif
 " vim-marching {{{
 if neobundle#tap('vim-marching')
   call neobundle#config({
-        \   'autoload': {'filetypes': 'cpp'}
+        \   'autoload': {'filetypes': 'cpp'},
+        \   'disable':  !executable('clang'),
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
@@ -658,7 +663,8 @@ if neobundle#tap('vim-clang-format')
         \   'autoload': {
         \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
         \     'filetypes': ['c', 'cpp']
-        \   }
+        \   },
+        \   'disable':  !executable('clang'),
         \ })
 
   let g:clang_format#style_options = {
@@ -666,16 +672,6 @@ if neobundle#tap('vim-clang-format')
         \   'ColumnLimit' : 128,
         \   'Standard' : 'C++11',
         \ }
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vinarise.vim {{{
-if neobundle#tap('vinarise.vim')
-  call neobundle#config({
-        \   'autoload': {'commands': ['Vinarise']}
-        \ })
 
   call neobundle#untap()
 endif
