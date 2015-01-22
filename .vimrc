@@ -597,6 +597,7 @@ if neobundle#tap('neocomplete.vim')
     let g:neocomplete#force_omni_input_patterns = {}
   endif
   let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+  let g:neocomplete#force_omni_input_patterns.ruby= '[^. *\t]\.\w*\|\h\w*::'
 
   " keybinds
   inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
@@ -755,6 +756,15 @@ if neobundle#tap('unite-colorscheme')
   call neobundle#config({
         \   'autoload': {'unite_sources': ['colorscheme']}
         \ })
+
+  call neobundle#untap()
+endif
+
+" vim-ruby {{{
+if neobundle#tap('vim-ruby')
+  let g:rubycomplete_buffer_loading     = 1
+  let g:rubycomplete_classes_in_global  = 1
+  let g:rubycomplete_use_bundler        = 1
 
   call neobundle#untap()
 endif
