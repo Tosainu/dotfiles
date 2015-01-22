@@ -299,34 +299,6 @@ NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'sc
 NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
 NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
 
-call neobundle#end()
-
-filetype plugin indent on
-" }}}
-
-" colorscheme {{{
-syntax enable
-if !has('gui_running')
-  if $TERM =~# '^xterm'
-    " color mode
-    set t_Co=256
-
-    try
-      colorscheme last256
-    catch
-      colorscheme slate
-    endtry
-
-    " transparent background
-    highlight Normal ctermbg=none
-  else
-    colorscheme default
-  endif
-endif
-" }}}
-
-" plugins config {{{
-
 " vim-gitgutter {{{
 if neobundle#tap('vim-gitgutter')
   let g:gitgutter_max_signs = 1000
@@ -467,16 +439,18 @@ endif
 
 " vim-watchdogs {{{
 if neobundle#tap('vim-watchdogs')
-  let g:watchdogs_check_BufWritePost_enables = {
-        \   'c':          1,
-        \   'javascript': 1,
-        \   'lua':        1,
-        \   'ruby':       1,
-        \   'sass':       1,
-        \   'scss':       1,
-        \ }
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:watchdogs_check_BufWritePost_enables = {
+          \   'c':          1,
+          \   'javascript': 1,
+          \   'lua':        1,
+          \   'ruby':       1,
+          \   'sass':       1,
+          \   'scss':       1,
+          \ }
 
-  call watchdogs#setup(g:quickrun_config)
+    call watchdogs#setup(g:quickrun_config)
+  endfunction
 endif
 " }}}
 
@@ -786,10 +760,34 @@ if neobundle#tap('unite-colorscheme')
 endif
 " }}}
 
+call neobundle#end()
+filetype plugin indent on
+
 NeoBundleCheck
 
 if !has('vim_starting')
   call neobundle#call_hook('on_source')
 endif
 
+" }}}
+
+" colorscheme {{{
+syntax enable
+if !has('gui_running')
+  if $TERM =~# '^xterm'
+    " color mode
+    set t_Co=256
+
+    try
+      colorscheme last256
+    catch
+      colorscheme slate
+    endtry
+
+    " transparent background
+    highlight Normal ctermbg=none
+  else
+    colorscheme default
+  endif
+endif
 " }}}
