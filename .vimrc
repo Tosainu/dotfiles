@@ -117,11 +117,11 @@ vnoremap <Down>  <Nop>
 vnoremap <Left>  <Nop>
 vnoremap <Right> <Nop>
 
-" swap j/k gj/gk
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
+" remap j/k
+nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+xnoremap <expr> j (v:count == 0 && mode() !=# 'V') ? 'gj' : 'j'
+nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+xnoremap <expr> k (v:count == 0 && mode() !=# 'V') ? 'gk' : 'k'
 
 " keep the middle of the screen when searching
 nnoremap n nzvzz
