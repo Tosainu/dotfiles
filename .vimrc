@@ -552,7 +552,11 @@ if neobundle#tap('emmet-vim')
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:user_emmet_leader_key = '<C-e>'
+    let g:user_emmet_settings = {
+          \   'indentation' : '  '
+          \ }
+
+    imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
   endfunction
 
   call neobundle#untap()
