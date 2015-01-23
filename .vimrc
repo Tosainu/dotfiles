@@ -602,14 +602,10 @@ if neobundle#tap('neocomplete.vim')
   if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
   endif
-  let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-  let g:neocomplete#force_omni_input_patterns.ruby= '[^. *\t]\.\w*\|\h\w*::'
-
-  " keybinds
-  inoremap <expr><BS>     neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><C-g>    neocomplete#undo_completion()
-  inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  let g:neocomplete#force_omni_input_patterns.cpp =
+        \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+  let g:neocomplete#force_omni_input_patterns.ruby =
+        \ '[^. *\t]\.\w*\|\h\w*::'
 
   call neobundle#untap()
 endif
@@ -620,7 +616,7 @@ if neobundle#tap('neosnippet.vim')
   call neobundle#config({
         \   'autoload': {
         \     'insert' : '1',
-        \     'filename_patterns': '.*\.snip'
+        \     'filetypes': 'neosnippet'
         \   }
         \ })
 
@@ -629,16 +625,21 @@ if neobundle#tap('neosnippet.vim')
         \ }
   let g:neosnippet#snippets_directory='~/.vim/snippets'
 
-  " keybinds
-  imap <expr><CR> !pumvisible() ? "\<CR>" :
+  " neocomplete and neosnippet keybinds
+  imap <expr> <CR> !pumvisible() ? "\<CR>" :
         \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
         \ neocomplete#close_popup()
-  imap <expr><TAB> !pumvisible() ?
-        \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : "\<Tab>"
-        \ : "\<C-n>"
-  smap <expr><TAB> neosnippet#jumpable() ?
+  imap <expr> <TAB> pumvisible() ? "\<C-n>" :
+        \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" :
+        \ "\<Tab>"
+  smap <expr> <TAB> neosnippet#jumpable() ?
         \ "\<Plug>(neosnippet_jump)"
         \ : "\<TAB>"
+
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  inoremap <expr> <C-h>   neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr> <BS>    neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr> <C-e>   neocomplete#cancel_popup()
 
   " for snippet_complete marker
   if has('conceal')
