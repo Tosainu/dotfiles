@@ -186,7 +186,6 @@ alias grep='grep --color -I'
 alias vi='vim'
 alias sl='ruby ~/.local/bin/sl/sl.rb'
 alias gl='cd $(ghq list -p | peco)'
-alias webrick="ruby -rwebrick -e 'WEBrick::HTTPServer.new({:DocumentRoot => \"./\", :Port => 3000}).start'"
 
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
