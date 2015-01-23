@@ -228,68 +228,74 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" require
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc.vim', {
-      \   'build': {
-      \     'unix': 'make -f make_unix.mak',
-      \     'mac' : 'make -f make_mac.mak'
-      \   }
-      \ }
+if neobundle#has_fresh_cache(expand('~/.vimrc'))
+  NeoBundleLoadCache
+else
+  " require
+  NeoBundleFetch 'Shougo/neobundle.vim'
+  NeoBundle 'Shougo/vimproc.vim', {
+        \   'build': {
+        \     'unix': 'make -f make_unix.mak',
+        \     'mac' : 'make -f make_mac.mak'
+        \   }
+        \ }
 
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'itchyny/lightline.vim'
+  NeoBundle 'airblade/vim-gitgutter'
+  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'itchyny/lightline.vim'
 
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
+  NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 
-NeoBundle 'jceb/vim-hier'
-NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 't9md/vim-textmanip'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'vim-jp/vimdoc-ja'
+  NeoBundle 'jceb/vim-hier'
+  NeoBundle 'rhysd/clever-f.vim'
+  NeoBundle 't9md/vim-textmanip'
+  NeoBundle 'tomtom/tcomment_vim'
+  NeoBundle 'tpope/vim-surround'
+  NeoBundle 'vim-jp/vimdoc-ja'
 
-NeoBundleLazy 'AndrewRadev/switch.vim'
-NeoBundleLazy 'Shougo/vimfiler'
-NeoBundleLazy 'Shougo/vinarise.vim'
-NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
-NeoBundleLazy 'koron/nyancat-vim'
-NeoBundleLazy 'mattn/emmet-vim'
-NeoBundleLazy 'osyo-manga/vim-over'
+  NeoBundleLazy 'AndrewRadev/switch.vim'
+  NeoBundleLazy 'Shougo/vimfiler'
+  NeoBundleLazy 'Shougo/vinarise.vim'
+  NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
+  NeoBundleLazy 'koron/nyancat-vim'
+  NeoBundleLazy 'mattn/emmet-vim'
+  NeoBundleLazy 'osyo-manga/vim-over'
 
-NeoBundleLazy 'Shougo/neocomplete.vim'
-NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
-NeoBundleLazy 'osyo-manga/vim-marching'
-NeoBundleLazy 'rhysd/vim-clang-format'
+  NeoBundleLazy 'Shougo/neocomplete.vim'
+  NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
+  NeoBundleLazy 'osyo-manga/vim-marching'
+  NeoBundleLazy 'rhysd/vim-clang-format'
 
-" operator
-NeoBundle 'kana/vim-operator-user'
+  " operator
+  NeoBundle 'kana/vim-operator-user'
 
-" colorscheme
-NeoBundle 'Tosainu/last256'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-NeoBundle 'w0ng/vim-hybrid'
+  " colorscheme
+  NeoBundle 'Tosainu/last256'
+  NeoBundle 'chriskempson/vim-tomorrow-theme'
+  NeoBundle 'w0ng/vim-hybrid'
 
-" unite
-NeoBundleLazy 'Shougo/unite.vim'
-NeoBundleLazy 'Shougo/neomru.vim',        {'depends': 'Shougo/unite.vim'}
-NeoBundleLazy 'rhysd/unite-codic.vim',    {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
-NeoBundleLazy 'ujihisa/unite-colorscheme',{'depends': 'Shougo/unite.vim'}
+  " unite
+  NeoBundleLazy 'Shougo/unite.vim'
+  NeoBundleLazy 'Shougo/neomru.vim',        {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'rhysd/unite-codic.vim',    {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
+  NeoBundleLazy 'ujihisa/unite-colorscheme',{'depends': 'Shougo/unite.vim'}
 
-" languages
-NeoBundleLazy 'sudar/vim-arduino-syntax', {'autoload': {'filetypes': 'arduino'}}
-NeoBundleLazy 'vim-jp/cpp-vim',           {'autoload': {'filetypes': 'cpp'}}
-NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
-NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
-NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
-NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filetypes': 'slim'}}
-NeoBundleLazy 'nginx.vim',                {'autoload': {'filetypes': 'nginx'}}
-NeoBundleLazy 'ap/vim-css-color',         {'autoload': {'filetypes': ['css', 'scss']}}
-NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'scss']}}
-NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
-NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
+  " languages
+  NeoBundleLazy 'sudar/vim-arduino-syntax', {'autoload': {'filetypes': 'arduino'}}
+  NeoBundleLazy 'vim-jp/cpp-vim',           {'autoload': {'filetypes': 'cpp'}}
+  NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
+  NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
+  NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
+  NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filetypes': 'slim'}}
+  NeoBundleLazy 'nginx.vim',                {'autoload': {'filetypes': 'nginx'}}
+  NeoBundleLazy 'ap/vim-css-color',         {'autoload': {'filetypes': ['css', 'scss']}}
+  NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'scss']}}
+  NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
+  NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
+
+  NeoBundleSaveCache
+endif
 
 " vim-gitgutter {{{
 if neobundle#tap('vim-gitgutter')
