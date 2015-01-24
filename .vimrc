@@ -680,9 +680,10 @@ if neobundle#tap('vim-clang-format')
         \ })
 
   let g:clang_format#style_options = {
-        \   'AccessModifierOffset' : -2,
-        \   'ColumnLimit' : 128,
-        \   'Standard' : 'C++11',
+        \   'AccessModifierOffset': -2,
+        \   'AllowShortFunctionsOnASingleLine': 'None',
+        \   'ColumnLimit':          128,
+        \   'Standard':             'Cpp11',
         \ }
 
   call neobundle#untap()
