@@ -658,7 +658,10 @@ if neobundle#tap('vim-marching')
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
-    let g:marching_clang_command_option = '-std=c++1y'
+    let g:marching_wait_time = 1.0
+    let g:marching#clang_command#options = {
+          \   'cpp':  '-std=gnu++1y',
+          \ }
 
     if neobundle#is_installed('neocomplete.vim')
       let g:marching_enable_neocomplete = 1
