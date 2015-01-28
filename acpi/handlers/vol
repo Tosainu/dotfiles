@@ -1,7 +1,0 @@
-#!/bin/sh
-step=1
-
-case $1 in
-  -) amixer set Master $step-;;
-  +) amixer set Master $step+;;
-esac
