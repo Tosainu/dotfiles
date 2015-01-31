@@ -255,7 +255,7 @@ else
   NeoBundle 'vim-jp/vimdoc-ja'
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
-  NeoBundleLazy 'Shougo/vimfiler'
+  NeoBundleLazy 'Shougo/vimfiler.vim'
   NeoBundleLazy 'Shougo/vimshell.vim'
   NeoBundleLazy 'Shougo/vinarise.vim'
   NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
@@ -487,7 +487,7 @@ endif
 " }}}
 
 " vimfiler {{{
-if neobundle#tap('vimfiler')
+if neobundle#tap('vimfiler.vim')
   call neobundle#config({
         \   'depends': 'Shougo/unite.vim',
         \   'autoload': {
