@@ -256,6 +256,7 @@ else
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
   NeoBundleLazy 'Shougo/vimfiler'
+  NeoBundleLazy 'Shougo/vimshell.vim'
   NeoBundleLazy 'Shougo/vinarise.vim'
   NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
   NeoBundleLazy 'koron/nyancat-vim'
@@ -516,6 +517,30 @@ if neobundle#tap('vimfiler')
 endif
 " }}}
 
+" vimshell.vim {{{
+if neobundle#tap('vimshell.vim')
+  call neobundle#config({
+        \   'autoload': {
+        \     'commands': ['VimShell', 'VimShellSendString', 'VimShellCurrentDir', 'VimShellInteractive'],
+        \   },
+        \ })
+
+  function! neobundle#tapped.hooks.on_source(bundle)
+    let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+    let g:vimshell_prompt = '> '
+
+    if filereadable(expand('~/.zsh_history'))
+      let g:vimshell_external_history_path = expand('~/.zsh_history')
+    endif
+  endfunction
+
+  " open VimShell
+  nnoremap <silent><Leader>vs :<C-u>VimShell -split-command=vsplit<CR>
+
+  call neobundle#untap()
+endif
+" }}}
+
 " vinarise.vim {{{
 if neobundle#tap('vinarise.vim')
   call neobundle#config({
@@ -591,6 +616,15 @@ if neobundle#tap('neocomplete.vim')
   let g:neocomplete#enable_auto_delimiter = 1
   let g:neocomplete#sources#syntax#min_keyword_length = 2
   let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+  let g:neocomplete#sources#vim#complete_functions = {
+        \   'Unite': 'unite#complete_source',
+        \   'VimFiler': 'vimfiler#complete',
+        \   'VimShell': 'vimshell#complete',
+        \   'VimShellExecute': 'vimshell#vimshell_execute_complete',
+        \   'VimShellInteractive': 'vimshell#vimshell_execute_complete',
+        \   'VimShellTerminal': 'vimshell#vimshell_execute_complete',
+        \ }
 
   if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
