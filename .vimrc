@@ -15,7 +15,6 @@ set fileencoding=utf=8
 set fileencodings=utf-8,cp932,euc-jp
 set fileformats=unix,dos,mac
 
-set ambiwidth=double
 " show cursorline
 set cursorline
 " show line number
