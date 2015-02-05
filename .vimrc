@@ -300,6 +300,10 @@ endif
 " vim-gitgutter {{{
 if neobundle#tap('vim-gitgutter')
   let g:gitgutter_max_signs = 1000
+  let g:gitgutter_sign_added = '✚'
+  let g:gitgutter_sign_modified = '➜'
+  let g:gitgutter_sign_modified_removed = '➜'
+  let g:gitgutter_sign_removed = '✘'
 
   call neobundle#untap()
 endif
@@ -312,33 +316,44 @@ if neobundle#tap('lightline.vim')
         \   'active': {
         \     'left': [
         \       ['mode'],
-        \       ['readonly', 'filename', 'modified'],
+        \       ['fugitive', 'readonly', 'filename', 'modified'],
         \     ],
         \     'right': [
         \       ['lineinfo'],
         \       ['percent'],
         \       ['fileformat', 'fileencoding', 'filetype'],
-        \       ['gitgutter', 'fugitive'],
+        \       ['gitgutter'],
         \     ]
         \   },
         \   'component_function': {
-        \     'readonly':   'LightlineReadonly',
-        \     'modified':   'LightlineModified',
+        \     'filename':   'LightlineFilename',
         \     'fugitive':   'LightlineFugitive',
         \     'gitgutter':  'LightlineGitGutter',
-        \   }
+        \     'modified':   'LightlineModified',
+        \     'readonly':   'LightlineReadonly',
+        \   },
+        \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
+        \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
+        \   'tabline':      {'left': [['tabs']], 'right': []},
         \ }
 
-  function! LightlineModified()
-    return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  function! LightlineReadonly()
+    return &ft !~? 'help' && &ro ? '' : ''
   endfunction
 
-  function! LightlineReadonly()
-    return &ft !~? 'help\|vimfiler' && &ro ? 'RO' : ''
+  function! LightlineFilename()
+    return  &ft == 'unite'    ? unite#get_status_string() :
+          \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \ &ft == 'vimshell' ? vimshell#get_status_string() :
+          \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
+  endfunction
+
+  function! LightlineModified()
+    return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
   endfunction
 
   function! LightlineFugitive()
-    return exists('*fugitive#head') ? fugitive#head() : ''
+    return strlen(fugitive#head()) ? "\ue0a0 " . fugitive#head() : ''
   endfunction
 
   function! LightlineGitGutter()
