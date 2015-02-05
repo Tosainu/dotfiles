@@ -158,14 +158,8 @@ function! s:cpp_config()
         \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ ]
 
-  let s:tmp = ''
-  for p in s:incpath
-    if isdirectory(p)
-      let s:tmp .= ',' .  p
-    endif
-  endfor
-
-  execute 'setlocal path+=' . s:tmp
+  execute 'setlocal path+=' . join(s:incpath, ',')
+  unlet s:incpath
 
   " expand namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
@@ -843,20 +837,16 @@ endif
 " colorscheme {{{
 syntax enable
 if !has('gui_running')
-  if $TERM =~# '^xterm'
-    " color mode
-    set t_Co=256
+  " color mode
+  set t_Co=256
 
-    try
-      colorscheme last256
-    catch
-      colorscheme slate
-    endtry
+  try
+    colorscheme last256
 
     " transparent background
     highlight Normal ctermbg=none
-  else
+  catch
     colorscheme default
-  endif
+  endtry
 endif
 " }}}
