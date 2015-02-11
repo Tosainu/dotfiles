@@ -77,6 +77,9 @@ set wrapscan
 set timeoutlen=500
 set updatetime=200
 
+" clipboard
+set clipboard& clipboard^=unnamedplus
+
 " no backup files
 set nobackup
 
