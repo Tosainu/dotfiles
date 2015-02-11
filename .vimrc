@@ -458,6 +458,8 @@ if neobundle#tap('vim-watchdogs')
 
     call watchdogs#setup(g:quickrun_config)
   endfunction
+
+  call neobundle#untap()
 endif
 " }}}
 
