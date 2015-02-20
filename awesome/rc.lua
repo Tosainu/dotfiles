@@ -1,15 +1,14 @@
--- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-awful.rules = require("awful.rules")
-require("awful.autofocus")
--- Widget and layout library
-local wibox = require("wibox")
--- Theme handling library
-local beautiful = require("beautiful")
--- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
+-- {{{ Required Libraries
+gears           = require("gears")
+awful           = require("awful")
+awful.autofocus = require("awful.autofocus")
+awful.rules     = require("awful.rules")
+beautiful       = require("beautiful")
+menubar         = require("menubar")
+naughty         = require("naughty")
+vicious         = require("vicious")
+wibox           = require("wibox")
+--- }}}
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -114,122 +113,57 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Widgets {{{
--- clock
-mytextclock = awful.widget.textclock("%a, %b %d %Y, %H:%M:%S ", 1)
-
--- battery
-function getBatteryStatus()
-  local fcapacity = io.open("/sys/class/power_supply/BAT1/capacity")
-  local fstatus = io.open("/sys/class/power_supply/BAT1/status")
-  local capacity = fcapacity:read()
-  local status = fstatus:read()
-  fcapacity:close()
-  fstatus:close()
-
-  capacity = tonumber(capacity)
-
-  if capacity > 15 and capacity <= 30 then
-    capacity = "<span color=\"#ffe100\">" .. string.format("%3d", capacity) .. "%</span>"
-  elseif capacity <= 15 then
-    capacity = "<span color=\"#ff3000\">" .. string.format("%3d", capacity) .. "%</span>"
-  else
-    capacity = string.format("%3d", capacity) .. "%"
-  end
-
-  if status == "Charging" then
-    return "<b>Bat</b> " .. capacity .. " C"
-  elseif status == "Discharging" then
-    return "<b>Bat</b> " .. capacity .. " D"
-  else
-    return "<b>Bat</b> " .. capacity .. " F"
-  end
-end
-
-battery = wibox.widget.textbox()
-battery:set_markup(getBatteryStatus())
-
--- temp
-function getCPUTemp()
-  local ftemp = io.popen("sensors -u | grep temp1_input | awk '{print $2}'")
-  local temperature = ftemp:read("*all")
-  ftemp:close()
-
-  temperature = tonumber(temperature)
-
-  if temperature >= 70 and temperature < 80 then
-    return "<b>CPU</b> <span color=\"#ffe100\">" .. string.format("%3d", temperature) .. "°C</span>"
-  elseif temperature >= 80 then
-    return "<b>CPU</b> <span color=\"#ff3000\">" .. string.format("%3d", temperature) .. "°C</span>"
-  else
-    return "<b>CPU</b> " .. string.format("%3d", temperature) .. "°C"
-  end
-end
-
-temp = wibox.widget.textbox()
-temp:set_markup(getCPUTemp())
-
--- volume
-function getVolume()
-  local fstatus = io.popen("amixer -M sget Master")
-  local status = fstatus:read("*all")
-  fstatus:close()
-
-  local volume = string.match(status, "(%d?%d?%d)%%")
-  volume = string.format("%3d", volume)
-
-  status = string.match(status, "%[(o[^%]]*)%]")
-
-  if string.find(status, "on", 1, true) then
-    return "<b>Vol</b> " .. volume .. "%"
-  else
-    return "<b>Vol</b> " .. volume .. "M"
-  end
-end
-
-volume = wibox.widget.textbox()
-volume:set_markup(getVolume())
-
--- wifi
-function getWifiStatus()
-  local fprofile = io.popen("netctl-auto current")
-  local fquality = io.popen("cat /proc/net/wireless | awk 'NR==3 {print $3}'")
-  local profile = fprofile:read()
-  local quality = fquality:read()
-  fprofile:close()
-  fquality:close()
-
-  if quality == nil then
-    quality = 0
-  end
-
-  if profile == nil then
-    profile = ""
-  end
-
-  return "<b>WLAN</b> " .. profile .. " " .. string.format("%3d", string.gsub(quality, "[.]", ""))
-end
-
-wifi = wibox.widget.textbox()
-wifi:set_markup(getWifiStatus())
-
--- refresh widgets
-widgetTimer = timer({timeout = 5})
-widgetTimer:connect_signal("timeout", function()
-  wifi:set_markup(getWifiStatus())
-  battery:set_markup(getBatteryStatus())
-  temp:set_markup(getCPUTemp())
-end)
-widgetTimer:start()
-
-volumeTimer = timer({ timeout = 0.2 })
-volumeTimer:connect_signal("timeout", function ()
-  volume:set_markup(getVolume())
-end)
-volumeTimer:start()
+-- color
+red     = "<span color='#ff3000'>"
+yellow  = "<span color='#ffe100'>"
+endspan = "</span>"
 
 -- Separator
 separator = wibox.widget.textbox()
 separator:set_markup("<span color=\"#777777\"> | </span>")
+
+-- clock
+mytextclock = awful.widget.textclock("%a, %b %d %Y, %H:%M:%S ", 1)
+
+-- battery
+battery = wibox.widget.textbox()
+vicious.register(battery, vicious.widgets.bat, function (widgets, args)
+  local capacity
+
+  if args[2] <= 15 then
+    capacity = red .. string.format("%3d", args[2]) .. "%" .. endspan
+  elseif args[2] <= 30 then
+    capacity = yellow .. string.format("%3d", args[2]) .. "%" .. endspan
+  else
+    capacity = string.format("%3d", args[2]) .. "%"
+  end
+
+  return "<b>Bat</b> " .. capacity .. " " .. args[1]
+end, 15, "BAT1")
+
+-- temp
+coretemp = wibox.widget.textbox()
+vicious.register(coretemp, vicious.widgets.thermal, function (widget, args)
+  if args[1] >= 80 then
+    return "<b>CPU</b> " .. red .. string.format("%3d", args[1]) .. "°C" .. endspan
+  elseif args[1] >= 70 then
+    return "<b>CPU</b> " .. yellow .. string.format("%3d", args[1]) .. "°C" .. endspan
+  else
+    return "<b>CPU</b> " .. string.format("%3d", args[1]) .. "°C"
+  end
+end, 5, "thermal_zone0")
+
+-- memory
+memwidget = wibox.widget.textbox()
+vicious.register(memwidget, vicious.widgets.mem, "<b>RAM</b> $1%", 15)
+
+-- wifi
+wifi = wibox.widget.textbox()
+vicious.register(wifi, vicious.widgets.wifi, "<b>WLAN</b> ${ssid} ${linp}%", 5, "wlp2s0")
+
+-- volume
+volume = wibox.widget.textbox()
+vicious.register(volume, vicious.widgets.volume, "<b>Vol</b> $1% $2", 0.2, "Master")
 -- }}}
 
 -- {{{ Wibox
@@ -315,7 +249,9 @@ for s = 1, screen.count() do
   right_layout:add(separator)
   right_layout:add(wifi)
   right_layout:add(separator)
-  right_layout:add(temp)
+  right_layout:add(coretemp)
+  right_layout:add(separator)
+  right_layout:add(memwidget)
   right_layout:add(separator)
   right_layout:add(battery)
   right_layout:add(separator)
