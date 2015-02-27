@@ -78,7 +78,12 @@ set timeoutlen=500
 set updatetime=200
 
 " clipboard
-set clipboard& clipboard^=unnamedplus
+set clipboard&
+if has('mac')
+  set clipboard^=unnamed
+else
+  set clipboard^=unnamedplus
+endif
 
 " no backup files
 set nobackup
