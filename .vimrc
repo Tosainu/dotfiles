@@ -285,7 +285,7 @@ else
 
   " languages
   NeoBundleLazy 'sudar/vim-arduino-syntax', {'autoload': {'filetypes': 'arduino'}}
-  NeoBundleLazy 'vim-jp/cpp-vim',           {'autoload': {'filetypes': 'cpp'}}
+  NeoBundleLazy 'vim-jp/vim-cpp',           {'autoload': {'filetypes': 'cpp'}}
   NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
   NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
   NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
