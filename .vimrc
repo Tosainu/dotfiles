@@ -59,7 +59,7 @@ set foldlevel=99
 set nofoldenable
 
 " indent
-set autoindent cindent
+set smartindent autoindent
 " use <SPACE> instead of <TAB>
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
@@ -155,7 +155,8 @@ endif
 " C++
 autocmd MyVimrc FileType cpp call s:cpp_config()
 function! s:cpp_config()
-  setlocal cinoptions& cinoptions+=g0,m1
+  setlocal cindent
+  setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws
 
   " include path
   let s:incpath = [
