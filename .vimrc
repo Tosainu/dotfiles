@@ -172,7 +172,7 @@ function! s:cpp_config()
   " expand namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
   function! s:expand_namespace()
-    let s = getline('.')[0:col('.')-1]
+    let s = getline('.')[0:col('.') - 2]
     if s =~# '\<b;$'
       return "\<BS>oost::"
     elseif s =~# '\<s;$'
