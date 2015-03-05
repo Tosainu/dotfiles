@@ -159,7 +159,7 @@ function! s:cpp_config()
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws
 
   " include path
-  let s:incpath = [
+  let incpath = [
         \   '/usr/include/boost',
         \   '/usr/include/c++/v1',
         \   '/usr/include/qt/QtCore',
@@ -167,8 +167,7 @@ function! s:cpp_config()
         \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ ]
 
-  execute 'setlocal path+=' . join(s:incpath, ',')
-  unlet s:incpath
+  execute 'setlocal path+=' . join(incpath, ',')
 
   " expand namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
@@ -547,10 +546,6 @@ if neobundle#tap('vimshell.vim')
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
     let g:vimshell_prompt = '> '
-
-    if filereadable(expand('~/.zsh_history'))
-      let g:vimshell_external_history_path = expand('~/.zsh_history')
-    endif
   endfunction
 
   " open VimShell
