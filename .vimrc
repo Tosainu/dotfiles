@@ -130,20 +130,11 @@ xnoremap <expr> j (v:count == 0 && mode() !=# 'V') ? 'gj' : 'j'
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 xnoremap <expr> k (v:count == 0 && mode() !=# 'V') ? 'gk' : 'k'
 
-" keep the middle of the screen when searching
-nnoremap n nzvzz
-nnoremap N Nzvzz
-nnoremap * *zvzz
-nnoremap # #zvzz
-
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
 nnoremap <S-Left>  <C-W><
 nnoremap <S-Right> <C-W>>
-
-" redraw screen and remove highlighting
-nnoremap <silent> <C-L> :<C-u>nohlsearch<CR><C-L>
 
 " fcitx
 if executable('fcitx-remote')
@@ -248,6 +239,7 @@ else
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 
+  NeoBundle 'haya14busa/incsearch.vim'
   NeoBundle 'jceb/vim-hier'
   NeoBundle 'rhysd/clever-f.vim'
   NeoBundle 't9md/vim-textmanip'
@@ -468,6 +460,22 @@ if neobundle#tap('vim-watchdogs')
   endfunction
 
   call neobundle#untap()
+endif
+" }}}
+
+" incsearch.vim {{{
+if neobundle#tap('incsearch.vim')
+  let g:incsearch#auto_nohlsearch = 1
+
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+
+  map n  <Plug>(incsearch-nohl-n)
+  map N  <Plug>(incsearch-nohl-N)
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
 endif
 " }}}
 
