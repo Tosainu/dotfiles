@@ -102,6 +102,7 @@ mymainmenu = awful.menu({ items = {
   { "awesome",  myawesomemenu, beautiful.awesome_icon },
   { "terminal", terminal },
   { "logout",   awesome.quit },
+  { "suspend",  "systemctl suspend" },
   { "reboot",   "systemctl reboot" },
   { "halt",     "systemctl poweroff" } }
 })
