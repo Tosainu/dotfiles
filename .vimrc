@@ -734,6 +734,7 @@ if neobundle#tap('vim-clang-format')
         \   'AccessModifierOffset': -2,
         \   'AllowShortFunctionsOnASingleLine': 'None',
         \   'ColumnLimit':          128,
+        \   'SpacesBeforeTrailingComments': 1,
         \   'Standard':             'Cpp11',
         \ }
 
