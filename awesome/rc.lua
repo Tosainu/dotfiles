@@ -131,11 +131,11 @@ vicious.register(battery, vicious.widgets.bat, function (widgets, args)
   local capacity
 
   if args[2] <= 15 then
-    capacity = red .. string.format("%3d", args[2]) .. "%" .. endspan
+    capacity = red .. string.format("%2d", args[2]) .. "%" .. endspan
   elseif args[2] <= 30 then
-    capacity = yellow .. string.format("%3d", args[2]) .. "%" .. endspan
+    capacity = yellow .. string.format("%2d", args[2]) .. "%" .. endspan
   else
-    capacity = string.format("%3d", args[2]) .. "%"
+    capacity = string.format("%2d", args[2]) .. "%"
   end
 
   return "<b>Bat</b> " .. capacity .. " " .. args[1]
@@ -145,11 +145,11 @@ end, 15, "BAT1")
 coretemp = wibox.widget.textbox()
 vicious.register(coretemp, vicious.widgets.thermal, function (widget, args)
   if args[1] >= 80 then
-    return "<b>CPU</b> " .. red .. string.format("%3d", args[1]) .. "°C" .. endspan
+    return "<b>CPU</b> " .. red .. string.format("%2d", args[1]) .. "°C" .. endspan
   elseif args[1] >= 70 then
-    return "<b>CPU</b> " .. yellow .. string.format("%3d", args[1]) .. "°C" .. endspan
+    return "<b>CPU</b> " .. yellow .. string.format("%2d", args[1]) .. "°C" .. endspan
   else
-    return "<b>CPU</b> " .. string.format("%3d", args[1]) .. "°C"
+    return "<b>CPU</b> " .. string.format("%2d", args[1]) .. "°C"
   end
 end, 5, "thermal_zone0")
 
