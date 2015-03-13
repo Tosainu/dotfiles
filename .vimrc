@@ -281,10 +281,10 @@ else
   NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
   NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
   NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
-  NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filetypes': 'slim'}}
   NeoBundleLazy 'nginx.vim',                {'autoload': {'filetypes': 'nginx'}}
   NeoBundleLazy 'ap/vim-css-color',         {'autoload': {'filetypes': ['css', 'scss']}}
   NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'scss']}}
+  NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filename_patterns': '\.slim$'}}
   NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
   NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
 
