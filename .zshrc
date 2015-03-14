@@ -17,7 +17,15 @@ export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
 
+# nvm
+[ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh
+
+# rvm
+[ -s ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+
 path=(
+  /usr/local/bin(N-/)
+  /usr/local/sbin(N-/)
   ~/.local/bin(N-/)
   ~/.cabal/bin(N-/)
   ~/.go/bin(N-/)
@@ -30,10 +38,6 @@ fpath=(
   ~/.go/src/github.com/motemen/ghq/zsh(N-/)
   $fpath
 )
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 # golang
 export GOPATH=~/.go
