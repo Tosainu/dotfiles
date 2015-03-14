@@ -456,6 +456,8 @@ if neobundle#tap('vim-watchdogs')
           \   'scss':       1,
           \ }
 
+    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
+
     call watchdogs#setup(g:quickrun_config)
   endfunction
 
