@@ -392,7 +392,7 @@ if neobundle#tap('vim-quickrun')
 
   let g:quickrun_config.cpp = {
         \   'command':    'clang++',
-        \   'cmdopt':     '-std=c++1y -Wall -Wextra -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
+        \   'cmdopt':     '-Wall -Wextra -std=c++1y -stdlib=libc++ -lc++abi -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ }
 
   let g:quickrun_config.make = {
@@ -409,7 +409,7 @@ if neobundle#tap('vim-quickrun')
   " vim-watchdogs
   let g:quickrun_config['watchdogs_checker/clang++'] = {
         \   'command':    'clang++',
-        \   'exec':       '%c %o -std=c++1y -fsyntax-only %s:p',
+        \   'exec':       '%c %o -Wall -Wextra -std=c++1y -stdlib=libc++ -fsyntax-only %s:p',
         \ }
   let g:quickrun_config['cpp/watchdogs_checker'] = {
         \   'type':       'watchdogs_checker/clang++',
@@ -718,7 +718,7 @@ if neobundle#tap('vim-marching')
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:marching_wait_time = 1.0
     let g:marching#clang_command#options = {
-          \   'cpp':  '-std=gnu++1y',
+          \   'cpp':  '-std=gnu++1y -stdlib=libc++',
           \ }
 
     if neobundle#is_installed('neocomplete.vim')
