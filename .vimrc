@@ -263,6 +263,7 @@ else
 
   " operator
   NeoBundle 'kana/vim-operator-user'
+  NeoBundle 'kana/vim-operator-replace'
 
   " colorscheme
   NeoBundle 'Tosainu/last256'
@@ -753,6 +754,11 @@ if neobundle#tap('vim-clang-format')
   call neobundle#untap()
 endif
 " }}}
+
+" vim-operator-replace
+if neobundle#tap('vim-operator-replace')
+  nmap R  <Plug>(operator-replace)
+endif
 
 " unite.vim {{{
 if neobundle#tap('unite.vim')
