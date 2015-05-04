@@ -220,9 +220,7 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-if neobundle#has_fresh_cache(expand('~/.vimrc'))
-  NeoBundleLoadCache
-else
+if neobundle#load_cache()
   " require
   NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'Shougo/vimproc.vim', {
