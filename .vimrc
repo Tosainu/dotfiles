@@ -135,11 +135,6 @@ nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
 nnoremap <S-Left>  <C-W><
 nnoremap <S-Right> <C-W>>
-
-" fcitx
-if executable('fcitx-remote')
-  autocmd MyVimrc InsertLeave * call vimproc#system('fcitx-remote -c')
-endif
 " }}}
 
 " filetypes {{{
@@ -153,8 +148,6 @@ function! s:cpp_config()
   let incpath = [
         \   '/usr/include/boost',
         \   '/usr/include/c++/v1',
-        \   '/usr/include/qt/QtCore',
-        \   '/usr/include/qt/QtWidgets',
         \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ ]
 
@@ -835,6 +828,7 @@ if neobundle#tap('unite-colorscheme')
 
   call neobundle#untap()
 endif
+" }}}
 
 " vim-ruby {{{
 if neobundle#tap('vim-ruby')
@@ -854,7 +848,6 @@ NeoBundleCheck
 if !has('vim_starting')
   call neobundle#call_hook('on_source')
 endif
-
 " }}}
 
 " colorscheme {{{
