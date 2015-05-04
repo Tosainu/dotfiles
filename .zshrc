@@ -233,9 +233,11 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias vi='vim'
 alias sl='ruby ~/.ghq/github.com/pocke/sl_tweet/sl.rb'
 alias gl='cd $(ghq list -p | peco)'
+alias tweet='t update'
 
 alias -g N='> /dev/null 2>&1'
 
+alias -s jar='java -jar'
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
 alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
