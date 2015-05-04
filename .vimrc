@@ -230,6 +230,7 @@ if neobundle#load_cache()
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 
+  NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'haya14busa/incsearch.vim'
   NeoBundle 'jceb/vim-hier'
   NeoBundle 'rhysd/clever-f.vim'
