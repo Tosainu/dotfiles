@@ -187,6 +187,21 @@ function! s:markdown_config()
         \ ]
 endfunction
 
+" binary files
+autocmd MyVimrc BufReadPost * if &binary | call s:binary_config() | endif
+function! s:binary_config()
+  if neobundle#is_installed('vinarise.vim')
+    Vinarise
+  else
+    silent %!xxd -g 1
+    setlocal ft=xxd
+
+    autocmd MyVimrc BufWritePre * %!xxd -r
+    autocmd MyVimrc BufWritePost * silent %!xxd -g 1
+    autocmd MyVimrc BufWritePost * setlocal nomodified
+  endif
+endfunction
+
 " quickfix
 autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
@@ -563,7 +578,7 @@ endif
 " vinarise.vim {{{
 if neobundle#tap('vinarise.vim')
   call neobundle#config({
-        \   'autoload': {'commands': ['Vinarise']},
+        \   'autoload': {'commands': ['Vinarise', 'VinarisePluginDump', 'VinarisePluginViewBitmapView']},
         \   'disabled': !has('python') && !has('python3'),
         \ })
 
