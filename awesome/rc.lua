@@ -71,14 +71,14 @@ local layouts = {
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-  for s = 1, screen.count() do
-    if screen[s].workarea.height > screen[s].workarea.width then
-      gears.wallpaper.centered(beautiful.wallpaper_vertical, s)
+for s = 1, screen.count() do
+  gears.wallpaper.centered((function()
+    if screen[s].workarea.width > screen[s].workarea.height then
+      return beautiful.wallpaper
     else
-      gears.wallpaper.centered(beautiful.wallpaper, s)
+      return beautiful.wallpaper_vertical
     end
-  end
+  end)(), s)
 end
 -- }}}
 
