@@ -408,14 +408,14 @@ awful.rules.rules = {
     keys = clientkeys,
     buttons = clientbuttons
   } },
-  { rule = { class = "LilyTerm" },
-    properties = { size_hints_honor = false }
+  { rule = { class = "Gimp" },
+    properties = { tag = tags[1][7] }
   },
   { rule = { class = "MPlayer" },
     properties = { floating = true }
   },
-  { rule = { class = "Gimp" },
-    properties = { tag = tags[1][7] }
+  { rule = { class = "Virt-manager" },
+    properties = { floating = true }
   },
 }
 -- }}}
