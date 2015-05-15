@@ -140,7 +140,7 @@ nnoremap <S-Right> <C-W>>
 autocmd MyVimrc FileType cpp call s:cpp_config()
 function! s:cpp_config()
   setlocal cindent
-  setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws
+  setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 
   " include path
   let incpath = [
@@ -165,9 +165,6 @@ function! s:cpp_config()
       return ';'
     endif
   endfunction
-
-  " clangformat
-  map <buffer><Leader>cf <Plug>(operator-clang-format)
 endfunction
 
 " markdown
@@ -745,16 +742,18 @@ if neobundle#tap('vim-clang-format')
         \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
         \     'filetypes': ['c', 'cpp']
         \   },
-        \   'disable':  !executable('clang'),
+        \   'disable':  !executable('clang-format'),
         \ })
 
   let g:clang_format#style_options = {
         \   'AccessModifierOffset': -2,
-        \   'AllowShortFunctionsOnASingleLine': 'None',
+        \   'AllowShortFunctionsOnASingleLine': 'Empty',
         \   'ColumnLimit':          128,
         \   'SpacesBeforeTrailingComments': 1,
         \   'Standard':             'Cpp11',
         \ }
+
+  map <buffer><Leader>cf <Plug>(operator-clang-format)
 
   call neobundle#untap()
 endif
