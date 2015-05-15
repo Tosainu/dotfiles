@@ -37,11 +37,11 @@ set title
 set shortmess& shortmess+=I
 " show tabs
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-" commandline
-set wildmenu wildignorecase wildmode=list:full
-" separator style
+" command-line completion
+set wildmenu wildignorecase wildmode=longest,full
+" separator
 set fillchars+=vert:\ 
-" launch file in tab
+" open file in tab
 set switchbuf+=usetab,newtab
 
 " add <> to matchpairs
@@ -125,10 +125,8 @@ vnoremap <Left>  <Nop>
 vnoremap <Right> <Nop>
 
 " remap j/k
-nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
-xnoremap <expr> j (v:count == 0 && mode() !=# 'V') ? 'gj' : 'j'
-nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-xnoremap <expr> k (v:count == 0 && mode() !=# 'V') ? 'gk' : 'k'
+nnoremap j gj
+nnoremap k gk
 
 " change window size
 nnoremap <S-Up>    <C-W>-
