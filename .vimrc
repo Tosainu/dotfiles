@@ -734,7 +734,7 @@ endif
 if neobundle#tap('neco-ghc')
   call neobundle#config({
         \   'autoload': {'filetypes': 'haskell'},
-        \   'disable':  !executable('neco-ghc'),
+        \   'disable':  !executable('ghc-mod'),
         \ })
 
   call neobundle#untap()
