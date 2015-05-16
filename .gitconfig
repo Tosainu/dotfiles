@@ -1,24 +1,32 @@
 [user]
   email = tosainu.maple@gmail.com
   name = Tosainu
-[push]
-  default = matching
+
 [core]
   editor = vim
   excludesfile = ~/.gitignore_global
-[github]
-  user = Tosainu
+  preloadindex = true
+
+[color]
+  ui = true
+
+[merge]
+  tool = vimdiff
+
+[pager]
+  diff = /usr/share/git/diff-highlight/diff-highlight | less
+
+[push]
+  default = simple
+
 [url "git@github.com:"]
   pushinsteadof = "git://github.com/"
   pushinsteadof = "https://github.com/"
-[color]
-  ui = true
-[pager]
-  log  = /usr/share/git/diff-highlight/diff-highlight | less
-  show = /usr/share/git/diff-highlight/diff-highlight | less
-  diff = /usr/share/git/diff-highlight/diff-highlight | less
+
+[github]
+  user = Tosainu
+
 [ghq]
   root = ~/.ghq
   root = ~/.go/src
-[merge]
-  tool = vimdiff
+  root = ~/.vim/bundle/
