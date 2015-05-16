@@ -259,7 +259,8 @@ if neobundle#load_cache()
   NeoBundleLazy 'osyo-manga/vim-over'
 
   NeoBundleLazy 'Shougo/neocomplete.vim'
-  NeoBundleLazy "Shougo/neosnippet.vim",    {'depends': 'Shougo/neocomplete.vim'}
+  NeoBundleLazy 'Shougo/neosnippet.vim',    {'depends': 'Shougo/neocomplete.vim'}
+  NeoBundleLazy 'eagletmt/neco-ghc'
   NeoBundleLazy 'osyo-manga/vim-marching'
   NeoBundleLazy 'rhysd/vim-clang-format'
 
@@ -279,18 +280,17 @@ if neobundle#load_cache()
   NeoBundleLazy 'ujihisa/unite-colorscheme',{'depends': 'Shougo/unite.vim'}
 
   " languages
-  NeoBundleLazy 'sudar/vim-arduino-syntax', {'autoload': {'filetypes': 'arduino'}}
-  NeoBundleLazy 'vim-jp/vim-cpp',           {'autoload': {'filetypes': 'cpp'}}
-  NeoBundleLazy 'dag/vim2hs',               {'autoload': {'filetypes': 'haskell'}}
-  NeoBundleLazy 'eagletmt/neco-ghc',        {'autoload': {'filetypes': 'haskell'}}
-  NeoBundleLazy 'JavaScript-syntax',        {'autoload': {'filetypes': 'javascript'}}
-  NeoBundleLazy 'pangloss/vim-javascript',  {'autoload': {'filetypes': 'javascript'}}
-  NeoBundleLazy 'nginx.vim',                {'autoload': {'filetypes': 'nginx'}}
-  NeoBundleLazy 'ap/vim-css-color',         {'autoload': {'filetypes': ['css', 'scss']}}
-  NeoBundleLazy 'hail2u/vim-css3-syntax',   {'autoload': {'filetypes': ['css', 'scss']}}
-  NeoBundleLazy 'slim-template/vim-slim',   {'autoload': {'filename_patterns': '\.slim$'}}
-  NeoBundleLazy 'othree/html5.vim',         {'autoload': {'filetypes': ['html', 'eruby', 'slim']}}
-  NeoBundleLazy 'vim-ruby/vim-ruby',        {'autoload': {'filetypes': ['ruby', 'eruby', 'slim']}}
+  NeoBundle 'JavaScript-syntax'
+  NeoBundle 'ap/vim-css-color'
+  NeoBundle 'dag/vim2hs'
+  NeoBundle 'hail2u/vim-css3-syntax'
+  NeoBundle 'nginx.vim'
+  NeoBundle 'othree/html5.vim'
+  NeoBundle 'pangloss/vim-javascript'
+  NeoBundle 'slim-template/vim-slim'
+  NeoBundle 'sudar/vim-arduino-syntax'
+  NeoBundle 'vim-jp/vim-cpp'
+  NeoBundle 'vim-ruby/vim-ruby'
 
   NeoBundleSaveCache
 endif
@@ -708,6 +708,17 @@ if neobundle#tap('neosnippet.vim')
   if has('conceal')
     set conceallevel=2 concealcursor=i
   endif
+
+  call neobundle#untap()
+endif
+" }}}
+
+" neco-ghc {{{
+if neobundle#tap('neco-ghc')
+  call neobundle#config({
+        \   'autoload': {'filetypes': 'haskell'},
+        \   'disable':  !executable('neco-ghc'),
+        \ })
 
   call neobundle#untap()
 endif
