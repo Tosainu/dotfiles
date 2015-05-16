@@ -141,17 +141,33 @@ autocmd MyVimrc FileType cpp call s:cpp_config()
 function! s:cpp_config()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
+  " // indent sample
+  "
+  " class foo {
+  " public:
+  "   void hello() const {
+  "     std::cout << "Hello!" << std::endl;
+  "   }
+  " };
+  "
+  " auto main() -> int {
+  "   std::array<foo, 5> a{};
+  "   std::for_each(a.begin(), a.end(), [](const auto& i) {
+  "     i.hello();
+  "   });
+  " }
 
   " include path
-  let incpath = [
+  let s:incpath = [
         \   '/usr/include/boost',
         \   '/usr/include/c++/v1',
         \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
         \ ]
 
-  execute 'setlocal path+=' . join(incpath, ',')
+  execute 'setlocal path+=' . join(s:incpath, ',')
 
   " expand namespace
+  " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
   function! s:expand_namespace()
     let s = getline('.')[0:col('.') - 2]
@@ -205,6 +221,7 @@ autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 
 " neobundle {{{
 " install neobundle
+" https://github.com/rhysd/dotfiles/blob/5011f6fc25d754649aa6837c83408d2e680ea845/vimrc#L755-L765
 if !isdirectory(expand('~/.vim/bundle'))
   echon "Installing neobundle.vim..."
   silent call mkdir(expand('~/.vim/bundle'), 'p')
@@ -238,7 +255,7 @@ if neobundle#load_cache()
   NeoBundle 'itchyny/lightline.vim'
 
   NeoBundle 'thinca/vim-quickrun'
-  NeoBundle 'osyo-manga/vim-watchdogs', {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
+  NeoBundle 'osyo-manga/vim-watchdogs',     {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 
   NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'haya14busa/incsearch.vim'
@@ -253,7 +270,7 @@ if neobundle#load_cache()
   NeoBundleLazy 'Shougo/vimfiler.vim'
   NeoBundleLazy 'Shougo/vimshell.vim'
   NeoBundleLazy 'Shougo/vinarise.vim'
-  NeoBundleLazy 'kannokanno/previm', {'depends': 'tyru/open-browser.vim'}
+  NeoBundleLazy 'kannokanno/previm',        {'depends': 'tyru/open-browser.vim'}
   NeoBundleLazy 'koron/nyancat-vim'
   NeoBundleLazy 'mattn/emmet-vim'
   NeoBundleLazy 'osyo-manga/vim-over'
@@ -336,7 +353,7 @@ if neobundle#tap('lightline.vim')
         \ }
 
   function! LightlineReadonly()
-    return &ft !~? 'help' && &ro ? '' : ''
+    return &ft !~? 'help' && &ro ? "\ue0a2" : ''
   endfunction
 
   function! LightlineFilename()
@@ -396,7 +413,7 @@ if neobundle#tap('vim-quickrun')
 
   let g:quickrun_config.cpp = {
         \   'command':    'clang++',
-        \   'cmdopt':     '-Wall -Wextra -std=c++1y -stdlib=libc++ -lc++abi -lboost_system -pthread -I' . expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
+        \   'cmdopt':     '-Wall -Wextra -std=c++14 -stdlib=libc++ -lc++abi -lboost_system -pthread',
         \ }
 
   let g:quickrun_config.make = {
@@ -734,7 +751,7 @@ if neobundle#tap('vim-marching')
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:marching_wait_time = 1.0
     let g:marching#clang_command#options = {
-          \   'cpp':  '-std=gnu++1y -stdlib=libc++',
+          \   'cpp':  '-std=gnu++14 -stdlib=libc++',
           \ }
 
     if neobundle#is_installed('neocomplete.vim')
