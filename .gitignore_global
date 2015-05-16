@@ -1,0 +1,24 @@
+# compiled files
+*.a
+*.dll
+*.dylib
+*.hi
+*.lib
+*.o
+*.pch
+*.so
+a.out
+
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+*~
+
+# osx
+.DS_Store
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+._*
+.fseventsd
