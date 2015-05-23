@@ -291,9 +291,10 @@ if neobundle#load_cache()
 
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
-  NeoBundleLazy 'Shougo/neomru.vim',        {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'rhysd/unite-codic.vim',    {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
-  NeoBundleLazy 'ujihisa/unite-colorscheme',{'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'Shougo/neomru.vim',          {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'rhysd/unite-codic.vim',      {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
+  NeoBundleLazy 'ujihisa/unite-colorscheme',  {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'ujihisa/unite-haskellimport',{'depends': 'Shougo/unite.vim'}
 
   " languages
   NeoBundle 'JavaScript-syntax'
@@ -862,6 +863,16 @@ endif
 if neobundle#tap('unite-colorscheme')
   call neobundle#config({
         \   'autoload': {'unite_sources': ['colorscheme']}
+        \ })
+
+  call neobundle#untap()
+endif
+" }}}
+
+" unite-haskellimport {{{
+if neobundle#tap('unite-haskellimport')
+  call neobundle#config({
+        \   'autoload': {'filetypes': ['haskell']}
         \ })
 
   call neobundle#untap()
