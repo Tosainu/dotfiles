@@ -47,7 +47,7 @@ set switchbuf+=usetab,newtab
 " add <> to matchpairs
 set matchpairs+=<:>
 " history
-set history=100
+set history=1000
 " backspace
 set backspace=indent,eol,start
 " use japanese-help first
