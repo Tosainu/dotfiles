@@ -1,6 +1,6 @@
 " basic settings {{{
 " skip when vim-tiny or vim-small
-if !1 | finish | endif
+if 0 | endif
 
 " vimrc augroup
 augroup MyVimrc
