@@ -119,10 +119,6 @@ inoremap <Up>    <Nop>
 inoremap <Down>  <Nop>
 inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
-vnoremap <Up>    <Nop>
-vnoremap <Down>  <Nop>
-vnoremap <Left>  <Nop>
-vnoremap <Right> <Nop>
 
 " remap j/k
 nnoremap j gj
@@ -196,6 +192,9 @@ function! s:markdown_config()
         \   'scss',
         \   'vim',
         \ ]
+
+  nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
+
 endfunction
 
 " binary files
@@ -459,7 +458,7 @@ if neobundle#tap('vim-quickrun')
   nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
   nnoremap <silent> <Space>mb :<C-u>QuickRun -type make<CR>
   nnoremap <silent> <Space>mc :<C-u>QuickRun -type make -args clean<CR>
-  nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+  nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
 
   call neobundle#untap()
 endif
@@ -605,8 +604,6 @@ if neobundle#tap('previm')
         \ })
 
   let g:previm_enable_realtime = 1
-
-  nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 
   call neobundle#untap()
 endif
