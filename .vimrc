@@ -1,5 +1,3 @@
-scriptencoding utf-8
-
 " basic settings {{{
 " skip when vim-tiny or vim-small
 if !1 | finish | endif
@@ -14,6 +12,8 @@ set encoding=utf-8
 set fileencoding=utf=8
 set fileencodings=utf-8,cp932,euc-jp
 set fileformats=unix,dos,mac
+
+scriptencoding utf-8
 
 " show cursorline
 set cursorline
