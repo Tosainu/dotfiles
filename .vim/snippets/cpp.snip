@@ -2,7 +2,7 @@ snippet include
 abbr   #include <iostream>
   #include <${1:iostream}>${0}
 
-snippet include2
+snippet include_local
 abbr   #include "mylib.h"
   #include "${1}"${0}
 
@@ -37,6 +37,14 @@ snippet hello_world
     std::cout << "Hello, World!" << std::endl;${0}
   }
 
+snippet print
+  std::cout << ${1:"Hello, World!"} << std::endl;${0}
+
+snippet func
+  ${1:void} ${2:func}(${3}) {
+    ${0}
+  }
+
 snippet if
 abbr    if () {}
   if (${1}) {
@@ -51,19 +59,25 @@ abbr    for (;;) {}
 
 snippet for_range
 abbr    for (:) {}
-  for (${1:auto&& }${2:var}: ${3:container}) {
+  for (${1:auto&&} ${2:var} : ${3:container}) {
     ${0}
   }
 
 snippet class
 abbr    class {}
   class ${1:#:name} {
-    ${2}
+    ${0}
+  };
+
+snippet enum
+abbr    enum class {}
+  enum class ${1:#:name} {
+    ${0}
   };
 
 snippet template
 abbr    template <typename T>
-  template <${1:typename T}>${0}
+  template <${1:typename} ${2:T}>${0}
 
 snippet static_cast
 abbr    static_cast<>()
