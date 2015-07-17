@@ -44,7 +44,7 @@ end
 beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "lilyterm"
+terminal = "termite"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -325,7 +325,7 @@ globalkeys = awful.util.table.join(
   awful.key({modkey}, "p", function() menubar.show() end),
 
   -- Mysettings
-  awful.key({modkey}, "]",     function() awful.util.spawn("spacefm") end),
+  awful.key({modkey}, "]",     function() awful.util.spawn("nautilus") end),
   awful.key({modkey}, "\\",    function() awful.util.spawn("chromium") end),
   awful.key({modkey}, "/",     function() awful.util.spawn("gimp") end),
   awful.key({},       "Print", function() awful.util.spawn("scrot -e 'mv $f ~/Pictures/ 2>/dev/null'") end)
