@@ -305,6 +305,7 @@ if neobundle#load_cache()
   NeoBundle 'nginx.vim'
   NeoBundle 'othree/html5.vim'
   NeoBundle 'pangloss/vim-javascript'
+  NeoBundle 'rust-lang/rust.vim'
   NeoBundle 'slim-template/vim-slim'
   NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'vim-jp/vim-cpp'
