@@ -881,8 +881,11 @@ endif
 " unite-haskellimport {{{
 if neobundle#tap('unite-haskellimport')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['haskell']}
+        \   'autoload': {'filetypes': ['haskell']},
+        \   'disable':  !executable('hoogle'),
         \ })
+
+  let g:necoghc_enable_detailed_browse = 1
 
   call neobundle#untap()
 endif
