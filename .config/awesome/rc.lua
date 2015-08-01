@@ -83,21 +83,13 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
-myawesomemenu = {
-  {"restart", awesome.restart},
-  {"quit",    awesome.quit}
-}
-
 mymainmenu = awful.menu({items = {
-  {"awesome",  myawesomemenu, beautiful.awesome_icon},
-  {"terminal", terminal},
+  {"awesome", { {"restart", awesome.restart} } , beautiful.awesome_icon},
   {"logout",   awesome.quit},
   {"suspend",  "systemctl suspend"},
   {"reboot",   "systemctl reboot"},
   {"halt",     "systemctl poweroff"}
 }})
-
-mylauncher = awful.widget.launcher({image = beautiful.awesome_icon, menu = mymainmenu})
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -229,7 +221,6 @@ for s = 1, screen.count() do
 
   -- Widgets that are aligned to the left
   local left_layout = wibox.layout.fixed.horizontal()
-  -- left_layout:add(mylauncher)
   left_layout:add(mytaglist[s])
   left_layout:add(mypromptbox[s])
 
