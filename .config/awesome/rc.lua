@@ -226,17 +226,19 @@ for s = 1, screen.count() do
 
   -- Widgets that are aligned to the right
   local right_layout = wibox.layout.fixed.horizontal()
-  if s == 1 then right_layout:add(wibox.widget.systray()) end
-  right_layout:add(separator)
-  right_layout:add(wifi)
-  right_layout:add(separator)
-  right_layout:add(coretemp)
-  right_layout:add(separator)
-  right_layout:add(memwidget)
-  right_layout:add(separator)
-  right_layout:add(battery)
-  right_layout:add(separator)
-  right_layout:add(volume)
+  if s == 1 then
+    right_layout:add(wibox.widget.systray())
+    right_layout:add(separator)
+    right_layout:add(wifi)
+    right_layout:add(separator)
+    right_layout:add(coretemp)
+    right_layout:add(separator)
+    right_layout:add(memwidget)
+    right_layout:add(separator)
+    right_layout:add(battery)
+    right_layout:add(separator)
+    right_layout:add(volume)
+  end
   right_layout:add(separator)
   right_layout:add(mytextclock)
   right_layout:add(mylayoutbox[s])
