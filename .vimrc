@@ -259,7 +259,6 @@ if neobundle#load_cache()
   NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'haya14busa/incsearch.vim'
   NeoBundle 'jceb/vim-hier'
-  NeoBundle 'osyo-manga/vim-trip'
   NeoBundle 'rhysd/clever-f.vim'
   NeoBundle 't9md/vim-textmanip'
   NeoBundle 'tomtom/tcomment_vim'
@@ -502,13 +501,6 @@ if neobundle#tap('incsearch.vim')
   map #  <Plug>(incsearch-nohl-#)
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
-endif
-" }}}
-
-" vim-trip {{{
-if neobundle#tap('vim-trip')
-  nmap <C-a> <Plug>(trip-increment)
-  nmap <C-x> <Plug>(trip-decrement)
 endif
 " }}}
 
