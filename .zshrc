@@ -247,6 +247,13 @@ alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
 # -------------------------------------
 
 # syntax highlighting
-if [ -f ~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]; then
-  source ~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+ZSH_SYNTAX_HIGHLIGHTING_PATH=~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
+  source $ZSH_SYNTAX_HIGHLIGHTING_PATH
+fi
+
+# enhancd
+ENHANCD_PATH=~/.ghq/github.com/b4b4r07/enhancd/enhancd.sh
+if [ -f $ENHANCD_PATH ]; then
+  source $ENHANCD_PATH
 fi
