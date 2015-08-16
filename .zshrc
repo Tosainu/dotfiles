@@ -108,20 +108,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*:processes-names' command  'ps c -u ${USER} -o command | uniq'
 
 # -------------------------------------
-# cdr
-# -------------------------------------
-
-[ ! -e "${XDG_CACHE_HOME:-$HOME/.cache}/shell" ] && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/shell"
-
-autoload -U chpwd_recent_dirs cdr add-zsh-hook; add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':completion:*:*:cdr:*:*' menu selection
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-pushd true
-zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
-
-# -------------------------------------
 # prompt
 # -------------------------------------
 
@@ -181,16 +167,16 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 
-function open_cdr {
+function tab_cd {
   if [[ -z "$BUFFER" ]]; then
-    BUFFER="cdr "
+    BUFFER="cd -"
     CURSOR=$#BUFFER
-    zle expand-or-complete
+    zle accept-line
   else 
     zle expand-or-complete
   fi
 }
-zle -N open_cdr
+zle -N tab_cd
 
 # -------------------------------------
 # key bindings
@@ -205,7 +191,7 @@ bindkey '^h'  backward-delete-char
 bindkey '^[[Z'  reverse-menu-complete
 
 bindkey '^r'  peco-select-history
-bindkey '^I'  open_cdr
+bindkey '^I'  tab_cd
 
 autoload -U select-word-style; select-word-style bash
 bindkey '^w' backward-kill-word
