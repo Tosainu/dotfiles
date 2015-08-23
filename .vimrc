@@ -274,8 +274,8 @@ if neobundle#load_cache()
   NeoBundleLazy 'mattn/emmet-vim'
   NeoBundleLazy 'osyo-manga/vim-over'
 
-  NeoBundleLazy 'Shougo/neocomplete.vim'
-  NeoBundleLazy 'Shougo/neosnippet.vim',    {'depends': 'Shougo/neocomplete.vim'}
+  NeoBundleLazy 'Shougo/neocomplete.vim',   {'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim']}
+  NeoBundleLazy 'Shougo/neosnippet.vim'
   NeoBundleLazy 'eagletmt/neco-ghc'
   NeoBundleLazy 'osyo-manga/vim-marching'
   NeoBundleLazy 'rhysd/vim-clang-format'
@@ -686,24 +686,6 @@ if neobundle#tap('neocomplete.vim')
   let g:neocomplete#force_omni_input_patterns.ruby =
         \ '[^. *\t]\.\w*\|\h\w*::'
 
-  call neobundle#untap()
-endif
-" }}}
-
-" neosnippet.vim {{{
-if neobundle#tap('neosnippet.vim')
-  call neobundle#config({
-        \   'autoload': {
-        \     'insert' : '1',
-        \     'filetypes': 'neosnippet'
-        \   }
-        \ })
-
-  let g:neosnippet#disable_runtime_snippets = {
-        \   "_": 1,
-        \ }
-  let g:neosnippet#snippets_directory='~/.vim/snippets'
-
   " neocomplete and neosnippet keybinds
   imap <expr> <CR> !pumvisible() ? "\<CR>" :
         \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
@@ -719,6 +701,23 @@ if neobundle#tap('neosnippet.vim')
   inoremap <expr> <C-h>   neocomplete#smart_close_popup()."\<C-h>"
   inoremap <expr> <BS>    neocomplete#smart_close_popup()."\<C-h>"
   inoremap <expr> <C-e>   neocomplete#cancel_popup()
+
+  call neobundle#untap()
+endif
+" }}}
+
+" neosnippet.vim {{{
+if neobundle#tap('neosnippet.vim')
+  call neobundle#config({
+        \   'autoload': {
+        \     'filetypes': 'neosnippet'
+        \   }
+        \ })
+
+  let g:neosnippet#disable_runtime_snippets = {
+        \   "_": 1,
+        \ }
+  let g:neosnippet#snippets_directory='~/.vim/snippets'
 
   " for snippet_complete marker
   if has('conceal')
