@@ -17,9 +17,6 @@ export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
 
-# nvm
-[ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh
-
 # rvm
 [ -s ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 
