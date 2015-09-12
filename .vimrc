@@ -292,6 +292,7 @@ if neobundle#load_cache()
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
   NeoBundleLazy 'Shougo/neomru.vim',          {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'lambdalisue/vim-gista',      {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
   NeoBundleLazy 'rhysd/unite-codic.vim',      {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
   NeoBundleLazy 'ujihisa/unite-colorscheme',  {'depends': 'Shougo/unite.vim'}
   NeoBundleLazy 'ujihisa/unite-haskellimport',{'depends': 'Shougo/unite.vim'}
@@ -842,6 +843,21 @@ if neobundle#tap('neomru.vim')
         \ })
 
   nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
+
+  call neobundle#untap()
+endif
+" }}}
+
+" vim-gista {{{
+if neobundle#tap('vim-gista')
+  call neobundle#config({
+        \   'autoload': {
+        \     'commands': ['Gista'],
+        \     'mappings': '<Plug>(gista-',
+        \     'unite_sources': 'gista', }
+        \ })
+
+  let g:gista#github_user = 'Tosainu'
 
   call neobundle#untap()
 endif
