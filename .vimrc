@@ -292,6 +292,7 @@ if neobundle#load_cache()
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
   NeoBundleLazy 'Shougo/neomru.vim',          {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'Shougo/unite-outline',       {'depends': 'Shougo/unite.vim'}
   NeoBundleLazy 'lambdalisue/vim-gista',      {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
   NeoBundleLazy 'rhysd/unite-codic.vim',      {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
   NeoBundleLazy 'ujihisa/unite-colorscheme',  {'depends': 'Shougo/unite.vim'}
@@ -843,6 +844,18 @@ if neobundle#tap('neomru.vim')
         \ })
 
   nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
+
+  call neobundle#untap()
+endif
+" }}}
+
+" unite-outline {{{
+if neobundle#tap('unite-outline')
+  call neobundle#config({
+        \   'autoload': {'unite_sources': 'outline'}
+        \ })
+
+  nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
 
   call neobundle#untap()
 endif
