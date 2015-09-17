@@ -216,6 +216,7 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias vi='vim'
 alias sl='ruby ~/.ghq/github.com/pocke/sl_tweet/sl.rb'
 alias gl='cd $(ghq list -p | peco)'
+alias tree='tree --dirsfirst'
 alias tweet='t update'
 
 alias -g N='> /dev/null 2>&1'
