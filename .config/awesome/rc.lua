@@ -97,55 +97,80 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Widgets {{{
 -- color
-red    = function(str) return "<span color='#ff3000'>" .. str .. "</span>" end
-yellow = function(str) return "<span color='#ffe100'>" .. str .. "</span>" end
+red    = '#ff3000'
+yellow = '#ffe100'
+gray   = '#777777'
+
+function markup(color, text)
+  return '<span color="' .. color .. '">' .. text .. '</span>'
+end
 
 -- Separator
 separator = wibox.widget.textbox()
-separator:set_markup("<span color='#777777'> | </span>")
+separator:set_markup(markup(gray, ' | '))
 
 -- clock
-mytextclock = awful.widget.textclock("%a, %b %d %Y, %H:%M:%S ", 1)
+mytextclock = awful.widget.textclock("%a, %b %d, %H:%M:%S ", 1)
 
 -- battery
 battery = wibox.widget.textbox()
 vicious.register(battery, vicious.widgets.bat, function(widgets, args)
-  return "<b>Bat</b> " .. (function()
-    if args[2] <= 15 then
-      return red(args[2] .. "%")
-    elseif args[2] <= 30 then
-      return yellow(args[2] .. "%")
-    else
-      return args[2] .. "%"
-    end end)() .. " " .. args[1]
-  end, 15, "BAT1"
-)
+  value = ""
+
+  if args[2] <= 15 then
+    value = markup(red, args[2])
+  elseif args[2] <= 30 then
+    value = markup(yellow, args[2])
+  else
+    value = args[2]
+  end
+
+  value = value .. '%'
+
+  if args[1] == '⌁' or
+     args[1] == '↯' or
+     args[1] == '+' then
+    value = value .. ' AC'
+  end
+
+  return markup(gray, 'Bat ') .. value
+end, 15, "BAT1")
 
 -- temp
 coretemp = wibox.widget.textbox()
 vicious.register(coretemp, vicious.widgets.thermal, function(widget, args)
-  return "<b>CPU</b> " .. (function()
-    if args[1] >= 80 then
-      return red(args[1] .. "°C")
-    elseif args[1] >= 70 then
-      return yellow(args[1] .. "°C")
-    else
-      return args[1] .. "°C"
-    end end)()
-  end, 5, "thermal_zone0"
-)
+  value = ""
+
+  if args[1] >= 80 then
+    value =  markup(red, args[1])
+  elseif args[1] >= 70 then
+    value =  markup(yellow, args[1])
+  else
+    value =  args[1]
+  end
+
+  return markup(gray, 'CPU ') .. value .. '°C'
+end, 5, 'thermal_zone0')
 
 -- memory
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "<b>RAM</b> $1%", 15)
+vicious.register(memwidget, vicious.widgets.mem, markup(gray, 'Mem') .. ' $1%', 15)
 
 -- wifi
 wifi = wibox.widget.textbox()
-vicious.register(wifi, vicious.widgets.wifi, "<b>WLAN</b> ${ssid} ${linp}%", 5, "wlp2s0")
+vicious.register(wifi, vicious.widgets.wifi, markup(gray, 'Wifi ') .. '${ssid} ${linp}%', 5, 'wlp2s0')
 
 -- volume
 volume = wibox.widget.textbox()
-vicious.register(volume, vicious.widgets.volume, "<b>Vol</b> $1% $2", 0.2, "Master")
+vicious.register(volume, vicious.widgets.volume, function(widget, args)
+  return markup(gray, 'Vol ') .. args[1] .. '%' .. (function(status)
+    if status == '♩' then
+      return ' M'
+    else
+      return ''
+    end
+  end)(args[2])
+end, 0.2, 'Master')
 -- }}}
 
 -- {{{ Wibox
