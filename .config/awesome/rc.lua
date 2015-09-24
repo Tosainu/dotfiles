@@ -110,7 +110,7 @@ separator = wibox.widget.textbox()
 separator:set_markup(markup(gray, ' | '))
 
 -- clock
-mytextclock = awful.widget.textclock("%a, %b %d, %H:%M:%S ", 1)
+mytextclock = awful.widget.textclock("%a, %b %d, %H:%M ", 60)
 
 -- battery
 battery = wibox.widget.textbox()
@@ -134,7 +134,7 @@ vicious.register(battery, vicious.widgets.bat, function(widgets, args)
   end
 
   return markup(gray, 'Bat ') .. value
-end, 15, "BAT1")
+end, 60, "BAT1")
 
 -- temp
 coretemp = wibox.widget.textbox()
@@ -158,7 +158,7 @@ vicious.register(memwidget, vicious.widgets.mem, markup(gray, 'Mem') .. ' $1%', 
 
 -- wifi
 wifi = wibox.widget.textbox()
-vicious.register(wifi, vicious.widgets.wifi, markup(gray, 'Wifi ') .. '${ssid} ${linp}%', 5, 'wlp2s0')
+vicious.register(wifi, vicious.widgets.wifi, markup(gray, 'Wifi ') .. '${ssid} ${linp}%', 15, 'wlp2s0')
 
 -- volume
 volume = wibox.widget.textbox()
@@ -170,7 +170,7 @@ vicious.register(volume, vicious.widgets.volume, function(widget, args)
       return ''
     end
   end)(args[2])
-end, 0.2, 'Master')
+end, 5, 'Master')
 -- }}}
 
 -- {{{ Wibox
