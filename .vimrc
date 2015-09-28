@@ -299,13 +299,11 @@ if neobundle#load_cache()
   NeoBundleLazy 'ujihisa/unite-haskellimport',{'depends': 'Shougo/unite.vim'}
 
   " languages
-  NeoBundle 'JavaScript-syntax'
   NeoBundle 'ap/vim-css-color'
   NeoBundle 'dag/vim2hs'
   NeoBundle 'hail2u/vim-css3-syntax'
   NeoBundle 'nginx.vim'
   NeoBundle 'othree/html5.vim'
-  NeoBundle 'pangloss/vim-javascript'
   NeoBundle 'rust-lang/rust.vim'
   NeoBundle 'slim-template/vim-slim'
   NeoBundle 'sudar/vim-arduino-syntax'
@@ -419,13 +417,6 @@ if neobundle#tap('vim-quickrun')
         \   'cmdopt':     '-Wall -Wextra -std=c++14 -stdlib=libc++ -lc++abi -lboost_system -pthread',
         \ }
 
-  let g:quickrun_config.make = {
-        \   'command':    'make',
-        \   'exec':       '%c %o %a',
-        \   'cmdopt':     '-j',
-        \   'outputter':  'quickfix',
-        \ }
-
   let g:quickrun_config.markdown = {
         \   'outputter':  'null',
         \ }
@@ -433,35 +424,13 @@ if neobundle#tap('vim-quickrun')
   " vim-watchdogs
   let g:quickrun_config['watchdogs_checker/clang++'] = {
         \   'command':    'clang++',
-        \   'exec':       '%c %o -Wall -Wextra -std=c++1y -stdlib=libc++ -fsyntax-only %s:p',
+        \   'exec':       '%c %o -Wall -Wextra -std=c++14 -stdlib=libc++ -fsyntax-only %s:p',
         \ }
   let g:quickrun_config['cpp/watchdogs_checker'] = {
         \   'type':       'watchdogs_checker/clang++',
         \ }
 
-  if executable('sass')
-    let g:quickrun_config['watchdogs_checker/sass'] = {
-          \   'command':      'sass',
-          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
-          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
-          \ }
-    let g:quickrun_config['sass/watchdogs_checker'] = {
-          \   'type':         'watchdogs_checker/sass',
-          \ }
-
-    let g:quickrun_config['watchdogs_checker/scss'] = {
-          \   'command':      'sass',
-          \   'exec':         '%c %o --check --compass --trace --no-cache %s:p',
-          \   'errorformat':  '%f:%l:%m\ (Sass::SyntaxError),%-G%.%#',
-          \ }
-    let g:quickrun_config['scss/watchdogs_checker'] = {
-          \   'type':         'watchdogs_checker/scss',
-          \ }
-  endif
-
   nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
-  nnoremap <silent> <Space>mb :<C-u>QuickRun -type make<CR>
-  nnoremap <silent> <Space>mc :<C-u>QuickRun -type make -args clean<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
 
   call neobundle#untap()
