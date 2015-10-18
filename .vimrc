@@ -302,13 +302,10 @@ if neobundle#load_cache()
   NeoBundle 'ap/vim-css-color'
   NeoBundle 'dag/vim2hs'
   NeoBundle 'hail2u/vim-css3-syntax'
-  NeoBundle 'nginx.vim'
   NeoBundle 'othree/html5.vim'
   NeoBundle 'rust-lang/rust.vim'
   NeoBundle 'slim-template/vim-slim'
-  NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'vim-jp/vim-cpp'
-  NeoBundle 'vim-ruby/vim-ruby'
 
   NeoBundleSaveCache
 endif
@@ -414,7 +411,7 @@ if neobundle#tap('vim-quickrun')
 
   let g:quickrun_config.cpp = {
         \   'command':    'clang++',
-        \   'cmdopt':     '-Wall -Wextra -std=c++14 -stdlib=libc++ -lc++abi -lboost_system -pthread',
+        \   'cmdopt':     '-Wall -Wextra -std=c++14 -lboost_system -pthread',
         \ }
 
   let g:quickrun_config.markdown = {
@@ -424,7 +421,7 @@ if neobundle#tap('vim-quickrun')
   " vim-watchdogs
   let g:quickrun_config['watchdogs_checker/clang++'] = {
         \   'command':    'clang++',
-        \   'exec':       '%c %o -Wall -Wextra -std=c++14 -stdlib=libc++ -fsyntax-only %s:p',
+        \   'exec':       '%c %o -Wall -Wextra -std=c++14 -fsyntax-only %s:p',
         \ }
   let g:quickrun_config['cpp/watchdogs_checker'] = {
         \   'type':       'watchdogs_checker/clang++',
@@ -720,7 +717,7 @@ if neobundle#tap('vim-marching')
   function! neobundle#tapped.hooks.on_source(bundle)
     let g:marching_wait_time = 1.0
     let g:marching#clang_command#options = {
-          \   'cpp':  '-std=gnu++14 -stdlib=libc++',
+          \   'cpp':  '-std=c++14',
           \ }
 
     if neobundle#is_installed('neocomplete.vim')
@@ -875,16 +872,6 @@ if neobundle#tap('unite-haskellimport')
         \ })
 
   let g:necoghc_enable_detailed_browse = 1
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vim-ruby {{{
-if neobundle#tap('vim-ruby')
-  let g:rubycomplete_buffer_loading     = 1
-  let g:rubycomplete_classes_in_global  = 1
-  let g:rubycomplete_use_bundler        = 1
 
   call neobundle#untap()
 endif
