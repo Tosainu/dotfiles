@@ -683,13 +683,13 @@ if neobundle#tap('neosnippet.vim')
         \ })
 
   let g:neosnippet#disable_runtime_snippets = {
-        \   "_": 1,
+        \   '_': 1,
         \ }
-  let g:neosnippet#snippets_directory='~/.vim/snippets'
+  let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
   " for snippet_complete marker
   if has('conceal')
-    set conceallevel=2 concealcursor=i
+    set conceallevel=2 concealcursor=niv
   endif
 
   call neobundle#untap()
