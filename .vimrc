@@ -703,7 +703,7 @@ endif
 if neobundle#tap('neco-ghc')
   call neobundle#config({
         \   'autoload': {'filetypes': 'haskell'},
-        \   'disable':  !executable('ghc-mod'),
+        \   'external_commands': 'ghc-mod',
         \ })
 
   call neobundle#untap()
@@ -714,7 +714,7 @@ endif
 if neobundle#tap('vim-marching')
   call neobundle#config({
         \   'autoload': {'filetypes': 'cpp'},
-        \   'disable':  !executable('clang'),
+        \   'external_commands': 'clang',
         \ })
 
   function! neobundle#tapped.hooks.on_source(bundle)
@@ -739,7 +739,7 @@ if neobundle#tap('vim-clang-format')
         \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
         \     'filetypes': ['c', 'cpp']
         \   },
-        \   'disable':  !executable('clang-format'),
+        \   'external_commands': 'clang-format',
         \ })
 
   let g:clang_format#style_options = {
@@ -871,7 +871,7 @@ endif
 if neobundle#tap('unite-haskellimport')
   call neobundle#config({
         \   'autoload': {'filetypes': ['haskell']},
-        \   'disable':  !executable('hoogle'),
+        \   'external_commands': 'hoogle',
         \ })
 
   let g:necoghc_enable_detailed_browse = 1
