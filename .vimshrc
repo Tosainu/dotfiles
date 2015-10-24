@@ -1,6 +1,0 @@
-alias ls='ls -F --group-directories-first'
-alias la='ls -A'
-alias ll='ls -l'
-alias lla='ls -Al'
-alias cp='cp -v'
-alias mv='mv -v'

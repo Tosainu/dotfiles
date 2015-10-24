@@ -267,7 +267,6 @@ if neobundle#load_cache()
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
   NeoBundleLazy 'Shougo/vimfiler.vim'
-  NeoBundleLazy 'Shougo/vimshell.vim'
   NeoBundleLazy 'Shougo/vinarise.vim'
   NeoBundleLazy 'kannokanno/previm',        {'depends': 'tyru/open-browser.vim'}
   NeoBundleLazy 'koron/nyancat-vim'
@@ -357,7 +356,6 @@ if neobundle#tap('lightline.vim')
   function! LightlineFilename()
     return  &ft == 'unite'    ? unite#get_status_string() :
           \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-          \ &ft == 'vimshell' ? vimshell#get_status_string() :
           \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
   endfunction
 
@@ -531,26 +529,6 @@ if neobundle#tap('vimfiler.vim')
 
   " open Vimfiler
   nmap <silent> <Leader>vf :<C-u>VimFilerExplorer -winwidth=25<CR>
-
-  call neobundle#untap()
-endif
-" }}}
-
-" vimshell.vim {{{
-if neobundle#tap('vimshell.vim')
-  call neobundle#config({
-        \   'autoload': {
-        \     'commands': ['VimShell', 'VimShellSendString', 'VimShellCurrentDir', 'VimShellInteractive'],
-        \   },
-        \ })
-
-  function! neobundle#tapped.hooks.on_source(bundle)
-    let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-    let g:vimshell_prompt = '> '
-  endfunction
-
-  " open VimShell
-  nnoremap <silent><Leader>vs :<C-u>VimShell -split-command=vsplit<CR>
 
   call neobundle#untap()
 endif
