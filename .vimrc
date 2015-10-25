@@ -240,7 +240,6 @@ endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 
 if neobundle#load_cache()
-  " require
   NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'Shougo/vimproc.vim', {
         \   'build': {
@@ -607,15 +606,6 @@ if neobundle#tap('neocomplete.vim')
   let g:neocomplete#enable_auto_delimiter = 1
   let g:neocomplete#sources#syntax#min_keyword_length = 2
   let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-  let g:neocomplete#sources#vim#complete_functions = {
-        \   'Unite': 'unite#complete_source',
-        \   'VimFiler': 'vimfiler#complete',
-        \   'VimShell': 'vimshell#complete',
-        \   'VimShellExecute': 'vimshell#vimshell_execute_complete',
-        \   'VimShellInteractive': 'vimshell#vimshell_execute_complete',
-        \   'VimShellTerminal': 'vimshell#vimshell_execute_complete',
-        \ }
 
   if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
