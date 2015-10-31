@@ -214,7 +214,6 @@ alias du='du -h'
 alias mkdir='nocorrect mkdir'
 alias grep='grep --binary-files=without-match --color=auto'
 alias vi='vim'
-alias sl='ruby ~/.ghq/github.com/pocke/sl_tweet/sl.rb'
 alias gl='cd $(ghq list -p | peco)'
 alias tree='tree --dirsfirst'
 alias tweet='t update'
@@ -229,6 +228,12 @@ alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
 # -------------------------------------
 # plugins
 # -------------------------------------
+
+# sl_tweet
+SL_TWEET_PATH=~/.ghq/github.com/pocke/sl_tweet/sl.rb
+if [ -f $SL_TWEET_PATH ]; then
+  alias sl='ruby $SL_TWEET_PATH'
+fi
 
 # syntax highlighting
 ZSH_SYNTAX_HIGHLIGHTING_PATH=~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
