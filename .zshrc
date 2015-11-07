@@ -223,7 +223,7 @@ alias -g N='> /dev/null 2>&1'
 alias -s jar='java -jar'
 alias -s rb='ruby'
 alias -s {html,htm,xhtml}=chromium
-alias -s {png,jpg,jpeg,gif,bmp,PNG,JPG,BMP}=viewnior
+alias -s {bmp,gif,jpg,JPG,png,svg}=viewnior
 
 # -------------------------------------
 # plugins
