@@ -491,7 +491,7 @@ if neobundle#tap('vimfiler.vim')
         \       'VimFilerExplorer',
         \       'Edit', 'Read', 'Source', 'Write'
         \     ],
-        \     'mappings': ['<Plug>(vimfiler_'],
+        \     'mappings': '<Plug>',
         \     'explorer': 1,
         \   }
         \ })
@@ -751,7 +751,7 @@ if neobundle#tap('vim-gista')
   call neobundle#config({
         \   'autoload': {
         \     'commands': ['Gista'],
-        \     'mappings': '<Plug>(gista-',
+        \     'mappings': '<Plug>',
         \     'unite_sources': 'gista', }
         \ })
 
