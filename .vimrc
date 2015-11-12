@@ -259,11 +259,10 @@ if neobundle#load_cache()
   NeoBundleLazy 'Shougo/neosnippet.vim'
   NeoBundleLazy 'eagletmt/neco-ghc'
   NeoBundleLazy 'osyo-manga/vim-marching'
-  NeoBundleLazy 'rhysd/vim-clang-format'
 
   " operator
-  NeoBundle 'kana/vim-operator-user'
-  NeoBundle 'kana/vim-operator-replace'
+  NeoBundleLazy 'kana/vim-operator-replace',{'depends': 'kana/vim-operator-user'}
+  NeoBundleLazy 'rhysd/vim-clang-format',   {'depends': 'kana/vim-operator-user'}
 
   " colorscheme
   NeoBundle 'Tosainu/last256'
@@ -656,12 +655,22 @@ if neobundle#tap('vim-marching')
 endif
 " }}}
 
+" vim-operator-replace
+if neobundle#tap('vim-operator-replace')
+  call neobundle#config({
+        \   'autoload': {'mappings': '<Plug>(operator-replace)'},
+        \ })
+
+  nmap R  <Plug>(operator-replace)
+endif
+
 " vim-clang-format {{{
 if neobundle#tap('vim-clang-format')
   call neobundle#config({
         \   'autoload': {
         \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
-        \     'filetypes': ['c', 'cpp']
+        \     'filetypes': ['c', 'cpp'],
+        \     'mappings': '<Plug>(operator-clang-format)',
         \   },
         \   'external_commands': 'clang-format',
         \ })
@@ -679,11 +688,6 @@ if neobundle#tap('vim-clang-format')
   call neobundle#untap()
 endif
 " }}}
-
-" vim-operator-replace
-if neobundle#tap('vim-operator-replace')
-  nmap R  <Plug>(operator-replace)
-endif
 
 " unite.vim {{{
 if neobundle#tap('unite.vim')
