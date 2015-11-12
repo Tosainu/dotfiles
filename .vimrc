@@ -222,20 +222,6 @@ autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " neobundle {{{
-" install neobundle
-" https://github.com/rhysd/dotfiles/blob/5011f6fc25d754649aa6837c83408d2e680ea845/vimrc#L755-L765
-if !isdirectory(expand('~/.vim/bundle'))
-  echon "Installing neobundle.vim..."
-  silent call mkdir(expand('~/.vim/bundle'), 'p')
-  silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
-  if v:shell_error
-    echoerr "neobundle.vim installation has failed!"
-    finish
-  elseif
-    echo "done."
-  endif
-endif
-
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
