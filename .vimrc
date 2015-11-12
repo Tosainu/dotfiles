@@ -203,16 +203,12 @@ endfunction
 " binary files
 autocmd MyVimrc BufReadPost * if &binary | call s:binary_config() | endif
 function! s:binary_config()
-  if neobundle#is_installed('vinarise.vim')
-    Vinarise
-  else
-    silent %!xxd -g 1
-    setlocal ft=xxd
+  silent %!xxd -g 1
+  setlocal ft=xxd
 
-    autocmd MyVimrc BufWritePre * %!xxd -r
-    autocmd MyVimrc BufWritePost * silent %!xxd -g 1
-    autocmd MyVimrc BufWritePost * setlocal nomodified
-  endif
+  autocmd MyVimrc BufWritePre * %!xxd -r
+  autocmd MyVimrc BufWritePost * silent %!xxd -g 1
+  autocmd MyVimrc BufWritePost * setlocal nomodified
 endfunction
 
 " quickfix
@@ -255,9 +251,7 @@ if neobundle#load_cache()
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
   NeoBundleLazy 'Shougo/vimfiler.vim'
-  NeoBundleLazy 'Shougo/vinarise.vim'
   NeoBundleLazy 'kannokanno/previm',        {'depends': 'tyru/open-browser.vim'}
-  NeoBundleLazy 'koron/nyancat-vim'
   NeoBundleLazy 'mattn/emmet-vim'
   NeoBundleLazy 'osyo-manga/vim-over'
 
@@ -273,13 +267,10 @@ if neobundle#load_cache()
 
   " colorscheme
   NeoBundle 'Tosainu/last256'
-  NeoBundle 'chriskempson/vim-tomorrow-theme'
-  NeoBundle 'w0ng/vim-hybrid'
 
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
   NeoBundleLazy 'Shougo/neomru.vim',          {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'Shougo/unite-outline',       {'depends': 'Shougo/unite.vim'}
   NeoBundleLazy 'lambdalisue/vim-gista',      {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
   NeoBundleLazy 'rhysd/unite-codic.vim',      {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
   NeoBundleLazy 'ujihisa/unite-colorscheme',  {'depends': 'Shougo/unite.vim'}
@@ -522,17 +513,6 @@ if neobundle#tap('vimfiler.vim')
 endif
 " }}}
 
-" vinarise.vim {{{
-if neobundle#tap('vinarise.vim')
-  call neobundle#config({
-        \   'autoload': {'commands': ['Vinarise', 'VinarisePluginDump', 'VinarisePluginViewBitmapView']},
-        \   'disabled': !has('python') && !has('python3'),
-        \ })
-
-  call neobundle#untap()
-endif
-" }}}
-
 " previm {{{
 if neobundle#tap('previm')
   call neobundle#config({
@@ -540,16 +520,6 @@ if neobundle#tap('previm')
         \ })
 
   let g:previm_enable_realtime = 1
-
-  call neobundle#untap()
-endif
-" }}}
-
-" nyancat-vim {{{
-if neobundle#tap('nyancat-vim')
-  call neobundle#config({
-        \   'autoload': {'commands': ['Nyancat', 'Nyancat2']}
-        \ })
 
   call neobundle#untap()
 endif
@@ -767,18 +737,6 @@ if neobundle#tap('neomru.vim')
         \ })
 
   nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
-
-  call neobundle#untap()
-endif
-" }}}
-
-" unite-outline {{{
-if neobundle#tap('unite-outline')
-  call neobundle#config({
-        \   'autoload': {'unite_sources': 'outline'}
-        \ })
-
-  nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
 
   call neobundle#untap()
 endif
