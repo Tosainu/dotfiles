@@ -101,6 +101,9 @@ endif
 set undodir=~/.vim/undo
 set undofile
 
+" viminfo
+set viminfo+=n~/.vim/viminfo
+
 " disable auto comment
 autocmd MyVimrc BufEnter * setlocal formatoptions-=ro
 " open last position
