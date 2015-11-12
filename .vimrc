@@ -238,7 +238,7 @@ if neobundle#load_cache()
   NeoBundle 'itchyny/lightline.vim'
 
   NeoBundle 'thinca/vim-quickrun'
-  NeoBundle 'osyo-manga/vim-watchdogs',     {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
+  NeoBundle 'osyo-manga/vim-watchdogs',         {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
 
   NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'haya14busa/incsearch.vim'
@@ -250,30 +250,30 @@ if neobundle#load_cache()
   NeoBundle 'vim-jp/vimdoc-ja'
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
-  NeoBundleLazy 'Shougo/vimfiler.vim'
-  NeoBundleLazy 'kannokanno/previm',        {'depends': 'tyru/open-browser.vim'}
+  NeoBundleLazy 'Shougo/vimfiler.vim',          {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'kannokanno/previm',            {'depends': 'tyru/open-browser.vim'}
   NeoBundleLazy 'mattn/emmet-vim'
   NeoBundleLazy 'osyo-manga/vim-over'
 
-  NeoBundleLazy 'Shougo/neocomplete.vim',   {'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim']}
+  NeoBundleLazy 'Shougo/neocomplete.vim',       {'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim']}
   NeoBundleLazy 'Shougo/neosnippet.vim'
   NeoBundleLazy 'eagletmt/neco-ghc'
   NeoBundleLazy 'osyo-manga/vim-marching'
 
   " operator
-  NeoBundleLazy 'kana/vim-operator-replace',{'depends': 'kana/vim-operator-user'}
-  NeoBundleLazy 'rhysd/vim-clang-format',   {'depends': 'kana/vim-operator-user'}
+  NeoBundleLazy 'kana/vim-operator-replace',    {'depends': 'kana/vim-operator-user'}
+  NeoBundleLazy 'rhysd/vim-clang-format',       {'depends': 'kana/vim-operator-user'}
 
   " colorscheme
   NeoBundle 'Tosainu/last256'
 
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
-  NeoBundleLazy 'Shougo/neomru.vim',          {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'lambdalisue/vim-gista',      {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
-  NeoBundleLazy 'rhysd/unite-codic.vim',      {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
-  NeoBundleLazy 'ujihisa/unite-colorscheme',  {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'ujihisa/unite-haskellimport',{'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'Shougo/neomru.vim',            {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'lambdalisue/vim-gista',        {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
+  NeoBundleLazy 'rhysd/unite-codic.vim',        {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
+  NeoBundleLazy 'ujihisa/unite-colorscheme',    {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'ujihisa/unite-haskellimport',  {'depends': 'Shougo/unite.vim'}
 
   " languages
   NeoBundle 'ap/vim-css-color'
@@ -394,15 +394,6 @@ if neobundle#tap('vim-quickrun')
         \   'outputter':  'null',
         \ }
 
-  " vim-watchdogs
-  let g:quickrun_config['watchdogs_checker/clang++'] = {
-        \   'command':    'clang++',
-        \   'exec':       '%c %o -Wall -Wextra -std=c++14 -fsyntax-only %s:p',
-        \ }
-  let g:quickrun_config['cpp/watchdogs_checker'] = {
-        \   'type':       'watchdogs_checker/clang++',
-        \ }
-
   nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
   nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
 
@@ -484,12 +475,10 @@ endif
 " vimfiler {{{
 if neobundle#tap('vimfiler.vim')
   call neobundle#config({
-        \   'depends': 'Shougo/unite.vim',
         \   'autoload': {
         \     'commands': [
-        \       {'name': 'VimFiler', 'complete' : 'customlist,vimfiler#complete'},
-        \       'VimFilerExplorer',
-        \       'Edit', 'Read', 'Source', 'Write'
+        \       {'name': 'VimFiler', 'complete': 'customlist,vimfiler#complete'},
+        \       'VimFilerExplorer', 'Edit', 'Read', 'Source', 'Write'
         \     ],
         \     'mappings': '<Plug>',
         \     'explorer': 1,
@@ -501,8 +490,7 @@ if neobundle#tap('vimfiler.vim')
     let g:vimfiler_safe_mode_by_default = 0
     " open in new tab
     let g:vimfiler_edit_action = 'tabopen'
-    " ignore patern
-    let g:vimfiler_ignore_pattern = '\(^\.git\|\.[ao]\|\.out\|\.bin\)$'
+    let g:vimfiler_ignore_pattern = ['^\.git$']
   endfunction
 
   " open Vimfiler
@@ -603,9 +591,7 @@ endif
 " neosnippet.vim {{{
 if neobundle#tap('neosnippet.vim')
   call neobundle#config({
-        \   'autoload': {
-        \     'filetypes': 'neosnippet'
-        \   }
+        \   'autoload': {'filetypes': 'neosnippet'}
         \ })
 
   let g:neosnippet#disable_runtime_snippets = {
@@ -693,10 +679,8 @@ endif
 if neobundle#tap('unite.vim')
   call neobundle#config({
         \   'autoload': {
-        \     'commands': [{
-        \       'name': 'Unite',
-        \         'complete': 'customlist,unite#complete_source'
-        \       },
+        \     'commands': [
+        \       {'name': 'Unite', 'complete': 'customlist,unite#complete_source'},
         \       'UniteWithCursorWord', 'UniteWithInput'
         \     ]
         \   }
@@ -709,7 +693,6 @@ if neobundle#tap('unite.vim')
 
     " always open new tab
     call unite#custom_default_action('file', 'tabopen')
-    " show dotfiles
     call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
 
     autocmd MyVimrc FileType unite call s:unite_myconfig()
@@ -752,7 +735,8 @@ if neobundle#tap('vim-gista')
         \   'autoload': {
         \     'commands': ['Gista'],
         \     'mappings': '<Plug>',
-        \     'unite_sources': 'gista', }
+        \     'unite_sources': 'gista',
+        \   }
         \ })
 
   let g:gista#github_user = 'Tosainu'
@@ -812,9 +796,6 @@ if !has('gui_running')
 
   try
     colorscheme last256
-
-    " transparent background
-    highlight Normal ctermbg=none
   catch
     colorscheme default
   endtry
