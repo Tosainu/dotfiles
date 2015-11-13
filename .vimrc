@@ -403,7 +403,7 @@ endif
 
 " vim-watchdogs {{{
 if neobundle#tap('vim-watchdogs')
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     let g:watchdogs_check_BufWritePost_enables = {
           \   'c':          1,
           \   'haskell':    1,
@@ -485,7 +485,7 @@ if neobundle#tap('vimfiler.vim')
         \   }
         \ })
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     let g:vimfiler_as_default_explorer = 1
     let g:vimfiler_safe_mode_by_default = 0
     " open in new tab
@@ -518,7 +518,7 @@ if neobundle#tap('emmet-vim')
         \   'autoload': {'filetypes': ['html', 'eruby', 'css', 'scss', 'slim']}
         \ })
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     let g:user_emmet_settings = {
           \   'indentation' : '  '
           \ }
@@ -626,7 +626,7 @@ if neobundle#tap('vim-marching')
         \   'external_commands': 'clang',
         \ })
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     let g:marching_wait_time = 1.0
     let g:marching#clang_command#options = {
           \   'cpp':  '-std=c++14',
@@ -686,7 +686,7 @@ if neobundle#tap('unite.vim')
         \   }
         \ })
 
-  function! neobundle#tapped.hooks.on_source(bundle)
+  function! neobundle#hooks.on_source(bundle)
     let g:unite_source_file_mru_limit = 200
     let g:unite_force_overwrite_statusline = 0
     let g:unite_source_history_yank_enable = 1
