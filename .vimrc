@@ -487,10 +487,12 @@ if neobundle#tap('vimfiler.vim')
 
   function! neobundle#hooks.on_source(bundle)
     let g:vimfiler_as_default_explorer = 1
-    let g:vimfiler_safe_mode_by_default = 0
-    " open in new tab
-    let g:vimfiler_edit_action = 'tabopen'
     let g:vimfiler_ignore_pattern = ['^\.git$']
+
+    call vimfiler#custom#profile('default', 'context', {
+          \   'safe':         0,
+          \   'edit_action':  'tabopen',
+          \ })
   endfunction
 
   " open Vimfiler
@@ -687,9 +689,7 @@ if neobundle#tap('unite.vim')
         \ })
 
   function! neobundle#hooks.on_source(bundle)
-    let g:unite_source_file_mru_limit = 200
     let g:unite_force_overwrite_statusline = 0
-    let g:unite_source_history_yank_enable = 1
 
     " always open new tab
     call unite#custom_default_action('file', 'tabopen')
