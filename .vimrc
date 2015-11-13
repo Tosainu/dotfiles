@@ -704,14 +704,13 @@ if neobundle#tap('unite.vim')
   " keybinds
   nnoremap [unite]  <Nop>
   nmap     <Space>u [unite]
-  nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir file -buffer-name=files<CR>
-  nnoremap <silent> [unite]r :<C-u>Unite file_rec/git -buffer-name=repository<CR>
-  nnoremap <silent> [unite]n :<C-u>Unite file/new -start-insert -buffer-name=newfile<CR>
-  nnoremap <silent> [unite]s :<C-u>Unite line -start-insert -buffer-name=search<CR>
-  nnoremap <silent> [unite]b :<C-u>Unite buffer -buffer-name=buffer<CR>
-  nnoremap <silent> [unite]t :<C-u>Unite tab -buffer-name=tab<CR>
-  nnoremap <silent> [unite]y :<C-u>Unite history/yank -buffer-name=yank<CR>
   nnoremap <silent> [unite]R :<C-u>UniteResume<CR>
+  nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir file<CR>
+  nnoremap <silent> [unite]n :<C-u>Unite file/new -start-insert<CR>
+  nnoremap <silent> [unite]r :<C-u>Unite register<CR>
+  nnoremap <silent> [unite]s :<C-u>Unite line -start-insert<CR>
+  nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
+  nnoremap <silent> [unite]u :<C-u>Unite neobundle/update<CR>
 
   call neobundle#untap()
 endif
@@ -740,6 +739,8 @@ if neobundle#tap('vim-gista')
         \ })
 
   let g:gista#github_user = 'Tosainu'
+
+  nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
 
   call neobundle#untap()
 endif
