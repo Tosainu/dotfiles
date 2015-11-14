@@ -197,7 +197,13 @@ function! s:markdown_config()
         \ ]
 
   nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
+endfunction
 
+" ruby
+autocmd MyVimrc FileType ruby call s:ruby_config()
+function! s:ruby_config()
+  let g:rubycomplete_buffer_loading = 1
+  let g:rubycomplete_classes_in_global = 1
 endfunction
 
 " binary files
