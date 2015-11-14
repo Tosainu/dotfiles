@@ -88,6 +88,12 @@ endif
 " no backup files
 set nobackup
 
+" runtimepath for windows
+if has('win32') || has('win64')
+  set runtimepath^=$HOME/.vim
+  set runtimepath+=$HOME/.vim/after
+endif
+
 " swapfile
 if !isdirectory($HOME.'/.vim/swap')
   call mkdir($HOME.'/.vim/swap', 'p')
