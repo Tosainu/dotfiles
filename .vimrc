@@ -292,7 +292,7 @@ endif
 " lightline.vim {{{
 if neobundle#tap('lightline.vim')
   call neobundle#config({
-        \   'depends': [ 'airblade/vim-gitgutter', 'tpope/vim-fugitive']
+        \   'depends': ['airblade/vim-gitgutter', 'tpope/vim-fugitive']
         \ })
 
   let g:lightline = {
@@ -419,17 +419,14 @@ if neobundle#tap('vim-watchdogs')
         \ })
 
   function! neobundle#hooks.on_source(bundle)
+    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
     let g:watchdogs_check_BufWritePost_enables = {
           \   'c':          1,
           \   'haskell':    1,
-          \   'javascript': 1,
           \   'lua':        1,
           \   'ruby':       1,
-          \   'sass':       1,
           \   'scss':       1,
           \ }
-
-    let g:watchdogs_check_BufWritePost_enable_on_wq = 0
 
     call watchdogs#setup(g:quickrun_config)
   endfunction
@@ -522,7 +519,7 @@ endif
 if neobundle#tap('previm')
   call neobundle#config({
         \   'autoload': {'filetypes': 'markdown'},
-        \   'depends': 'tyru/open-browser.vim'
+        \   'depends':  'tyru/open-browser.vim'
         \ })
 
   let g:previm_enable_realtime = 1
@@ -534,7 +531,7 @@ endif
 " emmet-vim {{{
 if neobundle#tap('emmet-vim')
   call neobundle#config({
-        \   'autoload': {'filetypes': ['html', 'eruby', 'css', 'scss', 'slim']}
+        \   'autoload': {'filetypes': ['html', 'css', 'scss', 'slim']}
         \ })
 
   function! neobundle#hooks.on_source(bundle)
@@ -563,7 +560,7 @@ endif
 if neobundle#tap('neocomplete.vim')
   call neobundle#config({
         \   'autoload': {'insert': '1'},
-        \   'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim'],
+        \   'depends':  ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim'],
         \   'disabled': !has('lua'),
         \ })
 
@@ -675,9 +672,9 @@ endif
 if neobundle#tap('vim-clang-format')
   call neobundle#config({
         \   'autoload': {
-        \     'commands': ['ClangFormat', 'ClangFormatEchoFormattedCode'],
-        \     'filetypes': ['c', 'cpp'],
-        \     'mappings': '<Plug>(operator-clang-format)',
+        \     'commands':   ['ClangFormat', 'ClangFormatEchoFormattedCode'],
+        \     'filetypes':  ['c', 'cpp'],
+        \     'mappings':   '<Plug>(operator-clang-format)',
         \   },
         \   'depends': 'kana/vim-operator-user',
         \   'external_commands': 'clang-format',
@@ -740,7 +737,7 @@ endif
 if neobundle#tap('neomru.vim')
   call neobundle#config({
         \   'autoload': {'unite_sources': 'file_mru'},
-        \   'depends': 'Shougo/unite.vim'
+        \   'depends':  'Shougo/unite.vim'
         \ })
 
   nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
@@ -772,7 +769,7 @@ endif
 if neobundle#tap('unite-codic.vim')
   call neobundle#config({
         \   'autoload': {'unite_sources': ['codic']},
-        \   'depends': ['Shougo/unite.vim', 'koron/codic-vim']
+        \   'depends':  ['Shougo/unite.vim', 'koron/codic-vim']
         \ })
 
   nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
@@ -785,7 +782,7 @@ endif
 if neobundle#tap('unite-colorscheme')
   call neobundle#config({
         \   'autoload': {'unite_sources': ['colorscheme']},
-        \   'depends': 'Shougo/unite.vim'
+        \   'depends':  'Shougo/unite.vim'
         \ })
 
   call neobundle#untap()
@@ -796,7 +793,7 @@ endif
 if neobundle#tap('unite-haskellimport')
   call neobundle#config({
         \   'autoload': {'filetypes': ['haskell']},
-        \   'depends': 'Shougo/unite.vim',
+        \   'depends':  'Shougo/unite.vim',
         \   'external_commands': 'hoogle',
         \ })
 
