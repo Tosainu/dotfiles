@@ -239,16 +239,13 @@ if neobundle#load_cache()
         \   }
         \ }
 
-  NeoBundle 'airblade/vim-gitgutter'
-  NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'itchyny/lightline.vim'
 
   NeoBundle 'thinca/vim-quickrun'
-  NeoBundle 'osyo-manga/vim-watchdogs',         {'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim']}
+  NeoBundle 'osyo-manga/vim-watchdogs'
 
   NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'haya14busa/incsearch.vim'
-  NeoBundle 'jceb/vim-hier'
   NeoBundle 'rhysd/clever-f.vim'
   NeoBundle 't9md/vim-textmanip'
   NeoBundle 'tomtom/tcomment_vim'
@@ -256,30 +253,29 @@ if neobundle#load_cache()
   NeoBundle 'vim-jp/vimdoc-ja'
 
   NeoBundleLazy 'AndrewRadev/switch.vim'
-  NeoBundleLazy 'Shougo/vimfiler.vim',          {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'kannokanno/previm',            {'depends': 'tyru/open-browser.vim'}
+  NeoBundleLazy 'Shougo/vimfiler.vim'
+  NeoBundleLazy 'kannokanno/previm'
   NeoBundleLazy 'mattn/emmet-vim'
   NeoBundleLazy 'osyo-manga/vim-over'
 
-  NeoBundleLazy 'Shougo/neocomplete.vim',       {'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim']}
-  NeoBundleLazy 'Shougo/neosnippet.vim'
+  NeoBundleLazy 'Shougo/neocomplete.vim'
   NeoBundleLazy 'eagletmt/neco-ghc'
   NeoBundleLazy 'osyo-manga/vim-marching'
 
   " operator
-  NeoBundleLazy 'kana/vim-operator-replace',    {'depends': 'kana/vim-operator-user'}
-  NeoBundleLazy 'rhysd/vim-clang-format',       {'depends': 'kana/vim-operator-user'}
+  NeoBundleLazy 'kana/vim-operator-replace'
+  NeoBundleLazy 'rhysd/vim-clang-format'
 
   " colorscheme
   NeoBundle 'Tosainu/last256'
 
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
-  NeoBundleLazy 'Shougo/neomru.vim',            {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'lambdalisue/vim-gista',        {'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']}
-  NeoBundleLazy 'rhysd/unite-codic.vim',        {'depends': ['Shougo/unite.vim', 'koron/codic-vim']}
-  NeoBundleLazy 'ujihisa/unite-colorscheme',    {'depends': 'Shougo/unite.vim'}
-  NeoBundleLazy 'ujihisa/unite-haskellimport',  {'depends': 'Shougo/unite.vim'}
+  NeoBundleLazy 'Shougo/neomru.vim'
+  NeoBundleLazy 'lambdalisue/vim-gista'
+  NeoBundleLazy 'rhysd/unite-codic.vim'
+  NeoBundleLazy 'ujihisa/unite-colorscheme'
+  NeoBundleLazy 'ujihisa/unite-haskellimport'
 
   " languages
   NeoBundle 'ap/vim-css-color'
@@ -293,20 +289,12 @@ if neobundle#load_cache()
   NeoBundleSaveCache
 endif
 
-" vim-gitgutter {{{
-if neobundle#tap('vim-gitgutter')
-  let g:gitgutter_max_signs = 1000
-  let g:gitgutter_sign_added = '✚'
-  let g:gitgutter_sign_modified = '➜'
-  let g:gitgutter_sign_modified_removed = '➜'
-  let g:gitgutter_sign_removed = '✘'
-
-  call neobundle#untap()
-endif
-" }}}
-
 " lightline.vim {{{
 if neobundle#tap('lightline.vim')
+  call neobundle#config({
+        \   'depends': [ 'airblade/vim-gitgutter', 'tpope/vim-fugitive']
+        \ })
+
   let g:lightline = {
         \   'colorscheme': 'wombat',
         \   'active': {
@@ -376,6 +364,18 @@ if neobundle#tap('lightline.vim')
 endif
 " }}}
 
+" vim-gitgutter {{{
+if neobundle#tap('vim-gitgutter')
+  let g:gitgutter_max_signs = 1000
+  let g:gitgutter_sign_added = '✚'
+  let g:gitgutter_sign_modified = '➜'
+  let g:gitgutter_sign_modified_removed = '➜'
+  let g:gitgutter_sign_removed = '✘'
+
+  call neobundle#untap()
+endif
+" }}}
+
 " vim-quickrun {{{
 if neobundle#tap('vim-quickrun')
   let g:quickrun_no_default_key_mappings = 1
@@ -409,6 +409,15 @@ endif
 
 " vim-watchdogs {{{
 if neobundle#tap('vim-watchdogs')
+  call neobundle#config({
+        \   'depends': [
+        \     'Shougo/vimproc.vim',
+        \     'jceb/vim-hier',
+        \     'osyo-manga/shabadou.vim',
+        \     'thinca/vim-quickrun',
+        \   ]
+        \ })
+
   function! neobundle#hooks.on_source(bundle)
     let g:watchdogs_check_BufWritePost_enables = {
           \   'c':          1,
@@ -488,7 +497,8 @@ if neobundle#tap('vimfiler.vim')
         \     ],
         \     'mappings': '<Plug>',
         \     'explorer': 1,
-        \   }
+        \   },
+        \   'depends': 'Shougo/unite.vim'
         \ })
 
   function! neobundle#hooks.on_source(bundle)
@@ -511,7 +521,8 @@ endif
 " previm {{{
 if neobundle#tap('previm')
   call neobundle#config({
-        \   'autoload': {'filetypes': 'markdown'}
+        \   'autoload': {'filetypes': 'markdown'},
+        \   'depends': 'tyru/open-browser.vim'
         \ })
 
   let g:previm_enable_realtime = 1
@@ -552,6 +563,7 @@ endif
 if neobundle#tap('neocomplete.vim')
   call neobundle#config({
         \   'autoload': {'insert': '1'},
+        \   'depends': ['Shougo/neoinclude.vim', 'Shougo/neosnippet.vim'],
         \   'disabled': !has('lua'),
         \ })
 
@@ -653,6 +665,7 @@ endif
 if neobundle#tap('vim-operator-replace')
   call neobundle#config({
         \   'autoload': {'mappings': '<Plug>(operator-replace)'},
+        \   'depends': 'kana/vim-operator-user'
         \ })
 
   nmap R  <Plug>(operator-replace)
@@ -666,6 +679,7 @@ if neobundle#tap('vim-clang-format')
         \     'filetypes': ['c', 'cpp'],
         \     'mappings': '<Plug>(operator-clang-format)',
         \   },
+        \   'depends': 'kana/vim-operator-user',
         \   'external_commands': 'clang-format',
         \ })
 
@@ -725,7 +739,8 @@ endif
 " neomru.vim {{{
 if neobundle#tap('neomru.vim')
   call neobundle#config({
-        \   'autoload': {'unite_sources': 'file_mru'}
+        \   'autoload': {'unite_sources': 'file_mru'},
+        \   'depends': 'Shougo/unite.vim'
         \ })
 
   nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
@@ -741,7 +756,8 @@ if neobundle#tap('vim-gista')
         \     'commands': ['Gista'],
         \     'mappings': '<Plug>',
         \     'unite_sources': 'gista',
-        \   }
+        \   },
+        \   'depends': ['Shougo/unite.vim', 'tyru/open-browser.vim']
         \ })
 
   let g:gista#github_user = 'Tosainu'
@@ -755,7 +771,8 @@ endif
 " unite-codic.vim {{{
 if neobundle#tap('unite-codic.vim')
   call neobundle#config({
-        \   'autoload': {'unite_sources': ['codic']}
+        \   'autoload': {'unite_sources': ['codic']},
+        \   'depends': ['Shougo/unite.vim', 'koron/codic-vim']
         \ })
 
   nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
@@ -767,7 +784,8 @@ endif
 " unite-colorscheme {{{
 if neobundle#tap('unite-colorscheme')
   call neobundle#config({
-        \   'autoload': {'unite_sources': ['colorscheme']}
+        \   'autoload': {'unite_sources': ['colorscheme']},
+        \   'depends': 'Shougo/unite.vim'
         \ })
 
   call neobundle#untap()
@@ -778,6 +796,7 @@ endif
 if neobundle#tap('unite-haskellimport')
   call neobundle#config({
         \   'autoload': {'filetypes': ['haskell']},
+        \   'depends': 'Shougo/unite.vim',
         \   'external_commands': 'hoogle',
         \ })
 
@@ -789,11 +808,6 @@ endif
 
 call neobundle#end()
 filetype plugin indent on
-
-if !has('vim_starting')
-  call neobundle#call_hook('on_source')
-endif
-" }}}
 
 " colorscheme {{{
 syntax enable
