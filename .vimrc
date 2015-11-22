@@ -805,14 +805,20 @@ filetype plugin indent on
 
 " colorscheme {{{
 syntax enable
-if !has('gui_running')
-  " color mode
-  set t_Co=256
 
-  try
-    colorscheme last256
-  catch
-    colorscheme default
-  endtry
+if $TERM =~# '^xterm.*'
+  set t_Co=256
+endif
+
+if !has('gui_running')
+  if &t_Co < 256
+    colorscheme slate
+  else
+    try
+      colorscheme last256
+    catch
+      colorscheme slate
+    endtry
+  endif
 endif
 " }}}
