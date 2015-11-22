@@ -150,8 +150,8 @@ nnoremap <S-Right> <C-W>>
 
 " filetypes {{{
 " C++
-Autocmd FileType cpp call s:cpp_config()
-function! s:cpp_config()
+Autocmd FileType cpp call s:on_cpp_files()
+function! s:on_cpp_files()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
   " // indent sample
@@ -197,8 +197,8 @@ function! s:cpp_config()
 endfunction
 
 " markdown
-Autocmd FileType markdown call s:markdown_config()
-function! s:markdown_config()
+Autocmd FileType markdown call s:on_markdown_files()
+function! s:on_markdown_files()
   let g:markdown_fenced_languages = [
         \   'c',
         \   'cpp',
@@ -214,15 +214,15 @@ function! s:markdown_config()
 endfunction
 
 " ruby
-Autocmd FileType ruby call s:ruby_config()
-function! s:ruby_config()
+Autocmd FileType ruby call s:on_ruby_files()
+function! s:on_ruby_files()
   let g:rubycomplete_buffer_loading = 1
   let g:rubycomplete_classes_in_global = 1
 endfunction
 
 " binary files
-Autocmd BufReadPost * if &binary | call s:binary_config() | endif
-function! s:binary_config()
+Autocmd BufReadPost * if &binary | call s:on_binary_files() | endif
+function! s:on_binary_files()
   silent %!xxd -g 1
   setlocal ft=xxd
 
