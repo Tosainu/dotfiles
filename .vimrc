@@ -267,7 +267,6 @@ if neobundle#load_cache()
 
   " unite
   NeoBundleLazy 'Shougo/unite.vim'
-  NeoBundleLazy 'Shougo/neomru.vim'
   NeoBundleLazy 'lambdalisue/vim-gista'
   NeoBundleLazy 'rhysd/unite-codic.vim'
   NeoBundleLazy 'ujihisa/unite-colorscheme'
@@ -724,19 +723,6 @@ if neobundle#tap('unite.vim')
   nnoremap <silent> [unite]s :<C-u>Unite line -start-insert<CR>
   nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
   nnoremap <silent> [unite]u :<C-u>Unite neobundle/update<CR>
-
-  call neobundle#untap()
-endif
-" }}}
-
-" neomru.vim {{{
-if neobundle#tap('neomru.vim')
-  call neobundle#config({
-        \   'autoload': {'unite_sources': 'file_mru'},
-        \   'depends':  'Shougo/unite.vim'
-        \ })
-
-  nnoremap <silent> [unite]h :<C-u>Unite file_mru -buffer-name=history<CR>
 
   call neobundle#untap()
 endif
