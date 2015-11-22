@@ -1,12 +1,18 @@
-" basic settings {{{
 " skip when vim-tiny or vim-small
 if 0 | endif
 
-" vimrc augroup
+" vimrc augroup {{{
 augroup MyVimrc
   autocmd!
 augroup END
 
+command! -nargs=* Autocmd autocmd MyVimrc <args>
+
+Autocmd FileType vim highlight def link myVimAutocmd vimAutoCmd
+Autocmd FileType vim match myVimAutocmd /\<\%(Autocmd\)\>/
+" }}}
+
+" basic settings {{{
 " encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -113,9 +119,9 @@ set undofile
 set viminfo+=n~/.vim/viminfo
 
 " disable auto comment
-autocmd MyVimrc BufEnter * setlocal formatoptions-=ro
+Autocmd BufEnter * setlocal formatoptions-=ro
 " open last position
-autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 " }}}
 
 " keybind {{{
@@ -144,7 +150,7 @@ nnoremap <S-Right> <C-W>>
 
 " filetypes {{{
 " C++
-autocmd MyVimrc FileType cpp call s:cpp_config()
+Autocmd FileType cpp call s:cpp_config()
 function! s:cpp_config()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
@@ -191,7 +197,7 @@ function! s:cpp_config()
 endfunction
 
 " markdown
-autocmd MyVimrc FileType markdown call s:markdown_config()
+Autocmd FileType markdown call s:markdown_config()
 function! s:markdown_config()
   let g:markdown_fenced_languages = [
         \   'c',
@@ -208,27 +214,27 @@ function! s:markdown_config()
 endfunction
 
 " ruby
-autocmd MyVimrc FileType ruby call s:ruby_config()
+Autocmd FileType ruby call s:ruby_config()
 function! s:ruby_config()
   let g:rubycomplete_buffer_loading = 1
   let g:rubycomplete_classes_in_global = 1
 endfunction
 
 " binary files
-autocmd MyVimrc BufReadPost * if &binary | call s:binary_config() | endif
+Autocmd BufReadPost * if &binary | call s:binary_config() | endif
 function! s:binary_config()
   silent %!xxd -g 1
   setlocal ft=xxd
 
-  autocmd MyVimrc BufWritePre * %!xxd -r
-  autocmd MyVimrc BufWritePost * silent %!xxd -g 1
-  autocmd MyVimrc BufWritePost * setlocal nomodified
+  Autocmd BufWritePre * %!xxd -r
+  Autocmd BufWritePost * silent %!xxd -g 1
+  Autocmd BufWritePost * setlocal nomodified
 endfunction
 
 " quickfix
-autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
+Autocmd FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
-autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
+Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " neobundle {{{
@@ -720,7 +726,7 @@ if neobundle#tap('unite.vim')
     call unite#custom_default_action('file', 'tabopen')
     call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
 
-    autocmd MyVimrc FileType unite call s:unite_myconfig()
+    Autocmd FileType unite call s:unite_myconfig()
     function! s:unite_myconfig()
       imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
     endfunction
