@@ -154,46 +154,25 @@ Autocmd FileType cpp call s:on_cpp_files()
 function! s:on_cpp_files()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
-  " // indent sample
-  "
-  " class foo {
-  " public:
-  "   void hello() const {
-  "     std::cout << "Hello!" << std::endl;
-  "   }
-  " };
-  "
-  " auto main() -> int {
-  "   std::array<foo, 5> a{};
-  "   std::for_each(a.begin(), a.end(), [](const auto& i) {
-  "     i.hello();
-  "   });
-  " }
 
   " include path
-  let s:incpath = [
-        \   '/usr/include/boost',
-        \   '/usr/include/c++/v1',
-        \   expand('~/.ghq/github.com/bolero-MURAKAMI/Sprout'),
-        \ ]
+  setlocal path+=/usr/include/c++/v1,/usr/local/include,~/.local/include
 
-  execute 'setlocal path+=' . join(s:incpath, ',')
-
-  " expand namespace
-  " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
   inoremap <buffer><expr>; <SID>expand_namespace()
-  function! s:expand_namespace()
-    let s = getline('.')[0:col('.') - 2]
-    if s =~# '\<b;$'
-      return "\<BS>oost::"
-    elseif s =~# '\<s;$'
-      return "\<BS>td::"
-    elseif s =~# '\<d;$'
-      return "\<BS>etail::"
-    else
-      return ';'
-    endif
-  endfunction
+endfunction
+
+" http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
+function! s:expand_namespace()
+  let s = getline('.')[0:col('.') - 2]
+  if s =~# '\<b;$'
+    return "\<BS>oost::"
+  elseif s =~# '\<s;$'
+    return "\<BS>td::"
+  elseif s =~# '\<d;$'
+    return "\<BS>etail::"
+  else
+    return ';'
+  endif
 endfunction
 
 " markdown
