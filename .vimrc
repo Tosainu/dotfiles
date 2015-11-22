@@ -214,6 +214,9 @@ endfunction
 Autocmd FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
 Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
+
+" search vim help for word under cursor
+Autocmd FileType vim  setlocal keywordprg=:help
 " }}}
 
 " neobundle {{{
