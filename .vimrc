@@ -230,16 +230,11 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'Shougo/vimproc.vim'
-
 Plugin 'itchyny/lightline.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 
 Plugin 'thinca/vim-quickrun'
-Plugin 'osyo-manga/vim-watchdogs'
-Plugin 'jceb/vim-hier',
-Plugin 'osyo-manga/shabadou.vim',
 
 Plugin 'Yggdroot/indentLine'
 Plugin 'haya14busa/incsearch.vim'
@@ -275,7 +270,6 @@ Plugin 'Shougo/unite.vim'
 Plugin 'lambdalisue/vim-gista'
 Plugin 'koron/codic-vim'
 Plugin 'rhysd/unite-codic.vim'
-Plugin 'ujihisa/unite-colorscheme'
 Plugin 'ujihisa/unite-haskellimport'
 
 " languages
@@ -376,7 +370,6 @@ let g:quickrun_config._ = {
       \   'outputter/error': 'quickfix',
       \   'outputter/error/success': 'buffer',
       \   'outputter': 'error',
-      \   'runner': 'vimproc',
       \ }
 
 let g:quickrun_config.cpp = {
@@ -384,25 +377,8 @@ let g:quickrun_config.cpp = {
       \   'cmdopt':     '-Wall -Wextra -std=c++14 -lboost_system -pthread',
       \ }
 
-let g:quickrun_config.markdown = {
-      \   'outputter':  'null',
-      \ }
-
 nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
-" }}}
-
-" vim-watchdogs {{{
-let g:watchdogs_check_BufWritePost_enable_on_wq = 0
-let g:watchdogs_check_BufWritePost_enables = {
-      \   'c':          1,
-      \   'haskell':    1,
-      \   'lua':        1,
-      \   'ruby':       1,
-      \   'scss':       1,
-      \ }
-
-call watchdogs#setup(g:quickrun_config)
 " }}}
 
 " incsearch.vim {{{
@@ -513,7 +489,7 @@ endif
 " }}}
 
 " vim-marching {{{
-let g:marching_wait_time = 1.0
+let g:marching_backend = 'sync_clang_command'
 let g:marching#clang_command#options = {
       \   'cpp':  '-std=c++14',
       \ }
