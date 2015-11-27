@@ -290,7 +290,7 @@ let g:lightline = {
       \   'active': {
       \     'left': [
       \       ['mode'],
-      \       ['fugitive', 'readonly', 'filename', 'modified'],
+      \       ['git-branch', 'readonly', 'filename', 'modified'],
       \     ],
       \     'right': [
       \       ['lineinfo'],
@@ -300,11 +300,11 @@ let g:lightline = {
       \     ]
       \   },
       \   'component_function': {
-      \     'filename':   'LightlineFilename',
-      \     'fugitive':   'LightlineFugitive',
-      \     'gitgutter':  'LightlineGitGutter',
-      \     'modified':   'LightlineModified',
       \     'readonly':   'LightlineReadonly',
+      \     'filename':   'LightlineFilename',
+      \     'modified':   'LightlineModified',
+      \     'git-branch': 'LightLineGitBranch',
+      \     'gitgutter':  'LightlineGitGutter',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
@@ -312,7 +312,7 @@ let g:lightline = {
       \ }
 
 function! LightlineReadonly()
-  return &ft !~? 'help' && &ro ? "\ue0a2" : ''
+  return &ro ? "\ue0a2" : ''
 endfunction
 
 function! LightlineFilename()
@@ -322,32 +322,34 @@ function! LightlineFilename()
 endfunction
 
 function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &modifiable && &modified ? '+' : ''
 endfunction
 
-function! LightlineFugitive()
-  return strlen(fugitive#head()) ? "\ue0a0 " . fugitive#head() : ''
+function! LightLineGitBranch()
+  if &ft == 'help' || !exists('*fugitive#head')
+    return ''
+  endif
+  let _ = fugitive#head()
+  return _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
 function! LightlineGitGutter()
-  if !exists('*GitGutterGetHunkSummary')
-        \ || !get(g:, 'gitgutter_enabled', 0)
-        \ || winwidth('.') <= 90
+  if !exists('*GitGutterGetHunkSummary') || !get(g:, 'gitgutter_enabled', 0)
     return ''
   endif
   let symbols = [
-        \ g:gitgutter_sign_added . ' ',
-        \ g:gitgutter_sign_modified . ' ',
-        \ g:gitgutter_sign_removed . ' '
+        \   g:gitgutter_sign_added,
+        \   g:gitgutter_sign_modified,
+        \   g:gitgutter_sign_removed,
         \ ]
   let hunks = GitGutterGetHunkSummary()
-  let ret = []
+  let _ = []
   for i in [0, 1, 2]
     if hunks[i] > 0
-      call add(ret, symbols[i] . hunks[i])
+      call add(_, symbols[i] . ' ' . hunks[i])
     endif
   endfor
-  return join(ret, ' ')
+  return join(_, ' ')
 endfunction
 " }}}
 
