@@ -137,9 +137,8 @@ inoremap <Down>  <Nop>
 inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
 
-" remap j/k
-nnoremap j gj
-nnoremap k gk
+" disable F1 key
+noremap <F1> <nop>
 
 " change window size
 nnoremap <S-Up>    <C-W>-
@@ -511,7 +510,7 @@ let g:clang_format#style_options = {
       \   'Standard':             'Cpp11',
       \ }
 
-map <buffer><Leader>cf <Plug>(operator-clang-format)
+map <buffer><Leader>x <Plug>(operator-clang-format)
 " }}}
 
 " unite.vim {{{
