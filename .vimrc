@@ -230,27 +230,26 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'itchyny/lightline.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-
-Plugin 'thinca/vim-quickrun'
-
+Plugin 'Shougo/vimfiler.vim'
 Plugin 'Yggdroot/indentLine'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'itchyny/lightline.vim'
+Plugin 'kannokanno/previm'
+Plugin 'thinca/vim-quickrun'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tyru/open-browser.vim'
+Plugin 'vim-jp/vimdoc-ja'
+
+Plugin 'AndrewRadev/switch.vim'
 Plugin 'haya14busa/incsearch.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 't9md/vim-textmanip'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-jp/vimdoc-ja'
 
-Plugin 'AndrewRadev/switch.vim'
-Plugin 'Shougo/vimfiler.vim'
-Plugin 'kannokanno/previm'
-Plugin 'mattn/emmet-vim'
-Plugin 'osyo-manga/vim-over'
-Plugin 'tyru/open-browser.vim'
-
+" code completion
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neoinclude.vim'
 Plugin 'Shougo/neosnippet.vim'
@@ -262,9 +261,6 @@ Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-operator-replace'
 Plugin 'rhysd/vim-clang-format'
 
-" colorscheme
-Plugin 'Tosainu/last256'
-
 " unite
 Plugin 'Shougo/unite.vim'
 Plugin 'lambdalisue/vim-gista'
@@ -272,7 +268,10 @@ Plugin 'koron/codic-vim'
 Plugin 'rhysd/unite-codic.vim'
 Plugin 'ujihisa/unite-haskellimport'
 
-" languages
+" colorscheme
+Plugin 'Tosainu/last256'
+
+" filetypes
 Plugin 'ap/vim-css-color'
 Plugin 'dag/vim2hs'
 Plugin 'hail2u/vim-css3-syntax'
@@ -283,6 +282,7 @@ Plugin 'vim-jp/vim-cpp'
 
 call vundle#end()
 filetype plugin indent on
+" }}}
 
 " lightline.vim {{{
 let g:lightline = {
@@ -549,8 +549,6 @@ nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR
 
 " unite-haskellimport {{{
 let g:necoghc_enable_detailed_browse = 1
-" }}}
-
 " }}}
 
 " colorscheme {{{
