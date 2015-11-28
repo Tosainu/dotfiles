@@ -11,6 +11,11 @@ set lines=38
 set guioptions-=m
 set guioptions-=M
 set guioptions-=T
+" hide scrollbar
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
 
 " disable visualbell
 set t_vb=
