@@ -103,10 +103,7 @@ if has('win32') || has('win64')
 endif
 
 " swapfile
-if !isdirectory($HOME.'/.vim/swap')
-  call mkdir($HOME.'/.vim/swap', 'p')
-endif
-set directory=~/.vim/swap
+set noswapfile
 
 " undofile
 if !isdirectory($HOME.'/.vim/undo')
