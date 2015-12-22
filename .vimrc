@@ -115,8 +115,6 @@ set undofile
 " viminfo
 set viminfo+=n~/.vim/viminfo
 
-" disable auto comment
-Autocmd BufEnter * setlocal formatoptions-=ro
 " open last position
 Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 " }}}
