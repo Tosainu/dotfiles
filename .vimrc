@@ -182,8 +182,6 @@ function! s:on_markdown_files()
         \   'scss',
         \   'vim',
         \ ]
-
-  nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 endfunction
 
 " ruby
@@ -408,6 +406,8 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 
 " previm {{{
 let g:previm_enable_realtime = 1
+
+Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 " }}}
 
 " emmet-vim {{{
