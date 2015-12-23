@@ -46,12 +46,12 @@ set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 " command-line completion
 set wildmenu wildignorecase wildmode=longest,full
 " separator
-set fillchars+=vert:\ 
+set fillchars& fillchars+=vert:\ 
 " open file in tab
 set switchbuf+=usetab,newtab
 
 " add <> to matchpairs
-set matchpairs+=<:>
+set matchpairs& matchpairs+=<:>
 " history
 set history=1000
 " backspace
@@ -98,6 +98,7 @@ set nobackup
 
 " runtimepath for windows
 if has('win32') || has('win64')
+  set runtimepath&
   set runtimepath^=$HOME/.vim
   set runtimepath+=$HOME/.vim/after
 endif
@@ -113,7 +114,7 @@ set undodir=~/.vim/undo
 set undofile
 
 " viminfo
-set viminfo+=n~/.vim/viminfo
+set viminfo& viminfo+=n~/.vim/viminfo
 
 " open last position
 Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
@@ -150,7 +151,7 @@ function! s:on_cpp_files()
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 
   " include path
-  setlocal path+=/usr/include/c++/v1,/usr/local/include,~/.local/include
+  setlocal path& path+=/usr/include/c++/v1,/usr/local/include,~/.local/include
 
   inoremap <buffer><expr>; <SID>expand_namespace()
 endfunction
