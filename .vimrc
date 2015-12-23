@@ -499,13 +499,14 @@ nmap R  <Plug>(operator-replace)
 " vim-clang-format {{{
 let g:clang_format#style_options = {
       \   'AccessModifierOffset': -2,
-      \   'AllowShortFunctionsOnASingleLine': 'Empty',
       \   'ColumnLimit':          128,
-      \   'SpacesBeforeTrailingComments': 1,
-      \   'Standard':             'Cpp11',
+      \   'AlignConsecutiveAssignments':      'true',
+      \   'AllowShortFunctionsOnASingleLine': 'Empty',
+      \   'DerivePointerAlignment':           'false',
+      \   'Standard':                         'Cpp11',
       \ }
 
-map <buffer><Leader>x <Plug>(operator-clang-format)
+Autocmd FileType c,cpp map <buffer><Leader>x <Plug>(operator-clang-format)
 " }}}
 
 " unite.vim {{{
