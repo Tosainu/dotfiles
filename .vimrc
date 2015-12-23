@@ -80,7 +80,7 @@ set hlsearch
 set wrapscan
 
 " timeout
-set timeoutlen=500
+set ttimeoutlen=10
 set updatetime=200
 
 " clipboard
