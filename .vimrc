@@ -224,7 +224,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'Shougo/vimfiler.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'itchyny/lightline.vim'
@@ -311,7 +310,6 @@ endfunction
 
 function! LightlineFilename()
   return  &ft == 'unite'    ? unite#get_status_string() :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
 endfunction
 
@@ -406,19 +404,6 @@ xmap <C-l> <Plug>(textmanip-move-right)
 
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
-" }}}
-
-" vimfiler {{{
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_ignore_pattern = ['^\.git$']
-
-call vimfiler#custom#profile('default', 'context', {
-      \   'safe':         0,
-      \   'edit_action':  'tabopen',
-      \ })
-
-" open Vimfiler
-nmap <silent> <Leader>vf :<C-u>VimFilerExplorer -winwidth=25<CR>
 " }}}
 
 " previm {{{
