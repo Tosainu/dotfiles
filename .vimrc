@@ -48,7 +48,7 @@ set wildmenu wildignorecase wildmode=longest,full
 " separator
 set fillchars& fillchars+=vert:\ 
 " open file in tab
-set switchbuf+=usetab,newtab
+set switchbuf=useopen,usetab,newtab
 
 " add <> to matchpairs
 set matchpairs& matchpairs+=<:>
