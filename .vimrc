@@ -469,6 +469,10 @@ if has('conceal')
 endif
 " }}}
 
+" neco-ghc {{{
+let g:necoghc_enable_detailed_browse = 1
+" }}}
+
 " vim-marching {{{
 let g:marching_backend = 'sync_clang_command'
 let g:marching#clang_command#options = {
@@ -525,10 +529,6 @@ nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
 
 " unite-codic.vim {{{
 nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
-" }}}
-
-" unite-haskellimport {{{
-let g:necoghc_enable_detailed_browse = 1
 " }}}
 
 " colorscheme {{{
