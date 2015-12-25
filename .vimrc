@@ -212,6 +212,19 @@ Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 Autocmd FileType vim  setlocal keywordprg=:help
 " }}}
 
+" netrw {{{
+let g:netrw_banner=0
+let g:netrw_winsize=-25
+" open file in new tab
+let g:netrw_browse_split=3
+" tree view
+let g:netrw_liststyle=3
+
+nnoremap <silent><C-\> :<C-u>Lexplore<CR>
+
+Autocmd FileType netrw setlocal nolist
+" }}}
+
 " Plugins {{{
 if isdirectory('~/.vim/bundle/Vundle.vim')
   finish
