@@ -212,20 +212,21 @@ Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 Autocmd FileType vim  setlocal keywordprg=:help
 " }}}
 
+" Plugins {{{
 " netrw {{{
-let g:netrw_banner=0
-let g:netrw_winsize=-25
+let g:netrw_banner = 0
+let g:netrw_winsize = -25
 " open file in new tab
-let g:netrw_browse_split=3
+let g:netrw_browse_split = 3
 " tree view
-let g:netrw_liststyle=3
+let g:netrw_liststyle = 3
 
 nnoremap <silent><C-\> :<C-u>Lexplore<CR>
 
 Autocmd FileType netrw setlocal nolist
 " }}}
 
-" Plugins {{{
+" Vundle.vim {{{
 if isdirectory('~/.vim/bundle/Vundle.vim')
   finish
 endif
@@ -496,8 +497,9 @@ let g:marching#clang_command#options = {
 let g:marching_enable_neocomplete = 1
 " }}}
 
-" vim-operator-replace
+" vim-operator-replace {{{
 nmap R  <Plug>(operator-replace)
+" }}}
 
 " vim-clang-format {{{
 let g:clang_format#style_options = {
@@ -543,6 +545,7 @@ nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
 
 " unite-codic.vim {{{
 nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
+" }}}
 " }}}
 
 " colorscheme {{{
