@@ -246,3 +246,8 @@ ENHANCD_PATH=~/.ghq/github.com/b4b4r07/enhancd/enhancd.sh
 if [ -f $ENHANCD_PATH ]; then
   source $ENHANCD_PATH
 fi
+
+if [[ $TERM == xterm-termite ]]; then
+  . /etc/profile.d/vte.sh
+  __vte_osc7
+fi
