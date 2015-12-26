@@ -34,6 +34,8 @@ typeset -Ua path cdpath fpath manpath
 # zsh options
 # -------------------------------------
 
+autoload -Uz add-zsh-hook
+
 # Basic
 setopt correct
 setopt extended_glob
@@ -211,9 +213,10 @@ alias -s {bmp,gif,jpg,JPG,png,svg}=viewnior
 # Title
 case $TERM in
   xterm*)
-    precmd() {
+    function update_title() {
       echo -ne "\033]0;${USER}@${HOST%%.*} (${SHELL})\007"
     }
+    add-zsh-hook precmd update_title
     ;;
 esac
 
