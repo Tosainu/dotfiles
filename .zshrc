@@ -62,14 +62,14 @@ setopt inc_append_history
 # colors
 # -------------------------------------
 
-autoload -U colors; colors
+autoload -Uz colors; colors
 export LS_COLORS='no=00;38;5;252:rs=0:di=01;38;5;111:ln=01;38;5;113:mh=00:pi=48;5;241;38;5;192;01:so=48;5;241;38;5;192;01:do=48;5;241;38;5;192;01:bd=48;5;241;38;5;177;01:cd=48;5;241;38;5;177;01:or=48;5;236;38;5;196:su=48;5;209;38;5;235:sg=48;5;192;38;5;235:ca=30;41:tw=48;5;113;38;5;235:ow=48;5;113;38;5;111:st=48;5;111;38;5;235:ex=01;38;5;209:*#=00;38;5;246:*~=00;38;5;246:*.o=00;38;5;246:*.swp=00;38;5;246:'
 
 # -------------------------------------
 # completion
 # -------------------------------------
 
-autoload -U compinit; compinit
+autoload -Uz compinit; compinit
 setopt list_packed
 setopt magic_equal_subst
 
@@ -169,7 +169,7 @@ bindkey '^[[Z'  reverse-menu-complete
 bindkey '^r'  peco-select-history
 bindkey '^I'  tab_cd
 
-autoload -U select-word-style; select-word-style bash
+autoload -Uz select-word-style; select-word-style bash
 bindkey '^w' backward-kill-word
 
 # -------------------------------------
