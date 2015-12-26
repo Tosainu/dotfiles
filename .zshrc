@@ -1,24 +1,12 @@
 # -------------------------------------
-# exports
+# variables
 # -------------------------------------
-
-# term
-if [ "$TERM" = "xterm" ]; then
-  if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-    export TERM='xterm-256color'
-  else
-    export TERM='xterm-color'
-  fi
-fi
 
 export KCODE=u
 export REPORTTIME=5
 export EDITOR='vim'
 export PAGER='less'
 export VISUAL='vim'
-
-# rvm
-[ -s ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 
 path=(
   /usr/local/bin(N-/)
@@ -39,7 +27,7 @@ fpath=(
 # golang
 export GOPATH=~/.go
 
-# remove duplicate path
+# remove duplicate
 typeset -Ua path cdpath fpath manpath
 
 # -------------------------------------
@@ -69,15 +57,6 @@ setopt extended_history
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt inc_append_history
-
-# Title
-case $TERM in
-  xterm*)
-    precmd() {
-      echo -ne "\033]0;${USER}@${HOST%%.*} (${SHELL})\007"
-    }
-    ;;
-esac
 
 # -------------------------------------
 # colors
@@ -226,6 +205,24 @@ alias -s {html,htm,xhtml}=chromium
 alias -s {bmp,gif,jpg,JPG,png,svg}=viewnior
 
 # -------------------------------------
+# term
+# -------------------------------------
+
+# Title
+case $TERM in
+  xterm*)
+    precmd() {
+      echo -ne "\033]0;${USER}@${HOST%%.*} (${SHELL})\007"
+    }
+    ;;
+esac
+
+if [[ $TERM == xterm-termite ]]; then
+  . /etc/profile.d/vte.sh
+  __vte_osc7
+fi
+
+# -------------------------------------
 # plugins
 # -------------------------------------
 
@@ -245,9 +242,4 @@ fi
 ENHANCD_PATH=~/.ghq/github.com/b4b4r07/enhancd/enhancd.sh
 if [ -f $ENHANCD_PATH ]; then
   source $ENHANCD_PATH
-fi
-
-if [[ $TERM == xterm-termite ]]; then
-  . /etc/profile.d/vte.sh
-  __vte_osc7
 fi
