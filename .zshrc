@@ -68,6 +68,29 @@ autoload -Uz colors; colors
 export LS_COLORS='no=00;38;5;252:rs=0:di=01;38;5;111:ln=01;38;5;113:mh=00:pi=48;5;241;38;5;192;01:so=48;5;241;38;5;192;01:do=48;5;241;38;5;192;01:bd=48;5;241;38;5;177;01:cd=48;5;241;38;5;177;01:or=48;5;236;38;5;196:su=48;5;209;38;5;235:sg=48;5;192;38;5;235:ca=30;41:tw=48;5;113;38;5;235:ow=48;5;113;38;5;111:st=48;5;111;38;5;235:ex=01;38;5;209:*#=00;38;5;246:*~=00;38;5;246:*.o=00;38;5;246:*.swp=00;38;5;246:'
 
 # -------------------------------------
+# cdr
+# -------------------------------------
+
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file    "$HOME/.config/zsh/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-max     1000
+zstyle ':chpwd:*' recent-dirs-pushd   true
+
+[ ! -d $HOME/.config/zsh ] && mkdir -p $HOME/.config/zsh
+
+function peco-cdr() {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-cdr
+
+# -------------------------------------
 # completion
 # -------------------------------------
 
@@ -80,6 +103,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' use-cache true
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion:*:*:cdr:*:*' menu selection
 zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
@@ -145,17 +170,6 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 
-function tab_cd {
-  if [[ -z "$BUFFER" ]]; then
-    BUFFER="cd -"
-    CURSOR=$#BUFFER
-    zle accept-line
-  else 
-    zle expand-or-complete
-  fi
-}
-zle -N tab_cd
-
 # -------------------------------------
 # key bindings
 # -------------------------------------
@@ -165,11 +179,10 @@ bindkey -v
 bindkey '^P'  history-beginning-search-backward
 bindkey '^N'  history-beginning-search-forward
 bindkey '^?'  backward-delete-char
-bindkey '^h'  backward-delete-char
 bindkey '^[[Z'  reverse-menu-complete
 
-bindkey '^r'  peco-select-history
-bindkey '^I'  tab_cd
+bindkey '^h'  peco-select-history
+bindkey '^r'  peco-cdr
 
 autoload -Uz select-word-style; select-word-style bash
 bindkey '^w' backward-kill-word
@@ -239,10 +252,4 @@ fi
 ZSH_SYNTAX_HIGHLIGHTING_PATH=~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
   source $ZSH_SYNTAX_HIGHLIGHTING_PATH
-fi
-
-# enhancd
-ENHANCD_PATH=~/.ghq/github.com/b4b4r07/enhancd/enhancd.sh
-if [ -f $ENHANCD_PATH ]; then
-  source $ENHANCD_PATH
 fi
