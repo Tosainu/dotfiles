@@ -374,12 +374,12 @@ let g:quickrun_no_default_key_mappings = 1
 
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config._ = {
-      \   'outputter/buffer/split': ':botright',
-      \   'outputter/buffer/into':  1,
-      \   'outputter/buffer/close_on_empty': 1,
-      \   'outputter/error': 'quickfix',
-      \   'outputter/error/success': 'buffer',
       \   'outputter': 'error',
+      \   'outputter/buffer/close_on_empty': 1,
+      \   'outputter/buffer/into':    1,
+      \   'outputter/buffer/split':   ':botright',
+      \   'outputter/error/error':    'quickfix',
+      \   'outputter/error/success':  'buffer',
       \ }
 
 let g:quickrun_config.cpp = {
@@ -408,7 +408,6 @@ map g# <Plug>(incsearch-nohl-g#)
 " clever-f.vim {{{
 let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case = 1
-let g:clever_f_use_migemo = 1
 " }}}
 
 " vim-textmanip {{{
@@ -525,11 +524,6 @@ let g:unite_force_overwrite_statusline = 0
 " always open new tab
 call unite#custom_default_action('file', 'tabopen')
 call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
-
-Autocmd FileType unite call s:unite_myconfig()
-function! s:unite_myconfig()
-  imap <silent><buffer> <C-w> <Plug>(unite_delete_backward_path)
-endfunction
 
 " keybinds
 nnoremap [unite]  <Nop>
