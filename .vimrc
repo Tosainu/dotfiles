@@ -545,6 +545,11 @@ nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
 " unite-codic.vim {{{
 nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
 " }}}
+
+" vim2hs {{{
+let g:haskell_conceal              = 0
+let g:haskell_conceal_enumerations = 0
+" }}}
 " }}}
 
 " colorscheme {{{
