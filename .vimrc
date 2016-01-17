@@ -170,6 +170,12 @@ function! s:expand_namespace()
   endif
 endfunction
 
+" Haskell
+let hs_highlight_boolean    = 1
+let hs_highlight_delimiters = 1
+let hs_highlight_more_types = 1
+let hs_highlight_types      = 1
+
 " markdown
 Autocmd FileType markdown call s:on_markdown_files()
 function! s:on_markdown_files()
@@ -282,7 +288,7 @@ Plugin 'Tosainu/last256'
 
 " filetypes
 Plugin 'ap/vim-css-color'
-Plugin 'dag/vim2hs'
+Plugin 'itchyny/vim-haskell-indent'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'othree/html5.vim'
 Plugin 'rust-lang/rust.vim'
@@ -547,11 +553,6 @@ nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
 
 " unite-codic.vim {{{
 nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
-" }}}
-
-" vim2hs {{{
-let g:haskell_conceal              = 0
-let g:haskell_conceal_enumerations = 0
 " }}}
 " }}}
 
