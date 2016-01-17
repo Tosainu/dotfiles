@@ -453,6 +453,8 @@ if s:meet_neocomplete_requirements
   if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
   endif
+  let g:neocomplete#force_omni_input_patterns.c =
+        \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
   let g:neocomplete#force_omni_input_patterns.cpp =
         \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
   let g:neocomplete#force_omni_input_patterns.ruby =
@@ -495,6 +497,7 @@ endif
 " vim-marching {{{
 let g:marching_backend = 'sync_clang_command'
 let g:marching#clang_command#options = {
+      \   'c':    '-std=c11',
       \   'cpp':  '-std=c++14',
       \ }
 
