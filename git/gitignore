@@ -2,12 +2,28 @@
 *.a
 *.dll
 *.dylib
-*.hi
 *.lib
 *.o
 *.pch
 *.so
 a.out
+
+# Haskell
+*.aux
+*.chi
+*.chs.h
+*.dyn_hi
+*.dyn_o
+*.hi
+*.hp
+*.prof
+.cabal-sandbox/
+.hpc
+.hsenv
+.stack-work/
+cabal-dev
+cabal.sandbox.config
+dist
 
 # vim
 [._]*.s[a-w][a-z]
