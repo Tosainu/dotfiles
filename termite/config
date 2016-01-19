@@ -10,7 +10,7 @@ clickable_url = true
 font = Source Code Pro Medium 11
 scrollback_lines = 100000
 search_wrap = true
-#icon_name = terminal
+icon_name = terminal
 #geometry = 640x480
 
 # "system", "on" or "off"
@@ -36,7 +36,6 @@ highlight = #2f2f2f
 foreground      = #dedede
 foreground_bold = #dedede
 cursor          = #dedede
-# background      = #2b2b2b
 background      = rgba(0, 0, 0, 0.7)
 
 # black
@@ -70,16 +69,5 @@ color14 = #34e2e2
 # white
 color7  = #d3d7cf
 color15 = #eeeeec
-
-[hints]
-#font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#active_foreground = #e68080
-#active_background = #3f3f3f
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0
 
 # vim: ft=dosini cms=#%s
