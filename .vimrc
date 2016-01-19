@@ -546,9 +546,7 @@ nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
 " }}}
 
 " vim-gista {{{
-let g:gista#github_user = 'Tosainu'
-
-nnoremap <silent> [unite]g :<C-u>Unite gista<CR>
+let g:gista#client#default_username = 'Tosainu'
 " }}}
 
 " unite-codic.vim {{{
