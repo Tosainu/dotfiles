@@ -145,10 +145,12 @@ nnoremap <S-Right> <C-W>>
 
 " filetypes {{{
 " C++
-Autocmd FileType cpp call s:on_cpp_files()
+Autocmd FileType c,cpp call s:on_cpp_files()
 function! s:on_cpp_files()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
+
+  setlocal foldmethod=syntax
 
   " include path
   setlocal path& path+=/usr/include/c++/v1,/usr/local/include,~/.local/include
