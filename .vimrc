@@ -198,6 +198,14 @@ function! s:on_ruby_files()
   let g:rubycomplete_classes_in_global = 1
 endfunction
 
+Autocmd FileType vim call s:on_vim_files()
+function! s:on_vim_files()
+  " search vim help for word under cursor
+  setlocal keywordprg=:help
+
+  setlocal foldmethod=marker
+endfunction
+
 " binary files
 Autocmd BufReadPost * if &binary | call s:on_binary_files() | endif
 function! s:on_binary_files()
@@ -215,8 +223,6 @@ Autocmd FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " command window
 Autocmd CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
-" search vim help for word under cursor
-Autocmd FileType vim  setlocal keywordprg=:help
 " }}}
 
 " Plugins {{{
