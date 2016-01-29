@@ -192,11 +192,8 @@ function! s:on_markdown_files()
 endfunction
 
 " ruby
-Autocmd FileType ruby call s:on_ruby_files()
-function! s:on_ruby_files()
-  let g:rubycomplete_buffer_loading = 1
-  let g:rubycomplete_classes_in_global = 1
-endfunction
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
 
 Autocmd FileType vim call s:on_vim_files()
 function! s:on_vim_files()
