@@ -177,19 +177,7 @@ let hs_highlight_more_types = 1
 let hs_highlight_types      = 1
 
 " markdown
-Autocmd FileType markdown call s:on_markdown_files()
-function! s:on_markdown_files()
-  let g:markdown_fenced_languages = [
-        \   'c',
-        \   'cpp',
-        \   'css',
-        \   'html',
-        \   'javascript',
-        \   'ruby',
-        \   'scss',
-        \   'vim',
-        \ ]
-endfunction
+let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'html', 'javascript', 'haskell', 'ruby', 'scss', 'sh', 'vim']
 
 " ruby
 let g:rubycomplete_buffer_loading = 1
