@@ -274,8 +274,8 @@ if s:meet_neocomplete_requirements
   Plugin 'Shougo/neocomplete.vim'
   Plugin 'Shougo/neoinclude.vim'
   Plugin 'Shougo/neosnippet.vim'
-  Plugin 'eagletmt/neco-ghc'
 endif
+Plugin 'eagletmt/neco-ghc'
 Plugin 'osyo-manga/vim-marching'
 
 " operator
@@ -502,10 +502,14 @@ if s:meet_neocomplete_requirements
   endif
   " }}}
 
-  " neco-ghc {{{
-  let g:necoghc_enable_detailed_browse = 1
-  " }}}
 endif
+
+" neco-ghc {{{
+let g:necoghc_enable_detailed_browse = 1
+if !s:meet_neocomplete_requirements
+  Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+endif
+" }}}
 
 " vim-marching {{{
 let g:marching_backend = 'sync_clang_command'
