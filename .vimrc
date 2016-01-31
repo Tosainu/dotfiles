@@ -180,8 +180,9 @@ let hs_highlight_types      = 1
 let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'html', 'javascript', 'haskell', 'ruby', 'scss', 'sh', 'vim']
 
 " ruby
-let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_buffer_loading    = 1
 let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_load_gemfile      = 1
 
 Autocmd FileType vim call s:on_vim_files()
 function! s:on_vim_files()
@@ -286,6 +287,7 @@ Plugin 'othree/html5.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim'
 Plugin 'vim-jp/vim-cpp'
+Plugin 'vim-ruby/vim-ruby'
 
 call vundle#end()
 filetype plugin indent on
