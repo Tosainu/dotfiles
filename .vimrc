@@ -49,7 +49,8 @@ set wildmenu wildignorecase wildmode=longest,full
 set fillchars& fillchars+=vert:\ 
 " open file in tab
 set switchbuf=useopen,usetab,newtab
-
+" increment/decrement alphabetical characters, bin/hex numbers
+set nrformats=alpha,bin,hex
 " add <> to matchpairs
 set matchpairs& matchpairs+=<:>
 " history
