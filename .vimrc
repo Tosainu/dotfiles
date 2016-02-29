@@ -247,6 +247,7 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'vim-jp/vimdoc-ja'
 
 Plugin 'AndrewRadev/switch.vim'
+Plugin 'a.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'osyo-manga/vim-over'
