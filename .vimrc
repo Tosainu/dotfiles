@@ -108,8 +108,8 @@ endif
 set noswapfile
 
 " undofile
-if !isdirectory($HOME.'/.vim/undo')
-  call mkdir($HOME.'/.vim/undo', 'p')
+if !isdirectory(expand('~/.vim/undo'))
+  call mkdir(expand('~/.vim/undo', 'p'))
 endif
 set undodir=~/.vim/undo
 set undofile
@@ -225,7 +225,7 @@ Autocmd FileType netrw setlocal nolist
 " }}}
 
 " Vundle.vim {{{
-if isdirectory('~/.vim/bundle/Vundle.vim')
+if !isdirectory(expand('~/.vim/bundle/Vundle.vim'))
   finish
 endif
 
