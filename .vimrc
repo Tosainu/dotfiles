@@ -252,8 +252,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 't9md/vim-textmanip'
-Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
+Plugin 'tyru/caw.vim'
 
 " code completion
 Plugin 'ervandew/supertab'
