@@ -257,6 +257,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
 
 " code completion
+Plugin 'ervandew/supertab'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'osyo-manga/vim-marching'
 
@@ -431,6 +432,9 @@ let g:user_emmet_settings = {
 imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " }}}
 
+" supertab {{{
+let g:SuperTabDefaultCompletionType = "context"
+" }}}
 
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
