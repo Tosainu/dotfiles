@@ -491,6 +491,10 @@ nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
 " unite-codic.vim {{{
 nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
 " }}}
+
+" unite-haskellimport {{{
+nnoremap <silent> [unite]h :<C-u>Unite haskellimport -start-insert -buffer-name=haskellimport<CR>
+" }}}
 " }}}
 
 " colorscheme {{{
