@@ -257,12 +257,6 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
 
 " code completion
-let s:meet_neocomplete_requirements = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
-if s:meet_neocomplete_requirements
-  Plugin 'Shougo/neocomplete.vim'
-  Plugin 'Shougo/neoinclude.vim'
-  Plugin 'Shougo/neosnippet.vim'
-endif
 Plugin 'eagletmt/neco-ghc'
 Plugin 'osyo-manga/vim-marching'
 
@@ -437,67 +431,10 @@ let g:user_emmet_settings = {
 imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " }}}
 
-if s:meet_neocomplete_requirements
-  " neocomplete.vim {{{
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_auto_delimiter = 1
-  let g:neocomplete#sources#syntax#min_keyword_length = 2
-  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-  " enable heavy omni completion
-  let g:neocomplete#force_overwrite_completefunc = 1
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
-  let g:neocomplete#force_omni_input_patterns.c =
-        \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-  let g:neocomplete#force_omni_input_patterns.cpp =
-        \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-  let g:neocomplete#force_omni_input_patterns.ruby =
-        \ '[^. *\t]\.\w*\|\h\w*::'
-
-  " neocomplete and neosnippet keybinds
-  imap <expr> <CR> !pumvisible() ? "\<CR>" :
-        \ neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" :
-        \ neocomplete#close_popup()
-  imap <expr> <TAB> pumvisible() ? "\<C-n>" :
-        \ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" :
-        \ "\<Tab>"
-  smap <expr> <TAB> neosnippet#jumpable() ?
-        \ "\<Plug>(neosnippet_jump)"
-        \ : "\<TAB>"
-
-  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-  inoremap <expr> <C-h>   neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr> <BS>    neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr> <C-e>   neocomplete#cancel_popup()
-  " }}}
-
-  " neosnippet.vim {{{
-  let g:neosnippet#disable_runtime_snippets = {
-        \   '_': 1,
-        \ }
-  let g:neosnippet#snippets_directory = '~/.vim/snippets'
-
-  " for snippet_complete marker
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-  " }}}
-
-endif
 
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
-if !s:meet_neocomplete_requirements
-  Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-endif
+Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 
 " vim-marching {{{
@@ -506,8 +443,6 @@ let g:marching#clang_command#options = {
       \   'c':    '-std=c11',
       \   'cpp':  '-std=c++14',
       \ }
-
-let g:marching_enable_neocomplete = s:meet_neocomplete_requirements
 " }}}
 
 " vim-operator-replace {{{
