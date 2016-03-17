@@ -134,9 +134,6 @@ inoremap <Down>  <Nop>
 inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
 
-" disable F1 key
-noremap <F1> <nop>
-
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
@@ -185,6 +182,7 @@ let g:rubycomplete_buffer_loading    = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_load_gemfile      = 1
 
+" vim
 Autocmd FileType vim call s:on_vim_files()
 function! s:on_vim_files()
   " search vim help for word under cursor
@@ -199,7 +197,7 @@ function! s:on_binary_files()
   silent %!xxd -g 1
   setlocal ft=xxd
 
-  Autocmd BufWritePre * %!xxd -r
+  Autocmd BufWritePre  * %!xxd -r
   Autocmd BufWritePost * silent %!xxd -g 1
   Autocmd BufWritePost * setlocal nomodified
 endfunction
@@ -214,12 +212,12 @@ Autocmd CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 
 " Plugins {{{
 " netrw {{{
-let g:netrw_banner = 0
-let g:netrw_winsize = -25
+let g:netrw_banner       = 0
+let g:netrw_winsize      = -25
 " open file in new tab
 let g:netrw_browse_split = 3
 " tree view
-let g:netrw_liststyle = 3
+let g:netrw_liststyle    = 3
 
 nnoremap <silent><C-\> :<C-u>Lexplore<CR>
 
@@ -241,6 +239,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kannokanno/previm'
+Plugin 'lambdalisue/vim-gista'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tyru/open-browser.vim'
@@ -268,7 +267,6 @@ Plugin 'rhysd/vim-clang-format'
 
 " unite
 Plugin 'Shougo/unite.vim'
-Plugin 'lambdalisue/vim-gista'
 Plugin 'koron/codic-vim'
 Plugin 'rhysd/unite-codic.vim'
 Plugin 'ujihisa/unite-haskellimport'
@@ -330,6 +328,7 @@ function! LightlineModified()
   return &modifiable && &modified ? '+' : ''
 endfunction
 
+" http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightLineGitBranch()
   if &ft == 'help' || !exists('*fugitive#head')
     return ''
@@ -359,11 +358,11 @@ endfunction
 " }}}
 
 " vim-gitgutter {{{
-let g:gitgutter_max_signs = 1000
-let g:gitgutter_sign_added = '✚'
+let g:gitgutter_max_signs     = 1000
+let g:gitgutter_sign_added    = '✚'
+let g:gitgutter_sign_removed  = '✘'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_modified_removed = '➜'
-let g:gitgutter_sign_removed = '✘'
 " }}}
 
 " vim-quickrun {{{
@@ -404,7 +403,7 @@ map g# <Plug>(incsearch-nohl-g#)
 
 " clever-f.vim {{{
 let g:clever_f_across_no_line = 1
-let g:clever_f_smart_case = 1
+let g:clever_f_smart_case     = 1
 " }}}
 
 " vim-textmanip {{{
@@ -424,6 +423,10 @@ let g:previm_enable_realtime = 1
 Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 " }}}
 
+" vim-gista {{{
+let g:gista#client#default_username = 'Tosainu'
+" }}}
+
 " emmet-vim {{{
 let g:user_emmet_settings = {
       \   'indentation' : '  '
@@ -438,6 +441,7 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
+
 Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 
@@ -471,7 +475,7 @@ let g:unite_force_overwrite_statusline = 0
 
 " always open new tab
 call unite#custom_default_action('file', 'tabopen')
-call unite#custom#source('file,file_rec/git', 'matchers', 'matcher_default')
+call unite#custom#source('file', 'matchers', 'matcher_default')
 
 " keybinds
 nnoremap [unite]  <Nop>
@@ -482,10 +486,6 @@ nnoremap <silent> [unite]n :<C-u>Unite file/new -start-insert<CR>
 nnoremap <silent> [unite]r :<C-u>Unite register<CR>
 nnoremap <silent> [unite]s :<C-u>Unite line -start-insert<CR>
 nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
-" }}}
-
-" vim-gista {{{
-let g:gista#client#default_username = 'Tosainu'
 " }}}
 
 " unite-codic.vim {{{
