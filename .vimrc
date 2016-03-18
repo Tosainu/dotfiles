@@ -80,6 +80,8 @@ set hlsearch
 " searches wrap around
 set wrapscan
 
+set completeopt=menu,menuone,longest,noselect
+
 " timeout
 set ttimeoutlen=10
 set updatetime=200
