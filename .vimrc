@@ -440,6 +440,8 @@ imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " supertab {{{
 let g:SuperTabDefaultCompletionType    = 'context'
 let g:SuperTabClosePreviewOnPopupClose = 1
+
+Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
 " }}}
 
 " neco-ghc {{{
