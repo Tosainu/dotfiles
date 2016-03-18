@@ -438,7 +438,8 @@ imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " }}}
 
 " supertab {{{
-let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType    = 'context'
+let g:SuperTabClosePreviewOnPopupClose = 1
 " }}}
 
 " neco-ghc {{{
