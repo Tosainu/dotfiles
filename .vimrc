@@ -213,19 +213,6 @@ Autocmd CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " Plugins {{{
-" netrw {{{
-let g:netrw_banner       = 0
-let g:netrw_winsize      = -25
-" open file in new tab
-let g:netrw_browse_split = 3
-" tree view
-let g:netrw_liststyle    = 3
-
-nnoremap <silent><C-\> :<C-u>Lexplore<CR>
-
-Autocmd FileType netrw setlocal nolist
-" }}}
-
 " Vundle.vim {{{
 if !isdirectory(expand('~/.vim/bundle/Vundle.vim'))
   finish
@@ -242,6 +229,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kannokanno/previm'
 Plugin 'lambdalisue/vim-gista'
+Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tyru/open-browser.vim'
@@ -427,6 +415,13 @@ Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 
 " vim-gista {{{
 let g:gista#client#default_username = 'Tosainu'
+" }}}
+
+" NERDTree {{{
+let NERDTreeShowHidden = 1
+let NERDTreeWinSize = 24
+
+nnoremap <silent><C-\> :<C-u>NERDTreeToggle<CR>
 " }}}
 
 " emmet-vim {{{
