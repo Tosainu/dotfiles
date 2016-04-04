@@ -433,6 +433,7 @@ imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " }}}
 
 " supertab {{{
+let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType    = 'context'
 let g:SuperTabClosePreviewOnPopupClose = 1
 
