@@ -225,10 +225,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Yggdroot/indentLine'
+Plugin 'a.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kannokanno/previm'
 Plugin 'lambdalisue/vim-gista'
+Plugin 'osyo-manga/vim-over'
+Plugin 'rhysd/clever-f.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tpope/vim-fugitive'
@@ -236,18 +240,14 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'vim-jp/vimdoc-ja'
 
 Plugin 'AndrewRadev/switch.vim'
-Plugin 'a.vim'
-Plugin 'haya14busa/incsearch.vim'
 Plugin 'mattn/emmet-vim'
-Plugin 'osyo-manga/vim-over'
-Plugin 'rhysd/clever-f.vim'
 Plugin 't9md/vim-textmanip'
 Plugin 'tpope/vim-surround'
 Plugin 'tyru/caw.vim'
 
 " code completion
-Plugin 'ervandew/supertab'
 Plugin 'eagletmt/neco-ghc'
+Plugin 'ervandew/supertab'
 Plugin 'osyo-manga/vim-marching'
 
 " operator
@@ -266,8 +266,8 @@ Plugin 'Tosainu/last256'
 
 " filetypes
 Plugin 'ap/vim-css-color'
-Plugin 'itchyny/vim-haskell-indent'
 Plugin 'hail2u/vim-css3-syntax'
+Plugin 'itchyny/vim-haskell-indent'
 Plugin 'othree/html5.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim'
@@ -276,6 +276,28 @@ Plugin 'vim-ruby/vim-ruby'
 
 call vundle#end()
 filetype plugin indent on
+" }}}
+
+" vim-gitgutter {{{
+let g:gitgutter_max_signs     = 1000
+let g:gitgutter_sign_added    = '✚'
+let g:gitgutter_sign_removed  = '✘'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_modified_removed = '➜'
+" }}}
+
+" incsearch.vim {{{
+let g:incsearch#auto_nohlsearch = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 " }}}
 
 " lightline.vim {{{
@@ -347,12 +369,26 @@ function! LightlineGitGutter()
 endfunction
 " }}}
 
-" vim-gitgutter {{{
-let g:gitgutter_max_signs     = 1000
-let g:gitgutter_sign_added    = '✚'
-let g:gitgutter_sign_removed  = '✘'
-let g:gitgutter_sign_modified = '➜'
-let g:gitgutter_sign_modified_removed = '➜'
+" previm {{{
+let g:previm_enable_realtime = 1
+
+Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
+" }}}
+
+" vim-gista {{{
+let g:gista#client#default_username = 'Tosainu'
+" }}}
+
+" clever-f.vim {{{
+let g:clever_f_across_no_line = 1
+let g:clever_f_smart_case     = 1
+" }}}
+
+" NERDTree {{{
+let NERDTreeShowHidden = 1
+let NERDTreeWinSize = 24
+
+nnoremap <silent><C-\> :<C-u>NERDTreeToggle<CR>
 " }}}
 
 " vim-quickrun {{{
@@ -377,51 +413,8 @@ nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
 " }}}
 
-" incsearch.vim {{{
-let g:incsearch#auto_nohlsearch = 1
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-" }}}
-
-" clever-f.vim {{{
-let g:clever_f_across_no_line = 1
-let g:clever_f_smart_case     = 1
-" }}}
-
-" vim-textmanip {{{
-xmap <C-j> <Plug>(textmanip-move-down)
-xmap <C-k> <Plug>(textmanip-move-up)
-xmap <C-h> <Plug>(textmanip-move-left)
-xmap <C-l> <Plug>(textmanip-move-right)
-" }}}
-
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
-" }}}
-
-" previm {{{
-let g:previm_enable_realtime = 1
-
-Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
-" }}}
-
-" vim-gista {{{
-let g:gista#client#default_username = 'Tosainu'
-" }}}
-
-" NERDTree {{{
-let NERDTreeShowHidden = 1
-let NERDTreeWinSize = 24
-
-nnoremap <silent><C-\> :<C-u>NERDTreeToggle<CR>
 " }}}
 
 " emmet-vim {{{
@@ -432,18 +425,25 @@ let g:user_emmet_settings = {
 imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
 " }}}
 
-" supertab {{{
-let g:SuperTabCrMapping = 1
-let g:SuperTabDefaultCompletionType    = 'context'
-let g:SuperTabClosePreviewOnPopupClose = 1
-
-Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
+" vim-textmanip {{{
+xmap <C-j> <Plug>(textmanip-move-down)
+xmap <C-k> <Plug>(textmanip-move-up)
+xmap <C-h> <Plug>(textmanip-move-left)
+xmap <C-l> <Plug>(textmanip-move-right)
 " }}}
 
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
 
 Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" }}}
+
+" supertab {{{
+let g:SuperTabCrMapping = 1
+let g:SuperTabDefaultCompletionType    = 'context'
+let g:SuperTabClosePreviewOnPopupClose = 1
+
+Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
 " }}}
 
 " vim-marching {{{
