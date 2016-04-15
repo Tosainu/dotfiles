@@ -13,7 +13,6 @@ path=(
   /usr/local/sbin(N-/)
   ~/.local/bin(N-/)
   ~/.cabal/bin(N-/)
-  ~/.go/bin(N-/)
   `ruby -e 'print Gem.user_dir'`/bin(N-/)
   $path
 )
@@ -23,9 +22,6 @@ fpath=(
   ~/.go/src/github.com/motemen/ghq/zsh(N-/)
   $fpath
 )
-
-# golang
-export GOPATH=~/.go
 
 # remove duplicate
 typeset -Ua path cdpath fpath manpath
@@ -80,15 +76,15 @@ zstyle ':chpwd:*' recent-dirs-pushd   true
 
 [ ! -d $HOME/.config/zsh ] && mkdir -p $HOME/.config/zsh
 
-function peco-cdr() {
-  local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+function fzf-cdr() {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf)
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
 }
-zle -N peco-cdr
+zle -N fzf-cdr
 
 # -------------------------------------
 # completion
@@ -154,8 +150,8 @@ function gr() {
   fi
 }
 
-# peco select history
-function peco-select-history() {
+# fzf select history
+function fzf-select-history() {
   local tac
   if which tac > /dev/null; then
     tac="tac"
@@ -164,11 +160,11 @@ function peco-select-history() {
   fi
   BUFFER=$(history -n 1 | \
     eval $tac | \
-    peco --query "$LBUFFER")
+    fzf --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 }
-zle -N peco-select-history
+zle -N fzf-select-history
 
 # -------------------------------------
 # key bindings
@@ -181,8 +177,8 @@ bindkey '^N'  history-beginning-search-forward
 bindkey '^?'  backward-delete-char
 bindkey '^[[Z'  reverse-menu-complete
 
-bindkey '^h'  peco-select-history
-bindkey '^r'  peco-cdr
+bindkey '^h'  fzf-select-history
+bindkey '^r'  fzf-cdr
 
 autoload -Uz select-word-style; select-word-style bash
 bindkey '^w' backward-kill-word
@@ -208,7 +204,7 @@ alias du='du -h'
 alias mkdir='nocorrect mkdir'
 alias grep='grep --binary-files=without-match --color=auto'
 alias vi='vim'
-alias gl='cd $(ghq list -p | peco)'
+alias gl='cd $(ghq list -p | fzf)'
 alias tree='tree --dirsfirst'
 alias tweet='t update'
 
