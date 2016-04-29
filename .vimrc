@@ -265,6 +265,7 @@ Plugin 'ujihisa/unite-haskellimport'
 Plugin 'Tosainu/last256'
 
 " filetypes
+Plugin 'Twinside/vim-haskellFold'
 Plugin 'ap/vim-css-color'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'itchyny/vim-haskell-indent'
