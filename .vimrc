@@ -386,8 +386,11 @@ let g:clever_f_smart_case     = 1
 " }}}
 
 " NERDTree {{{
-let NERDTreeShowHidden = 1
-let NERDTreeWinSize = 24
+let NERDTreeHijackNetrw = 1
+let NERDTreeIgnore      = ['\.git$', '\.stack-work$', '\~$']
+let NERDTreeMinimalUI   = 1
+let NERDTreeShowHidden  = 1
+let NERDTreeWinSize     = 24
 
 nnoremap <silent><C-\> :<C-u>NERDTreeToggle<CR>
 " }}}
