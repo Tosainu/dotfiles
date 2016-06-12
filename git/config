@@ -1,6 +1,7 @@
 [user]
   email = tosainu.maple@gmail.com
   name = Tosainu
+	signingkey = AF213B5F
 
 [core]
   editor = vim
