@@ -111,7 +111,7 @@ set noswapfile
 
 " undofile
 if !isdirectory(expand('~/.vim/undo'))
-  call mkdir(expand('~/.vim/undo', 'p'))
+  call mkdir(expand('~/.vim/undo'), 'p')
 endif
 set undodir=~/.vim/undo
 set undofile
