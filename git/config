@@ -20,6 +20,9 @@
 [merge]
   tool = vimdiff
 
+[diff]
+  compactionHeuristic = true
+
 [pager]
   diff = /usr/share/git/diff-highlight/diff-highlight | less
 
