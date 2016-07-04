@@ -426,8 +426,7 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 let g:user_emmet_settings = {
       \   'indentation' : '  '
       \ }
-
-imap <buffer><silent> <C-e> <Plug>(emmet-expand-abbr)
+let g:user_emmet_leader_key = '<C-e>'
 " }}}
 
 " vim-textmanip {{{
