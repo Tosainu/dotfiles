@@ -138,6 +138,10 @@ inoremap <Right> <Nop>
 nnoremap  Q <Nop>
 nnoremap gQ <Nop>
 
+" disable <F1>
+noremap <F1> <Nop>
+inoremap <F1> <Nop>
+
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
