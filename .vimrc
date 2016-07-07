@@ -83,8 +83,9 @@ set wrapscan
 set completeopt=menu,menuone,longest,noselect
 
 " timeout
-set ttimeoutlen=10
-set updatetime=200
+set timeout timeoutlen=500
+set ttimeout ttimeoutlen=50
+set updatetime=300
 
 " clipboard
 if has('clipboard')
