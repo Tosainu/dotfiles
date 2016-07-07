@@ -147,6 +147,15 @@ nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
 nnoremap <S-Left>  <C-W><
 nnoremap <S-Right> <C-W>>
+
+" navigate window
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" tab
+nnoremap <silent> <C-t> :<C-u>tabnew<CR>
 " }}}
 
 " filetypes {{{
