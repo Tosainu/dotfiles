@@ -227,13 +227,13 @@ Plugin 'a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
+Plugin 'itchyny/vim-gitbranch'
 Plugin 'kannokanno/previm'
 Plugin 'lambdalisue/vim-gista'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tyru/open-browser.vim'
 Plugin 'vim-jp/vimdoc-ja'
 
@@ -340,15 +340,15 @@ function! LightlineModified()
   return &modifiable && &modified ? '+' : ''
 endfunction
 
-" http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightLineGitBranch()
-  if &ft == 'help' || !exists('*fugitive#head')
+  if &ft == 'help' || !exists('*gitbranch#name')
     return ''
   endif
-  let _ = fugitive#head()
+  let _ = gitbranch#name()
   return _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
+" http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightlineGitGutter()
   if !exists('*GitGutterGetHunkSummary') || !get(g:, 'gitgutter_enabled', 0)
     return ''
