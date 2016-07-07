@@ -124,8 +124,6 @@ Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g
 " }}}
 
 " keybind {{{
-let mapleader = ","
-
 " disable arrow keys
 noremap <Up>    <Nop>
 noremap <Down>  <Nop>
@@ -419,7 +417,7 @@ nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() 
 " }}}
 
 " switch.vim {{{
-nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
+nnoremap <silent> ,sw :<C-u>Switch<CR>
 " }}}
 
 " emmet-vim {{{
@@ -472,7 +470,7 @@ let g:clang_format#style_options = {
       \   'Standard':                         'Cpp11',
       \ }
 
-Autocmd FileType c,cpp map <buffer><Leader>x <Plug>(operator-clang-format)
+Autocmd FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
 " }}}
 
 " unite.vim {{{
