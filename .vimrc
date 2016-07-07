@@ -134,6 +134,10 @@ inoremap <Down>  <Nop>
 inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
 
+" disable EX-mode
+nnoremap  Q <Nop>
+nnoremap gQ <Nop>
+
 " change window size
 nnoremap <S-Up>    <C-W>-
 nnoremap <S-Down>  <C-W>+
