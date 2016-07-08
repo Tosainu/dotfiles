@@ -100,13 +100,6 @@ endif
 " no backup files
 set nobackup
 
-" runtimepath for windows
-if has('win32') || has('win64')
-  set runtimepath&
-  set runtimepath^=$HOME/.vim
-  set runtimepath+=$HOME/.vim/after
-endif
-
 " swapfile
 set noswapfile
 
