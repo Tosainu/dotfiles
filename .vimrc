@@ -33,44 +33,30 @@ set laststatus=2
 set showtabline=2
 " margin during scrolling
 set scrolloff=5
-" disable beep
-set vb t_vb=
-" use fast terminal connection
-set ttyfast
 " show title
 set title
 " hide startup messages
 set shortmess& shortmess+=I
 " show tabs
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-" command-line completion
-set wildmenu wildignorecase wildmode=longest,full
 " separator
 set fillchars& fillchars+=vert:\ 
-" open file in tab
-set switchbuf=useopen,usetab,newtab
-" increment/decrement bin/hex numbers
-set nrformats=bin,hex
 " add <> to matchpairs
 set matchpairs& matchpairs+=<:>
-" history
-set history=1000
-" backspace
-set backspace=indent,eol,start
 " use english-help first
 set helplang=en,ja
 
-" folding
-set foldmethod=syntax
-set foldlevel=99
-set nofoldenable
-
+" backspace
+set backspace=indent,eol,start
+" increment/decrement bin/hex numbers
+set nrformats=bin,hex
+" open file in tab
+set switchbuf=useopen,usetab,newtab
 " indent
 set smartindent autoindent
 " use <SPACE> instead of <TAB>
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
-
 " smartcase search
 set ignorecase smartcase
 " incremental search
@@ -79,13 +65,24 @@ set incsearch
 set hlsearch
 " searches wrap around
 set wrapscan
+" folding
+set foldmethod=syntax
+set foldlevel=99
+set nofoldenable
 
+" command-line
+set wildmenu wildignorecase wildmode=longest,full
+" completion
 set completeopt=menu,menuone,longest,noselect
 
 " timeout
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=50
 set updatetime=300
+" use fast terminal connection
+set ttyfast
+" disable bell
+set noerrorbells visualbell t_vb=
 
 " clipboard
 if has('clipboard')
@@ -97,21 +94,18 @@ if has('clipboard')
   endif
 endif
 
-" no backup files
-set nobackup
-
-" swapfile
-set noswapfile
+" history
+set history=1000
+" viminfo
+set viminfo& viminfo+=n~/.vim/viminfo
+" disable backup/swap files
+set nobackup noswapfile
 
 " undofile
 if !isdirectory(expand('~/.vim/undo'))
   call mkdir(expand('~/.vim/undo'), 'p')
 endif
-set undodir=~/.vim/undo
-set undofile
-
-" viminfo
-set viminfo& viminfo+=n~/.vim/viminfo
+set undofile undodir=~/.vim/undo
 
 " open last position
 Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
@@ -352,18 +346,13 @@ function! LightlineModified()
 endfunction
 
 function! LightLineGitBranch()
-  if &ft == 'help' || !exists('*gitbranch#name')
-    return ''
-  endif
   let _ = gitbranch#name()
   return _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightlineGitGutter()
-  if !exists('*GitGutterGetHunkSummary') || !get(g:, 'gitgutter_enabled', 0)
-    return ''
-  endif
+  if !get(g:, 'gitgutter_enabled', 0) | return '' | endif
   let symbols = [
         \   g:gitgutter_sign_added,
         \   g:gitgutter_sign_modified,
@@ -453,9 +442,9 @@ Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 " supertab {{{
 let g:SuperTabCrMapping = 1
-let g:SuperTabDefaultCompletionType    = 'context'
-let g:SuperTabContextDefaultCompletionType  = "<C-n>"
 let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabDefaultCompletionType         = 'context'
+let g:SuperTabContextDefaultCompletionType  = "<C-n>"
 
 Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
 " }}}
