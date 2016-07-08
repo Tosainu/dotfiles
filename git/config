@@ -1,44 +1,44 @@
 [user]
-  email = tosainu.maple@gmail.com
-  name = Tosainu
+	email = tosainu.maple@gmail.com
+	name = Tosainu
 	signingkey = AF213B5F
 
 [core]
-  editor = vim
-  excludesfile = ~/.config/git/gitignore
-  preloadindex = true
+	editor = vim
+	excludesfile = ~/.config/git/gitignore
+	preloadindex = true
 
 [color]
-  ui = true
+	ui = true
 
 [alias]
-  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  mt = mergetool
-  st = status
-  diffc = diff --cached
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	mt = mergetool
+	st = status
+	diffc = diff --cached
 
 [merge]
-  tool = vimdiff
+	tool = vimdiff
 
 [diff]
-  compactionHeuristic = true
+	compactionHeuristic = true
 
 [pager]
-  diff = /usr/share/git/diff-highlight/diff-highlight | less
-  log  = /usr/share/git/diff-highlight/diff-highlight | less
-  show = /usr/share/git/diff-highlight/diff-highlight | less
+	diff = /usr/share/git/diff-highlight/diff-highlight | less
+	log  = /usr/share/git/diff-highlight/diff-highlight | less
+	show = /usr/share/git/diff-highlight/diff-highlight | less
 
 [push]
-  default = simple
+	default = simple
 
 [url "git@github.com:"]
-  pushinsteadof = "git://github.com/"
-  pushinsteadof = "https://github.com/"
+	pushinsteadof = "git://github.com/"
+	pushinsteadof = "https://github.com/"
 
 [github]
-  user = Tosainu
+	user = Tosainu
 
 [ghq]
-  root = ~/.ghq
-  root = ~/.go/src
-  root = ~/.vim/bundle/
+	root = ~/.ghq
+	root = ~/.go/src
+	root = ~/.vim/bundle/
