@@ -57,8 +57,8 @@ set matchpairs& matchpairs+=<:>
 set history=1000
 " backspace
 set backspace=indent,eol,start
-" use japanese-help first
-set helplang=ja,en
+" use english-help first
+set helplang=en,ja
 
 " folding
 set foldmethod=syntax
