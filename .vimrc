@@ -478,6 +478,7 @@ let g:clang_format#style_options = {
       \   'AlignConsecutiveAssignments':      'true',
       \   'AllowShortFunctionsOnASingleLine': 'Empty',
       \   'DerivePointerAlignment':           'false',
+      \   'SortIncludes':                     'false',
       \   'Standard':                         'Cpp11',
       \ }
 
