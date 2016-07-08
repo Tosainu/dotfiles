@@ -454,6 +454,7 @@ Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " supertab {{{
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType    = 'context'
+let g:SuperTabContextDefaultCompletionType  = "<C-n>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 
 Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
