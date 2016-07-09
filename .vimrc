@@ -321,6 +321,7 @@ let g:lightline = {
       \     ]
       \   },
       \   'component_function': {
+      \     'mode':       'LightLineMode',
       \     'readonly':   'LightlineReadonly',
       \     'filename':   'LightlineFilename',
       \     'modified':   'LightlineModified',
@@ -331,6 +332,13 @@ let g:lightline = {
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
       \   'tabline':      {'left': [['tabs']], 'right': []},
       \ }
+
+function! LightLineMode()
+  let fname = expand('%:t')
+  return  fname =~ 'NERD_tree'  ? 'NERDTree' :
+        \ &ft   == 'unite'      ? 'Unite' :
+        \ lightline#mode()
+endfunction
 
 function! LightlineReadonly()
   return &ro ? "\ue0a2" : ''
