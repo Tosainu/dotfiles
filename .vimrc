@@ -143,7 +143,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " tab
-nnoremap <silent> <C-t> :<C-u>tabnew<CR>
+nnoremap <silent> <C-n> :<C-u>tabnew<CR>
 " }}}
 
 " filetypes {{{
