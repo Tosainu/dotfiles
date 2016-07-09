@@ -322,11 +322,11 @@ let g:lightline = {
       \   },
       \   'component_function': {
       \     'mode':       'LightLineMode',
-      \     'readonly':   'LightlineReadonly',
-      \     'filename':   'LightlineFilename',
-      \     'modified':   'LightlineModified',
+      \     'readonly':   'LightLineReadonly',
+      \     'filename':   'LightLineFilename',
+      \     'modified':   'LightLineModified',
       \     'git-branch': 'LightLineGitBranch',
-      \     'gitgutter':  'LightlineGitGutter',
+      \     'gitgutter':  'LightLineGitGutter',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
@@ -340,16 +340,16 @@ function! LightLineMode()
         \ lightline#mode()
 endfunction
 
-function! LightlineReadonly()
+function! LightLineReadonly()
   return &ro ? "\ue0a2" : ''
 endfunction
 
-function! LightlineFilename()
+function! LightLineFilename()
   return  &ft == 'unite'    ? unite#get_status_string() :
         \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
 endfunction
 
-function! LightlineModified()
+function! LightLineModified()
   return &modifiable && &modified ? '+' : ''
 endfunction
 
@@ -359,7 +359,7 @@ function! LightLineGitBranch()
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
-function! LightlineGitGutter()
+function! LightLineGitGutter()
   if !get(g:, 'gitgutter_enabled', 0) | return '' | endif
   let symbols = [
         \   g:gitgutter_sign_added,
