@@ -12,10 +12,16 @@
 	ui = true
 
 [alias]
+	cl    = clone
+	co    = commit
+	di    = diff
+	dic   = diff --cached
+	dif   = diff
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	mt = mergetool
-	st = status
-	diffc = diff --cached
+	mt    = mergetool
+	pl    = pull
+	pu    = push
+	st    = status
 
 [merge]
 	tool = vimdiff
