@@ -250,3 +250,5 @@ ZSH_SYNTAX_HIGHLIGHTING_PATH=~/.ghq/github.com/zsh-users/zsh-syntax-highlighting
 if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
   source $ZSH_SYNTAX_HIGHLIGHTING_PATH
 fi
+
+# vim:set foldmethod=marker:
