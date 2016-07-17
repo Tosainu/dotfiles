@@ -207,6 +207,7 @@ alias vi='vim'
 alias gl='cd $(ghq list -p | fzf)'
 alias tree='tree --dirsfirst'
 alias tweet='t update'
+alias gdb='gdb -q'
 
 alias -g N='> /dev/null 2>&1'
 
