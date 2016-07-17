@@ -471,12 +471,14 @@ nmap R  <Plug>(operator-replace)
 
 " vim-clang-format {{{
 let g:clang_format#style_options = {
-      \   'AccessModifierOffset': -2,
-      \   'ColumnLimit':          128,
+      \   'AccessModifierOffset':             -2,
       \   'AlignConsecutiveAssignments':      'true',
       \   'AllowShortFunctionsOnASingleLine': 'Empty',
+      \   'ColumnLimit':                      96,
+      \   'Cpp11BracedListStyle':             'true',
       \   'DerivePointerAlignment':           'false',
       \   'SortIncludes':                     'false',
+      \   'SpacesBeforeTrailingComments':     1,
       \   'Standard':                         'Cpp11',
       \ }
 
