@@ -33,41 +33,41 @@ size_hints = false
 highlight = #2f2f2f
 
 # special
-foreground      = #dedede
-foreground_bold = #dedede
-cursor          = #dedede
+foreground      = #dbdbdb
+foreground_bold = #dbdbdb
+cursor          = #dbdbdb
 background      = rgba(0, 0, 0, 0.7)
 
 # black
-color0  = #2e3436
-color8  = #555753
+color0  = #575757
+color8  = #262626
 
 # red
-color1  = #cc0000
-color9  = #ef2929
+color1  = #ff1b00
+color9  = #d51d00
 
 # green
-color2  = #4e9a06
-color10 = #8ae234
+color2  = #a5e055
+color10 = #a5df55
 
 # yellow
-color3  = #c4a000
-color11 = #fce94f
+color3  = #fbe74a
+color11 = #fbe84a
 
 # blue
-color4  = #3465a4
-color12 = #729fcf
+color4  = #496487
+color12 = #89beff
 
 # magenta
-color5  = #75507b
-color13 = #ad7fa8
+color5  = #fd5ff1
+color13 = #c001c1
 
 # cyan
-color6  = #06989a
-color14 = #34e2e2
+color6  = #86e9fe
+color14 = #86eafe
 
 # white
-color7  = #d3d7cf
-color15 = #eeeeec
+color7  = #cbcccb
+color15 = #dbdbdb
 
 # vim: ft=dosini cms=#%s
