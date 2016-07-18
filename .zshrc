@@ -237,10 +237,8 @@ bindkey '^h'  fzf-select-history
 # }}}
 
 # plugins {{{
-ZSH_SYNTAX_HIGHLIGHTING_PATH=~/.ghq/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
-  source $ZSH_SYNTAX_HIGHLIGHTING_PATH
-fi
+ZSH_SYNTAX_HIGHLIGHTING_PATH=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ] && source $ZSH_SYNTAX_HIGHLIGHTING_PATH
 # }}}
 
 # vim:set foldmethod=marker:
