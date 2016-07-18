@@ -103,17 +103,25 @@ RPROMPT='%D{%H:%M:%S}'
 autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
 
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
-zstyle ':completion:*' menu select=2
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':completion::complete:*' use-cache on
+zstyle ':completion:*:*:*:*:*' menu select=2
+
+# caching
 zstyle ':completion::complete:*' cache-path ~/.cache/zsh/compcache
-zstyle ':completion:*:*:cdr:*:*' menu selection
-zstyle ':completion:*:kill:*' force-list always
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-zstyle ':completion:*:processes-names' command  'ps c -u ${USER} -o command | uniq'
+zstyle ':completion::complete:*' use-cache on
+
+# case-insensitive match
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# directories
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+
+# kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $USER -o pid,user,comm -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
 # }}}
 
 # cdr {{{
