@@ -8,6 +8,9 @@ fi
 # }}}
 
 # basic settings {{{
+# create ~/.cache/zsh directory
+[ ! -d ~/.cache/zsh ] && mkdir -p ~/.cache/zsh
+
 setopt correct
 setopt extended_glob
 setopt globdots
@@ -27,7 +30,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 
 # History
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/zsh/history
 HISTSIZE=100000
 SAVEHIST=100000
 setopt extended_history
@@ -97,14 +100,15 @@ RPROMPT='%D{%H:%M:%S}'
 # }}}
 
 # completion {{{
-autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
 
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=2
-zstyle ':completion:*' use-cache true
 zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path ~/.cache/zsh/compcache
 zstyle ':completion:*:*:cdr:*:*' menu selection
 zstyle ':completion:*:kill:*' force-list always
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
@@ -116,11 +120,9 @@ zstyle ':completion:*:processes-names' command  'ps c -u ${USER} -o command | un
 autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-file    "$HOME/.config/zsh/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-file    ~/.cache/zsh/recent-dirs
 zstyle ':chpwd:*' recent-dirs-max     1000
 zstyle ':chpwd:*' recent-dirs-pushd   true
-
-[ ! -d $HOME/.config/zsh ] && mkdir -p $HOME/.config/zsh
 # }}}
 
 # aliases {{{
