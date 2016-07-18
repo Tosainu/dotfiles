@@ -137,7 +137,6 @@ zstyle ':chpwd:*' recent-dirs-pushd   true
 alias cp='nocorrect cp -i -v'
 alias du='du -h'
 alias gdb='gdb -q'
-alias gl='cd $(ghq list -p | fzf)'
 alias grep='grep --binary-files=without-match --color=auto'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv -i -v'
@@ -186,6 +185,16 @@ function gr() {
     cd `git rev-parse --show-toplevel`
   fi
 }
+
+function recent-dirs() {
+  local line
+  autoload -Uz chpwd_recent_filehandler
+  chpwd_recent_filehandler && for line in $reply; do
+  if [[ -d "$line" ]]; then
+    echo "$line"
+  fi
+done
+}
 # }}}
 
 # term {{{
@@ -206,17 +215,17 @@ fi
 # }}}
 
 # fzf {{{
-function fzf-cdr() {
-  local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf)
+function fzf-recent-dirs() {
+  local selected_dir="$( (recent-dirs; ghq list -p) | fzf)"
   if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
+    BUFFER="cd ${(q)selected_dir}"
     zle accept-line
   fi
   zle clear-screen
 }
 
-zle -N fzf-cdr
-bindkey '^r'  fzf-cdr
+zle -N fzf-recent-dirs
+bindkey '^r'  fzf-recent-dirs
 
 function fzf-select-history() {
   local tac
