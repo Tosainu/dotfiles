@@ -316,22 +316,26 @@ let g:lightline = {
       \     'right': [
       \       ['lineinfo'],
       \       ['percent'],
-      \       ['fileformat', 'fileencoding', 'filetype'],
-      \       ['gitgutter'],
+      \       ['gitgutter', 'fileformat', 'fileencoding', 'filetype'],
       \     ]
       \   },
       \   'component_function': {
-      \     'mode':       'LightLineMode',
-      \     'readonly':   'LightLineReadonly',
       \     'filename':   'LightLineFilename',
-      \     'modified':   'LightLineModified',
       \     'git-branch': 'LightLineGitBranch',
       \     'gitgutter':  'LightLineGitGutter',
+      \     'mode':       'LightLineMode',
+      \     'modified':   'LightLineModified',
+      \     'readonly':   'LightLineReadonly',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
       \   'tabline':      {'left': [['tabs']], 'right': []},
       \ }
+
+function! LightLineFilename()
+  return  &ft == 'unite'    ? unite#get_status_string() :
+        \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
+endfunction
 
 function! LightLineMode()
   let fname = expand('%:t')
@@ -340,17 +344,12 @@ function! LightLineMode()
         \ lightline#mode()
 endfunction
 
-function! LightLineReadonly()
-  return &ro ? "\ue0a2" : ''
-endfunction
-
-function! LightLineFilename()
-  return  &ft == 'unite'    ? unite#get_status_string() :
-        \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
-endfunction
-
 function! LightLineModified()
   return &modifiable && &modified ? '+' : ''
+endfunction
+
+function! LightLineReadonly()
+  return &ro ? "\ue0a2" : ''
 endfunction
 
 function! LightLineGitBranch()
