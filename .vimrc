@@ -409,7 +409,7 @@ let g:quickrun_config._ = {
       \   'outputter': 'error',
       \   'outputter/buffer/close_on_empty': 1,
       \   'outputter/buffer/into':    1,
-      \   'outputter/buffer/split':   ':botright',
+      \   'outputter/buffer/split':   'botright',
       \   'outputter/error/error':    'quickfix',
       \   'outputter/error/success':  'buffer',
       \ }
