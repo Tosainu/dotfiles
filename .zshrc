@@ -216,7 +216,7 @@ fi
 
 # fzf {{{
 function fzf-recent-dirs() {
-  local selected_dir="$( (recent-dirs; ghq list -p) | fzf)"
+  local selected_dir="$(recent-dirs | fzf)"
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
@@ -243,6 +243,13 @@ function fzf-select-history() {
 
 zle -N fzf-select-history
 bindkey '^h'  fzf-select-history
+
+function gl() {
+  local selected_dir="$(ghq list -p | fzf)"
+  if [ -n "$selected_dir" ]; then
+    cd ${(q)selected_dir}
+  fi
+}
 # }}}
 
 # plugins {{{
