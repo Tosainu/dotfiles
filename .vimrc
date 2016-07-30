@@ -144,6 +144,9 @@ nnoremap <C-l> <C-w>l
 
 " tab
 nnoremap <silent> <C-n> :<C-u>tabnew<CR>
+
+" sort
+vnoremap <silent> ,s :sort<CR>
 " }}}
 
 " filetypes {{{
