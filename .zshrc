@@ -66,7 +66,9 @@ path=(
   $path
 )
 
-(( $+commands[ruby] )) && path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
+if (( $+commands[ruby] )); then
+  path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
+fi
 # }}}
 
 # prompt {{{
@@ -254,7 +256,9 @@ function gl() {
 
 # plugins {{{
 ZSH_SYNTAX_HIGHLIGHTING_PATH=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ] && source $ZSH_SYNTAX_HIGHLIGHTING_PATH
+if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
+  source $ZSH_SYNTAX_HIGHLIGHTING_PATH
+fi
 # }}}
 
 # vim:set foldmethod=marker:
