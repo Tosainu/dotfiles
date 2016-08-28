@@ -252,9 +252,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tyru/caw.vim'
 
 " code completion
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'eagletmt/neco-ghc'
-Plugin 'ervandew/supertab'
-Plugin 'osyo-manga/vim-marching'
 
 " operator
 Plugin 'kana/vim-operator-user'
@@ -444,27 +443,22 @@ xmap <C-h> <Plug>(textmanip-move-left)
 xmap <C-l> <Plug>(textmanip-move-right)
 " }}}
 
+" YouCompleteMe {{{
+let g:ycm_confirm_extra_conf    = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_goto_buffer_command   = 'new-or-existing-tab'
+let g:ycm_semantic_triggers     = {'haskell': ['.']}
+let g:ycm_show_diagnostics_ui   = 0
+
+nnoremap <silent> ,t  :<C-u>YcmCompleter GetType<CR>
+nnoremap <silent> ,gd :<C-u>YcmCompleter GoToDeclaration<CR>
+nnoremap <silent> ,gD :<C-u>YcmCompleter GoToDefinition<CR>
+" }}}
+
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
 
 Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-" }}}
-
-" supertab {{{
-let g:SuperTabCrMapping = 1
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabDefaultCompletionType         = 'context'
-let g:SuperTabContextDefaultCompletionType  = "<C-n>"
-
-Autocmd FileType haskell call SuperTabSetDefaultCompletionType("<C-x><C-o>")
-" }}}
-
-" vim-marching {{{
-let g:marching_backend = 'sync_clang_command'
-let g:marching#clang_command#options = {
-      \   'c':    '-std=c11',
-      \   'cpp':  '-std=c++14',
-      \ }
 " }}}
 
 " vim-operator-replace {{{
