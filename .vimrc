@@ -246,8 +246,8 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 't9md/vim-textmanip'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
-Plugin 'tyru/caw.vim'
 
 " code completion
 Plugin 'Valloric/YouCompleteMe'
