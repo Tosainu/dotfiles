@@ -237,13 +237,11 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'itchyny/vim-gitbranch'
 Plugin 'kannokanno/previm'
-Plugin 'lambdalisue/vim-gista'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tyru/open-browser.vim'
-Plugin 'vim-jp/vimdoc-ja'
 
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'mattn/emmet-vim'
@@ -276,7 +274,6 @@ Plugin 'hail2u/vim-css3-syntax'
 Plugin 'itchyny/vim-haskell-indent'
 Plugin 'itchyny/vim-haskell-sort-import'
 Plugin 'othree/html5.vim'
-Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim'
 Plugin 'vim-jp/vim-cpp'
 Plugin 'vim-ruby/vim-ruby'
@@ -382,10 +379,6 @@ endfunction
 let g:previm_enable_realtime = 1
 
 Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
-" }}}
-
-" vim-gista {{{
-let g:gista#client#default_username = 'Tosainu'
 " }}}
 
 " clever-f.vim {{{
