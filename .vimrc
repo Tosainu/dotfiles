@@ -53,7 +53,7 @@ set nrformats=bin,hex
 " open file in tab
 set switchbuf=useopen,usetab,newtab
 " indent
-set smartindent autoindent
+set smartindent autoindent breakindent
 " use <SPACE> instead of <TAB>
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
