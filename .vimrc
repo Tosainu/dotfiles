@@ -228,7 +228,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'Yggdroot/indentLine'
 Plugin 'a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'haya14busa/incsearch.vim'
