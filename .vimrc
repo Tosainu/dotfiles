@@ -73,7 +73,7 @@ set nofoldenable
 " command-line
 set wildmenu wildignorecase wildmode=longest,full
 " completion
-set completeopt=menu,menuone,longest,noselect
+set completeopt=menuone,noinsert,noselect
 
 " timeout
 set timeout timeoutlen=500
@@ -436,11 +436,12 @@ xmap <C-l> <Plug>(textmanip-move-right)
 
 " YouCompleteMe {{{
 let g:ycm_allow_changing_updatetime = 0
-let g:ycm_confirm_extra_conf    = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
-let g:ycm_goto_buffer_command   = 'new-or-existing-tab'
-let g:ycm_semantic_triggers     = {'haskell': ['.']}
-let g:ycm_show_diagnostics_ui   = 0
+let g:ycm_complete_in_comments      = 1
+let g:ycm_confirm_extra_conf        = 0
+let g:ycm_show_diagnostics_ui       = 0
+let g:ycm_global_ycm_extra_conf     = '~/.vim/ycm_extra_conf.py'
+let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
+let g:ycm_semantic_triggers         = {'haskell': ['.']}
 
 nnoremap <silent> ,t  :<C-u>YcmCompleter GetType<CR>
 nnoremap <silent> ,gd :<C-u>YcmCompleter GoToDeclaration<CR>
