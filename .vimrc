@@ -236,6 +236,7 @@ Plugin 'itchyny/vim-gitbranch'
 Plugin 'kannokanno/previm'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
+Plugin 'rhysd/committia.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tyru/open-browser.vim'
@@ -381,6 +382,19 @@ Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 " clever-f.vim {{{
 let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case     = 1
+" }}}
+
+" committia.vim {{{
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+  " enable spell checking
+  setlocal spell
+
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  end
+endfunction
 " }}}
 
 " NERDTree {{{
