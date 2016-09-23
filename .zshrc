@@ -218,7 +218,7 @@ fi
 
 # fzf {{{
 function fzf-recent-dirs() {
-  local selected_dir="$(recent-dirs | fzf)"
+  local selected_dir=$(recent-dirs | fzf --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
@@ -230,15 +230,7 @@ zle -N fzf-recent-dirs
 bindkey '^r'  fzf-recent-dirs
 
 function fzf-select-history() {
-  local tac
-  if which tac > /dev/null; then
-    tac="tac"
-  else
-    tac="tail -r"
-  fi
-  BUFFER=$(history -n 1 | \
-    eval $tac | \
-    fzf --query "$LBUFFER")
+  BUFFER=$(history -n 1 | fzf --tac --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 }
