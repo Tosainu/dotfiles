@@ -237,7 +237,6 @@ Plugin 'kannokanno/previm'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 'rhysd/committia.vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'thinca/vim-quickrun'
 Plugin 'tyru/open-browser.vim'
 
@@ -329,9 +328,7 @@ function! LightLineFilename()
 endfunction
 
 function! LightLineMode()
-  let fname = expand('%:t')
-  return  fname =~ 'NERD_tree'  ? 'NERDTree' :
-        \ lightline#mode()
+  return  lightline#mode()
 endfunction
 
 function! LightLineModified()
@@ -388,16 +385,6 @@ function! g:committia_hooks.edit_open(info)
     startinsert
   end
 endfunction
-" }}}
-
-" NERDTree {{{
-let NERDTreeHijackNetrw = 1
-let NERDTreeIgnore      = ['\.git$', '\.stack-work$', '\~$']
-let NERDTreeMinimalUI   = 1
-let NERDTreeShowHidden  = 1
-let NERDTreeWinSize     = 24
-
-nnoremap <silent><C-\> :<C-u>NERDTreeToggle<CR>
 " }}}
 
 " vim-quickrun {{{
