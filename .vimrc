@@ -230,6 +230,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'a.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'itchyny/vim-gitbranch'
@@ -279,6 +280,15 @@ let g:gitgutter_sign_added    = '✚'
 let g:gitgutter_sign_removed  = '✘'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_modified_removed = '➜'
+" }}}
+
+" ctrlp.vim {{{
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = '\v[\/]\.git$'
+let g:ctrlp_prompt_mappings = {
+      \   'AcceptSelection("e")': ['<C-t>'],
+      \   'AcceptSelection("t")': ['<CR>'],
+      \ }
 " }}}
 
 " incsearch.vim {{{
