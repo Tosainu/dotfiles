@@ -256,12 +256,6 @@ Plugin 'kana/vim-operator-user'
 Plugin 'kana/vim-operator-replace'
 Plugin 'rhysd/vim-clang-format'
 
-" unite
-Plugin 'Shougo/unite.vim'
-Plugin 'koron/codic-vim'
-Plugin 'rhysd/unite-codic.vim'
-Plugin 'ujihisa/unite-haskellimport'
-
 " colorscheme
 Plugin 'Tosainu/last256'
 
@@ -330,14 +324,13 @@ let g:lightline = {
       \ }
 
 function! LightLineFilename()
-  return  &ft == 'unite'    ? unite#get_status_string() :
-        \ expand('%:t') != '' ? expand('%:t') : '[No Name]'
+  let fname = expand('%:t')
+  return  fname != '' ? fname : '[No Name]'
 endfunction
 
 function! LightLineMode()
   let fname = expand('%:t')
   return  fname =~ 'NERD_tree'  ? 'NERDTree' :
-        \ &ft   == 'unite'      ? 'Unite' :
         \ lightline#mode()
 endfunction
 
@@ -485,32 +478,6 @@ let g:clang_format#style_options = {
       \ }
 
 Autocmd FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
-" }}}
-
-" unite.vim {{{
-let g:unite_force_overwrite_statusline = 0
-
-" always open new tab
-call unite#custom_default_action('file', 'tabopen')
-call unite#custom#source('file', 'matchers', 'matcher_default')
-
-" keybinds
-nnoremap [unite]  <Nop>
-nmap     <Space>u [unite]
-nnoremap <silent> [unite]R :<C-u>UniteResume<CR>
-nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir file<CR>
-nnoremap <silent> [unite]n :<C-u>Unite file/new -start-insert<CR>
-nnoremap <silent> [unite]r :<C-u>Unite register<CR>
-nnoremap <silent> [unite]s :<C-u>Unite line -start-insert<CR>
-nnoremap <silent> [unite]t :<C-u>Unite tab buffer<CR>
-" }}}
-
-" unite-codic.vim {{{
-nnoremap <silent> [unite]c :<C-u>Unite codic -start-insert -buffer-name=codic<CR>
-" }}}
-
-" unite-haskellimport {{{
-nnoremap <silent> [unite]h :<C-u>Unite haskellimport -start-insert -buffer-name=haskellimport<CR>
 " }}}
 " }}}
 
