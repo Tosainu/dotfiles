@@ -258,6 +258,7 @@ Plugin 'rhysd/vim-clang-format'
 
 " colorscheme
 Plugin 'Tosainu/last256'
+Plugin 'mkarmona/colorsbox'
 
 " filetypes
 Plugin 'Twinside/vim-haskellFold'
@@ -514,7 +515,7 @@ if !has('gui_running')
     colorscheme slate
   else
     try
-      colorscheme last256
+      colorscheme colorsbox-stbright
     catch
       colorscheme slate
     endtry

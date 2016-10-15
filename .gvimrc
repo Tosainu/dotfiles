@@ -1,4 +1,4 @@
-colorscheme last256
+colorscheme colorsbox-stbright
 
 " disable mouse
 set mouse=
