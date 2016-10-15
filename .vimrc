@@ -504,21 +504,21 @@ Autocmd FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
 " }}}
 
 " colorscheme {{{
-syntax enable
-
-if $TERM =~# '^xterm.*'
-  set t_Co=256
+if &t_Co > 2 || has("gui_running")
+  syntax on
 endif
 
-if !has('gui_running')
-  if &t_Co < 256
-    colorscheme slate
+if $TERM =~? '^xterm.*'
+  if has('termguicolors')
+    set termguicolors
   else
-    try
-      colorscheme colorsbox-stbright
-    catch
-      colorscheme slate
-    endtry
+    set t_Co=256
   endif
 endif
+
+try
+  colorscheme colorsbox-stbright
+catch
+  colorscheme slate
+endtry
 " }}}

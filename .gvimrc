@@ -1,5 +1,3 @@
-colorscheme colorsbox-stbright
-
 " disable mouse
 set mouse=
 
