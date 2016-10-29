@@ -342,45 +342,45 @@ let g:lightline = {
       \     ]
       \   },
       \   'component_function': {
-      \     'filename':   'LightLineFilename',
-      \     'git-branch': 'LightLineGitBranch',
-      \     'gitgutter':  'LightLineGitGutter',
-      \     'mode':       'LightLineMode',
-      \     'modified':   'LightLineModified',
-      \     'readonly':   'LightLineReadonly',
+      \     'filename':   'LightlineFilename',
+      \     'git-branch': 'LightlineGitBranch',
+      \     'gitgutter':  'LightlineGitGutter',
+      \     'mode':       'LightlineMode',
+      \     'modified':   'LightlineModified',
+      \     'readonly':   'LightlineReadonly',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
       \   'tabline':      {'left': [['tabs']], 'right': []},
       \ }
 
-function! LightLineFilename()
+function! LightlineFilename()
   let fname = expand('%:t')
   return  fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
         \ fname != '' ? fname : '[No Name]'
 endfunction
 
-function! LightLineMode()
+function! LightlineMode()
   let fname = expand('%:t')
   return  fname == 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
-function! LightLineModified()
+function! LightlineModified()
   return &modifiable && &modified ? '+' : ''
 endfunction
 
-function! LightLineReadonly()
+function! LightlineReadonly()
   return &ro ? "\ue0a2" : ''
 endfunction
 
-function! LightLineGitBranch()
+function! LightlineGitBranch()
   let _ = gitbranch#name()
   return _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
-function! LightLineGitGutter()
+function! LightlineGitGutter()
   if !get(g:, 'gitgutter_enabled', 0) | return '' | endif
   let symbols = [
         \   g:gitgutter_sign_added,
