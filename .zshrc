@@ -145,6 +145,7 @@ alias mv='nocorrect mv -i -v'
 alias tree='tree --dirsfirst'
 alias tweet='t update'
 alias vi='vim'
+alias www='ruby -run -ehttpd --'
 
 case $OSTYPE in
 darwin*)
