@@ -445,6 +445,8 @@ let g:quickrun_config._ = {
       \   'outputter/buffer/split':   'botright',
       \   'outputter/error/error':    'quickfix',
       \   'outputter/error/success':  'buffer',
+      \   'outputter/quickfix/into':  1,
+      \   'runner': 'job',
       \ }
 
 let g:quickrun_config.cpp = {
