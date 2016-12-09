@@ -137,7 +137,6 @@ zstyle ':chpwd:*' recent-dirs-pushd   true
 
 # aliases {{{
 alias cp='nocorrect cp -i -v'
-alias du='du -h'
 alias gdb='gdb -q'
 alias grep='grep --binary-files=without-match --color=auto'
 alias mkdir='nocorrect mkdir'
@@ -157,10 +156,21 @@ alias la='ls -A'
 alias ll='ls -l'
 alias lla='ls -Al'
 
+alias -s hs='runhaskell'
 alias -s jar='java -jar'
 alias -s rb='ruby'
-alias -s {bmp,gif,jpg,JPG,png,svg}=viewnior
-alias -s {html,htm,xhtml}=chromium
+
+open=${commands[open]:-${commands[xdg-open]}}
+if [[ ! -z $open ]]; then
+  alias open="$open"
+
+  # images
+  alias -s {bmp,gif,jpg,JPG,png,svg}='open'
+  # documents
+  alias -s {html,htm,pdf}='open'
+  # medias
+  alias -s {MOV,avi,m4v,mkv,mp3,mp4,mpg}='open'
+fi
 
 alias -g N='> /dev/null 2>&1'
 # }}}
