@@ -53,6 +53,7 @@ export KCODE=u
 export REPORTTIME=5
 export EDITOR='vim'
 export PAGER='less'
+export WORDCHARS="${WORDCHARS:s@/@}"
 
 fpath=(
   /usr/share/zsh/site-functions(N-/)
