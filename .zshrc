@@ -185,11 +185,12 @@ bindkey '^P'    history-beginning-search-backward
 bindkey "^A"    beginning-of-line
 bindkey "^E"    end-of-line
 
-bindkey '^?'    backward-delete-char
-bindkey '^[[Z'  reverse-menu-complete
-
+bindkey "^?"    backward-delete-char
 bindkey "^K"    kill-whole-line
 bindkey "^[[3~" delete-char
+bindkey '^W'    backward-kill-word
+
+bindkey '^[[Z'  reverse-menu-complete
 # }}}
 
 # functions {{{
