@@ -173,7 +173,9 @@ if [[ ! -z $open ]]; then
   alias -s {MOV,avi,m4v,mkv,mp3,mp4,mpg}='open'
 fi
 
+alias -g L="| $PAGER"
 alias -g N='> /dev/null 2>&1'
+alias -g X='| xargs'
 # }}}
 
 # bindkeys {{{
