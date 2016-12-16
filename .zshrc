@@ -266,4 +266,8 @@ if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
 fi
 # }}}
 
+if [ -f $HOME/.zshrc.local ]; then
+  source $HOME/.zshrc.local
+fi
+
 # vim:set foldmethod=marker:
