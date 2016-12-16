@@ -54,10 +54,6 @@ setopt no_beep
 setopt noautoremoveslash
 setopt print_eight_bit
 
-# completion
-setopt list_packed
-setopt magic_equal_subst
-
 # directory
 setopt auto_cd
 setopt auto_pushd
@@ -71,12 +67,11 @@ setopt extended_history
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt inc_append_history
-
-# prompt
-setopt prompt_subst
 # }}}
 
 # prompt {{{
+setopt prompt_subst
+
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{red}'
@@ -106,6 +101,9 @@ RPROMPT='%D{%H:%M:%S}'
 # }}}
 
 # completion {{{
+setopt list_packed
+setopt magic_equal_subst
+
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*:*:*:*:*' menu select=2
 
