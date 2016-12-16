@@ -181,18 +181,19 @@ alias -g X='| xargs'
 # bindkeys {{{
 bindkey -v
 
-bindkey '^N'    history-beginning-search-forward
-bindkey '^P'    history-beginning-search-backward
+bindkey -M viins '^N'    history-beginning-search-forward
+bindkey -M viins '^P'    history-beginning-search-backward
 
-bindkey "^A"    beginning-of-line
-bindkey "^E"    end-of-line
+bindkey -M viins "^A"    beginning-of-line
+bindkey -M viins "^E"    end-of-line
 
-bindkey "^?"    backward-delete-char
-bindkey "^K"    kill-whole-line
-bindkey "^[[3~" delete-char
-bindkey '^W'    backward-kill-word
+bindkey -M viins "^?"    backward-delete-char
+bindkey -M viins "^K"    kill-whole-line
+bindkey -M viins "^[[3~" delete-char
+bindkey -M viins '^W'    backward-kill-word
 
-bindkey '^[[Z'  reverse-menu-complete
+bindkey -M viins '^[[Z'  reverse-menu-complete
+
 # }}}
 
 # functions {{{
