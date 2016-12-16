@@ -38,6 +38,7 @@ autoload -Uz add-zsh-hook
 autoload -Uz cdr
 autoload -Uz chpwd_recent_dirs
 autoload -Uz chpwd_recent_filehandler
+autoload -Uz smart-insert-last-word
 autoload -Uz vcs_info
 # }}}
 
@@ -192,6 +193,8 @@ bindkey -M viins '^W'    backward-kill-word
 
 bindkey -M viins '^[[Z'  reverse-menu-complete
 
+zle -N insert-last-word smart-insert-last-word
+bindkey -M viins '^]' insert-last-word
 # }}}
 
 # functions {{{
