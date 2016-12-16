@@ -1,10 +1,19 @@
 # colors {{{
-autoload -Uz colors; colors
 if (( $+commands[dircolors] )); then
   eval "$(dircolors -b)"
 else
   export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'
 fi
+# }}}
+
+# autoloading functions {{{
+autoload -Uz colors; colors
+autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
+autoload -Uz add-zsh-hook
+autoload -Uz cdr
+autoload -Uz chpwd_recent_dirs
+autoload -Uz chpwd_recent_filehandler
+autoload -Uz vcs_info
 # }}}
 
 # basic settings {{{
@@ -40,9 +49,6 @@ setopt inc_append_history
 
 # prompt
 setopt prompt_subst
-
-# load add-zsh-hook function
-autoload -Uz add-zsh-hook
 # }}}
 
 # exports {{{
@@ -73,7 +79,6 @@ fi
 # }}}
 
 # prompt {{{
-autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{red}'
@@ -103,8 +108,6 @@ RPROMPT='%D{%H:%M:%S}'
 # }}}
 
 # completion {{{
-autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
-
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*:*:*:*:*' menu select=2
 
@@ -128,7 +131,6 @@ zstyle ':completion:*:*:kill:*' insert-ids single
 # }}}
 
 # cdr {{{
-autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file    ~/.cache/zsh/recent-dirs
@@ -205,7 +207,6 @@ function gr() {
 
 function recent-dirs() {
   local line
-  autoload -Uz chpwd_recent_filehandler
   chpwd_recent_filehandler && for line in $reply; do
   if [[ -d "$line" ]]; then
     echo "$line"
