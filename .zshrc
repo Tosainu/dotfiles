@@ -1,4 +1,29 @@
-# colors {{{
+# exports {{{
+# remove duplicate
+typeset -Ua cdpath fpath manpath path
+
+export REPORTTIME=5
+export EDITOR='vim'
+export PAGER='less'
+export WORDCHARS="${WORDCHARS:s@/@}"
+
+fpath=(
+  /usr/share/zsh/site-functions(N-/)
+  $fpath
+)
+
+path=(
+  /usr/local/bin(N-/)
+  ~/.local/bin(N-/)
+  ~/.cabal/bin(N-/)
+  $path
+)
+
+if (( $+commands[ruby] )); then
+  path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
+fi
+
+# colors
 if (( $+commands[dircolors] )); then
   eval "$(dircolors -b)"
 else
@@ -49,33 +74,6 @@ setopt inc_append_history
 
 # prompt
 setopt prompt_subst
-# }}}
-
-# exports {{{
-# remove duplicate
-typeset -Ua cdpath fpath manpath path
-
-export KCODE=u
-export REPORTTIME=5
-export EDITOR='vim'
-export PAGER='less'
-export WORDCHARS="${WORDCHARS:s@/@}"
-
-fpath=(
-  /usr/share/zsh/site-functions(N-/)
-  $fpath
-)
-
-path=(
-  /usr/local/bin(N-/)
-  ~/.local/bin(N-/)
-  ~/.cabal/bin(N-/)
-  $path
-)
-
-if (( $+commands[ruby] )); then
-  path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
-fi
 # }}}
 
 # prompt {{{
