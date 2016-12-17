@@ -296,21 +296,22 @@ let g:gitgutter_sign_modified_removed = '➜'
 
 " ctrlp.vim {{{
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '\v[\/]\.git$'
-let g:ctrlp_extensions = ['changes', 'line', 'quickfix']
+let g:ctrlp_custom_ignore   = '\v[\/]\.git$'
+let g:ctrlp_extensions      = ['changes', 'line', 'quickfix']
 let g:ctrlp_prompt_mappings = {
       \   'AcceptSelection("e")': ['<C-t>'],
       \   'AcceptSelection("t")': ['<CR>'],
-      \ }
-let g:ctrlp_status_func = {
-      \   'main': 'CtrlPStatusFunc_1',
-      \   'prog': 'CtrlPStatusFunc_2',
       \ }
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -i --ignore ".git" --nocolor --nogroup --hidden -g ""'
   let g:ctrlp_use_caching = 0
 endif
+
+let g:ctrlp_status_func = {
+      \   'main': 'CtrlPStatusFunc_1',
+      \   'prog': 'CtrlPStatusFunc_2',
+      \ }
 
 function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
   let g:lightline.ctrlp_regex = a:regex
