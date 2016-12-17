@@ -98,7 +98,15 @@ function update_vcs_info() {
 PROMPT=$'
 %{$fg_bold[yellow]%}%n@%m %{$fg_bold[green]%}%~%{$reset_color%} %{$fg_bold[blue]%}`update_vcs_info`%{$reset_color%}
 %(?,,%{$fg_bold[red]%}%? )%{$reset_color%}❯ '
-RPROMPT='%D{%H:%M:%S}'
+
+# http://zshwiki.org/home/examples/zlewidgets#vi_keys_-_show_mode
+function zle-line-init zle-keymap-select {
+  RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/}"
+  RPS2=$RPS1
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 # }}}
 
 # completion {{{
