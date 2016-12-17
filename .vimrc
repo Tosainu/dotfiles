@@ -295,6 +295,7 @@ let g:gitgutter_sign_modified_removed = '➜'
 " }}}
 
 " ctrlp.vim {{{
+let g:ctrlp_by_filename = 1
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore   = '\v[\/]\.git$'
 let g:ctrlp_extensions      = ['changes', 'line', 'quickfix']
