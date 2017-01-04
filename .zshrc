@@ -205,24 +205,6 @@ zle -N insert-last-word smart-insert-last-word
 bindkey -M viins '^]' insert-last-word
 # }}}
 
-# functions {{{
-# move to git root
-function gr() {
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    cd `git rev-parse --show-toplevel`
-  fi
-}
-
-function recent-dirs() {
-  local line
-  chpwd_recent_filehandler && for line in $reply; do
-  if [[ -d "$line" ]]; then
-    echo "$line"
-  fi
-done
-}
-# }}}
-
 # term {{{
 # Title
 case $TERM in
@@ -240,7 +222,23 @@ if [[ $TERM == xterm-termite ]]; then
 fi
 # }}}
 
-# fzf {{{
+# functions {{{
+# move to git root
+function gr() {
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    cd `git rev-parse --show-toplevel`
+  fi
+}
+
+function recent-dirs() {
+  local line
+  chpwd_recent_filehandler && for line in $reply; do
+  if [[ -d "$line" ]]; then
+    echo "$line"
+  fi
+done
+}
+
 function fzf-recent-dirs() {
   local selected_dir=$(recent-dirs | fzf --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
