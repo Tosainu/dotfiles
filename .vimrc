@@ -45,6 +45,8 @@ set fillchars& fillchars+=vert:\
 set matchpairs& matchpairs+=<:>
 " use english-help first
 set helplang=en,ja
+" same sized splits
+set equalalways
 
 " backspace
 set backspace=indent,eol,start
