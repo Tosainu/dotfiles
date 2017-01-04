@@ -4,6 +4,7 @@ typeset -Ua cdpath fpath manpath path
 
 export REPORTTIME=5
 export EDITOR='vim'
+export FUZZY_FINDERR='fzf'
 export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
 
@@ -239,8 +240,8 @@ function recent-dirs() {
 done
 }
 
-function fzf-recent-dirs() {
-  local selected_dir=$(recent-dirs | fzf --query "$LBUFFER")
+function fuzzy-recent-dirs() {
+  local selected_dir=$(recent-dirs | $FUZZY_FINDERR --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
@@ -248,20 +249,20 @@ function fzf-recent-dirs() {
   zle clear-screen
 }
 
-zle -N fzf-recent-dirs
-bindkey '^r'  fzf-recent-dirs
+zle -N fuzzy-recent-dirs
+bindkey '^r'  fuzzy-recent-dirs
 
-function fzf-select-history() {
-  BUFFER=$(history -n 1 | fzf --tac --query "$LBUFFER")
+function fuzzy-select-history() {
+  BUFFER=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDERR --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle clear-screen
 }
 
-zle -N fzf-select-history
-bindkey '^h'  fzf-select-history
+zle -N fuzzy-select-history
+bindkey '^h'  fuzzy-select-history
 
 function gl() {
-  local selected_dir="$(ghq list -p | fzf)"
+  local selected_dir="$(ghq list -p | $FUZZY_FINDERR)"
   if [ -n "$selected_dir" ]; then
     cd ${(q)selected_dir}
   fi
