@@ -488,6 +488,7 @@ let g:ycm_global_ycm_extra_conf     = '~/.vim/ycm_extra_conf.py'
 let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
 let g:ycm_semantic_triggers         = {'haskell': ['.']}
 
+nnoremap <silent> ,f  :<C-u>YcmCompleter FixIt<CR>
 nnoremap <silent> ,t  :<C-u>YcmCompleter GetType<CR>
 nnoremap <silent> ,gd :<C-u>YcmCompleter GoToDeclaration<CR>
 nnoremap <silent> ,gD :<C-u>YcmCompleter GoToDefinition<CR>
