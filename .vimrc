@@ -261,8 +261,10 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
 
 " code completion
+Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'eagletmt/neco-ghc'
+Plugin 'honza/vim-snippets'
 
 " operator
 Plugin 'kana/vim-operator-user'
@@ -492,6 +494,12 @@ nnoremap <silent> ,f  :<C-u>YcmCompleter FixIt<CR>
 nnoremap <silent> ,t  :<C-u>YcmCompleter GetType<CR>
 nnoremap <silent> ,gd :<C-u>YcmCompleter GoToDeclaration<CR>
 nnoremap <silent> ,gD :<C-u>YcmCompleter GoToDefinition<CR>
+" }}}
+
+" UltiSnips {{{
+let g:UltiSnipsExpandTrigger        = '<C-e>'
+let g:UltiSnipsJumpBackwardTrigger  = '<C-b>'
+let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
 " }}}
 
 " neco-ghc {{{
