@@ -5,11 +5,6 @@ if 0 | endif
 augroup MyVimrc
   autocmd!
 augroup END
-
-command! -nargs=* Autocmd autocmd MyVimrc <args>
-
-Autocmd FileType vim highlight def link myVimAutocmd vimAutoCmd
-Autocmd FileType vim match myVimAutocmd /\<\%(Autocmd\)\>/
 " }}}
 
 " basic settings {{{
@@ -21,35 +16,35 @@ set fileformats=unix,dos,mac
 
 scriptencoding utf-8
 
-" show cursorline
+" show cursor line
 set cursorline
 " show line number
 set number
 " show ruler
 set ruler
-" always show statusline
-set laststatus=2
-" always show tabline
-set showtabline=2
-" margin during scrolling
-set scrolloff=5
 " show title
 set title
-" hide startup messages
-set shortmess& shortmess+=I
 " show tabs
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-" separator
-set fillchars& fillchars+=vert:\ 
-" add <> to matchpairs
-set matchpairs& matchpairs+=<:>
-" use english-help first
-set helplang=en,ja
+" always show status line
+set laststatus=2
+" always show tab page label
+set showtabline=2
+" folding
+set foldlevel=99 foldmethod=syntax nofoldenable
+" margin during scrolling
+set scrolloff=5
 " same sized splits
 set equalalways
+" remove vertical separators
+set fillchars-=vert:\|
+" hide startup messages
+set shortmess& shortmess+=I
+" disable bell
+set noerrorbells visualbell t_vb=
 
-" backspace
-set backspace=indent,eol,start
+" add <> to matchpairs
+set matchpairs& matchpairs+=<:>
 " increment/decrement bin/hex numbers
 set nrformats=bin,hex
 " open file in tab
@@ -59,6 +54,7 @@ set smartindent autoindent breakindent
 " use <SPACE> instead of <TAB>
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
+
 " smartcase search
 set ignorecase smartcase
 " incremental search
@@ -67,22 +63,16 @@ set incsearch
 set hlsearch
 " searches wrap around
 set wrapscan
-" folding
-set foldmethod=syntax
-set foldlevel=99
-set nofoldenable
 
-" command-line
-set wildmenu wildignorecase wildmode=longest,full
 " completion
 set completeopt=menuone,noinsert,noselect
+" command line completion
+set wildmenu wildignorecase wildmode=longest,full
 
-" timeout
+" performance
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
 set updatetime=500
-" disable bell
-set noerrorbells visualbell t_vb=
 
 " clipboard
 if has('clipboard')
@@ -108,7 +98,7 @@ endif
 set undofile undodir=~/.vim/undo
 
 " open last position
-Autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 " }}}
 
 " keybind {{{
@@ -162,7 +152,7 @@ command! -bang Wa wa<bang>
 
 " filetypes {{{
 " C++
-Autocmd FileType c,cpp call s:on_cpp_files()
+autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
 function! s:on_cpp_files()
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
@@ -202,7 +192,7 @@ let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_load_gemfile      = 1
 
 " vim
-Autocmd FileType vim call s:on_vim_files()
+autocmd MyVimrc FileType vim call s:on_vim_files()
 function! s:on_vim_files()
   " search vim help for word under cursor
   setlocal keywordprg=:help
@@ -211,22 +201,22 @@ function! s:on_vim_files()
 endfunction
 
 " binary files
-Autocmd BufReadPost * if &binary | call s:on_binary_files() | endif
+autocmd MyVimrc BufReadPost * if &binary | call s:on_binary_files() | endif
 function! s:on_binary_files()
   silent %!xxd -g 1
   setlocal ft=xxd
 
-  Autocmd BufWritePre  * %!xxd -r
-  Autocmd BufWritePost * silent %!xxd -g 1
-  Autocmd BufWritePost * setlocal nomodified
+  autocmd MyVimrc BufWritePre  * %!xxd -r
+  autocmd MyVimrc BufWritePost * silent %!xxd -g 1
+  autocmd MyVimrc BufWritePost * setlocal nomodified
 endfunction
 
 " quickfix
-Autocmd FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
+autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
-Autocmd FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
+autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 " command window
-Autocmd CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
+autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " Plugins {{{
@@ -241,24 +231,25 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'AndrewRadev/switch.vim'
 Plugin 'a.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'itchyny/vim-gitbranch'
+Plugin 'kana/vim-operator-replace'
+Plugin 'kana/vim-operator-user'
 Plugin 'kannokanno/previm'
+Plugin 'mattn/emmet-vim'
 Plugin 'osyo-manga/vim-over'
 Plugin 'rhysd/clever-f.vim'
 Plugin 'rhysd/committia.vim'
-Plugin 'thinca/vim-quickrun'
-Plugin 'tyru/open-browser.vim'
-
-Plugin 'AndrewRadev/switch.vim'
-Plugin 'mattn/emmet-vim'
 Plugin 't9md/vim-textmanip'
+Plugin 'thinca/vim-quickrun'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-surround'
+Plugin 'tyru/open-browser.vim'
 
 " code completion
 Plugin 'SirVer/ultisnips'
@@ -266,22 +257,18 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'honza/vim-snippets'
 
-" operator
-Plugin 'kana/vim-operator-user'
-Plugin 'kana/vim-operator-replace'
-Plugin 'rhysd/vim-clang-format'
-
 " colorscheme
 Plugin 'Tosainu/last256'
 Plugin 'mkarmona/colorsbox'
 
-" filetypes
+" lang
 Plugin 'Twinside/vim-haskellFold'
 Plugin 'ap/vim-css-color'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'itchyny/vim-haskell-indent'
 Plugin 'itchyny/vim-haskell-sort-import'
 Plugin 'othree/html5.vim'
+Plugin 'rhysd/vim-clang-format'
 Plugin 'slim-template/vim-slim'
 Plugin 'vim-jp/vim-cpp'
 Plugin 'vim-ruby/vim-ruby'
@@ -418,7 +405,7 @@ endfunction
 " previm {{{
 let g:previm_enable_realtime = 1
 
-Autocmd FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
+autocmd MyVimrc FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 " }}}
 
 " clever-f.vim {{{
@@ -505,7 +492,7 @@ let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
 " neco-ghc {{{
 let g:necoghc_enable_detailed_browse = 1
 
-Autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+autocmd MyVimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 
 " vim-operator-replace {{{
@@ -525,7 +512,7 @@ let g:clang_format#style_options = {
       \   'Standard':                         'Cpp11',
       \ }
 
-Autocmd FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
+autocmd MyVimrc FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
 " }}}
 " }}}
 
