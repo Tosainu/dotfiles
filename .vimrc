@@ -458,7 +458,6 @@ nnoremap <silent> ,sw :<C-u>Switch<CR>
 let g:user_emmet_settings = {
       \   'indentation' : '  '
       \ }
-let g:user_emmet_leader_key = '<C-e>'
 " }}}
 
 " vim-textmanip {{{
