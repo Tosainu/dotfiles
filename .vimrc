@@ -380,25 +380,28 @@ endfunction
 
 function! LightlineGitBranch()
   let _ = gitbranch#name()
-  return _ != '' ? "\ue0a0 " . _ : ''
+  return winwidth(0) >= 80 &&  _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightlineGitGutter()
-  if !get(g:, 'gitgutter_enabled', 0) | return '' | endif
-  let symbols = [
-        \   g:gitgutter_sign_added,
-        \   g:gitgutter_sign_modified,
-        \   g:gitgutter_sign_removed,
-        \ ]
-  let hunks = GitGutterGetHunkSummary()
-  let _ = []
-  for i in [0, 1, 2]
-    if hunks[i] > 0
-      call add(_, symbols[i] . ' ' . hunks[i])
-    endif
-  endfor
-  return join(_, ' ')
+  if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
+    let symbols = [
+          \   g:gitgutter_sign_added,
+          \   g:gitgutter_sign_modified,
+          \   g:gitgutter_sign_removed,
+          \ ]
+    let hunks = GitGutterGetHunkSummary()
+    let _ = []
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(_, symbols[i] . ' ' . hunks[i])
+      endif
+    endfor
+    return join(_, ' ')
+  else
+    return ''
+  endif
 endfunction
 " }}}
 
