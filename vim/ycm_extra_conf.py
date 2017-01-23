@@ -1,4 +1,7 @@
+from subprocess import Popen, PIPE
 import os
+import re
+import subprocess
 import ycm_core
 
 # These are the compilation flags that will be used in case there's no
@@ -12,8 +15,6 @@ flags = [
     '-DNDEBUG',
     '-x', 'c++',
     '-I', '.',
-    '-isystem', '/usr/include',
-    '-isystem', '/usr/include/c++/v1',
 ]
 
 
@@ -34,7 +35,16 @@ if os.path.exists(compilation_database_folder):
 else:
     database = None
 
-SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+
+def GetClangIncludePathList():
+    cmd = 'clang++ -E -x c++ - -v'.split()
+    proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
+    out = proc.communicate()
+    match = re.search(
+        '#include <\.\.\.> search starts here:\n(.+)\nEnd of search list',
+        out[1].decode(),
+        re.DOTALL)
+    return [s.strip() for s in match.group(1).splitlines()]
 
 
 def DirectoryOfThisScript():
@@ -82,7 +92,7 @@ def GetCompilationInfoForFile(filename):
     # should be good enough.
     if IsHeaderFile(filename):
         basename = os.path.splitext(filename)[0]
-        for extension in SOURCE_EXTENSIONS:
+        for extension in ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']:
             replacement_file = basename + extension
             if os.path.exists(replacement_file):
                 compilation_info = database.GetCompilationInfoForFile(
@@ -115,6 +125,9 @@ def FlagsForFile(filename, **kwargs):
     else:
         relative_to = DirectoryOfThisScript()
         final_flags = MakeRelativePathsInFlagsAbsolute(flags, relative_to)
+
+    for path in GetClangIncludePathList():
+        final_flags.extend(['-isystem', path])
 
     return {
         'flags': final_flags,
