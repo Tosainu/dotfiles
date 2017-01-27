@@ -148,6 +148,8 @@ command! -bang QA qa<bang>
 command! -bang Qa qa<bang>
 command! -bang WA wa<bang>
 command! -bang Wa wa<bang>
+command! -bang WQa wqa<bang>
+command! -bang Wqa wqa<bang>
 " }}}
 
 " filetypes {{{
