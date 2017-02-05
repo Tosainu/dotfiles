@@ -219,6 +219,13 @@ autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " Plugins {{{
+" Disable compressed file plugins
+let g:loaded_gzip           = 1
+let g:loaded_tar            = 1
+let g:loaded_tarPlugin      = 1
+let g:loaded_zip            = 1
+let g:loaded_zipPlugin      = 1
+
 " Vundle.vim {{{
 if !isdirectory(expand('~/.vim/bundle/Vundle.vim'))
   finish
