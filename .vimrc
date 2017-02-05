@@ -474,6 +474,7 @@ let g:ycm_allow_changing_updatetime = 0
 let g:ycm_complete_in_comments      = 1
 let g:ycm_confirm_extra_conf        = 0
 let g:ycm_show_diagnostics_ui       = 0
+let g:ycm_extra_conf_vim_data       = ['&filetype']
 let g:ycm_global_ycm_extra_conf     = '~/.vim/ycm_extra_conf.py'
 let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
 let g:ycm_semantic_triggers         = {'haskell': ['.']}

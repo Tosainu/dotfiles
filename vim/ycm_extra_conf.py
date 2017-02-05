@@ -7,16 +7,18 @@ import ycm_core
 # These are the compilation flags that will be used in case there's no
 # compilation database set (by default, one is not set).
 # CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
-flags = [
+default_flags = [
     '-Wall',
     '-Wextra',
     '-pedantic',
-    '-std=c++14',
     '-DNDEBUG',
-    '-x', 'c++',
     '-I', '.',
 ]
 
+filetype_flags = {
+    'c': ['-x', 'c', '-std=c11'],
+    'cpp': ['-x', 'c++', '-std=c++14'],
+}
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
 # compile_commands.json file to use that instead of 'flags'. See here for
@@ -36,8 +38,8 @@ else:
     database = None
 
 
-def GetClangIncludePathList():
-    cmd = 'clang++ -E -x c++ - -v'.split()
+def GetClangIncludePathList(filetype):
+    cmd = ['clang', '-E'] + filetype_flags[filetype] + ['-', '-v']
     proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
     out = proc.communicate()
     match = re.search(
@@ -45,10 +47,6 @@ def GetClangIncludePathList():
         out[1].decode(),
         re.DOTALL)
     return [s.strip() for s in match.group(1).splitlines()]
-
-
-def DirectoryOfThisScript():
-    return os.path.dirname(os.path.abspath(__file__))
 
 
 def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
@@ -104,6 +102,16 @@ def GetCompilationInfoForFile(filename):
 
 
 def FlagsForFile(filename, **kwargs):
+    flags = []
+
+    client_data = kwargs['client_data']
+    filetype = client_data.get('&filetype', '')
+    if filetype in filetype_flags:
+        flags.extend(filetype_flags[filetype])
+
+        for path in GetClangIncludePathList(filetype):
+            flags.extend(['-isystem', path])
+
     if database:
         # Bear in mind that compilation_info.compiler_flags_ does NOT return a
         # python list, but a "list-like" StringVec object
@@ -111,25 +119,14 @@ def FlagsForFile(filename, **kwargs):
         if not compilation_info:
             return None
 
-        final_flags = MakeRelativePathsInFlagsAbsolute(
-            compilation_info.compiler_flags_,
-            compilation_info.compiler_working_dir_)
+        flags.extend(compilation_info.compiler_flags_)
+        workdir = compilation_info.compiler_working_dir_
 
-        # NOTE: This is just for YouCompleteMe; it's highly likely that your project
-        # does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
-        # ycm_extra_conf IF YOU'RE NOT 100% SURE YOU NEED IT.
-        try:
-            final_flags.remove('-stdlib=libc++')
-        except ValueError:
-            pass
     else:
-        relative_to = DirectoryOfThisScript()
-        final_flags = MakeRelativePathsInFlagsAbsolute(flags, relative_to)
-
-    for path in GetClangIncludePathList():
-        final_flags.extend(['-isystem', path])
+        flags.extend(default_flags)
+        workdir = os.path.dirname(os.path.abspath(__file__))
 
     return {
-        'flags': final_flags,
+        'flags': MakeRelativePathsInFlagsAbsolute(flags, workdir),
         'do_cache': True
     }
