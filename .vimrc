@@ -176,6 +176,8 @@ function! s:expand_namespace()
   endif
 endfunction
 
+autocmd MyVimrc BufReadPost /usr/include/c++/* :setlocal filetype=cpp
+
 " Haskell
 let hs_highlight_boolean    = 1
 let hs_highlight_delimiters = 1
