@@ -16,34 +16,37 @@ set fileformats=unix,dos,mac
 
 scriptencoding utf-8
 
+set breakindent
 set cursorline
+set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 set number
 set ruler
 set title
-set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 set laststatus=2
 set showtabline=2
-set foldlevel=99 foldmethod=syntax nofoldenable
 set scrolloff=5
-set equalalways
+set background=dark
 set fillchars-=vert:\|
-set shortmess& shortmess+=I
-set noerrorbells visualbell t_vb=
-
+set foldlevel=99 foldmethod=syntax nofoldenable
 set matchpairs& matchpairs+=<:>
-set nrformats=bin,hex
+set noerrorbells visualbell t_vb=
+set shortmess& shortmess+=I
+set equalalways
 set switchbuf=useopen,usetab,newtab
-set smartindent autoindent breakindent
+set wildmenu wildmode=longest,full
+set wildignorecase
+
+set backspace=2
+set completeopt=menuone,noinsert,noselect
+set nrformats=bin,hex
 set expandtab smarttab
-set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
+set smartindent
+set shiftwidth=2 softtabstop=2 tabstop=2
 
 set ignorecase smartcase
 set incsearch
 set hlsearch
 set wrapscan
-
-set completeopt=menuone,noinsert,noselect
-set wildmenu wildignorecase wildmode=longest,full
 
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
@@ -62,13 +65,18 @@ if !isdirectory(expand('~/.vim/swap'))
   call mkdir(expand('~/.vim/swap'), 'p')
 endif
 
-if !isdirectory(expand('~/.vim/undo'))
-  call mkdir(expand('~/.vim/undo'), 'p')
+if has('persistent_undo')
+  set undofile undodir=~/.vim/undo
+  if !isdirectory(&undodir)
+    call mkdir(&undodir, 'p')
+  endif
 endif
-set undofile undodir=~/.vim/undo
 
-" open last position
-autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+" jump to the last known cursor position
+autocmd MyVimrc BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 
 filetype plugin indent on
 " }}}
