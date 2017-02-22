@@ -304,6 +304,7 @@ endfunction
 
 " incsearch.vim {{{
 let g:incsearch#auto_nohlsearch = 1
+let g:incsearch#magic = '\v'
 
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
