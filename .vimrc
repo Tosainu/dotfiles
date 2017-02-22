@@ -16,65 +16,39 @@ set fileformats=unix,dos,mac
 
 scriptencoding utf-8
 
-" show cursor line
 set cursorline
-" show line number
 set number
-" show ruler
 set ruler
-" show title
 set title
-" show tabs
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-" always show status line
 set laststatus=2
-" always show tab page label
 set showtabline=2
-" folding
 set foldlevel=99 foldmethod=syntax nofoldenable
-" margin during scrolling
 set scrolloff=5
-" same sized splits
 set equalalways
-" remove vertical separators
 set fillchars-=vert:\|
-" hide startup messages
 set shortmess& shortmess+=I
-" disable bell
 set noerrorbells visualbell t_vb=
 
-" add <> to matchpairs
 set matchpairs& matchpairs+=<:>
-" increment/decrement bin/hex numbers
 set nrformats=bin,hex
-" open file in tab
 set switchbuf=useopen,usetab,newtab
-" indent
 set smartindent autoindent breakindent
-" use <SPACE> instead of <TAB>
 set expandtab smarttab
 set tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
 
-" smartcase search
 set ignorecase smartcase
-" incremental search
 set incsearch
-" highlight results
 set hlsearch
-" searches wrap around
 set wrapscan
 
-" completion
 set completeopt=menuone,noinsert,noselect
-" command line completion
 set wildmenu wildignorecase wildmode=longest,full
 
-" performance
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
 set updatetime=500
 
-" clipboard
 if has('clipboard')
   set clipboard&
   if has('unnamedplus')
@@ -84,14 +58,10 @@ if has('clipboard')
   endif
 endif
 
-" history
 set history=1000
-" viminfo
 set viminfo& viminfo+=n~/.vim/viminfo
-" disable backup/swap files
 set nobackup noswapfile
 
-" undofile
 if !isdirectory(expand('~/.vim/undo'))
   call mkdir(expand('~/.vim/undo'), 'p')
 endif
