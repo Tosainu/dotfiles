@@ -49,13 +49,8 @@ set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
 set updatetime=500
 
-if has('clipboard')
-  set clipboard&
-  if has('unnamedplus')
-    set clipboard^=unnamedplus
-  else
-    set clipboard^=unnamed
-  endif
+if has('unnamedplus')
+  set clipboard& clipboard^=unnamedplus
 endif
 
 set history=1000
