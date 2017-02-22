@@ -135,7 +135,7 @@ command! -bang Wqa wqa<bang>
 " filetypes {{{
 " C++
 autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
-function! s:on_cpp_files()
+function! s:on_cpp_files() abort
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 
@@ -143,7 +143,7 @@ function! s:on_cpp_files()
 endfunction
 
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
-function! s:expand_namespace()
+function! s:expand_namespace() abort
   let s = getline('.')[0:col('.') - 2]
   if s =~# '\<b;$'
     return "\<BS>oost::"
@@ -174,7 +174,7 @@ let g:rubycomplete_load_gemfile      = 1
 
 " vim
 autocmd MyVimrc FileType vim call s:on_vim_files()
-function! s:on_vim_files()
+function! s:on_vim_files() abort
   " search vim help for word under cursor
   setlocal keywordprg=:help
 
@@ -183,7 +183,7 @@ endfunction
 
 " binary files
 autocmd MyVimrc BufReadPost * if &binary | call s:on_binary_files() | endif
-function! s:on_binary_files()
+function! s:on_binary_files() abort
   silent %!xxd -g 1
   setlocal ft=xxd
 
@@ -289,7 +289,7 @@ let g:ctrlp_status_func = {
       \   'prog': 'CtrlPStatusFunc_2',
       \ }
 
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked) abort
   let g:lightline.ctrlp_regex = a:regex
   let g:lightline.ctrlp_prev = a:prev
   let g:lightline.ctrlp_item = a:item
@@ -297,7 +297,7 @@ function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
   return lightline#statusline(0)
 endfunction
 
-function! CtrlPStatusFunc_2(str)
+function! CtrlPStatusFunc_2(str) abort
   return lightline#statusline(0)
 endfunction
 " }}}
@@ -343,33 +343,33 @@ let g:lightline = {
       \   'tabline':      {'left': [['tabs']], 'right': []},
       \ }
 
-function! LightlineFilename()
+function! LightlineFilename() abort
   let fname = expand('%:t')
   return  fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
         \ fname != '' ? fname : '[No Name]'
 endfunction
 
-function! LightlineMode()
+function! LightlineMode() abort
   let fname = expand('%:t')
   return  fname == 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
-function! LightlineModified()
+function! LightlineModified() abort
   return &modifiable && &modified ? '+' : ''
 endfunction
 
-function! LightlineReadonly()
+function! LightlineReadonly() abort
   return &ro ? "\ue0a2" : ''
 endfunction
 
-function! LightlineGitBranch()
+function! LightlineGitBranch() abort
   let _ = gitbranch#name()
   return winwidth(0) >= 80 &&  _ != '' ? "\ue0a0 " . _ : ''
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
-function! LightlineGitGutter()
+function! LightlineGitGutter() abort
   if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
     let symbols = [
           \   g:gitgutter_sign_added,
@@ -403,7 +403,7 @@ let g:clever_f_smart_case     = 1
 
 " committia.vim {{{
 let g:committia_hooks = {}
-function! g:committia_hooks.edit_open(info)
+function! g:committia_hooks.edit_open(info) abort
   " enable spell checking
   setlocal spell
 
