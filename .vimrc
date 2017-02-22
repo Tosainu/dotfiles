@@ -55,7 +55,12 @@ endif
 
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
-set nobackup noswapfile
+set nobackup
+
+set swapfile directory^=~/.vim/swap
+if !isdirectory(expand('~/.vim/swap'))
+  call mkdir(expand('~/.vim/swap'), 'p')
+endif
 
 if !isdirectory(expand('~/.vim/undo'))
   call mkdir(expand('~/.vim/undo'), 'p')
