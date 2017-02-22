@@ -49,4 +49,4 @@
 
 [ghq]
 	root = ~/.ghq
-	root = ~/.vim/bundle/
+	root = ~/.vim/pack/

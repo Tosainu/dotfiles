@@ -99,6 +99,8 @@ set undofile undodir=~/.vim/undo
 
 " open last position
 autocmd MyVimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+filetype plugin indent on
 " }}}
 
 " keybind {{{
@@ -228,61 +230,58 @@ let g:loaded_tarPlugin      = 1
 let g:loaded_zip            = 1
 let g:loaded_zipPlugin      = 1
 
-" Vundle.vim {{{
-if !isdirectory(expand('~/.vim/bundle/Vundle.vim'))
+" minpac {{{
+silent! packadd minpac
+
+if !exists('*minpac#init')
   finish
+else
+  call minpac#init()
+
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+  call minpac#add('AndrewRadev/switch.vim')
+  call minpac#add('airblade/vim-gitgutter')
+  call minpac#add('ctrlpvim/ctrlp.vim')
+  call minpac#add('haya14busa/incsearch.vim')
+  call minpac#add('itchyny/lightline.vim')
+  call minpac#add('itchyny/vim-gitbranch')
+  call minpac#add('kana/vim-operator-replace')
+  call minpac#add('kana/vim-operator-user')
+  call minpac#add('kannokanno/previm')
+  call minpac#add('mattn/emmet-vim')
+  call minpac#add('osyo-manga/vim-over')
+  call minpac#add('rhysd/clever-f.vim')
+  call minpac#add('rhysd/committia.vim')
+  call minpac#add('t9md/vim-textmanip')
+  call minpac#add('thinca/vim-quickrun')
+  call minpac#add('tomtom/tcomment_vim')
+  call minpac#add('tpope/vim-surround')
+  call minpac#add('tyru/open-browser.vim')
+  call minpac#add('vim-scripts/a.vim')
+
+  " code completion
+  call minpac#add('SirVer/ultisnips')
+  call minpac#add('Valloric/YouCompleteMe')
+  call minpac#add('eagletmt/neco-ghc')
+  call minpac#add('honza/vim-snippets')
+
+  " colorscheme
+  call minpac#add('Tosainu/last256')
+  call minpac#add('mkarmona/colorsbox')
+
+  " lang
+  call minpac#add('Twinside/vim-haskellFold')
+  call minpac#add('ap/vim-css-color')
+  call minpac#add('hail2u/vim-css3-syntax')
+  call minpac#add('itchyny/vim-haskell-indent')
+  call minpac#add('itchyny/vim-haskell-sort-import')
+  call minpac#add('othree/html5.vim')
+  call minpac#add('rhysd/vim-clang-format')
+  call minpac#add('slim-template/vim-slim')
+  call minpac#add('vim-jp/vim-cpp')
+  call minpac#add('vim-ruby/vim-ruby')
 endif
-
-filetype off
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'AndrewRadev/switch.vim'
-Plugin 'a.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'itchyny/vim-gitbranch'
-Plugin 'kana/vim-operator-replace'
-Plugin 'kana/vim-operator-user'
-Plugin 'kannokanno/previm'
-Plugin 'mattn/emmet-vim'
-Plugin 'osyo-manga/vim-over'
-Plugin 'rhysd/clever-f.vim'
-Plugin 'rhysd/committia.vim'
-Plugin 't9md/vim-textmanip'
-Plugin 'thinca/vim-quickrun'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tyru/open-browser.vim'
-
-" code completion
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'honza/vim-snippets'
-
-" colorscheme
-Plugin 'Tosainu/last256'
-Plugin 'mkarmona/colorsbox'
-
-" lang
-Plugin 'Twinside/vim-haskellFold'
-Plugin 'ap/vim-css-color'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'itchyny/vim-haskell-indent'
-Plugin 'itchyny/vim-haskell-sort-import'
-Plugin 'othree/html5.vim'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'slim-template/vim-slim'
-Plugin 'vim-jp/vim-cpp'
-Plugin 'vim-ruby/vim-ruby'
-
-call vundle#end()
-filetype plugin indent on
 " }}}
 
 " vim-gitgutter {{{
