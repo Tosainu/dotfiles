@@ -156,7 +156,7 @@ function! s:expand_namespace() abort
   endif
 endfunction
 
-autocmd MyVimrc BufReadPost /usr/include/c++/* :setlocal filetype=cpp
+autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
 
 " Haskell
 let hs_highlight_boolean    = 1
