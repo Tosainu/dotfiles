@@ -4,7 +4,7 @@
 	signingkey = AF213B5F
 
 [core]
-	editor = vim
+	editor = vim +1
 	excludesfile = ~/.config/git/gitignore
 	preloadindex = true
 
