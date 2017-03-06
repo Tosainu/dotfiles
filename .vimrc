@@ -78,6 +78,9 @@ autocmd MyVimrc BufReadPost *
       \   exe "normal! g`\"" |
       \ endif
 
+" open .vimrc
+command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
+
 filetype plugin indent on
 " }}}
 
