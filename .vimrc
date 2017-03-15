@@ -70,6 +70,8 @@ if has('persistent_undo')
   if !isdirectory(&undodir)
     call mkdir(&undodir, 'p')
   endif
+
+  autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
 
 " jump to the last known cursor position
