@@ -31,6 +31,9 @@
 [diff]
 	compactionHeuristic = true
 
+[fetch]
+	prune = true
+
 [pager]
 	diff = /usr/share/git/diff-highlight/diff-highlight | less
 	log  = /usr/share/git/diff-highlight/diff-highlight | less
