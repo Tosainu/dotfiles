@@ -25,6 +25,9 @@
 [merge]
 	tool = vimdiff
 
+[commit]
+	gpgsign = true
+
 [diff]
 	compactionHeuristic = true
 
