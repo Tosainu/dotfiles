@@ -5,7 +5,6 @@
 
 [core]
 	editor = vim +1
-	excludesfile = ~/.config/git/gitignore
 	preloadindex = true
 
 [color]
