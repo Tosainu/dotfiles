@@ -244,7 +244,16 @@ else
 
   " code completion
   call minpac#add('SirVer/ultisnips')
-  call minpac#add('Valloric/YouCompleteMe')
+  call minpac#add('Valloric/YouCompleteMe', {'do': {-> system('
+        \   mkdir -p ycm_build && cd $_ &&
+        \   cmake -G Ninja . ../third_party/ycmd/cpp
+        \     -DCMAKE_C_COMPILER=clang
+        \     -DCMAKE_CXX_COMPILER=clang++
+        \     -DUSE_PYTHON2=OFF
+        \     -DUSE_SYSTEM_BOOST=ON
+        \     -DUSE_SYSTEM_LIBCLANG=ON &&
+        \   cmake --build . --target ycm_core --config Release --clean-first')
+        \ }})
   call minpac#add('eagletmt/neco-ghc')
   call minpac#add('honza/vim-snippets')
 
