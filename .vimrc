@@ -241,7 +241,6 @@ else
   call minpac#add('tomtom/tcomment_vim')
   call minpac#add('tpope/vim-surround')
   call minpac#add('tyru/open-browser.vim')
-  call minpac#add('vim-scripts/a.vim')
 
   " code completion
   call minpac#add('SirVer/ultisnips')
