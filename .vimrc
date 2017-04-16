@@ -232,7 +232,7 @@ else
   call minpac#add('kana/vim-operator-replace')
   call minpac#add('kana/vim-operator-user')
   call minpac#add('kannokanno/previm')
-  call minpac#add('mattn/emmet-vim')
+  call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('osyo-manga/vim-over')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
@@ -258,8 +258,8 @@ else
   call minpac#add('honza/vim-snippets')
 
   " colorscheme
-  call minpac#add('Tosainu/last256')
-  call minpac#add('mkarmona/colorsbox')
+  call minpac#add('Tosainu/last256', {'type': 'opt'})
+  call minpac#add('mkarmona/colorsbox', {'type': 'opt'})
 
   " lang
   call minpac#add('Twinside/vim-haskellFold')
