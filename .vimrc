@@ -206,12 +206,16 @@ autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
 " Plugins {{{
-" Disable compressed file plugins
-let g:loaded_gzip           = 1
-let g:loaded_tar            = 1
-let g:loaded_tarPlugin      = 1
-let g:loaded_zip            = 1
-let g:loaded_zipPlugin      = 1
+" Disable some pre-installed plugins
+let g:loaded_getscriptPlugin  = 1
+let g:loaded_gzip             = 1
+let g:loaded_logiPat          = 1
+let g:loaded_netrwPlugin      = 1
+let g:loaded_tar              = 1
+let g:loaded_tarPlugin        = 1
+let g:loaded_vimballPlugin    = 1
+let g:loaded_zip              = 1
+let g:loaded_zipPlugin        = 1
 
 " minpac {{{
 silent! packadd minpac
