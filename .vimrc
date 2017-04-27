@@ -447,10 +447,20 @@ let g:quickrun_config._ = {
       \   'runner': 'job',
       \ }
 
-let g:quickrun_config.cpp = {
-      \   'command':    'clang++',
-      \   'cmdopt':     '-Wall -Wextra -std=c++14 -lboost_system -pthread',
-      \ }
+if executable('clang++')
+  let g:quickrun_config.cpp = {
+        \   'command':    'clang++',
+        \   'cmdopt':     '-Wall -Wextra -std=c++14 -lboost_system -pthread',
+        \ }
+endif
+
+if executable('stack')
+  let g:quickrun_config.haskell = {
+        \   'command': 'stack',
+        \   'exec': '%c %o %s %a',
+        \   'cmdopt': 'runghc',
+        \ }
+endif
 
 nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
