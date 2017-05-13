@@ -76,38 +76,25 @@ setopt prompt_subst
 
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr '%F{red}'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}'
-zstyle ':vcs_info:*' formats '%u%c%b'
-zstyle ':vcs_info:*' actionformats '%u%c%b|%a'
+zstyle ':vcs_info:*' formats        '%F{blue}%m%u%c%b%f'
+zstyle ':vcs_info:*' actionformats  '%F{blue}%m%u%c%b|%a%f'
+zstyle ':vcs_info:*' stagedstr      '%f%F{red}'
+zstyle ':vcs_info:*' unstagedstr    '%f%F{yellow}'
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
 function +vi-git-untracked() {
   if command git status --porcelain 2> /dev/null \
     | awk '{print $1}' \
     | command grep -F '??' > /dev/null 2>&1 ; then
-    hook_com[unstaged]+='%F{yellow}'
+    hook_com[misc]='%f%F{yellow}'
   fi
 }
 
-function update_vcs_info() {
-  psvar=()
-  vcs_info
-  [[ -n $vcs_info_msg_0_ ]] && echo $vcs_info_msg_0_
-}
+add-zsh-hook precmd vcs_info
 
 PROMPT=$'
-%{$fg_bold[yellow]%}%n@%m %{$fg_bold[green]%}%~%{$reset_color%} %{$fg_bold[blue]%}`update_vcs_info`%{$reset_color%}
-%(?,,%{$fg_bold[red]%}%? )%{$reset_color%}❯ '
-
-# http://zshwiki.org/home/examples/zlewidgets#vi_keys_-_show_mode
-function zle-line-init zle-keymap-select {
-  RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/}"
-  RPS2=$RPS1
-  zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+%B%F{yellow}%n@%m$f %F{green}%~%f ${vcs_info_msg_0_}
+%(?,,%F{red}%?%f )\ue0b1%b '
 # }}}
 
 # completion {{{
