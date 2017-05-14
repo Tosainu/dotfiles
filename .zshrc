@@ -17,11 +17,17 @@ path=(
   /usr/local/bin(N-/)
   ~/.local/bin(N-/)
   ~/.cabal/bin(N-/)
+  ~/.cargo/bin(N-/)
   $path
 )
 
 if (( $+commands[ruby] )); then
   path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
+fi
+
+# rust
+if (( $+commands[rustc] )); then
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 
 # colors

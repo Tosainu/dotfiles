@@ -248,16 +248,24 @@ else
 
   " code completion
   call minpac#add('SirVer/ultisnips')
-  call minpac#add('Valloric/YouCompleteMe', {'do': {-> system('
-        \   mkdir -p ycm_build && cd $_ &&
-        \   cmake -G Ninja . ../third_party/ycmd/cpp
-        \     -DCMAKE_C_COMPILER=clang
-        \     -DCMAKE_CXX_COMPILER=clang++
-        \     -DUSE_PYTHON2=OFF
-        \     -DUSE_SYSTEM_BOOST=ON
-        \     -DUSE_SYSTEM_LIBCLANG=ON &&
-        \   cmake --build . --target ycm_core --config Release --clean-first')
-        \ }})
+  function! s:build_ycm(hooktype, name)
+    " setup ycm_core library
+    call system('mkdir -p ycm_build && cd $_ &&
+          \ cmake -G Ninja . ../third_party/ycmd/cpp
+          \   -DCMAKE_C_COMPILER=clang
+          \   -DCMAKE_CXX_COMPILER=clang++
+          \   -DUSE_PYTHON2=OFF
+          \   -DUSE_SYSTEM_BOOST=ON
+          \   -DUSE_SYSTEM_LIBCLANG=ON &&
+          \ cmake --build . --target ycm_core --config Release --clean-first')
+
+    " setup rust completer
+    if (executable('cargo'))
+      call system('cd third_party/ycmd/third_party/racerd &&
+            \ cargo build --release')
+    endif
+  endfunction
+  call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
   call minpac#add('eagletmt/neco-ghc')
   call minpac#add('honza/vim-snippets')
 
