@@ -296,16 +296,19 @@ let g:gitgutter_sign_modified_removed = '➜'
 " }}}
 
 " ctrlp.vim {{{
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore   = '\v[\/]\.git$'
 let g:ctrlp_extensions      = ['changes', 'line', 'quickfix']
 let g:ctrlp_prompt_mappings = {
       \   'AcceptSelection("e")': ['<C-t>'],
       \   'AcceptSelection("t")': ['<CR>'],
       \ }
 
+let g:ctrlp_user_command = {}
+let g:ctrlp_user_command.types = {
+      \   1: ['.git', 'git --git-dir=%s/.git ls-files -co --exclude-standard'],
+      \ }
+
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s --ignore ".git" --nocolor --nogroup --hidden -g ""'
+  let g:ctrlp_user_command.fallback = 'ag %s --nocolor --nogroup -g ""'
   let g:ctrlp_use_caching = 0
 endif
 
