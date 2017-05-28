@@ -99,7 +99,7 @@ function +vi-git-untracked() {
 add-zsh-hook precmd vcs_info
 
 PROMPT=$'
-%B%F{yellow}%n@%m$f %F{green}%~%f ${vcs_info_msg_0_}
+%B%F{yellow}%n@%m%f %F{green}%~%f ${vcs_info_msg_0_}
 %(?,,%F{red}%?%f )\ue0b1%b '
 # }}}
 
