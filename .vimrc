@@ -10,8 +10,7 @@ augroup END
 " basic settings {{{
 " encoding
 set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8,cp932,euc-jp
+set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,latin1
 set fileformats=unix,dos,mac
 
 scriptencoding utf-8
