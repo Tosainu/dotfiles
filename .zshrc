@@ -89,10 +89,8 @@ zstyle ':vcs_info:*' unstagedstr    '%f%F{yellow}'
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
 function +vi-git-untracked() {
-  if command git status --porcelain 2> /dev/null \
-    | awk '{print $1}' \
-    | command grep -F '??' > /dev/null 2>&1 ; then
-    hook_com[misc]='%f%F{yellow}'
+  if [[ -n $(git ls-files --others --exclude-standard) ]]; then
+    hook_com[misc]+='%f%F{yellow}'
   fi
 }
 
