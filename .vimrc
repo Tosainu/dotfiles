@@ -247,7 +247,7 @@ else
 
   " code completion
   call minpac#add('SirVer/ultisnips')
-  function! s:build_ycm(hooktype, name)
+  function! s:build_ycm(hooktype, name) abort
     " setup ycm_core library
     call system('mkdir -p ycm_build && cd $_ &&
           \ cmake -G Ninja . ../third_party/ycmd/cpp
