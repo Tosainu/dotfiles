@@ -171,11 +171,6 @@ let hs_highlight_types      = 1
 " markdown
 let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'html', 'javascript', 'haskell', 'ruby', 'scss', 'sh', 'vim']
 
-" ruby
-let g:rubycomplete_buffer_loading    = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_load_gemfile      = 1
-
 " vim
 autocmd MyVimrc FileType vim call s:on_vim_files()
 function! s:on_vim_files() abort
@@ -232,10 +227,9 @@ else
   call minpac#add('haya14busa/incsearch.vim')
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
+  call minpac#add('justinmk/vim-dirvish')
   call minpac#add('kana/vim-operator-replace')
   call minpac#add('kana/vim-operator-user')
-  call minpac#add('kannokanno/previm')
-  call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('osyo-manga/vim-over')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
@@ -245,8 +239,11 @@ else
   call minpac#add('tpope/vim-surround')
   call minpac#add('tyru/open-browser.vim')
 
+  " colorscheme
+  call minpac#add('Tosainu/last256', {'type': 'opt'})
+  call minpac#add('mkarmona/colorsbox', {'type': 'opt'})
+
   " code completion
-  call minpac#add('SirVer/ultisnips')
   function! s:build_ycm(hooktype, name) abort
     " setup ycm_core library
     call system('mkdir -p ycm_build && cd $_ &&
@@ -265,24 +262,29 @@ else
     endif
   endfunction
   call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
-  call minpac#add('eagletmt/neco-ghc')
+
+  " snippets
+  call minpac#add('SirVer/ultisnips')
   call minpac#add('honza/vim-snippets')
 
-  " colorscheme
-  call minpac#add('Tosainu/last256', {'type': 'opt'})
-  call minpac#add('mkarmona/colorsbox', {'type': 'opt'})
+  " C++
+  call minpac#add('rhysd/vim-clang-format')
+  call minpac#add('vim-jp/vim-cpp')
 
-  " lang
+  " Haskell
   call minpac#add('Twinside/vim-haskellFold')
-  call minpac#add('ap/vim-css-color')
-  call minpac#add('hail2u/vim-css3-syntax')
+  call minpac#add('eagletmt/neco-ghc')
   call minpac#add('itchyny/vim-haskell-indent')
   call minpac#add('itchyny/vim-haskell-sort-import')
-  call minpac#add('othree/html5.vim')
-  call minpac#add('rhysd/vim-clang-format')
+
+  " Rust
+  call minpac#add('cespare/vim-toml')
+  call minpac#add('rust-lang/rust.vim')
+
+  call minpac#add('ap/vim-css-color')
+  call minpac#add('kannokanno/previm', {'type': 'opt'})
+  call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('slim-template/vim-slim')
-  call minpac#add('vim-jp/vim-cpp')
-  call minpac#add('vim-ruby/vim-ruby')
 endif
 " }}}
 
@@ -420,8 +422,6 @@ endfunction
 
 " previm {{{
 let g:previm_enable_realtime = 1
-
-autocmd MyVimrc FileType markdown nnoremap <silent> <Space>p :<C-u>PrevimOpen<CR>
 " }}}
 
 " clever-f.vim {{{
