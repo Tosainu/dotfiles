@@ -86,6 +86,8 @@ filetype plugin indent on
 " }}}
 
 " keybind {{{
+let g:mapleader = ","
+
 " disable arrow keys
 noremap <Up>    <Nop>
 noremap <Down>  <Nop>
@@ -120,7 +122,8 @@ nnoremap <C-l> <C-w>l
 nnoremap <silent> <C-n> :<C-u>tabnew<CR>
 
 " sort
-vnoremap <silent> ,s :sort<CR>
+vnoremap <silent> <Leader>s :sort<CR>
+vnoremap <silent> <Leader>u :sort u<CR>
 
 " https://sanctum.geek.nz/arabesque/vim-command-typos/
 command! -bang -nargs=? -complete=file E e<bang> <args>
@@ -472,12 +475,12 @@ if executable('stack')
         \ }
 endif
 
-nnoremap <silent> <Space>r :<C-u>QuickRun<CR>
+nnoremap <silent> <Leader>r :<C-u>QuickRun<CR>
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
 " }}}
 
 " switch.vim {{{
-nnoremap <silent> ,sw :<C-u>Switch<CR>
+nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
 
 " emmet-vim {{{
@@ -504,10 +507,10 @@ let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
 let g:ycm_python_binary_path        = 'python'
 let g:ycm_semantic_triggers         = {'haskell': ['.']}
 
-nnoremap <silent> ,f  :<C-u>YcmCompleter FixIt<CR>
-nnoremap <silent> ,t  :<C-u>YcmCompleter GetType<CR>
-nnoremap <silent> ,gd :<C-u>YcmCompleter GoToDeclaration<CR>
-nnoremap <silent> ,gD :<C-u>YcmCompleter GoToDefinition<CR>
+nnoremap <silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
+nnoremap <silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
+nnoremap <silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
+nnoremap <silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
 " }}}
 
 " UltiSnips {{{
@@ -539,7 +542,7 @@ let g:clang_format#style_options = {
       \   'Standard':                         'Cpp11',
       \ }
 
-autocmd MyVimrc FileType c,cpp map <buffer>,x <Plug>(operator-clang-format)
+autocmd MyVimrc FileType c,cpp xmap <buffer> <Leader>x <Plug>(operator-clang-format)
 " }}}
 " }}}
 
