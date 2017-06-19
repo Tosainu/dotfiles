@@ -332,6 +332,14 @@ endfunction
 function! CtrlPStatusFunc_2(str) abort
   return lightline#statusline(0)
 endfunction
+
+nnoremap [ctrlp] <nop>
+nmap     <Leader>c [ctrlp]
+nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
+nnoremap <silent> [ctrlp]c :<C-u>CtrlPChangeAll<CR>
+nnoremap <silent> [ctrlp]f :<C-u>CtrlP<CR>
+nnoremap <silent> [ctrlp]l :<C-u>CtrlPLine<CR>
+nnoremap <silent> [ctrlp]r :<C-u>CtrlPMRU<CR>
 " }}}
 
 " incsearch.vim {{{
