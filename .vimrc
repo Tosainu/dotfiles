@@ -75,7 +75,7 @@ endif
 
 " jump to the last known cursor position
 autocmd MyVimrc BufReadPost *
-      \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
       \   exe "normal! g`\"" |
       \ endif
 
