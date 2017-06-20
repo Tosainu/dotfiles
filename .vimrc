@@ -58,10 +58,13 @@ set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
 set nobackup
 
-set swapfile directory^=~/.vim/swap
-if !isdirectory(expand('~/.vim/swap'))
-  call mkdir(expand('~/.vim/swap'), 'p')
+set swapfile directory&
+let s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
+      \ $XDG_RUNTIME_DIR . '/vim/swap' : expand('~/.vim/swap')
+if !isdirectory(s:swapdir)
+  call mkdir(s:swapdir, 'p')
 endif
+let &directory = s:swapdir . ',' . &directory
 
 if has('persistent_undo')
   set undofile undodir=~/.vim/undo
