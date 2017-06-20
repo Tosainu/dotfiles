@@ -18,7 +18,6 @@ scriptencoding utf-8
 set breakindent
 set cursorline
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
-set number
 set ruler
 set title
 set laststatus=2
@@ -124,6 +123,9 @@ nnoremap <silent> <C-n> :<C-u>tabnew<CR>
 " sort
 vnoremap <silent> <Leader>s :sort<CR>
 vnoremap <silent> <Leader>u :sort u<CR>
+
+" toggle line number
+nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
 
 " https://sanctum.geek.nz/arabesque/vim-command-typos/
 command! -bang -nargs=? -complete=file E e<bang> <args>
