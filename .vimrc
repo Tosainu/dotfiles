@@ -557,21 +557,25 @@ autocmd MyVimrc FileType c,cpp xmap <buffer> <Leader>x <Plug>(operator-clang-for
 " }}}
 
 " colorscheme {{{
-if &t_Co > 2 || has("gui_running")
-  syntax on
-endif
+syntax on
 
-if $TERM =~? '^xterm.*'
-  if has('termguicolors')
-    set termguicolors
-  else
-    set t_Co=256
+" https://gist.github.com/XVilka/8346728#detection
+if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+  if &t_8f ==# '' || &t_8b ==# ''
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   endif
+  set termguicolors
 endif
 
 try
-  colorscheme colorsbox-stbright
+  if &termguicolors || has('gui_running')
+    colorscheme colorsbox-stbright
+  elseif &t_Co == 256
+    colorscheme last256
+  endif
 catch
+  set termguicolors&
   colorscheme slate
 endtry
 " }}}
