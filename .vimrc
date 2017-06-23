@@ -171,10 +171,10 @@ endfunction
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
 
 " Haskell
-let hs_highlight_boolean    = 1
-let hs_highlight_delimiters = 1
-let hs_highlight_more_types = 1
-let hs_highlight_types      = 1
+let g:hs_highlight_boolean    = 1
+let g:hs_highlight_delimiters = 1
+let g:hs_highlight_more_types = 1
+let g:hs_highlight_types      = 1
 
 " markdown
 let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'html', 'javascript', 'haskell', 'ruby', 'scss', 'sh', 'vim']
