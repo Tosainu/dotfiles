@@ -207,6 +207,30 @@ autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
 autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 " }}}
 
+" colorscheme {{{
+syntax on
+
+" https://gist.github.com/XVilka/8346728#detection
+if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+  if &t_8f ==# '' || &t_8b ==# ''
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+  set termguicolors
+endif
+
+try
+  if &termguicolors || has('gui_running')
+    colorscheme colorsbox-stbright
+  elseif &t_Co == 256
+    colorscheme last256
+  endif
+catch
+  set termguicolors&
+  colorscheme slate
+endtry
+" }}}
+
 " Plugins {{{
 " Disable some pre-installed plugins
 let g:loaded_getscriptPlugin  = 1
@@ -559,28 +583,4 @@ let g:clang_format#style_options = {
 
 autocmd MyVimrc FileType c,cpp xmap <buffer> <Leader>x <Plug>(operator-clang-format)
 " }}}
-" }}}
-
-" colorscheme {{{
-syntax on
-
-" https://gist.github.com/XVilka/8346728#detection
-if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
-  if &t_8f ==# '' || &t_8b ==# ''
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  endif
-  set termguicolors
-endif
-
-try
-  if &termguicolors || has('gui_running')
-    colorscheme colorsbox-stbright
-  elseif &t_Co == 256
-    colorscheme last256
-  endif
-catch
-  set termguicolors&
-  colorscheme slate
-endtry
 " }}}
