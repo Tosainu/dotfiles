@@ -260,8 +260,6 @@ else
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('justinmk/vim-dirvish')
-  call minpac#add('kana/vim-operator-replace')
-  call minpac#add('kana/vim-operator-user')
   call minpac#add('osyo-manga/vim-over')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
@@ -270,6 +268,12 @@ else
   call minpac#add('tomtom/tcomment_vim')
   call minpac#add('tpope/vim-surround')
   call minpac#add('tyru/open-browser.vim')
+
+  " operator/textobj
+  call minpac#add('kana/vim-operator-replace')
+  call minpac#add('kana/vim-operator-user')
+  call minpac#add('kana/vim-textobj-user')
+  call minpac#add('sgur/vim-textobj-parameter')
 
   " colorscheme
   call minpac#add('Tosainu/last256', {'type': 'opt'})
