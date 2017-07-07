@@ -211,7 +211,9 @@ autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
 syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
-if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+let s:truecolor =
+      \ has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+if s:truecolor
   if &t_8f ==# '' || &t_8b ==# ''
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -220,14 +222,16 @@ if has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
 endif
 
 try
-  if &termguicolors || has('gui_running')
+  if s:truecolor || has('gui_running')
     colorscheme colorsbox-stbright
   elseif &t_Co == 256
     colorscheme last256
   endif
 catch
-  set termguicolors&
-  colorscheme slate
+  if s:truecolor
+    set termguicolors&
+  endif
+  colorscheme default
 endtry
 " }}}
 
