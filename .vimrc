@@ -40,6 +40,7 @@ set nrformats=bin,hex
 set expandtab smarttab
 set smartindent
 set shiftwidth=2 softtabstop=2 tabstop=2
+set shiftround
 
 set ignorecase smartcase
 set incsearch
