@@ -32,8 +32,6 @@ set shortmess& shortmess+=I
 set equalalways
 set switchbuf=useopen,usetab,newtab
 set showcmd
-set wildmenu wildmode=longest,full
-set wildignorecase
 
 set backspace=2
 set completeopt=menuone,noinsert,noselect
@@ -47,6 +45,10 @@ set ignorecase smartcase
 set incsearch
 set hlsearch
 set wrapscan
+
+set cedit=<C-c>
+set wildmenu wildmode=longest,full
+set wildignorecase
 
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
@@ -205,8 +207,12 @@ endfunction
 autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
 " help
 autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
-" command window
-autocmd MyVimrc CmdwinEnter * nnoremap <buffer><silent> q :<C-u>q<CR>
+" command-line window
+autocmd MyVimrc CmdwinEnter * call s:on_command_line_window()
+function! s:on_command_line_window() abort
+  nnoremap <buffer><silent> q     :<C-u>q<CR>
+  nnoremap <buffer><silent> <Esc> :<C-u>q<CR>
+endfunction
 " }}}
 
 " colorscheme {{{
