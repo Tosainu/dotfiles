@@ -31,6 +31,7 @@ set noerrorbells visualbell t_vb=
 set shortmess& shortmess+=I
 set equalalways
 set switchbuf=useopen,usetab,newtab
+set showcmd
 set wildmenu wildmode=longest,full
 set wildignorecase
 
