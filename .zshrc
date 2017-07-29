@@ -208,7 +208,8 @@ case $TERM in
     ;;
 esac
 
-if [[ $TERM == xterm-termite ]]; then
+# https://github.com/thestinger/termite#id2
+if [[ $TERM == xterm-termite && -a "/etc/profile.d/vte.sh" ]]; then
   . /etc/profile.d/vte.sh
   __vte_osc7
 fi
