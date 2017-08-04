@@ -88,6 +88,17 @@ autocmd MyVimrc BufReadPost *
 " open .vimrc
 command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 
+" ibus
+if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
+  function! s:switch_ibus_engine(engine) abort
+    silent let engine_name = system('ibus engine')
+    if engine_name !~# a:engine
+      silent execute '!ibus engine ' . a:engine
+    endif
+  endfunction
+  autocmd MyVimrc InsertLeave * :call s:switch_ibus_engine('xkb:us::eng')
+endif
+
 filetype plugin indent on
 " }}}
 
