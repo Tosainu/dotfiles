@@ -267,13 +267,13 @@ let g:loaded_zip              = 1
 let g:loaded_zipPlugin        = 1
 
 " minpac {{{
-silent! packadd minpac
+function! s:init_minpack() abort
+  silent! packadd minpac
+  if !exists('*minpac#init')
+    return
+  endif
 
-if !exists('*minpac#init')
-  finish
-else
   call minpac#init()
-
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
   call minpac#add('AndrewRadev/switch.vim')
@@ -344,7 +344,11 @@ else
   call minpac#add('kannokanno/previm', {'type': 'opt'})
   call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('slim-template/vim-slim')
-endif
+endfunction
+
+command! PackInit   call s:init_minpack()
+command! PackUpdate call s:init_minpack() | call minpac#update()
+command! PackClean  call s:init_minpack() | call minpac#clean()
 " }}}
 
 " vim-gitgutter {{{
