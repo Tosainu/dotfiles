@@ -267,7 +267,7 @@ let g:loaded_zip              = 1
 let g:loaded_zipPlugin        = 1
 
 " minpac {{{
-function! s:init_minpack() abort
+function! s:init_minpac() abort
   silent! packadd minpac
   if !exists('*minpac#init')
     return
@@ -346,9 +346,9 @@ function! s:init_minpack() abort
   call minpac#add('slim-template/vim-slim')
 endfunction
 
-command! PackInit   call s:init_minpack()
-command! PackUpdate call s:init_minpack() | call minpac#update()
-command! PackClean  call s:init_minpack() | call minpac#clean()
+command! PackInit   call s:init_minpac()
+command! PackUpdate call s:init_minpac() | call minpac#update()
+command! PackClean  call s:init_minpac() | call minpac#clean()
 " }}}
 
 " vim-gitgutter {{{
