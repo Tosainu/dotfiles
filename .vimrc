@@ -15,6 +15,13 @@ set fileformats=unix,dos,mac
 
 scriptencoding utf-8
 
+" create directory if not exists
+function! s:mkdir(dir) abort
+  if !isdirectory(a:dir)
+    call mkdir(a:dir, 'p')
+  endif
+endfunction
+
 set breakindent
 set cursorline
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
@@ -61,21 +68,19 @@ endif
 
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
+call s:mkdir(expand('~/.vim'))
+
 set nobackup
 
 set swapfile directory&
 let s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
       \ $XDG_RUNTIME_DIR . '/vim/swap' : expand('~/.vim/swap')
-if !isdirectory(s:swapdir)
-  call mkdir(s:swapdir, 'p')
-endif
 let &directory = s:swapdir . ',' . &directory
+call s:mkdir(s:swapdir)
 
 if has('persistent_undo')
   set undofile undodir=~/.vim/undo
-  if !isdirectory(&undodir)
-    call mkdir(&undodir, 'p')
-  endif
+  call s:mkdir(&undodir)
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
