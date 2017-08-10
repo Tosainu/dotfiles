@@ -312,7 +312,7 @@ function! s:init_minpac() abort
           \   -DUSE_PYTHON2=OFF
           \   -DUSE_SYSTEM_BOOST=ON
           \   -DUSE_SYSTEM_LIBCLANG=ON &&
-          \ cmake --build . --target ycm_core --config Release --clean-first')
+          \ cmake --build . --target ycm_core --config Release')
 
     " setup rust completer
     if (executable('cargo'))
