@@ -36,6 +36,7 @@ set showcmd
 set backspace=2
 set completeopt=menuone,noinsert,noselect
 set nrformats=bin,hex
+
 set expandtab smarttab
 set smartindent
 set shiftwidth=2 softtabstop=2 tabstop=2
@@ -84,9 +85,6 @@ autocmd MyVimrc BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
       \   exe "normal! g`\"" |
       \ endif
-
-" open .vimrc
-command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
@@ -144,7 +142,9 @@ vnoremap <silent> <Leader>u :sort u<CR>
 
 " toggle line number
 nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
+" }}}
 
+" commands {{{
 " https://sanctum.geek.nz/arabesque/vim-command-typos/
 command! -bang -nargs=? -complete=file E e<bang> <args>
 command! -bang -nargs=? -complete=file W w<bang> <args>
@@ -157,6 +157,9 @@ command! -bang WA wa<bang>
 command! -bang Wa wa<bang>
 command! -bang WQa wqa<bang>
 command! -bang Wqa wqa<bang>
+
+" open .vimrc
+command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 " }}}
 
 " filetypes {{{
@@ -166,7 +169,7 @@ function! s:on_cpp_files() abort
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 
-  inoremap <buffer><expr>; <SID>expand_namespace()
+  inoremap <buffer><expr> ; <SID>expand_namespace()
 endfunction
 
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
@@ -230,9 +233,9 @@ endfunction
 syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
-let s:truecolor =
+let s:supports_truecolor =
       \ has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
-if s:truecolor
+if s:supports_truecolor
   if &t_8f ==# '' || &t_8b ==# ''
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -241,13 +244,13 @@ if s:truecolor
 endif
 
 try
-  if s:truecolor || has('gui_running')
+  if s:supports_truecolor || has('gui_running')
     colorscheme colorsbox-stbright
   elseif &t_Co == 256
     colorscheme last256
   endif
 catch
-  if s:truecolor
+  if s:supports_truecolor
     set termguicolors&
   endif
   colorscheme default
