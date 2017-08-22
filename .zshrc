@@ -7,6 +7,9 @@ export EDITOR='vim'
 export FUZZY_FINDER='fzf'
 export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
+if [ -f $HOME/.config/less ]; then
+  export LESSKEY=~/.config/less
+fi
 
 fpath=(
   /usr/share/zsh/site-functions(N-/)
