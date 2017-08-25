@@ -33,7 +33,7 @@ filter_unmatched_urls = true
 
 [colors]
 # if unset, will reverse foreground and background
-highlight = #2f2f2f
+# highlight = #2f2f2f
 
 # special
 foreground      = #dbdbdb
