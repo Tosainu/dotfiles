@@ -99,7 +99,7 @@ if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
       silent execute '!ibus engine ' . a:engine
     endif
   endfunction
-  autocmd MyVimrc InsertLeave * :call s:switch_ibus_engine('xkb:us::eng')
+  autocmd MyVimrc InsertLeave * call s:switch_ibus_engine('xkb:us::eng')
 endif
 
 filetype plugin indent on
