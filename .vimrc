@@ -1,12 +1,6 @@
 " skip when vim-tiny or vim-small
 if 0 | endif
 
-" vimrc augroup {{{
-augroup MyVimrc
-  autocmd!
-augroup END
-" }}}
-
 " basic settings {{{
 " encoding
 set encoding=utf-8
@@ -14,6 +8,11 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,latin1
 set fileformats=unix,dos,mac
 
 scriptencoding utf-8
+
+" vimrc augroup
+augroup MyVimrc
+  autocmd!
+augroup END
 
 " create directory if not exists
 function! s:mkdir(dir) abort
