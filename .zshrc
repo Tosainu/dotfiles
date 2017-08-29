@@ -159,6 +159,12 @@ alias la='ls -A'
 alias ll='ls -l'
 alias lla='ls -Al'
 
+if (( $+commands[stack] )); then
+  alias ghc='stack ghc --'
+  alias ghci='stack ghci --'
+  alias runhaskell='stack runhaskell --'
+fi
+
 alias -s hs='runhaskell'
 alias -s jar='java -jar'
 alias -s rb='ruby'
