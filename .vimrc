@@ -22,6 +22,7 @@ function! s:mkdir(dir) abort
 endfunction
 
 set breakindent
+set colorcolumn=100
 set cursorline
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
 set ruler
