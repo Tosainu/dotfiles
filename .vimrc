@@ -298,7 +298,6 @@ function! s:init_minpac() abort
   call minpac#add('thinca/vim-quickrun')
   call minpac#add('tomtom/tcomment_vim')
   call minpac#add('tpope/vim-surround')
-  call minpac#add('tyru/open-browser.vim')
 
   " operator/textobj
   call minpac#add('kana/vim-operator-replace')
@@ -336,20 +335,17 @@ function! s:init_minpac() abort
 
   " C++
   call minpac#add('rhysd/vim-clang-format')
-  call minpac#add('vim-jp/vim-cpp')
 
   " Haskell
   call minpac#add('Twinside/vim-haskellFold')
   call minpac#add('eagletmt/neco-ghc')
   call minpac#add('itchyny/vim-haskell-indent')
-  call minpac#add('itchyny/vim-haskell-sort-import')
 
   " Rust
   call minpac#add('cespare/vim-toml')
   call minpac#add('rust-lang/rust.vim')
 
   call minpac#add('ap/vim-css-color')
-  call minpac#add('kannokanno/previm', {'type': 'opt'})
   call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('slim-template/vim-slim')
 endfunction
@@ -498,10 +494,6 @@ function! LightlineGitGutter() abort
     return ''
   endif
 endfunction
-" }}}
-
-" previm {{{
-let g:previm_enable_realtime = 1
 " }}}
 
 " clever-f.vim {{{
