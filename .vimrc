@@ -199,6 +199,10 @@ let g:hs_highlight_delimiters = 1
 let g:hs_highlight_more_types = 1
 let g:hs_highlight_types      = 1
 
+if executable('stylish-haskell')
+  autocmd MyVimrc FileType haskell setlocal formatprg=stylish-haskell
+endif
+
 " markdown
 let g:markdown_fenced_languages = [
       \   'c',
@@ -613,6 +617,7 @@ nmap R  <Plug>(operator-replace)
 " }}}
 
 " vim-clang-format {{{
+let g:clang_format#auto_formatexpr = 1
 let g:clang_format#style_options = {
       \   'AccessModifierOffset':             -2,
       \   'AlignConsecutiveAssignments':      'true',
