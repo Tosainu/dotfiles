@@ -200,7 +200,19 @@ let g:hs_highlight_more_types = 1
 let g:hs_highlight_types      = 1
 
 " markdown
-let g:markdown_fenced_languages = ['c', 'cpp', 'css', 'html', 'javascript', 'haskell', 'ruby', 'scss', 'sh', 'vim']
+let g:markdown_fenced_languages = [
+      \   'c',
+      \   'cpp',
+      \   'css',
+      \   'haskell',
+      \   'html',
+      \   'python',
+      \   'ruby',
+      \   'rust',
+      \   'scss',
+      \   'sh',
+      \   'vim',
+      \ ]
 
 " vim
 autocmd MyVimrc FileType vim call s:on_vim_files()
