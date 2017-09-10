@@ -304,6 +304,7 @@ function! s:init_minpac() abort
   call minpac#add('airblade/vim-gitgutter')
   call minpac#add('ctrlpvim/ctrlp.vim')
   call minpac#add('haya14busa/incsearch.vim')
+  call minpac#add('haya14busa/incsearch-fuzzy.vim')
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('justinmk/vim-dirvish')
@@ -429,6 +430,10 @@ let g:incsearch#magic = '\v'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
 
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
