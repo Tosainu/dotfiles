@@ -449,21 +449,24 @@ let g:lightline = {
       \   'active': {
       \     'left': [
       \       ['mode'],
-      \       ['git-branch', 'readonly', 'filename', 'modified'],
+      \       ['readonly', 'filename', 'modified'],
       \     ],
       \     'right': [
       \       ['lineinfo'],
-      \       ['percent'],
-      \       ['gitgutter', 'fileformat', 'fileencoding', 'filetype'],
+      \       ['filetype', 'fileformat'],
+      \       ['git-branch', 'gitgutter'],
       \     ]
+      \   },
+      \   'component': {
+      \     'fileformat': '%{&fenc !=# "" ? &fenc : &enc}[%{&ff}]',
+      \     'modified':   '%{&modifiable && &modified ? "+" : ""}',
+      \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
       \     'filename':   'LightlineFilename',
       \     'git-branch': 'LightlineGitBranch',
       \     'gitgutter':  'LightlineGitGutter',
       \     'mode':       'LightlineMode',
-      \     'modified':   'LightlineModified',
-      \     'readonly':   'LightlineReadonly',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
@@ -480,14 +483,6 @@ function! LightlineMode() abort
   let fname = expand('%:t')
   return  fname == 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
-endfunction
-
-function! LightlineModified() abort
-  return &modifiable && &modified ? '+' : ''
-endfunction
-
-function! LightlineReadonly() abort
-  return &ro ? "\ue0a2" : ''
 endfunction
 
 function! LightlineGitBranch() abort
