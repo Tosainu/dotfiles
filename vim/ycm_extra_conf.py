@@ -1,12 +1,10 @@
+from itertools import chain, repeat
 from subprocess import Popen, PIPE
 import os
 import re
 import ycm_core
 
-# These are the compilation flags that will be used in case there's no
-# compilation database set (by default, one is not set).
-# CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
-default_flags = [
+extra_flags = [
     '-Wall',
     '-Wextra',
     '-pedantic',
@@ -30,8 +28,9 @@ else:
     database = None
 
 
-def GetDefaultSearchList(flags):
-    p = Popen(['clang', '-E'] + flags + ['-', '-v'], stdout=PIPE, stderr=PIPE)
+def GetSearchList(filetype):
+    p = Popen(['clang', '-E'] + filetype_flags[filetype] + ['-', '-v'],
+              stdout=PIPE, stderr=PIPE)
     _, stderr = p.communicate()
     search_list = re.search(
         '#include <\.\.\.> search starts here:\n(.+)\nEnd of search list',
@@ -40,32 +39,11 @@ def GetDefaultSearchList(flags):
     return [s.strip() for s in search_list.group(1).splitlines()]
 
 
-def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
-    if not working_directory:
-        return list(flags)
-
-    new_flags = []
-    make_next_absolute = False
-    for flag in flags:
-        new_flag = flag
-
-        if make_next_absolute:
-            make_next_absolute = False
-            if not flag.startswith('/'):
-                new_flag = os.path.join(working_directory, flag)
-
-        for path_flag in ['-isystem', '-I', '-iquote', '--sysroot=']:
-            if flag == path_flag:
-                make_next_absolute = True
-                break
-
-            if flag.startswith(path_flag):
-                path = flag[len(path_flag):]
-                new_flag = path_flag + os.path.join(working_directory, path)
-                break
-
-        new_flags.append(new_flag)
-    return new_flags
+def GetDefaultFlags(filetype):
+    if filetype in filetype_flags:
+        return filetype_flags[filetype] + list(chain.from_iterable(
+            zip(repeat('-isystem'), GetSearchList(filetype))))
+    return []
 
 
 def IsHeaderFile(filename):
@@ -92,30 +70,24 @@ def GetCompilationInfoForFile(filename):
 
 
 def FlagsForFile(filename, **kwargs):
-    flags = []
-
     client_data = kwargs['client_data']
     filetype = client_data.get('&filetype', '')
-    if filetype in filetype_flags:
-        flags.extend(filetype_flags[filetype])
 
-        for path in GetDefaultSearchList(filetype_flags[filetype]):
-            flags.extend(['-isystem', path])
+    default_flags = GetDefaultFlags(filetype)
+    if not default_flags:
+        return None
 
-    if database:
-        # Bear in mind that compilation_info.compiler_flags_ does NOT return a
-        # python list, but a "list-like" StringVec object
-        compilation_info = GetCompilationInfoForFile(filename)
-        if not compilation_info:
-            return None
+    if not database:
+        return {
+            'flags': default_flags + extra_flags,
+            'include_paths_relative_to_dir': os.path.dirname(os.path.abspath(__file__))
+        }
 
-        flags.extend(compilation_info.compiler_flags_)
-        workdir = compilation_info.compiler_working_dir_
-    else:
-        flags.extend(default_flags)
-        workdir = os.path.dirname(os.path.abspath(__file__))
+    compilation_info = GetCompilationInfoForFile(filename)
+    if not compilation_info:
+        return None
 
     return {
-        'flags': MakeRelativePathsInFlagsAbsolute(flags, workdir),
-        'do_cache': True
+        'flags': default_flags + list(compilation_info.compiler_flags_),
+        'include_paths_relative_to_dir': compilation_info.compiler_working_dir_
     }
