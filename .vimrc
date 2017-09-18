@@ -457,6 +457,10 @@ let g:lightline = {
       \       ['git-branch', 'gitgutter'],
       \     ]
       \   },
+      \   'inactive': {
+      \     'left':       [ ['filename'] ],
+      \     'right':      [ ['lineinfo'], ['filetype', 'fileformat'] ],
+      \   },
       \   'component': {
       \     'fileformat': '%{&fenc !=# "" ? &fenc : &enc}[%{&ff}]',
       \     'modified':   '%{&modifiable && &modified ? "+" : ""}',
