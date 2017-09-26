@@ -463,7 +463,6 @@ let g:lightline = {
       \   },
       \   'component': {
       \     'fileformat': '%{&fenc !=# "" ? &fenc : &enc}[%{&ff}]',
-      \     'modified':   '%{&modifiable && &modified ? "+" : ""}',
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
