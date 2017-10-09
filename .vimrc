@@ -355,7 +355,6 @@ function! s:init_minpac() abort
 
   " Haskell
   call minpac#add('Twinside/vim-haskellFold')
-  call minpac#add('eagletmt/neco-ghc')
   call minpac#add('itchyny/vim-haskell-indent')
 
   " Rust
@@ -608,12 +607,6 @@ nnoremap <silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
 let g:UltiSnipsExpandTrigger        = '<C-e>'
 let g:UltiSnipsJumpBackwardTrigger  = '<C-b>'
 let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
-" }}}
-
-" neco-ghc {{{
-let g:necoghc_enable_detailed_browse = 1
-
-autocmd MyVimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 
 " vim-operator-replace {{{
