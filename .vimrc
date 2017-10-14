@@ -309,6 +309,8 @@ function! s:init_minpac() abort
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('justinmk/vim-dirvish')
   call minpac#add('osyo-manga/vim-over')
+  call minpac#add('prabirshrestha/async.vim')
+  call minpac#add('prabirshrestha/vim-lsp')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
   call minpac#add('t9md/vim-textmanip')
@@ -601,6 +603,17 @@ nnoremap <silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
 nnoremap <silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
 nnoremap <silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
 nnoremap <silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
+" }}}
+
+" vim-lsp {{{
+if executable('hie')
+  autocmd MyVimrc User lsp_setup call lsp#register_server({
+        \   'name':      'hie',
+        \   'cmd':       {server_info->['hie', '--lsp']},
+        \   'whitelist': ['haskell'],
+        \ })
+  autocmd MyVimrc FileType haskell setlocal omnifunc=lsp#complete
+endif
 " }}}
 
 " UltiSnips {{{
