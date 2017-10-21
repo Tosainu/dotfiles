@@ -94,8 +94,8 @@ autocmd MyVimrc BufReadPost *
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
-    silent let engine_name = system('ibus engine')
-    if engine_name !~# a:engine
+    silent let l:engine_name = system('ibus engine')
+    if l:engine_name !~# a:engine
       silent execute '!ibus engine ' . a:engine
     endif
   endfunction
@@ -106,7 +106,7 @@ filetype plugin indent on
 " }}}
 
 " keybind {{{
-let g:mapleader = ","
+let g:mapleader = ','
 
 " disable arrow keys
 noremap <Up>    <Nop>
@@ -179,12 +179,12 @@ endfunction
 
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
 function! s:expand_namespace() abort
-  let s = getline('.')[0:col('.') - 2]
-  if s =~# '\<b;$'
+  let l:s = getline('.')[0:col('.') - 2]
+  if l:s =~# '\<b;$'
     return "\<BS>oost::"
-  elseif s =~# '\<s;$'
+  elseif l:s =~# '\<s;$'
     return "\<BS>td::"
-  elseif s =~# '\<d;$'
+  elseif l:s =~# '\<d;$'
     return "\<BS>etail::"
   else
     return ';'
@@ -231,7 +231,7 @@ endfunction
 autocmd MyVimrc BufReadPost * if &binary | call s:on_binary_files() | endif
 function! s:on_binary_files() abort
   silent %!xxd -g 1
-  setlocal ft=xxd
+  setlocal filetype=xxd
 
   autocmd MyVimrc BufWritePre  * %!xxd -r
   autocmd MyVimrc BufWritePost * silent %!xxd -g 1
@@ -478,38 +478,38 @@ let g:lightline = {
       \ }
 
 function! LightlineFilename() abort
-  let fname = expand('%:t')
-  return  fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname != '' ? fname : '[No Name]'
+  let l:fname = expand('%:t')
+  return  l:fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ l:fname !=# '' ? l:fname : '[No Name]'
 endfunction
 
 function! LightlineMode() abort
-  let fname = expand('%:t')
-  return  fname == 'ControlP' ? 'CtrlP' :
+  let l:fname = expand('%:t')
+  return  l:fname ==# 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
 function! LightlineGitBranch() abort
-  let _ = gitbranch#name()
-  return winwidth(0) >= 80 &&  _ != '' ? "\ue0a0 " . _ : ''
+  let l:_ = gitbranch#name()
+  return winwidth(0) >= 80 && l:_ !=# '' ? "\ue0a0 " . l:_ : ''
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightlineGitGutter() abort
   if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
-    let symbols = [
+    let l:symbols = [
           \   g:gitgutter_sign_added,
           \   g:gitgutter_sign_modified,
           \   g:gitgutter_sign_removed,
           \ ]
-    let hunks = GitGutterGetHunkSummary()
-    let _ = []
-    for i in [0, 1, 2]
-      if hunks[i] > 0
-        call add(_, symbols[i] . ' ' . hunks[i])
+    let l:hunks = GitGutterGetHunkSummary()
+    let l:_ = []
+    for l:i in [0, 1, 2]
+      if l:hunks[l:i] > 0
+        call add(l:_, l:symbols[l:i] . ' ' . l:hunks[l:i])
       endif
     endfor
-    return join(_, ' ')
+    return join(l:_, ' ')
   else
     return ''
   endif
