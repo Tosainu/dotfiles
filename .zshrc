@@ -4,7 +4,7 @@ typeset -Ua cdpath fpath manpath path
 
 export REPORTTIME=5
 export EDITOR='vim'
-export FUZZY_FINDER='fzf'
+export FUZZY_FINDER='fzy'
 export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
 if [ -f $HOME/.config/less ]; then
