@@ -37,6 +37,7 @@ set matchpairs& matchpairs+=<:>
 set noerrorbells visualbell t_vb=
 set shortmess& shortmess+=I
 set equalalways
+set lazyredraw
 set switchbuf=useopen,usetab,newtab
 set showcmd
 
