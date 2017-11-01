@@ -167,8 +167,7 @@ command! -bang Wqa wqa<bang>
 command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 " }}}
 
-" filetypes {{{
-" C++
+" C++ {{{
 autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
 function! s:on_cpp_files() abort
   setlocal cindent
@@ -192,8 +191,9 @@ function! s:expand_namespace() abort
 endfunction
 
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
+" }}}
 
-" Haskell
+" Haskell {{{
 let g:hs_highlight_boolean    = 1
 let g:hs_highlight_delimiters = 1
 let g:hs_highlight_more_types = 1
@@ -202,8 +202,9 @@ let g:hs_highlight_types      = 1
 if executable('stylish-haskell')
   autocmd MyVimrc FileType haskell setlocal formatprg=stylish-haskell
 endif
+" }}}
 
-" markdown
+" Markdown {{{
 let g:markdown_fenced_languages = [
       \   'c',
       \   'cpp',
@@ -217,8 +218,9 @@ let g:markdown_fenced_languages = [
       \   'sh',
       \   'vim',
       \ ]
+" }}}
 
-" vim
+" Vim {{{
 autocmd MyVimrc FileType vim call s:on_vim_files()
 function! s:on_vim_files() abort
   " search vim help for word under cursor
@@ -226,8 +228,9 @@ function! s:on_vim_files() abort
 
   setlocal foldmethod=marker
 endfunction
+" }}}
 
-" binary files
+" binary files {{{
 autocmd MyVimrc BufReadPost * if &binary | call s:on_binary_files() | endif
 function! s:on_binary_files() abort
   silent %!xxd -g 1
@@ -237,12 +240,17 @@ function! s:on_binary_files() abort
   autocmd MyVimrc BufWritePost * silent %!xxd -g 1
   autocmd MyVimrc BufWritePost * setlocal nomodified
 endfunction
+" }}}
 
-" quickfix
+" quickfix {{{
 autocmd MyVimrc FileType qf   nnoremap <buffer><silent> q :<C-u>cclose<CR>
-" help
+" }}}
+
+" help {{{
 autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
-" command-line window
+" }}}
+
+" command-line window {{{
 autocmd MyVimrc CmdwinEnter * call s:on_command_line_window()
 function! s:on_command_line_window() abort
   nnoremap <buffer><silent> q     :<C-u>q<CR>
