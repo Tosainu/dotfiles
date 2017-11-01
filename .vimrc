@@ -53,6 +53,8 @@ set ignorecase smartcase
 set incsearch
 set hlsearch
 set wrapscan
+autocmd MyVimrc CmdlineEnter [/\?] :set hlsearch
+autocmd MyVimrc CmdlineLeave [/\?] :set nohlsearch
 
 set cedit=<C-c>
 set wildmenu wildmode=longest,full
@@ -137,6 +139,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" clear search highlights
+nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
 " tab
 nnoremap <silent> <C-n> :<C-u>tabnew<CR>
@@ -311,12 +316,9 @@ function! s:init_minpac() abort
   call minpac#add('AndrewRadev/switch.vim')
   call minpac#add('airblade/vim-gitgutter')
   call minpac#add('ctrlpvim/ctrlp.vim')
-  call minpac#add('haya14busa/incsearch.vim')
-  call minpac#add('haya14busa/incsearch-fuzzy.vim')
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('justinmk/vim-dirvish')
-  call minpac#add('osyo-manga/vim-over')
   call minpac#add('prabirshrestha/async.vim')
   call minpac#add('prabirshrestha/vim-lsp')
   call minpac#add('rhysd/clever-f.vim')
@@ -430,26 +432,6 @@ nnoremap <silent> [ctrlp]c :<C-u>CtrlPChangeAll<CR>
 nnoremap <silent> [ctrlp]f :<C-u>CtrlP<CR>
 nnoremap <silent> [ctrlp]l :<C-u>CtrlPLine<CR>
 nnoremap <silent> [ctrlp]r :<C-u>CtrlPMRU<CR>
-" }}}
-
-" incsearch.vim {{{
-let g:incsearch#auto_nohlsearch = 1
-let g:incsearch#magic = '\v'
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
-
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
 " }}}
 
 " lightline.vim {{{
