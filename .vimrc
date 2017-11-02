@@ -440,7 +440,7 @@ let g:lightline = {
       \   'colorscheme': 'wombat',
       \   'active': {
       \     'left': [
-      \       ['mode'],
+      \       ['mode', 'textmanip'],
       \       ['readonly', 'filename', 'modified'],
       \     ],
       \     'right': [
@@ -462,6 +462,7 @@ let g:lightline = {
       \     'git-branch': 'LightlineGitBranch',
       \     'gitgutter':  'LightlineGitGutter',
       \     'mode':       'LightlineMode',
+      \     'textmanip':  'LightlineTextmanipMode',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
@@ -478,6 +479,12 @@ function! LightlineMode() abort
   let l:fname = expand('%:t')
   return  l:fname ==# 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
+endfunction
+
+function! LightlineTextmanipMode() abort
+  return  exists('g:textmanip_current_mode') && (mode() =~? 'v' || mode() ==# "\<C-V>") ?
+        \ g:textmanip_current_mode ==# 'insert'  ? 'I' :
+        \ g:textmanip_current_mode ==# 'replace' ? 'R' : '' : ''
 endfunction
 
 function! LightlineGitBranch() abort
