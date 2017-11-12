@@ -488,8 +488,12 @@ function! LightlineTextmanipMode() abort
 endfunction
 
 function! LightlineGitBranch() abort
-  let l:_ = gitbranch#name()
-  return winwidth(0) >= 80 && l:_ !=# '' ? "\ue0a0 " . l:_ : ''
+  if winwidth(0) >= 90 && exists('*gitbranch#name')
+    let l:_ = gitbranch#name()
+    return l:_ !=# '' ? "\ue0a0 " . l:_ : ''
+  else
+    return ''
+  endif
 endfunction
 
 " http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
