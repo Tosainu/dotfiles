@@ -139,11 +139,10 @@ zstyle ':chpwd:*' recent-dirs-pushd   true
 # }}}
 
 # aliases {{{
-alias cp='nocorrect cp -i -v'
+alias cp='cp -i -v'
 alias gdb='gdb -q'
 alias grep='grep --binary-files=without-match --color=auto'
-alias mkdir='nocorrect mkdir'
-alias mv='nocorrect mv -i -v'
+alias mv='mv -i -v'
 alias tree='tree --dirsfirst'
 alias tweet='t update'
 alias vi='vim'
