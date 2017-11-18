@@ -496,22 +496,15 @@ function! LightlineGitBranch() abort
   endif
 endfunction
 
-" http://qiita.com/yuyuchu3333/items/20a0acfe7e0d0e167ccc
 function! LightlineGitGutter() abort
   if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
+    let l:hunks   = GitGutterGetHunkSummary()
     let l:symbols = [
-          \   g:gitgutter_sign_added,
-          \   g:gitgutter_sign_modified,
-          \   g:gitgutter_sign_removed,
+          \   [g:gitgutter_sign_added,    l:hunks[0]],
+          \   [g:gitgutter_sign_modified, l:hunks[1]],
+          \   [g:gitgutter_sign_removed,  l:hunks[2]],
           \ ]
-    let l:hunks = GitGutterGetHunkSummary()
-    let l:_ = []
-    for l:i in [0, 1, 2]
-      if l:hunks[l:i] > 0
-        call add(l:_, l:symbols[l:i] . ' ' . l:hunks[l:i])
-      endif
-    endfor
-    return join(l:_, ' ')
+    return join(map(filter(l:symbols, 'v:val[1] > 0'), 'join(v:val)'))
   else
     return ''
   endif
