@@ -320,8 +320,6 @@ function! s:init_minpac() abort
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('justinmk/vim-dirvish')
-  call minpac#add('prabirshrestha/async.vim')
-  call minpac#add('prabirshrestha/vim-lsp')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
   call minpac#add('t9md/vim-textmanip')
@@ -358,6 +356,7 @@ function! s:init_minpac() abort
     endif
   endfunction
   call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
+  call minpac#add('natebosch/vim-lsc')
 
   " snippets
   call minpac#add('SirVer/ultisnips')
@@ -595,7 +594,10 @@ let g:ycm_global_ycm_extra_conf     = '~/.vim/ycm_extra_conf.py'
 let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
 let g:ycm_key_list_stop_completion  = ['<C-y>', '<CR>']
 let g:ycm_python_binary_path        = 'python'
-let g:ycm_semantic_triggers         = {'haskell': ['re!(import\s+.*|\w\.)']}
+let g:ycm_filetype_specific_completion_to_disable = {
+      \   'gitcommit':  1,
+      \   'haskell':    1,
+      \}
 
 nnoremap <silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
 nnoremap <silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
@@ -603,14 +605,11 @@ nnoremap <silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
 nnoremap <silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
 " }}}
 
-" vim-lsp {{{
+" vim-lsc {{{
+let g:lsc_enable_incremental_sync = v:true
+let g:lsc_server_commands = {}
 if executable('hie')
-  autocmd MyVimrc User lsp_setup call lsp#register_server({
-        \   'name':      'hie',
-        \   'cmd':       {server_info->['hie', '--lsp']},
-        \   'whitelist': ['haskell'],
-        \ })
-  autocmd MyVimrc FileType haskell setlocal omnifunc=lsp#complete
+  let g:lsc_server_commands.haskell = 'hie --lsp'
 endif
 " }}}
 
