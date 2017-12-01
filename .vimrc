@@ -348,6 +348,7 @@ function! s:init_minpac() abort
   call minpac#add('ctrlpvim/ctrlp.vim')
   call minpac#add('itchyny/lightline.vim')
   call minpac#add('itchyny/vim-gitbranch')
+  call minpac#add('junegunn/vim-easy-align')
   call minpac#add('justinmk/vim-dirvish')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
@@ -538,6 +539,11 @@ function! LightlineGitGutter() abort
   endif
 endfunction
 " }}}
+
+" vim-easy-align {{{
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+"}}}
 
 " clever-f.vim {{{
 let g:clever_f_across_no_line = 1
