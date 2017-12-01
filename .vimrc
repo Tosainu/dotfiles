@@ -369,21 +369,33 @@ function! s:init_minpac() abort
 
   " code completion
   function! s:build_ycm(hooktype, name) abort
-    " setup ycm_core library
-    call system('mkdir -p ycm_build && cd $_ &&
-          \ cmake -G Ninja . ../third_party/ycmd/cpp
-          \   -DCMAKE_C_COMPILER=clang
-          \   -DCMAKE_CXX_COMPILER=clang++
-          \   -DUSE_PYTHON2=OFF
-          \   -DUSE_SYSTEM_BOOST=ON
-          \   -DUSE_SYSTEM_LIBCLANG=ON &&
-          \ cmake --build . --target ycm_core --config Release')
-
-    " setup rust completer
-    if (executable('cargo'))
-      call system('cd third_party/ycmd/third_party/racerd &&
-            \ cargo build --release')
+    let l:ycm_build_cmd = [
+          \   'mkdir -p ycm_build',
+          \   'cd ycm_build',
+          \   join([
+          \     'cmake -G Ninja . ../third_party/ycmd/cpp',
+          \     '-DCMAKE_C_COMPILER=clang',
+          \     '-DCMAKE_CXX_COMPILER=clang++',
+          \     '-DUSE_PYTHON2=' . (has('python3') ? 'OFF' : 'ON'),
+          \     '-DUSE_SYSTEM_BOOST=ON',
+          \     '-DUSE_SYSTEM_LIBCLANG=ON'
+          \   ]),
+          \   'cmake --build . --target ycm_core --config Release',
+          \ ]
+    if executable('cargo')
+      let l:ycm_build_cmd += [
+            \   'cd ../third_party/ycmd/third_party/racerd',
+            \   'cargo build --release',
+            \ ]
     endif
+    let l:job = job_start([&shell, '-c', join(l:ycm_build_cmd, ' && ')], {
+          \   'cwd':      minpac#getpluginfo(a:name).dir,
+          \   'err_io':   'buffer',
+          \   'err_name': 'ycm-buildlogs',
+          \   'out_io':   'buffer',
+          \   'out_name': 'ycm-buildlogs',
+          \ })
+    sbuf ycm-buildlogs
   endfunction
   call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
   call minpac#add('natebosch/vim-lsc')
