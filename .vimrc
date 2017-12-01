@@ -189,17 +189,16 @@ command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 set termkey=<C-q>
 tnoremap <silent> <C-z> <C-q>:<C-u>hide<CR>
 
-function! s:open_terminal(args) abort
-  let l:nr   = winnr('$')
-  let l:tnrs = filter(term_list(), {idx, val -> val != l:nr})
-  if empty(l:tnrs) || !empty(a:args)
+function! s:open_terminal(new, args) abort
+  if a:new || empty(term_list()) || !empty(a:args)
     execute 'terminal' '++close' a:args
   else
-    execute 'sbuffer' l:tnrs[0]
+    execute 'sbuffer' term_list()[0]
   endif
 endfunction
-command! -nargs=* -complete=shellcmd Term call s:open_terminal(<q-args>)
+command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
 nnoremap <silent> <Leader>w :<C-u>Term<CR>
+nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " }}}
 
 " C++ {{{
