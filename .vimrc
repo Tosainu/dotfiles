@@ -139,6 +139,20 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" emacs-like cursor move in command-line mode
+cnoremap <C-a>  <Home>
+cnoremap <C-e>  <End>
+cnoremap <C-b>  <Left>
+cnoremap <C-f>  <Right>
+cnoremap <C-p>  <Up>
+cnoremap <C-n>  <Down>
+if has('unix') && !has('gui_running')
+  cmap <Esc>b <M-b>
+  cmap <Esc>f <M-f>
+endif
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
+
 " clear search highlights
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
