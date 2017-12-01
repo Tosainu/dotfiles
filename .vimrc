@@ -352,7 +352,7 @@ function! s:init_minpac() abort
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
   call minpac#add('t9md/vim-textmanip')
-  call minpac#add('thinca/vim-quickrun')
+  call minpac#add('thinca/vim-quickrun', {'type': 'opt'})
   call minpac#add('tomtom/tcomment_vim')
   call minpac#add('tpope/vim-surround')
 
@@ -560,7 +560,7 @@ endfunction
 " vim-quickrun {{{
 let g:quickrun_no_default_key_mappings = 1
 
-let g:quickrun_config = get(g:, 'quickrun_config', {})
+let g:quickrun_config = {}
 let g:quickrun_config._ = {
       \   'outputter': 'error',
       \   'outputter/buffer/close_on_empty': 1,
@@ -587,8 +587,10 @@ if executable('stack')
         \ }
 endif
 
-nnoremap <silent> <Leader>r :<C-u>QuickRun<CR>
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "<C-c>"
+nnoremap <silent>       <Leader>r :<C-u>packadd vim-quickrun <bar> QuickRun<CR>
+nnoremap <expr><silent> <C-c>
+      \ exists('*quickrun#is_running') && quickrun#is_running() ?
+      \ quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 
 " switch.vim {{{
