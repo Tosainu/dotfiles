@@ -54,8 +54,6 @@ set ignorecase smartcase
 set incsearch
 set hlsearch
 set wrapscan
-autocmd MyVimrc CmdlineEnter [/\?] :set hlsearch
-autocmd MyVimrc CmdlineLeave [/\?] :set nohlsearch
 
 set cedit=<C-c>
 set wildmenu wildmode=longest,full
