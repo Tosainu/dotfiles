@@ -185,6 +185,23 @@ command! -bang Wqa wqa<bang>
 command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
 " }}}
 
+" Terminal {{[
+set termkey=<C-q>
+tnoremap <silent> <C-z> <C-q>:<C-u>hide<CR>
+
+function! s:open_terminal(args) abort
+  let l:nr   = winnr('$')
+  let l:tnrs = filter(term_list(), {idx, val -> val != l:nr})
+  if empty(l:tnrs) || !empty(a:args)
+    execute 'terminal' '++close' a:args
+  else
+    execute 'sbuffer' l:tnrs[0]
+  endif
+endfunction
+command! -nargs=* -complete=shellcmd Term call s:open_terminal(<q-args>)
+nnoremap <silent> <Leader>w :<C-u>Term<CR>
+" }}}
+
 " C++ {{{
 autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
 function! s:on_cpp_files() abort
