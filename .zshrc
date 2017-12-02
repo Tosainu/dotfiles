@@ -17,10 +17,9 @@ fpath=(
 )
 
 path=(
-  /usr/local/bin(N-/)
   ~/.local/bin(N-/)
-  ~/.cabal/bin(N-/)
   ~/.cargo/bin(N-/)
+  /usr/local/bin(N-/)
   $path
 )
 
