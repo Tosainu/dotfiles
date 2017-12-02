@@ -95,8 +95,8 @@ autocmd MyVimrc BufReadPost *
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
-    silent let l:engine_name = system('ibus engine')
-    if l:engine_name !~# a:engine
+    silent let l:engine = systemlist('ibus engine')[0]
+    if l:engine !=# a:engine
       silent execute '!ibus engine ' . a:engine
     endif
   endfunction
@@ -207,21 +207,20 @@ function! s:on_cpp_files() abort
   setlocal cindent
   setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 
+  " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
+  function! s:expand_namespace() abort
+    let l:s = getline('.')[0:col('.') - 2]
+    if l:s =~# '\<b;$'
+      return "\<BS>oost::"
+    elseif l:s =~# '\<s;$'
+      return "\<BS>td::"
+    elseif l:s =~# '\<d;$'
+      return "\<BS>etail::"
+    else
+      return ';'
+    endif
+  endfunction
   inoremap <buffer><expr> ; <SID>expand_namespace()
-endfunction
-
-" http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
-function! s:expand_namespace() abort
-  let l:s = getline('.')[0:col('.') - 2]
-  if l:s =~# '\<b;$'
-    return "\<BS>oost::"
-  elseif l:s =~# '\<s;$'
-    return "\<BS>td::"
-  elseif l:s =~# '\<d;$'
-    return "\<BS>etail::"
-  else
-    return ';'
-  endif
 endfunction
 
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
@@ -467,12 +466,12 @@ function! CtrlPStatusFunc_2(str) abort
   return lightline#statusline(0)
 endfunction
 
-nnoremap [ctrlp] <nop>
-nmap     <Leader>c [ctrlp]
-nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
-nnoremap <silent> [ctrlp]f :<C-u>CtrlP<CR>
-nnoremap <silent> [ctrlp]l :<C-u>CtrlPLine<CR>
-nnoremap <silent> [ctrlp]r :<C-u>CtrlPMRU<CR>
+nnoremap            [ctrlp]   <nop>
+nmap     <Leader>c  [ctrlp]
+nnoremap <silent>   [ctrlp]b  :<C-u>CtrlPBuffer<CR>
+nnoremap <silent>   [ctrlp]f  :<C-u>CtrlP<CR>
+nnoremap <silent>   [ctrlp]l  :<C-u>CtrlPLine<CR>
+nnoremap <silent>   [ctrlp]r  :<C-u>CtrlPMRU<CR>
 " }}}
 
 " lightline.vim {{{
@@ -645,7 +644,7 @@ let g:ycm_python_binary_path        = 'python'
 let g:ycm_filetype_specific_completion_to_disable = {
       \   'gitcommit':  1,
       \   'haskell':    1,
-      \}
+      \ }
 
 nnoremap <silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
 nnoremap <silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
