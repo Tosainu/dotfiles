@@ -220,6 +220,9 @@ esac
 if [[ $TERM == xterm-termite && -a "/etc/profile.d/vte.sh" ]]; then
   . /etc/profile.d/vte.sh
 fi
+
+# disable XON/XOFF flow control
+stty -ixon -ixoff 2> /dev/null
 # }}}
 
 # functions {{{
