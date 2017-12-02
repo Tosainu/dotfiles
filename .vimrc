@@ -307,6 +307,7 @@ endif
 
 try
   if s:supports_truecolor || has('gui_running')
+    let g:colorsbox_italic = 1
     colorscheme colorsbox-stbright
   elseif &t_Co == 256
     colorscheme last256
