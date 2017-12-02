@@ -24,7 +24,7 @@ path=(
 )
 
 if (( $+commands[ruby] )); then
-  path=(`ruby -e 'print Gem.user_dir'`/bin(N-/) $path)
+  path=($(ruby -e 'print Gem.user_dir')/bin(N-/) $path)
 fi
 
 # rust
@@ -228,7 +228,7 @@ stty -ixon -ixoff 2> /dev/null
 # move to git root
 function gr() {
   if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    cd `git rev-parse --show-toplevel`
+    cd $(git rev-parse --show-toplevel)
   fi
 }
 
