@@ -142,6 +142,7 @@ alias cp='cp -i -v'
 alias gdb='gdb -q'
 alias grep='grep --binary-files=without-match --color=auto'
 alias mv='mv -i -v'
+alias sudo='sudo '
 alias tree='tree --dirsfirst'
 alias tweet='t update'
 alias vi='vim'
@@ -163,9 +164,7 @@ if (( $+commands[stack] )); then
   alias runhaskell='stack runhaskell --'
 fi
 
-alias -s hs='runhaskell'
 alias -s jar='java -jar'
-alias -s rb='ruby'
 
 open=${commands[open]:-${commands[xdg-open]}}
 if [[ ! -z $open ]]; then
