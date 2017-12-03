@@ -336,7 +336,8 @@ let g:loaded_zipPlugin        = 1
 function! s:init_minpac() abort
   silent! packadd minpac
   if !exists('*minpac#init')
-    return
+    echomsg "Failed to load minpac"
+    return v:false
   endif
 
   call minpac#init()
@@ -421,11 +422,13 @@ function! s:init_minpac() abort
 
   call minpac#add('ap/vim-css-color')
   call minpac#add('slim-template/vim-slim')
+
+  return v:true
 endfunction
 
 command! PackInit   call s:init_minpac()
-command! PackUpdate call s:init_minpac() | call minpac#update()
-command! PackClean  call s:init_minpac() | call minpac#clean()
+command! PackUpdate if s:init_minpac() | call minpac#update() | endif
+command! PackClean  if s:init_minpac() | call minpac#clean()  | endif
 " }}}
 
 " vim-gitgutter {{{
