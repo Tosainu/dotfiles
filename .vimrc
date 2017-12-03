@@ -349,6 +349,7 @@ function! s:init_minpac() abort
   call minpac#add('itchyny/vim-gitbranch')
   call minpac#add('junegunn/vim-easy-align')
   call minpac#add('justinmk/vim-dirvish')
+  call minpac#add('natebosch/vim-lsc')
   call minpac#add('rhysd/clever-f.vim')
   call minpac#add('rhysd/committia.vim')
   call minpac#add('t9md/vim-textmanip')
@@ -366,20 +367,21 @@ function! s:init_minpac() abort
   call minpac#add('Tosainu/last256', {'type': 'opt'})
   call minpac#add('mkarmona/colorsbox', {'type': 'opt'})
 
-  " code completion
   function! s:build_ycm(hooktype, name) abort
+    silent! let l:nproc = systemlist('nproc 2> /dev/null || echo 1')[0]
     let l:ycm_build_cmd = [
+          \   'set -x',
           \   'mkdir -p ycm_build',
           \   'cd ycm_build',
           \   join([
-          \     'cmake -G Ninja . ../third_party/ycmd/cpp',
+          \     'cmake -G "Unix Makefiles" . ../third_party/ycmd/cpp',
           \     '-DCMAKE_C_COMPILER=clang',
           \     '-DCMAKE_CXX_COMPILER=clang++',
-          \     '-DUSE_PYTHON2=' . (has('python3') ? 'OFF' : 'ON'),
+          \     '-DUSE_PYTHON2=OFF',
           \     '-DUSE_SYSTEM_BOOST=ON',
           \     '-DUSE_SYSTEM_LIBCLANG=ON'
           \   ]),
-          \   'cmake --build . --target ycm_core --config Release',
+          \   'cmake --build . --target ycm_core --config Release -- -j ' . l:nproc,
           \ ]
     if executable('cargo')
       let l:ycm_build_cmd += [
@@ -387,8 +389,9 @@ function! s:init_minpac() abort
             \   'cargo build --release',
             \ ]
     endif
-    let l:job = job_start([&shell, '-c', join(l:ycm_build_cmd, ' && ')], {
+    call job_start([&shell, '-c', join(l:ycm_build_cmd, ' && ')], {
           \   'cwd':      minpac#getpluginfo(a:name).dir,
+          \   'exit_cb':  {_, code -> execute('echom ' . (code ? '"failed"' : '"done!"'), '')},
           \   'err_io':   'buffer',
           \   'err_name': 'ycm-buildlogs',
           \   'out_io':   'buffer',
@@ -396,12 +399,14 @@ function! s:init_minpac() abort
           \ })
     sbuf ycm-buildlogs
   endfunction
-  call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
-  call minpac#add('natebosch/vim-lsc')
+  if has('python3') && executable('clang') && executable('cmake') && executable('make')
+    " code completion
+    call minpac#add('Valloric/YouCompleteMe', {'do': function('s:build_ycm')})
 
-  " snippets
-  call minpac#add('SirVer/ultisnips')
-  call minpac#add('honza/vim-snippets')
+    " snippets
+    call minpac#add('SirVer/ultisnips')
+    call minpac#add('honza/vim-snippets')
+  endif
 
   " C++
   call minpac#add('rhysd/vim-clang-format')
