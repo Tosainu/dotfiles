@@ -415,7 +415,6 @@ function! s:init_minpac() abort
   call minpac#add('rust-lang/rust.vim')
 
   call minpac#add('ap/vim-css-color')
-  call minpac#add('mattn/emmet-vim', {'type': 'opt'})
   call minpac#add('slim-template/vim-slim')
 endfunction
 
@@ -612,12 +611,6 @@ nnoremap <expr><silent> <C-c>
 
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
-" }}}
-
-" emmet-vim {{{
-let g:user_emmet_settings = {
-      \   'indentation' : '  '
-      \ }
 " }}}
 
 " vim-textmanip {{{
