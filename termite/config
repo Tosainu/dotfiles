@@ -46,31 +46,31 @@ color0  = #191919
 color8  = #191919
 
 # red
-color1  = #ff355b
-color9  = #ff355b
+color1  = #e63250
+color9  = #ff3759
 
 # green
-color2  = #b7e876
-color10 = #b7e876
+color2  = #a5d862
+color10 = #b9f26e
 
 # yellow
-color3  = #ffc251
+color3  = #e5ae49
 color11 = #ffc251
 
 # blue
-color4  = #76d4ff
-color12 = #76d5ff
+color4  = #66a6cc
+color12 = #73bbe5
 
 # magenta
-color5  = #ba76e7
-color13 = #ba76e7
+color5  = #a370cc
+color13 = #b77ee5
 
 # cyan
-color6  = #6cbfb5
-color14 = #6cbfb5
+color6  = #7accc2
+color14 = #89e5da
 
 # white
-color7  = #c2c8d7
-color15 = #c2c8d7
+color7  = #d9d9d9
+color15 = #f1f1f1
 
 # vim: ft=dosini cms=#%s
