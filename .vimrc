@@ -565,6 +565,11 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 "}}}
 
+" vim-dirvish {{{
+nmap <Plug>(dirvish_up_) <Plug>(dirvish_up)
+autocmd MyVimrc FileType dirvish nmap <buffer><silent> - <Plug>(dirvish_up)
+" }}}
+
 " clever-f.vim {{{
 let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case     = 1
