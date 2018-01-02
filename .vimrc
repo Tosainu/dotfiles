@@ -71,7 +71,6 @@ endif
 
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
-call s:mkdir(expand('~/.vim'))
 
 set nobackup
 
@@ -338,7 +337,7 @@ let g:loaded_zipPlugin        = 1
 function! s:init_minpac() abort
   silent! packadd minpac
   if !exists('*minpac#init')
-    echomsg "Failed to load minpac"
+    echomsg 'Failed to load minpac'
     return v:false
   endif
 
@@ -500,8 +499,8 @@ let g:lightline = {
       \     ]
       \   },
       \   'inactive': {
-      \     'left':       [ ['filename'] ],
-      \     'right':      [ ['lineinfo'], ['filetype', 'fileformat'] ],
+      \     'left':       [['filename']],
+      \     'right':      [['lineinfo'], ['filetype', 'fileformat']],
       \   },
       \   'component': {
       \     'fileformat': '%{&fenc !=# "" ? &fenc : &enc}[%{&ff}]',
