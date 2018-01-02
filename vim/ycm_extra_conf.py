@@ -14,7 +14,7 @@ extra_flags = [
 
 filetype_flags = {
     'c': ['-x', 'c', '-std=c11'],
-    'cpp': ['-x', 'c++', '-std=c++14'],
+    'cpp': ['-x', 'c++', '-std=c++17'],
 }
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
