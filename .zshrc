@@ -248,7 +248,6 @@ function fuzzy-recent-dirs() {
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
   fi
-  zle clear-screen
 }
 
 zle -N fuzzy-recent-dirs
