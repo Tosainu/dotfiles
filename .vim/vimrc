@@ -93,6 +93,11 @@ autocmd MyVimrc BufReadPost *
       \   exe "normal! g`\"" |
       \ endif
 
+" disable automatic comment insertion
+autocmd MyVimrc FileType * call timer_start(0, {->
+      \   execute('setlocal formatoptions-=r formatoptions-=o')
+      \ })
+
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
