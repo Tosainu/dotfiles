@@ -362,11 +362,11 @@ function! s:init_minpac() abort
   call minpac#add('t9md/vim-textmanip')
   call minpac#add('thinca/vim-quickrun', {'type': 'opt'})
   call minpac#add('tomtom/tcomment_vim')
-  call minpac#add('tpope/vim-surround')
 
   " operator/textobj
   call minpac#add('kana/vim-operator-replace')
   call minpac#add('kana/vim-operator-user')
+  call minpac#add('rhysd/vim-operator-surround')
   call minpac#add('kana/vim-textobj-user')
   call minpac#add('sgur/vim-textobj-parameter')
 
@@ -682,6 +682,12 @@ let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
 
 " vim-operator-replace {{{
 nmap R  <Plug>(operator-replace)
+" }}}
+
+" vim-operator-surround {{{
+nmap sa <Plug>(operator-surround-append)
+nmap sd <Plug>(operator-surround-delete)
+nmap sr <Plug>(operator-surround-replace)
 " }}}
 
 " vim-clang-format {{{
