@@ -681,13 +681,13 @@ let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
 " }}}
 
 " vim-operator-replace {{{
-nmap R  <Plug>(operator-replace)
+map <Leader>p  <Plug>(operator-replace)
 " }}}
 
 " vim-operator-surround {{{
-nmap sa <Plug>(operator-surround-append)
-nmap sd <Plug>(operator-surround-delete)
-nmap sr <Plug>(operator-surround-replace)
+map <Leader>sa <Plug>(operator-surround-append)
+map <Leader>sd <Plug>(operator-surround-delete)
+map <Leader>sr <Plug>(operator-surround-replace)
 " }}}
 
 " vim-clang-format {{{
@@ -703,8 +703,6 @@ let g:clang_format#style_options = {
       \   'SpacesBeforeTrailingComments':     1,
       \   'Standard':                         'Cpp11',
       \ }
-
-autocmd MyVimrc FileType c,cpp xmap <buffer> <Leader>x <Plug>(operator-clang-format)
 " }}}
 
 " plasticboy/vim-markdown {{{
