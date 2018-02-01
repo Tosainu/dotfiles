@@ -390,12 +390,6 @@ function! s:init_minpac() abort
           \   ]),
           \   'cmake --build . --target ycm_core --config Release -- -j ' . l:nproc,
           \ ]
-    if executable('cargo')
-      let l:ycm_build_cmd += [
-            \   'cd ../third_party/ycmd/third_party/racerd',
-            \   'cargo build --release',
-            \ ]
-    endif
     call job_start([&shell, '-c', join(l:ycm_build_cmd, ' && ')], {
           \   'cwd':      minpac#getpluginfo(a:name).dir,
           \   'exit_cb':  {_, code -> execute('echom ' . (code ? '"failed"' : '"done!"'), '')},
@@ -675,12 +669,12 @@ endfunction
 
 " vim-lsc {{{
 let g:lsc_enable_incremental_sync = v:true
-let g:lsc_server_commands = {}
-if executable('hie')
-  let g:lsc_server_commands.haskell = 'hie --lsp'
-endif
+let g:lsc_server_commands = {
+      \   'haskell': 'hie --lsp',
+      \   'rust':    'rustup run nightly rls',
+      \ }
 
-autocmd MyVimrc FileType haskell call s:set_lsc_keybinds()
+autocmd MyVimrc FileType haskell,rust call s:set_lsc_keybinds()
 function! s:set_lsc_keybinds()
   nnoremap <buffer><silent> <Leader>gd :<C-u>LSClientGoToDefinition<CR>
   nnoremap <buffer><silent> <Leader>t  :<C-u>LSClientShowHover<CR>
