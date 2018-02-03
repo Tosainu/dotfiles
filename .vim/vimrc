@@ -626,6 +626,11 @@ nnoremap <expr><silent> <C-c>
       \ quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 
+" tcomment_vim {{{
+let g:tcommentMapLeader1= ''
+let g:tcommentMapLeader2= ''
+" }}}
+
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
