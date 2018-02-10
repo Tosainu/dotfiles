@@ -346,33 +346,47 @@ function! s:init_minpac() abort
     return v:false
   endif
 
-  call minpac#init()
-  call minpac#add('k-takata/minpac', {'type': 'opt'})
+  function! s:plugin(plugname, ...) abort
+    let l:opt = extend(copy(get(a:000, 0, {})), {
+          \   'cond': {-> v:true},
+          \ })
+    if !l:opt.cond()
+      return
+    endif
+    if type(a:plugname) == v:t_list
+      call map(a:plugname, {_, v -> minpac#add(v, l:opt)})
+    else
+      call minpac#add(a:plugname, l:opt)
+    endif
+  endfunction
 
-  call minpac#add('AndrewRadev/switch.vim')
-  call minpac#add('airblade/vim-gitgutter')
-  call minpac#add('ctrlpvim/ctrlp.vim')
-  call minpac#add('itchyny/lightline.vim')
-  call minpac#add('itchyny/vim-gitbranch')
-  call minpac#add('junegunn/vim-easy-align')
-  call minpac#add('justinmk/vim-dirvish')
-  call minpac#add('natebosch/vim-lsc')
-  call minpac#add('rhysd/clever-f.vim')
-  call minpac#add('rhysd/committia.vim')
-  call minpac#add('t9md/vim-textmanip')
-  call minpac#add('thinca/vim-quickrun', {'type': 'opt'})
-  call minpac#add('tomtom/tcomment_vim')
+  call minpac#init()
+  call s:plugin('k-takata/minpac', {'type': 'opt'})
+
+  call s:plugin('AndrewRadev/switch.vim')
+  call s:plugin('airblade/vim-gitgutter')
+  call s:plugin('ctrlpvim/ctrlp.vim')
+  call s:plugin('itchyny/lightline.vim')
+  call s:plugin('itchyny/vim-gitbranch')
+  call s:plugin('junegunn/vim-easy-align')
+  call s:plugin('justinmk/vim-dirvish')
+  call s:plugin('natebosch/vim-lsc')
+  call s:plugin('rhysd/clever-f.vim')
+  call s:plugin('rhysd/committia.vim')
+  call s:plugin('t9md/vim-textmanip')
+  call s:plugin('thinca/vim-quickrun', {'type': 'opt'})
+  call s:plugin('tomtom/tcomment_vim')
 
   " operator/textobj
-  call minpac#add('kana/vim-operator-replace')
-  call minpac#add('kana/vim-operator-user')
-  call minpac#add('rhysd/vim-operator-surround')
-  call minpac#add('kana/vim-textobj-user')
-  call minpac#add('sgur/vim-textobj-parameter')
+  call s:plugin('kana/vim-operator-replace')
+  call s:plugin('kana/vim-operator-user')
+  call s:plugin('rhysd/vim-operator-surround')
+  call s:plugin('kana/vim-textobj-user')
+  call s:plugin('sgur/vim-textobj-parameter')
 
   " colorscheme
-  call minpac#add('Tosainu/last256', {'type': 'opt'})
-  call minpac#add('mkarmona/colorsbox', {'type': 'opt'})
+  call s:plugin('Tosainu/last256', {'type': 'opt'})
+  call s:plugin('mkarmona/colorsbox', {'type': 'opt'})
 
   function! s:build_ycm(hooktype, name) abort
     silent! let l:nproc = systemlist('nproc 2> /dev/null || echo 1')[0]
@@ -400,32 +414,32 @@ function! s:init_minpac() abort
           \ })
     sbuf ycm-buildlogs
   endfunction
-  if has('python3') && executable('clang') && executable('cmake') && executable('make')
-    " code completion
-    call minpac#add('Valloric/YouCompleteMe', {
-          \   'do':   function('s:build_ycm'),
-          \   'type': 'opt',
-          \ })
+  " code completion
+  call s:plugin('Valloric/YouCompleteMe', {
+        \   'cond': {-> has('python3') && executable('clang') && executable('cmake') && executable('make')},
+        \   'do':   function('s:build_ycm'),
+        \   'type': 'opt',
+        \ })
 
-    " snippets
-    call minpac#add('SirVer/ultisnips')
-    call minpac#add('honza/vim-snippets')
-  endif
+  " snippets
+  call s:plugin(['SirVer/ultisnips', 'honza/vim-snippets'], {
+        \   'cond': {-> has('python3')},
+        \ })
 
   " C++
-  call minpac#add('rhysd/vim-clang-format')
+  call s:plugin('rhysd/vim-clang-format', {'cond': {-> executable('clang-format')}})
 
   " Haskell
-  call minpac#add('Twinside/vim-haskellFold')
-  call minpac#add('itchyny/vim-haskell-indent')
+  call s:plugin('Twinside/vim-haskellFold')
+  call s:plugin('itchyny/vim-haskell-indent')
 
   " Rust
-  call minpac#add('cespare/vim-toml')
-  call minpac#add('rust-lang/rust.vim')
+  call s:plugin('cespare/vim-toml')
+  call s:plugin('rust-lang/rust.vim')
 
-  call minpac#add('ap/vim-css-color')
-  call minpac#add('plasticboy/vim-markdown')
-  call minpac#add('slim-template/vim-slim')
+  call s:plugin('ap/vim-css-color')
+  call s:plugin('plasticboy/vim-markdown')
+  call s:plugin('slim-template/vim-slim')
 
   return v:true
 endfunction
