@@ -388,36 +388,12 @@ function! s:init_minpac() abort
   call s:plugin('Tosainu/last256', {'type': 'opt'})
   call s:plugin('mkarmona/colorsbox', {'type': 'opt'})
 
-  function! s:build_ycm(hooktype, name) abort
-    silent! let l:nproc = systemlist('nproc 2> /dev/null || echo 1')[0]
-    let l:ycm_build_cmd = [
-          \   'set -x',
-          \   'mkdir -p ycm_build',
-          \   'cd ycm_build',
-          \   join([
-          \     'cmake -G "Unix Makefiles" . ../third_party/ycmd/cpp',
-          \     '-DCMAKE_C_COMPILER=clang',
-          \     '-DCMAKE_CXX_COMPILER=clang++',
-          \     '-DUSE_PYTHON2=OFF',
-          \     '-DUSE_SYSTEM_BOOST=ON',
-          \     '-DUSE_SYSTEM_LIBCLANG=ON'
-          \   ]),
-          \   'cmake --build . --target ycm_core --config Release -- -j ' . l:nproc,
-          \ ]
-    call job_start([&shell, '-c', join(l:ycm_build_cmd, ' && ')], {
-          \   'cwd':      minpac#getpluginfo(a:name).dir,
-          \   'exit_cb':  {_, code -> execute('echom ' . (code ? '"failed"' : '"done!"'), '')},
-          \   'err_io':   'buffer',
-          \   'err_name': 'ycm-buildlogs',
-          \   'out_io':   'buffer',
-          \   'out_name': 'ycm-buildlogs',
-          \ })
-    sbuf ycm-buildlogs
-  endfunction
   " code completion
   call s:plugin('Valloric/YouCompleteMe', {
-        \   'cond': {-> has('python3') && executable('clang') && executable('cmake') && executable('make')},
-        \   'do':   function('s:build_ycm'),
+        \   'cond': {-> has('python3') && executable('cmake')},
+        \   'do':   {-> [
+        \     execute('!./install.py --clang-completer --system-boost --system-libclang'),
+        \   ]},
         \   'type': 'opt',
         \ })
 
