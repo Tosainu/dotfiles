@@ -169,6 +169,11 @@ nnoremap <silent> <C-n> :<C-u>tabnew<CR>
 vnoremap <silent> <Leader>s :sort<CR>
 vnoremap <silent> <Leader>u :sort u<CR>
 
+" select completion result
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
+
 " toggle line number
 nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
 " }}}
@@ -653,8 +658,9 @@ let g:ycm_show_diagnostics_ui       = 0
 let g:ycm_extra_conf_vim_data       = ['&filetype']
 let g:ycm_global_ycm_extra_conf     = '~/.vim/ycm_extra_conf.py'
 let g:ycm_goto_buffer_command       = 'new-or-existing-tab'
-let g:ycm_key_list_stop_completion  = ['<C-y>', '<CR>']
 let g:ycm_python_binary_path        = 'python'
+let g:ycm_key_list_previous_completion = []
+let g:ycm_key_list_select_completion   = []
 let g:ycm_filetype_specific_completion_to_disable = {
       \   'gitcommit':  1,
       \   'haskell':    1,
