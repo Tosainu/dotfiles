@@ -433,12 +433,20 @@ function! s:init_minpac() abort
   call s:plugin('Twinside/vim-haskellFold')
   call s:plugin('itchyny/vim-haskell-indent')
 
+  " Markdown
+  call s:plugin('plasticboy/vim-markdown')
+  call s:plugin('euclio/vim-markdown-composer', {
+        \   'cond': {-> executable('cargo')},
+        \   'do':   {-> [
+        \     execute('!cargo build --release --no-default-features --features json-rpc'),
+        \   ]},
+        \ })
+
   " Rust
   call s:plugin('cespare/vim-toml')
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('ap/vim-css-color')
-  call s:plugin('plasticboy/vim-markdown')
   call s:plugin('slim-template/vim-slim')
 
   return v:true
