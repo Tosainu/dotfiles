@@ -722,4 +722,9 @@ let g:vim_markdown_frontmatter             = 1
 let g:vim_markdown_new_list_item_indent    = 0
 let g:vim_markdown_no_default_key_mappings = 1
 " }}}
+
+" vim-markdown-composer {{{
+let g:markdown_composer_autostart    = 0
+let g:markdown_composer_open_browser = 1
+" }}}
 " }}}
