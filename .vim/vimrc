@@ -352,9 +352,7 @@ function! s:init_minpac() abort
   endif
 
   function! s:plugin(plugname, ...) abort
-    let l:opt = extend(copy(get(a:000, 0, {})), {
-          \   'cond': {-> v:true},
-          \ })
+    let l:opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
     if !l:opt.cond()
       return
     endif
