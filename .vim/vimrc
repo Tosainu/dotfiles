@@ -722,4 +722,8 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:markdown_composer_autostart    = 0
 let g:markdown_composer_open_browser = 1
 " }}}
+
+" rust.vim {{{
+let g:rustfmt_command = 'rustup run nightly rustfmt'
+" }}}
 " }}}
