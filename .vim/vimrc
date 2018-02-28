@@ -201,10 +201,12 @@ set termkey=<C-q>
 tnoremap <silent> <C-z> <C-q>:<C-u>hide<CR>
 
 function! s:open_terminal(new, args) abort
+  let l:split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
   if a:new || empty(term_list()) || !empty(a:args)
-    execute 'terminal' '++close' a:args
+    execute l:split 'terminal' '++close' a:args
   else
-    execute 'sbuffer' term_list()[0]
+    execute l:split 'sbuffer'
+          \ get(filter(term_list(), {_, nr -> bufwinnr(nr) == -1}), 0, term_list()[0])
   endif
 endfunction
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
