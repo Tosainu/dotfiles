@@ -166,8 +166,8 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 nnoremap <silent> <C-n> :<C-u>tabnew<CR>
 
 " sort
-vnoremap <silent> <Leader>s :sort<CR>
-vnoremap <silent> <Leader>u :sort u<CR>
+vnoremap <silent> <Leader>sl :sort<CR>
+vnoremap <silent> <Leader>su :sort u<CR>
 
 " select completion result
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -560,8 +560,8 @@ endfunction
 " }}}
 
 " vim-easy-align {{{
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
+xmap <Leader>a <Plug>(EasyAlign)
 "}}}
 
 " vim-dirvish {{{
@@ -617,7 +617,7 @@ if executable('stack')
         \ }
 endif
 
-nnoremap <silent>       <Leader>r :<C-u>packadd vim-quickrun <bar> QuickRun<CR>
+nnoremap <silent>       <Leader>qr :<C-u>packadd vim-quickrun <bar> QuickRun<CR>
 nnoremap <expr><silent> <C-c>
       \ exists('*quickrun#is_running') && quickrun#is_running() ?
       \ quickrun#sweep_sessions() : "\<C-c>"
@@ -685,7 +685,7 @@ let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
 " }}}
 
 " vim-operator-replace {{{
-map <Leader>p  <Plug>(operator-replace)
+map <Leader>r  <Plug>(operator-replace)
 " }}}
 
 " vim-operator-surround {{{
