@@ -193,7 +193,7 @@ command! -bang WQa wqa<bang>
 command! -bang Wqa wqa<bang>
 
 " open .vimrc
-command! Vimrc if !empty($MYVIMRC) | execute('args ' . $MYVIMRC) | endif
+command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
 " Terminal {{[
