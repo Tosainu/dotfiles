@@ -387,6 +387,7 @@ function! s:init_minpac() abort
   call s:plugin('kana/vim-operator-user')
   call s:plugin('rhysd/vim-operator-surround')
   call s:plugin('kana/vim-textobj-user')
+  call s:plugin('pocke/vim-textobj-markdown')
   call s:plugin('sgur/vim-textobj-parameter')
 
   " colorscheme
