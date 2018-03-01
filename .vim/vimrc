@@ -431,7 +431,7 @@ function! s:init_minpac() abort
 endfunction
 
 command! PackInit   call s:init_minpac()
-command! PackUpdate if s:init_minpac() | call minpac#update() | endif
+command! PackUpdate if s:init_minpac() | call minpac#update('', {'do': 'redraw!'}) | endif
 command! PackClean  if s:init_minpac() | call minpac#clean()  | endif
 " }}}
 
