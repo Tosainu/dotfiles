@@ -496,23 +496,21 @@ nnoremap <silent>   [ctrlp]r  :<C-u>CtrlPMRU<CR>
 
 " lightline.vim {{{
 let g:lightline = {
-      \   'colorscheme': 'wombat',
+      \   'colorscheme': 'deus',
       \   'active': {
-      \     'left': [
-      \       ['mode', 'textmanip'],
-      \       ['readonly', 'filename', 'modified'],
-      \     ],
-      \     'right': [
-      \       ['lineinfo'],
-      \       ['filetype', 'fileformat'],
-      \       ['git-branch', 'gitgutter'],
-      \     ]
+      \     'left':   [['mode'], ['filename', 'readonly', 'modified']],
+      \     'right':  [['lineinfo'], ['filetype', 'fileformat'], ['git-branch', 'gitgutter']],
       \   },
       \   'inactive': {
-      \     'left':       [['filename']],
-      \     'right':      [['lineinfo'], ['filetype', 'fileformat']],
+      \     'left':   [['filename', 'readonly', 'modified']],
+      \     'right':  [[], ['filetype', 'fileformat']],
+      \   },
+      \   'tabline': {
+      \     'left':   [['tabs']],
+      \     'right':  [['cwd']],
       \   },
       \   'component': {
+      \     'cwd':        '%{&columns > 160 ? fnamemodify(getcwd(), ":~") : ""}',
       \     'fileformat': '%{&fenc !=# "" ? &fenc : &enc}[%{&ff}]',
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
@@ -521,11 +519,9 @@ let g:lightline = {
       \     'git-branch': 'LightlineGitBranch',
       \     'gitgutter':  'LightlineGitGutter',
       \     'mode':       'LightlineMode',
-      \     'textmanip':  'LightlineTextmanipMode',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
-      \   'tabline':      {'left': [['tabs']], 'right': []},
       \ }
 
 function! LightlineFilename() abort
@@ -540,14 +536,8 @@ function! LightlineMode() abort
         \ lightline#mode()
 endfunction
 
-function! LightlineTextmanipMode() abort
-  return  exists('g:textmanip_current_mode') && (mode() =~? 'v' || mode() ==# "\<C-V>") ?
-        \ g:textmanip_current_mode ==# 'insert'  ? 'I' :
-        \ g:textmanip_current_mode ==# 'replace' ? 'R' : '' : ''
-endfunction
-
 function! LightlineGitBranch() abort
-  if winwidth(0) >= 90 && exists('*gitbranch#name')
+  if winwidth(0) >= 90 && exists('*gitbranch#name') && &ft !=# 'help'
     let l:_ = gitbranch#name()
     return l:_ !=# '' ? "\ue0a0 " . l:_ : ''
   else
