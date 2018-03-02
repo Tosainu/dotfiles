@@ -60,8 +60,11 @@
 	default = simple
 
 [url "git@github.com:"]
-	pushinsteadof = "git://github.com/"
-	pushinsteadof = "https://github.com/"
+	pushInsteadOf = "git://github.com/"
+	pushInsteadOf = "https://github.com/"
+
+[url "https://github.com/"]
+	insteadOf = "git://github.com/"
 
 [github]
 	user = Tosainu
