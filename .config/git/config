@@ -11,16 +11,30 @@
 	ui = auto
 
 [alias]
+	a     = add
+	ap    = add -p
+	br    = branch
+	cbf   = "!git checkout $(git br --sort=-authordate | grep -Ev '^\\*' | tr -d ' ' | fzy)"
 	cl    = clone
 	co    = commit
 	di    = diff
 	dic   = diff --cached
-	dif   = diff
+	ef    = "!$EDITOR $(git ls-files | fzy)"
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lg    = !git graph
+	lga   = !git graph --all
+	lp    = log -p
 	mt    = mergetool
 	pl    = pull
 	pu    = push
+	ra    = rebase --abort
+	rc    = rebase --continue
+	ri    = rebase -i
+	rif   = "!git rebase -i $(git graph --color=always | fzy -l 20 | sed 's/\\x1b\\[[0-9;]*[a-zA-Z]//g' | cut -d ' ' -f 2)"
 	st    = status
+	wa    = worktree add
+	wl    = worktree list
+	wp    = worktree prune --verbose
 
 [merge]
 	tool = vimdiff
