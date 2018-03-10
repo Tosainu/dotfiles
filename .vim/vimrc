@@ -499,7 +499,7 @@ let g:lightline = {
       \   'colorscheme': 'deus',
       \   'active': {
       \     'left':   [['mode'], ['filename', 'readonly', 'modified']],
-      \     'right':  [['lineinfo'], ['filetype', 'fileformat'], ['git-branch', 'gitgutter']],
+      \     'right':  [['lineinfo'], ['filetype', 'fileformat'], ['branch_name', 'hunk_summary']],
       \   },
       \   'inactive': {
       \     'left':   [['filename', 'readonly', 'modified']],
@@ -515,28 +515,28 @@ let g:lightline = {
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
-      \     'filename':   'LightlineFilename',
-      \     'git-branch': 'LightlineGitBranch',
-      \     'gitgutter':  'LightlineGitGutter',
-      \     'mode':       'LightlineMode',
+      \     'branch_name':  s:SID . 'lightline_branch_name',
+      \     'filename':     s:SID . 'lightline_filename',
+      \     'hunk_summary': s:SID . 'lightline_hunk_summary',
+      \     'mode':         s:SID . 'lightline_mode',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
       \ }
 
-function! LightlineFilename() abort
+function! s:lightline_filename() abort
   let l:fname = expand('%:t')
   return  l:fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
         \ l:fname !=# '' ? l:fname : '[No Name]'
 endfunction
 
-function! LightlineMode() abort
+function! s:lightline_mode() abort
   let l:fname = expand('%:t')
   return  l:fname ==# 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
-function! LightlineGitBranch() abort
+function! s:lightline_branch_name() abort
   if winwidth(0) >= 90 && exists('*gitbranch#name') && &ft !=# 'help'
     let l:_ = gitbranch#name()
     return l:_ !=# '' ? "\ue0a0 " . l:_ : ''
@@ -545,7 +545,7 @@ function! LightlineGitBranch() abort
   endif
 endfunction
 
-function! LightlineGitGutter() abort
+function! s:lightline_hunk_summary() abort
   if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
     let l:hunks   = GitGutterGetHunkSummary()
     let l:symbols = [
