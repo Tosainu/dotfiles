@@ -21,6 +21,12 @@ function! s:mkdir(dir) abort
   endif
 endfunction
 
+function! s:get_SID() abort
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_SID$')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
+
 set breakindent
 set colorcolumn=100
 set cursorline
