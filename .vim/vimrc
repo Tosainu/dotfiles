@@ -288,9 +288,9 @@ function! s:on_binary_files() abort
   silent %!xxd -g 1
   setlocal filetype=xxd
 
-  autocmd MyVimrc BufWritePre  * %!xxd -r
-  autocmd MyVimrc BufWritePost * silent %!xxd -g 1
-  autocmd MyVimrc BufWritePost * setlocal nomodified
+  autocmd MyVimrc BufWritePre  <buffer> %!xxd -r
+  autocmd MyVimrc BufWritePost <buffer> silent %!xxd -g 1
+  autocmd MyVimrc BufWritePost <buffer> setlocal nomodified
 endfunction
 " }}}
 
