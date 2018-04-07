@@ -681,7 +681,28 @@ execute 'autocmd MyVimrc FileType ' .
       \   join(keys(g:lsc_server_commands), ',') . ' call s:set_lsc_keybinds()'
 function! s:set_lsc_keybinds() abort
   nnoremap <buffer><silent> <Leader>gd :<C-u>LSClientGoToDefinition<CR>
-  nnoremap <buffer><silent> <Leader>t  :<C-u>LSClientShowHover<CR>
+  nnoremap <buffer><silent> <Leader>t  :<C-u>call <SID>show_hover()<CR>
+
+  function! s:show_hover() abort
+    call lsc#file#flushChanges()
+    let l:params = lsc#params#documentPosition()
+    call lsc#server#userCall('textDocument/hover', l:params, function("<SID>handle_show_hover"))
+  endfunction
+
+  function! s:handle_show_hover(result) abort
+    if empty(a:result) || empty(a:result.contents)
+      echom 'No hover information'
+      return
+    endif
+    let l:contents = a:result.contents
+    if type(l:contents) == v:t_list
+      let l:contents = l:contents[0]
+    endif
+    if type(l:contents) == v:t_dict
+      let l:contents = l:contents.value
+    endif
+    echom l:contents
+  endfunction
 endfunction
 " }}}
 
