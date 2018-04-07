@@ -629,9 +629,9 @@ nnoremap <expr><silent> <C-c>
 " }}}
 
 " tcomment_vim {{{
-let g:tcommentMapLeader1= ''
-let g:tcommentMapLeader2= ''
-let g:tcommentTextObjectInlineComment = ''
+let g:tcomment_mapleader1 = ''
+let g:tcomment_mapleader2 = ''
+let g:tcomment_textoject_inlinecomment = ''
 " }}}
 
 " switch.vim {{{
