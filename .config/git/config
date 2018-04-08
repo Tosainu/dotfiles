@@ -72,5 +72,6 @@
 [ghq]
 	root = ~/.ghq
 	root = ~/.vim/pack/
+	root = ~/work
 
 # vim: ft=gitconfig noet
