@@ -203,8 +203,9 @@ command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
 " Terminal {{[
-set termkey=<C-q>
-tnoremap <silent> <C-z> <C-q>:<C-u>hide<CR>
+set termwinkey=<C-q>
+tnoremap <silent> <C-z>      <C-q>:<C-u>hide<CR>
+tnoremap <silent> <C-q><C-n> <C-q>N
 
 function! s:open_terminal(new, args) abort
   if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
