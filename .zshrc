@@ -242,6 +242,17 @@ function recent-dirs() {
 done
 }
 
+function man() {
+  LESS_TERMCAP_mb=$'\E[01;92m'  \
+  LESS_TERMCAP_md=$'\E[01;92m'  \
+  LESS_TERMCAP_me=$'\E[0m'      \
+  LESS_TERMCAP_so=$'\E[7m'      \
+  LESS_TERMCAP_se=$'\E[0m'      \
+  LESS_TERMCAP_us=$'\E[4;96m'   \
+  LESS_TERMCAP_ue=$'\E[0m'      \
+  command man $@
+}
+
 function fuzzy-recent-dirs() {
   local selected_dir=$(recent-dirs | $FUZZY_FINDER --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
