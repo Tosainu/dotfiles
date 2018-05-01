@@ -726,9 +726,9 @@ endfunction
 " }}}
 
 " UltiSnips {{{
-let g:UltiSnipsExpandTrigger        = '<C-e>'
+let g:UltiSnipsExpandTrigger        = '<C-f>'
 let g:UltiSnipsJumpBackwardTrigger  = '<C-b>'
-let g:UltiSnipsJumpForwardTrigger   = '<C-e>'
+let g:UltiSnipsJumpForwardTrigger   = '<C-f>'
 " }}}
 
 " vim-operator-replace {{{
