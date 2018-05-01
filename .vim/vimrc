@@ -507,7 +507,7 @@ function! CtrlPStatusFunc_2(str) abort
 endfunction
 
 nnoremap            [ctrlp]   <nop>
-nmap     <Leader>c  [ctrlp]
+nmap     <Leader><Leader> [ctrlp]
 nnoremap <silent>   [ctrlp]b  :<C-u>CtrlPBuffer<CR>
 nnoremap <silent>   [ctrlp]f  :<C-u>CtrlP<CR>
 nnoremap <silent>   [ctrlp]l  :<C-u>CtrlPLine<CR>
