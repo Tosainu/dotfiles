@@ -400,7 +400,7 @@ function! s:init_minpac() abort
   call s:plugin('rhysd/committia.vim')
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('thinca/vim-quickrun', {'type': 'opt'})
-  call s:plugin('tomtom/tcomment_vim')
+  call s:plugin('tyru/caw.vim')
 
   " operator/textobj
   call s:plugin('kana/vim-operator-replace')
@@ -642,10 +642,15 @@ nnoremap <expr><silent> <C-c>
       \ quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 
-" tcomment_vim {{{
-let g:tcomment_mapleader1 = ''
-let g:tcomment_mapleader2 = ''
-let g:tcomment_textoject_inlinecomment = ''
+" caw.vim {{{
+let g:caw_no_default_keymappings = 1
+let g:caw_hatpos_skip_blank_line = 1
+
+nmap <Leader>cc <Plug>(caw:hatpos:toggle:operator)
+xmap <Leader>cc <Plug>(caw:hatpos:toggle)
+nmap <Leader>ca <Plug>(caw:dollarpos:comment)
+nmap <Leader>cw <Plug>(caw:wrap:toggle:operator)
+xmap <Leader>cw <Plug>(caw:wrap:comment)
 " }}}
 
 " switch.vim {{{
