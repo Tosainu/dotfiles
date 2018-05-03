@@ -403,12 +403,16 @@ function! s:init_minpac() abort
   call s:plugin('tyru/caw.vim')
 
   " operator/textobj
-  call s:plugin('kana/vim-operator-replace')
-  call s:plugin('kana/vim-operator-user')
-  call s:plugin('rhysd/vim-operator-surround')
-  call s:plugin('kana/vim-textobj-user')
-  call s:plugin('pocke/vim-textobj-markdown')
-  call s:plugin('sgur/vim-textobj-parameter')
+  call s:plugin(['kana/vim-operator-user',
+        \   'kana/vim-operator-replace',
+        \   'rhysd/vim-operator-surround',
+        \ ])
+  call s:plugin(['kana/vim-textobj-user',
+        \   'kana/vim-textobj-entire',
+        \   'kana/vim-textobj-line',
+        \   'pocke/vim-textobj-markdown',
+        \   'sgur/vim-textobj-parameter',
+        \ ])
 
   " colorscheme
   call s:plugin('Tosainu/last256', {'type': 'opt'})
