@@ -351,6 +351,10 @@ catch
   endif
   colorscheme default
 endtry
+
+if !has('gui_running')
+  highlight Normal ctermbg=NONE guibg=NONE
+endif
 " }}}
 
 " Plugins {{{
