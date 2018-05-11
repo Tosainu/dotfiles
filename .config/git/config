@@ -70,8 +70,7 @@
 	user = Tosainu
 
 [ghq]
-	root = ~/.ghq
-	root = ~/.vim/pack/
 	root = ~/work
+	root = ~/.vim/pack/
 
 # vim: ft=gitconfig noet
