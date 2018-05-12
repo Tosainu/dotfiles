@@ -453,7 +453,6 @@ function! s:init_minpac() abort
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('ap/vim-css-color')
-  call s:plugin('slim-template/vim-slim')
 
   return v:true
 endfunction
