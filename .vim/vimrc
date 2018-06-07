@@ -202,7 +202,7 @@ command! -bang Wqa wqa<bang>
 command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
-" Terminal {{[
+" Terminal {{{
 set termwinkey=<C-q>
 tnoremap <silent> <C-z>      <C-q>:<C-u>hide<CR>
 tnoremap <silent> <C-q><C-n> <C-q>N
@@ -234,6 +234,7 @@ nnoremap <silent> <Leader>w :<C-u>Term<CR>
 nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " }}}
 
+" Filetype {{{
 " C++ {{{
 autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
 function! s:on_cpp_files() abort
@@ -323,6 +324,7 @@ function! s:on_command_line_window() abort
   nnoremap <buffer><silent> q     :<C-u>q<CR>
   nnoremap <buffer><silent> <Esc> :<C-u>q<CR>
 endfunction
+" }}}
 " }}}
 
 " colorscheme {{{
