@@ -258,6 +258,8 @@ function fuzzy-recent-dirs() {
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
+  else
+    zle reset-prompt
   fi
 }
 
@@ -265,9 +267,12 @@ zle -N fuzzy-recent-dirs
 bindkey '^r'  fuzzy-recent-dirs
 
 function fuzzy-select-history() {
-  BUFFER=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDER --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle clear-screen
+  local selected=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDER --query "$LBUFFER")
+  if [ -n "$selected" ]; then
+    BUFFET=$selected
+    CURSOR=$#BUFFER
+  fi
+  zle reset-prompt
 }
 
 zle -N fuzzy-select-history
