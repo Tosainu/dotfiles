@@ -574,7 +574,7 @@ function! s:lightline_mode() abort
 endfunction
 
 function! s:lightline_branch_name() abort
-  if winwidth(0) >= 90 && exists('*gitbranch#name') && &ft !=# 'help'
+  if winwidth(0) >= 90 && exists('*gitbranch#name') && &filetype !=# 'help'
     let l:_ = gitbranch#name()
     return l:_ !=# '' ? "\ue0a0 " . l:_ : ''
   else
@@ -675,6 +675,7 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
 
 " vim-textmanip {{{
+let g:textmanip_enable_mappings = 0
 xmap <Leader>d <Plug>(textmanip-duplicate-down)
 xmap <Leader>D <Plug>(textmanip-duplicate-up)
 xmap <C-j>     <Plug>(textmanip-move-down)
@@ -722,7 +723,7 @@ function! s:set_lsc_keybinds() abort
   function! s:show_hover() abort
     call lsc#file#flushChanges()
     let l:params = lsc#params#documentPosition()
-    call lsc#server#userCall('textDocument/hover', l:params, function("<SID>handle_show_hover"))
+    call lsc#server#userCall('textDocument/hover', l:params, function('<SID>handle_show_hover'))
   endfunction
 
   function! s:handle_show_hover(result) abort
