@@ -16,6 +16,7 @@
 	br    = branch
 	cbf   = "!git checkout $(git br --sort=-authordate | grep -Ev '^\\*' | tr -d ' ' | fzy)"
 	cl    = clone
+	cl1   = clone --depth 1
 	co    = commit
 	di    = diff
 	dic   = diff --cached
