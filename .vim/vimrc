@@ -715,7 +715,7 @@ endfunction
 " vim-lsc {{{
 let g:lsc_enable_incremental_sync = v:true
 let g:lsc_server_commands = {
-      \   'haskell': 'hie --lsp',
+      \   'haskell': 'stack exec hie-wrapper -- --lsp',
       \   'rust':    'rustup run nightly rls',
       \ }
 
