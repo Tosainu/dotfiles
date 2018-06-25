@@ -172,6 +172,11 @@ endif
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
+nnoremap n nzvzz
+nnoremap N Nzvzz
+nnoremap * *zvzz
+nnoremap # *zvzz
+
 " clear search highlights
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
