@@ -194,6 +194,9 @@ inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
 
 " toggle line number
 nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
+
+" toggle background color
+nnoremap <silent> <Leader>bg :<C-u>let &background = (&background ==# 'dark' ? 'light' : 'dark')<CR>
 " }}}
 
 " commands {{{
@@ -353,23 +356,37 @@ if s:supports_truecolor
   set termguicolors
 endif
 
-try
-  if s:supports_truecolor || has('gui_running')
-    let g:colorsbox_italic = 1
-    colorscheme colorsbox-stbright
-  elseif &t_Co == 256
-    colorscheme last256
-  endif
-catch
-  if s:supports_truecolor
-    set termguicolors&
-  endif
-  colorscheme default
-endtry
+let g:colorsbox_italic = 1
 
-if !has('gui_running')
-  highlight Normal ctermbg=NONE guibg=NONE
-endif
+function! s:reset_colorscheme() abort
+  let l:colorschemes = {
+        \ 'dark':  ['colorsbox-stbright', 'last256', 'default'],
+        \ 'light': ['colorsbox-faff',     'morning', 'default'],
+        \ }
+  try
+    if s:supports_truecolor || has('gui_running')
+      execute 'colorscheme' l:colorschemes[&background][0]
+    elseif &t_Co == 256
+      execute 'colorscheme' l:colorschemes[&background][1]
+    endif
+  catch
+    if s:supports_truecolor
+      set termguicolors&
+    endif
+    execute 'colorscheme' l:colorschemes[&background][2]
+  endtry
+endfunction
+
+call s:reset_colorscheme()
+
+autocmd! MyVimrc OptionSet background nested call s:reset_colorscheme()
+
+autocmd! MyVimrc ColorScheme,VimEnter * call s:clear_background_color()
+function! s:clear_background_color()
+  if !has('gui_running') && &background ==# 'dark'
+    highlight Normal ctermbg=NONE guibg=NONE
+  endif
+endfunction
 " }}}
 
 " Plugins {{{
