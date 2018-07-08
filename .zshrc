@@ -269,7 +269,7 @@ bindkey '^r'  fuzzy-recent-dirs
 function fuzzy-select-history() {
   local selected=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDER --query "$LBUFFER")
   if [ -n "$selected" ]; then
-    BUFFET=$selected
+    BUFFER=$selected
     CURSOR=$#BUFFER
   fi
   zle reset-prompt
