@@ -23,15 +23,6 @@ path=(
   $path
 )
 
-if (( $+commands[ruby] )); then
-  path=($(ruby -e 'print Gem.user_dir')/bin(N-/) $path)
-fi
-
-# rust
-if (( $+commands[rustc] )); then
-  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
-
 # colors
 if (( $+commands[dircolors] )); then
   eval "$(dircolors -b)"
