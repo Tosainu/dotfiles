@@ -7,7 +7,7 @@ export EDITOR='vim'
 export FUZZY_FINDER='fzy'
 export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
-if [ -f $HOME/.config/less ]; then
+if [[ -f $HOME/.config/less ]]; then
   export LESSKEY=~/.config/less
 fi
 
@@ -44,7 +44,9 @@ autoload -Uz vcs_info
 
 # basic settings {{{
 # create ~/.cache/zsh directory
-[ ! -d ~/.cache/zsh ] && mkdir -p ~/.cache/zsh
+if [[ ! -d ~/.cache/zsh ]]; then
+  mkdir -p ~/.cache/zsh
+fi
 
 setopt correct
 setopt extended_glob
@@ -201,7 +203,7 @@ bindkey '^]' insert-last-word
 case $TERM in
   xterm*)
     function update_title() {
-      echo -ne "\033]0;${USER}@${HOST%%.*} (${SHELL})\007"
+      echo -ne "\\033]0;${USER}@${HOST%%.*} (${SHELL})\\007"
     }
     add-zsh-hook precmd update_title
     ;;
@@ -227,10 +229,10 @@ function gr() {
 function recent-dirs() {
   local line
   chpwd_recent_filehandler && for line in $reply; do
-  if [[ -d "$line" ]]; then
-    echo "$line"
-  fi
-done
+    if [[ -d "$line" ]]; then
+      echo "$line"
+    fi
+  done
 }
 
 function man() {
@@ -246,7 +248,7 @@ function man() {
 
 function fuzzy-recent-dirs() {
   local selected_dir=$(recent-dirs | $FUZZY_FINDER --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
+  if [[ -n "$selected_dir" ]]; then
     BUFFER="cd ${(q)selected_dir}"
     zle accept-line
   else
@@ -259,8 +261,8 @@ bindkey '^r'  fuzzy-recent-dirs
 
 function fuzzy-select-history() {
   local selected=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDER --query "$LBUFFER")
-  if [ -n "$selected" ]; then
-    BUFFER=$selected
+  if [[ -n "$selected" ]]; then
+    BUFFER="$selected"
     CURSOR=$#BUFFER
   fi
   zle reset-prompt
@@ -271,8 +273,8 @@ bindkey '^h'  fuzzy-select-history
 
 function gl() {
   local selected_dir="$(ghq list -p | $FUZZY_FINDER)"
-  if [ -n "$selected_dir" ]; then
-    cd ${(q)selected_dir}
+  if [[ -n "$selected_dir" ]]; then
+    cd "${(q)selected_dir}"
   fi
 }
 # }}}
