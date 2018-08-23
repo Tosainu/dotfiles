@@ -14,13 +14,6 @@ augroup MyVimrc
   autocmd!
 augroup END
 
-" create directory if not exists
-function! s:mkdir(dir) abort
-  if !isdirectory(a:dir)
-    call mkdir(a:dir, 'p')
-  endif
-endfunction
-
 function! s:get_SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_SID$')
 endfunction
@@ -84,11 +77,11 @@ set swapfile directory&
 let s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
       \ $XDG_RUNTIME_DIR . '/vim/swap' : expand('~/.vim/swap')
 let &directory = s:swapdir . ',' . &directory
-call s:mkdir(s:swapdir)
+call mkdir(s:swapdir, 'p')
 
 if has('persistent_undo')
   set undofile undodir=~/.vim/undo
-  call s:mkdir(&undodir)
+  call mkdir(&undodir, 'p')
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
