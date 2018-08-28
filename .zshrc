@@ -280,14 +280,14 @@ function gl() {
 # }}}
 
 # plugins {{{
-ZSH_SYNTAX_HIGHLIGHTING_PATH=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-if [ -f $ZSH_SYNTAX_HIGHLIGHTING_PATH ]; then
-  source $ZSH_SYNTAX_HIGHLIGHTING_PATH
-fi
+plugins=(
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
+  ~/work/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
+  ~/.zshrc.local(N-.)
+)
+for plugin in $plugins; do
+  source "$plugin"
+done
 # }}}
-
-if [ -f $HOME/.zshrc.local ]; then
-  source $HOME/.zshrc.local
-fi
 
 # vim:set foldmethod=marker:
