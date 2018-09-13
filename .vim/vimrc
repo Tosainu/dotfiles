@@ -428,7 +428,6 @@ function! s:init_minpac() abort
   call s:plugin('rhysd/clever-f.vim')
   call s:plugin('rhysd/committia.vim')
   call s:plugin('t9md/vim-textmanip')
-  call s:plugin('thinca/vim-quickrun', {'type': 'opt'})
   call s:plugin('tyru/caw.vim')
 
   " operator/textobj
@@ -638,40 +637,6 @@ function! g:committia_hooks.edit_open(info) abort
     startinsert
   end
 endfunction
-" }}}
-
-" vim-quickrun {{{
-let g:quickrun_no_default_key_mappings = 1
-
-let g:quickrun_config = {}
-let g:quickrun_config._ = {
-      \   'outputter': 'error',
-      \   'outputter/buffer/close_on_empty': 1,
-      \   'outputter/buffer/into':    1,
-      \   'outputter/buffer/split':   'botright',
-      \   'outputter/error/error':    'loclist',
-      \   'outputter/error/success':  'buffer',
-      \   'outputter/loclist/into':   1,
-      \   'runner': 'job',
-      \ }
-
-let g:quickrun_config.cpp = {
-      \   'command': 'clang++',
-      \   'cmdopt':  '-Wall -Wextra -std=c++17 -lboost_system -pthread',
-      \ }
-
-if executable('stack')
-  let g:quickrun_config.haskell = {
-        \   'command': 'stack',
-        \   'exec':    '%c %o %s %a',
-        \   'cmdopt':  'runghc',
-        \ }
-endif
-
-nnoremap <silent>       <Leader>qr :<C-u>packadd vim-quickrun <bar> QuickRun<CR>
-nnoremap <expr><silent> <C-c>
-      \ exists('*quickrun#is_running') && quickrun#is_running() ?
-      \ quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 
 " caw.vim {{{
