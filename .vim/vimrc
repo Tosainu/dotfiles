@@ -21,6 +21,7 @@ let s:SID = s:get_SID()
 delfunction s:get_SID
 
 set breakindent
+let &showbreak = '» '
 set colorcolumn=100
 set cursorline
 set list listchars=tab:>-,trail:-,eol:¬,nbsp:%
