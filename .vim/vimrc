@@ -171,15 +171,15 @@ nnoremap N Nzvzz
 nnoremap * *zvzz
 nnoremap # *zvzz
 
+" search in new window
+nnoremap <expr> <C-w>* "\<C-w>" . (winwidth(0) > 160 ? "v" : "s") . "*"
+nnoremap <expr> <C-w># "\<C-w>" . (winwidth(0) > 160 ? "v" : "s") . "#"
+
 " clear search highlights
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
 " tab
 nnoremap <silent> <C-n> :<C-u>tabnew<CR>
-
-" sort
-vnoremap <silent> <Leader>sl :sort<CR>
-vnoremap <silent> <Leader>su :sort u<CR>
 
 " select completion result
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -735,6 +735,19 @@ let g:UltiSnipsExpandTrigger        = '<C-f>'
 let g:UltiSnipsJumpBackwardTrigger  = '<C-b>'
 let g:UltiSnipsJumpForwardTrigger   = '<C-f>'
 " }}}
+
+" vim-operator-user {{{
+autocmd MyVimrc VimEnter * call s:init_user_defined_operators()
+function! s:init_user_defined_operators() abort
+  if !exists('*operator#user#define_ex_command') | return | endif
+
+  call operator#user#define_ex_command('sort', 'sort')
+  call operator#user#define_ex_command('sort-uniq', 'sort u')
+endfunction
+
+map <Leader>sl <Plug>(operator-sort)
+map <Leader>su <Plug>(operator-sort-uniq)
+" }}
 
 " vim-operator-replace {{{
 map <Leader>r  <Plug>(operator-replace)
