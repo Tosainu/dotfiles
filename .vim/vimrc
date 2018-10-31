@@ -424,11 +424,11 @@ function! s:init_minpac() abort
   call s:plugin('itchyny/vim-gitbranch')
   call s:plugin('junegunn/vim-easy-align')
   call s:plugin('justinmk/vim-dirvish')
-  call s:plugin('natebosch/vim-lsc')
   call s:plugin('rhysd/clever-f.vim')
   call s:plugin('rhysd/committia.vim')
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('tyru/caw.vim')
+  call s:plugin('w0rp/ale')
 
   " operator/textobj
   call s:plugin(['kana/vim-operator-user',
@@ -652,6 +652,33 @@ nmap <Leader>cw <Plug>(caw:wrap:toggle:operator)
 xmap <Leader>cw <Plug>(caw:wrap:comment)
 " }}}
 
+" ale {{{
+let g:ale_completion_enabled = 1
+let g:ale_linters_explicit = 1
+let g:ale_set_signs = 0
+
+let g:ale_linters = {}
+
+let g:ale_linters.haskell        = ['hie']
+let g:ale_haskell_hie_executable = 'hie-wrapper'
+
+let g:ale_linters.rust           = ['rls']
+let g:ale_rust_rls_executable    = 'rls'
+
+let g:ale_linters.vim            = ['vint']
+
+execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keybinds()'
+function! s:set_ale_keybinds() abort
+  nmap <buffer> <Leader>f  <Plug>(ale_fix)
+  nmap <buffer> <Leader>gd <Plug>(ale_go_to_definition_in_tab)
+  nmap <buffer> <Leader>gg <Plug>(ale_first)
+  nmap <buffer> <Leader>gG <Plug>(ale_last)
+  nmap <buffer> <Leader>gn <Plug>(ale_next_wrap)
+  nmap <buffer> <Leader>gp <Plug>(ale_previous_wrap)
+  nmap <buffer> <Leader>t  <Plug>(ale_hover)
+endfunction
+" }}}
+
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
@@ -688,45 +715,6 @@ function! s:load_ycm() abort
   nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
   nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
   nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
-endfunction
-" }}}
-
-" vim-lsc {{{
-let g:lsc_enable_incremental_sync = v:true
-let g:lsc_server_commands = {
-      \   'haskell': {
-      \     'command': 'stack exec hie-wrapper -- --lsp',
-      \     'suppress_stderr': v:true,
-      \   },
-      \   'rust':    'rustup run nightly rls',
-      \ }
-
-execute 'autocmd MyVimrc FileType ' .
-      \   join(keys(g:lsc_server_commands), ',') . ' call s:set_lsc_keybinds()'
-function! s:set_lsc_keybinds() abort
-  nnoremap <buffer><silent> <Leader>gd :<C-u>LSClientGoToDefinition<CR>
-  nnoremap <buffer><silent> <Leader>t  :<C-u>call <SID>show_hover()<CR>
-
-  function! s:show_hover() abort
-    call lsc#file#flushChanges()
-    let l:params = lsc#params#documentPosition()
-    call lsc#server#userCall('textDocument/hover', l:params, function('<SID>handle_show_hover'))
-  endfunction
-
-  function! s:handle_show_hover(result) abort
-    if empty(a:result) || empty(a:result.contents)
-      echom 'No hover information'
-      return
-    endif
-    let l:contents = a:result.contents
-    if type(l:contents) == v:t_list
-      let l:contents = l:contents[0]
-    endif
-    if type(l:contents) == v:t_dict
-      let l:contents = l:contents.value
-    endif
-    echom l:contents
-  endfunction
 endfunction
 " }}}
 
