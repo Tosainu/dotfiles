@@ -370,11 +370,11 @@ function! s:reset_colorscheme() abort
   endtry
 endfunction
 
-call s:reset_colorscheme()
+silent! call s:reset_colorscheme()
 
-autocmd! MyVimrc OptionSet background nested call s:reset_colorscheme()
+autocmd MyVimrc OptionSet background nested call s:reset_colorscheme()
 
-autocmd! MyVimrc ColorScheme,VimEnter * call s:clear_background_color()
+autocmd MyVimrc ColorScheme,VimEnter * call s:clear_background_color()
 function! s:clear_background_color()
   if !has('gui_running') && &background ==# 'dark'
     highlight Normal ctermbg=NONE guibg=NONE
