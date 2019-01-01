@@ -98,6 +98,21 @@ autocmd MyVimrc FileType * call timer_start(0, {->
       \   execute('setlocal formatoptions-=r formatoptions-=o')
       \ })
 
+" add execute permission to script file
+autocmd MyVimrc BufWritePost * call s:make_script_executable()
+function! s:make_script_executable() abort
+  let b:make_script_executable_checked = get(b:, 'make_script_executable_checked', {})
+  let l:file = expand('<afile>:p')
+  if !get(b:make_script_executable_checked, l:file, 0)
+        \ && getline(1) =~# '^#![^[]'
+        \ && !executable(l:file)
+        \ && (input(printf('chmod +x %s?[y/n]', l:file)) ==? 'y')
+    silent! execute '!chmod +x ' . shellescape(l:file)
+    edit
+  endif
+  let b:make_script_executable_checked[l:file] = 1
+endfunction
+
 " cursor shape
 if has('cursorshape') && has('vim_starting') && &term =~# 'xterm'
   let &t_EI .= "\e[\x30 q"
