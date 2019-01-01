@@ -60,7 +60,7 @@
 [push]
 	default = simple
 
-[url "git@github.com:"]
+[url "ssh://git@github.com/"]
 	pushInsteadOf = "git://github.com/"
 	pushInsteadOf = "http://github.com/"
 	pushInsteadOf = "https://github.com/"
@@ -68,6 +68,15 @@
 [url "https://github.com/"]
 	insteadOf = "git://github.com/"
 	insteadOf = "http://github.com/"
+
+[url "ssh://git@gist.github.com/"]
+	pushInsteadOf = "git://gist.github.com/"
+	pushInsteadOf = "http://gist.github.com/"
+	pushInsteadOf = "https://gist.github.com/"
+
+[url "https://gist.github.com/"]
+	insteadOf = "git://gist.github.com/"
+	insteadOf = "http://gist.github.com/"
 
 [github]
 	user = Tosainu
