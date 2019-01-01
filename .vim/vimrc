@@ -433,6 +433,7 @@ function! s:init_minpac() abort
   call s:plugin('k-takata/minpac', {'type': 'opt'})
 
   call s:plugin('AndrewRadev/switch.vim')
+  call s:plugin('Yggdroot/indentLine')
   call s:plugin('airblade/vim-gitgutter')
   call s:plugin('ctrlpvim/ctrlp.vim')
   call s:plugin('itchyny/lightline.vim')
@@ -724,6 +725,12 @@ autocmd MyVimrc User ALEFixPost call lightline#update()
 
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
+" }}}
+
+" indentLine {{{
+let g:indentLine_fileType = ['yaml']
+
+nnoremap <silent> <Leader>il :<C-u>IndentLinesToggle<CR>
 " }}}
 
 " vim-textmanip {{{
