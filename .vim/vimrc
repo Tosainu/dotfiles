@@ -522,12 +522,9 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 " }}}
 
 " ctrlp.vim {{{
-let g:ctrlp_switch_buffer   = 'ET'
 let g:ctrlp_extensions      = ['line']
-let g:ctrlp_prompt_mappings = {
-      \   'AcceptSelection("e")': ['<C-t>'],
-      \   'AcceptSelection("t")': ['<CR>'],
-      \ }
+let g:ctrlp_open_new_file   = 't'
+let g:ctrlp_switch_buffer   = 'ET'
 
 let g:ctrlp_user_command = {}
 let g:ctrlp_user_command.types = {
@@ -540,11 +537,14 @@ if executable('ag')
 endif
 
 let g:ctrlp_status_func = {
-      \   'main': 'CtrlPStatusFunc_1',
-      \   'prog': 'CtrlPStatusFunc_2',
+      \   'main': s:SID . 'ctrlp_status_func_main',
+      \   'prog': s:SID . 'ctrlp_status_func_prog',
       \ }
 
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked) abort
+function! s:ctrlp_status_func_main(focus, byfname, regex, prev, item, next, marked) abort
+  if !exists('*lightline#statusline')
+    return &statusline
+  endif
   let g:lightline.ctrlp_regex = a:regex
   let g:lightline.ctrlp_prev = a:prev
   let g:lightline.ctrlp_item = a:item
@@ -552,7 +552,10 @@ function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked) abo
   return lightline#statusline(0)
 endfunction
 
-function! CtrlPStatusFunc_2(str) abort
+function! s:ctrlp_status_func_prog(str) abort
+  if !exists('*lightline#statusline')
+    return &statusline
+  endif
   return lightline#statusline(0)
 endfunction
 
