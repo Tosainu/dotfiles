@@ -707,6 +707,7 @@ let g:ale_haskell_hie_executable = 'hie-wrapper'
 
 let g:ale_linters.rust           = ['rls']
 let g:ale_rust_rls_executable    = 'rls'
+let g:ale_rust_rls_toolchain     = 'stable'
 
 let g:ale_linters.vim            = ['vint']
 
@@ -826,9 +827,5 @@ let g:vim_markdown_no_default_key_mappings = 1
 " vim-markdown-composer {{{
 let g:markdown_composer_autostart    = 0
 let g:markdown_composer_open_browser = 1
-" }}}
-
-" rust.vim {{{
-let g:rustfmt_command = 'rustup run nightly rustfmt'
 " }}}
 " }}}
