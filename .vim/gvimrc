@@ -20,12 +20,13 @@ set t_vb=
 
 " directx
 if has('directx')
-  set renderoptions=type:directx
+  set renderoptions=type:directx,renmode:5
 endif
 
 " font
 if has('win32') || has('win64')
   set guifont=Source_Code_Pro_Medium:h11:cANSI
+  set guifontwide=M+_1m_medium:h11:cSHIFTJIS
 else
   set guifont=Source\ Code\ Pro\ Medium\ 11
 endif
