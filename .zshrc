@@ -184,14 +184,10 @@ bindkey -e
 bindkey '^N'    history-beginning-search-forward
 bindkey '^P'    history-beginning-search-backward
 
-bindkey "^A"    beginning-of-line
-bindkey "^E"    end-of-line
+# <Del>
+bindkey '^[[3~' delete-char
 
-bindkey "^?"    backward-delete-char
-bindkey "^K"    kill-whole-line
-bindkey "^[[3~" delete-char
-bindkey '^W'    backward-kill-word
-
+# <S-Tab>
 bindkey '^[[Z'  reverse-menu-complete
 
 zle -N insert-last-word smart-insert-last-word
@@ -257,7 +253,7 @@ function fuzzy-recent-dirs() {
 }
 
 zle -N fuzzy-recent-dirs
-bindkey '^r'  fuzzy-recent-dirs
+bindkey '^H'  fuzzy-recent-dirs
 
 function fuzzy-select-history() {
   local selected=$(history -n 1 | ${commands[tac]:-"tail -r"} | $FUZZY_FINDER --query "$LBUFFER")
@@ -269,7 +265,7 @@ function fuzzy-select-history() {
 }
 
 zle -N fuzzy-select-history
-bindkey '^h'  fuzzy-select-history
+bindkey '^R'  fuzzy-select-history
 
 function gl() {
   local selected_dir="$(ghq list -p | $FUZZY_FINDER)"
