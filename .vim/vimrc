@@ -442,6 +442,7 @@ function! s:init_minpac() abort
   call s:plugin('justinmk/vim-dirvish')
   call s:plugin('rhysd/clever-f.vim')
   call s:plugin('rhysd/committia.vim')
+  call s:plugin('rhysd/reply.vim')
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('tyru/caw.vim')
   call s:plugin('w0rp/ale')
