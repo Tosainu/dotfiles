@@ -202,9 +202,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " toggle line number
 nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
-
-" toggle background color
-nnoremap <silent> <Leader>bg :<C-u>let &background = (&background ==# 'dark' ? 'light' : 'dark')<CR>
 " }}}
 
 " commands {{{
@@ -368,26 +365,29 @@ let g:colorsbox_italic = 1
 
 function! s:reset_colorscheme() abort
   let l:colorschemes = {
-        \ 'dark':  ['colorsbox-stbright', 'last256', 'default'],
-        \ 'light': ['github', 'morning', 'default'],
+        \   'dark':  ['colorsbox-stbright', 'last256', 'slate'],
+        \   'light': ['github', 'github', 'morning'],
         \ }
+  let l:background = &background
+  let l:index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
   try
-    if s:supports_truecolor || has('gui_running')
-      execute 'colorscheme' l:colorschemes[&background][0]
-    elseif &t_Co == 256
-      execute 'colorscheme' l:colorschemes[&background][1]
-    endif
+    execute 'colorscheme' l:colorschemes[l:background][l:index]
   catch
     if s:supports_truecolor
       set termguicolors&
     endif
-    execute 'colorscheme' l:colorschemes[&background][2]
+    execute 'colorscheme' l:colorschemes[l:background][2]
   endtry
 endfunction
 
 silent! call s:reset_colorscheme()
 
-autocmd MyVimrc OptionSet background nested call s:reset_colorscheme()
+function! s:toggle_background_color() abort
+  let &background = (&background ==# 'dark' ? 'light' : 'dark')
+  call s:reset_colorscheme()
+endfunction
+command! ToggleBackgroundColor call s:toggle_background_color()
+nnoremap <silent> <Leader>bg :<C-u>ToggleBackgroundColor<CR>
 
 autocmd MyVimrc ColorScheme,VimEnter * call s:clear_background_color()
 function! s:clear_background_color()
