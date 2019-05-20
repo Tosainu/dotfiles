@@ -252,6 +252,8 @@ endfunction
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
 nnoremap <silent> <Leader>w :<C-u>Term<CR>
 nnoremap <silent> <Leader>W :<C-u>Term!<CR>
+tnoremap <silent> <C-q><Leader>w <C-q>:<C-u>Term<CR>
+tnoremap <silent> <C-q><Leader>W <C-q>:<C-u>Term!<CR>
 " }}}
 
 " Filetype {{{
