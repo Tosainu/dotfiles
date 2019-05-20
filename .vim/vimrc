@@ -472,6 +472,7 @@ function! s:init_minpac() abort
         \   'do':   '!./install.py --clang-completer --system-boost --system-libclang',
         \   'type': 'opt',
         \ })
+  call s:plugin('rhysd/github-complete.vim')
 
   " snippets
   call s:plugin(['SirVer/ultisnips', 'honza/vim-snippets'], {
