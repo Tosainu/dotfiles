@@ -134,7 +134,7 @@ endif
 filetype plugin indent on
 " }}}
 
-" keybind {{{
+" keymappings {{{
 let g:mapleader = ','
 
 " disable arrow keys
@@ -716,8 +716,8 @@ let g:ale_rust_rls_toolchain     = 'stable'
 
 let g:ale_linters.vim            = ['vint']
 
-execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keybinds()'
-function! s:set_ale_keybinds() abort
+execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keymappings()'
+function! s:set_ale_keymappings() abort
   nmap <buffer> <Leader>f  <Plug>(ale_fix)
   nmap <buffer> <Leader>gd <Plug>(ale_go_to_definition_in_tab)
   nmap <buffer> <Leader>gg <Plug>(ale_first)
