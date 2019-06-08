@@ -36,7 +36,7 @@ set foldlevel=99 foldmethod=syntax nofoldenable
 set hidden
 set matchpairs& matchpairs+=<:>
 set noerrorbells visualbell t_vb=
-set shortmess& shortmess+=I
+set shortmess& shortmess+=I shortmess+=c
 set equalalways
 set lazyredraw
 set switchbuf=useopen,usetab,newtab
@@ -478,6 +478,7 @@ function! s:init_minpac() abort
         \   'do':   '!./install.py --clang-completer --system-boost --system-libclang',
         \   'type': 'opt',
         \ })
+  call s:plugin('lifepillar/vim-mucomplete')
   call s:plugin('rhysd/github-complete.vim')
 
   " snippets
@@ -812,6 +813,28 @@ function! s:load_ycm() abort
   nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
   nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
 endfunction
+" }}}
+
+" vim-mucomplete {{{
+let g:mucomplete#enable_auto_at_startup = 0
+let g:mucomplete#no_mappings = 1
+let g:mucomplete#chains = {
+      \   'default': ['path', 'omni', 'keyn', 'ulti'],
+      \   'vim': ['path', 'cmd', 'keyn', 'ulti'],
+      \ }
+
+let g:mucomplete#can_complete = {}
+let g:mucomplete#can_complete.haskell =
+      \ {'omni': {t -> t =~# '\m\%(\k\{' . get(g:, 'mucomplete#minimum_prefix_length', 2) . '\}\|\S\.\)$'}}
+let g:mucomplete#can_complete.markdown =
+      \ {'omni': {t -> t =~# '\m\%(:\)$'}}
+let g:mucomplete#can_complete.rust =
+      \ {'omni': {t -> t =~# '\m\%(\k\{' . get(g:, 'mucomplete#minimum_prefix_length', 2) . '\}\|\S\.\|\S::\)$'}}
+
+autocmd MyVimrc FileType *
+      \ if expand('<amatch>') !~# '^\(c\|cpp\)$' |
+      \   silent! MUcompleteAutoOn |
+      \ endif
 " }}}
 
 " UltiSnips {{{
