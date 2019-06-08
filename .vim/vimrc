@@ -259,28 +259,27 @@ tnoremap <silent> <C-q><Leader>W <C-q>:<C-u>Term!<CR>
 
 " Filetype {{{
 " C++ {{{
-autocmd MyVimrc FileType c,cpp call s:on_cpp_files()
-function! s:on_cpp_files() abort
-  setlocal cindent
-  setlocal cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
-
-  " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
-  function! s:expand_namespace() abort
-    let l:s = getline('.')[0:col('.') - 2]
-    if l:s =~# '\<b;$'
-      return "\<BS>oost::"
-    elseif l:s =~# '\<s;$'
-      return "\<BS>td::"
-    elseif l:s =~# '\<d;$'
-      return "\<BS>etail::"
-    else
-      return ';'
-    endif
-  endfunction
-  inoremap <buffer><expr> ; <SID>expand_namespace()
-endfunction
-
+autocmd MyVimrc FileType c,cpp setlocal cindent cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
+" }}}
+
+" C++ & Rust {{{
+" http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
+function! s:expand_semicolon() abort
+  let s = getline('.')[0:col('.') - 2]
+  if s =~# '\<b;$'      " b;; => boost::
+    return "\<BS>oost::"
+  elseif s =~# '\<s;$'  " s;; => std::
+    return "\<BS>td::"
+  elseif s =~# '\<d;$'  " d;; => detail::
+    return "\<BS>etail::"
+  elseif s =~# ';$'     " ;;  => ::
+    return "\<BS>::"
+  else
+    return ';'
+  endif
+endfunction
+autocmd MyVimrc FileType cpp,rust inoremap <silent><buffer><expr> ; <SID>expand_semicolon()
 " }}}
 
 " Haskell {{{
