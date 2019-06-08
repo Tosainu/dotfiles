@@ -33,6 +33,7 @@ set scrolloff=5
 set background=dark
 set fillchars-=vert:\|
 set foldlevel=99 foldmethod=syntax nofoldenable
+set hidden
 set matchpairs& matchpairs+=<:>
 set noerrorbells visualbell t_vb=
 set shortmess& shortmess+=I
@@ -448,6 +449,11 @@ function! s:init_minpac() abort
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('tyru/caw.vim')
   call s:plugin('w0rp/ale')
+  call s:plugin('autozimu/LanguageClient-neovim', {
+        \   'branch': 'next',
+        \   'cond':   {-> executable('cargo')},
+        \   'do':     '!make release',
+        \ })
 
   " operator/textobj
   call s:plugin(['kana/vim-operator-user',
@@ -701,35 +707,66 @@ xmap <Leader>cw <Plug>(caw:wrap:comment)
 " }}}
 
 " ale {{{
-let g:ale_completion_enabled = 1
+let g:ale_disable_lsp = 1
 let g:ale_linters_explicit = 1
 let g:ale_set_signs = 0
 
 let g:ale_linters = {}
-
-let g:ale_linters.haskell        = ['hie']
-let g:ale_haskell_hie_executable = 'hie-wrapper'
-
-let g:ale_linters.rust           = ['rls']
-let g:ale_rust_rls_executable    = 'rls'
-let g:ale_rust_rls_toolchain     = 'stable'
-
-let g:ale_linters.vim            = ['vint']
+let g:ale_linters.vim = ['vint']
 
 execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keymappings()'
 function! s:set_ale_keymappings() abort
-  nmap <buffer> <Leader>f  <Plug>(ale_fix)
-  nmap <buffer> <Leader>gd <Plug>(ale_go_to_definition_in_tab)
   nmap <buffer> <Leader>gg <Plug>(ale_first)
   nmap <buffer> <Leader>gG <Plug>(ale_last)
   nmap <buffer> <Leader>gn <Plug>(ale_next_wrap)
   nmap <buffer> <Leader>gp <Plug>(ale_previous_wrap)
-  nmap <buffer> <Leader>t  <Plug>(ale_hover)
 endfunction
 
 autocmd MyVimrc User ALEJobStarted call lightline#update()
 autocmd MyVimrc User ALELintPost call lightline#update()
 autocmd MyVimrc User ALEFixPost call lightline#update()
+" }}}
+
+" LanguageClient-neovim {{{
+let g:LanguageClient_serverCommands = {
+      \   'haskell': ['hie-wrapper'],
+      \   'rust': ['rustup', 'run', 'stable', 'rls'],
+      \ }
+let g:LanguageClient_diagnosticsDisplay = {
+      \   1: {
+      \     'name': 'Error',
+      \     'texthl': 'SpellBad',
+      \   },
+      \   2: {
+      \     'name': 'Warning',
+      \     'texthl': 'SpellCap',
+      \   },
+      \   3: {
+      \     'name': 'Information',
+      \     'texthl': 'SpellCap',
+      \   },
+      \   4: {
+      \     'name': 'Hint',
+      \     'texthl': 'SpellCap',
+      \   },
+      \ }
+let g:LanguageClient_diagnosticsList = 'Location'
+let g:LanguageClient_diagnosticsSignsMax = 0
+let g:LanguageClient_hoverPreview = 'Never'
+let g:LanguageClient_selectionUI = 'quickfix'
+
+autocmd MyVimrc FileType * call s:set_lc_keymappings()
+function! s:set_lc_keymappings() abort
+  if has_key(g:LanguageClient_serverCommands, expand('<amatch>'))
+    nmap <buffer><silent> <Leader>gd :<C-u>call LanguageClient#textDocument_definition()<CR>
+    nmap <buffer><silent> <Leader>gi :<C-u>call LanguageClient#textDocument_implementation()<CR>
+    nmap <buffer><silent> <Leader>gt :<C-u>call LanguageClient#textDocument_typeDefinition()<CR>
+    nmap <buffer><silent> <Leader>gr :<C-u>call LanguageClient#textDocument_references()<CR>
+    nmap <buffer><silent> <Leader>t  :<C-u>call LanguageClient#textDocument_hover()<CR>
+
+    command -buffer LCRename call LanguageClient#textDocument_rename()
+  endif
+endfunction
 " }}}
 
 " switch.vim {{{
