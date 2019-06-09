@@ -103,15 +103,15 @@ autocmd MyVimrc FileType * call timer_start(0, {->
 autocmd MyVimrc BufWritePost * call s:make_script_executable()
 function! s:make_script_executable() abort
   let b:make_script_executable_checked = get(b:, 'make_script_executable_checked', {})
-  let l:file = expand('<afile>:p')
-  if !get(b:make_script_executable_checked, l:file, 0)
+  let file = expand('<afile>:p')
+  if !get(b:make_script_executable_checked, file, 0)
         \ && getline(1) =~# '^#![^[]'
-        \ && !executable(l:file)
-        \ && (input(printf('chmod +x %s?[y/n]', l:file)) ==? 'y')
-    silent! execute '!chmod +x ' . shellescape(l:file)
+        \ && !executable(file)
+        \ && (input(printf('chmod +x %s?[y/n]', file)) ==? 'y')
+    silent! execute '!chmod +x ' . shellescape(file)
     edit
   endif
-  let b:make_script_executable_checked[l:file] = 1
+  let b:make_script_executable_checked[file] = 1
 endfunction
 
 " cursor shape
@@ -124,8 +124,8 @@ endif
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
-    silent let l:engine = systemlist('ibus engine')[0]
-    if l:engine !=# a:engine
+    silent let engine = systemlist('ibus engine')[0]
+    if engine !=# a:engine
       silent execute '!ibus engine ' . a:engine
     endif
   endfunction
@@ -242,11 +242,11 @@ function! s:open_terminal(new, args) abort
           \ ]
   endif
 
-  let l:split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
+  let split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
   if a:new || empty(term_list()) || !empty(a:args)
-    execute l:split 'terminal' '++close' a:args
+    execute split 'terminal' '++close' a:args
   else
-    execute l:split 'sbuffer'
+    execute split 'sbuffer'
           \ get(filter(term_list(), {_, nr -> bufwinnr(nr) == -1}), 0, term_list()[0])
   endif
 endfunction
@@ -366,19 +366,19 @@ endif
 let g:colorsbox_italic = 1
 
 function! s:reset_colorscheme() abort
-  let l:colorschemes = {
+  let colorschemes = {
         \   'dark':  ['colorsbox-stbright', 'last256', 'slate'],
         \   'light': ['github', 'github', 'morning'],
         \ }
-  let l:background = &background
-  let l:index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
+  let background = &background
+  let index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
   try
-    execute 'colorscheme' l:colorschemes[l:background][l:index]
+    execute 'colorscheme' colorschemes[background][index]
   catch
     if s:supports_truecolor
       set termguicolors&
     endif
-    execute 'colorscheme' l:colorschemes[l:background][2]
+    execute 'colorscheme' colorschemes[background][2]
   endtry
 endfunction
 
@@ -420,14 +420,14 @@ function! s:init_minpac() abort
   endif
 
   function! s:plugin(plugname, ...) abort
-    let l:opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
-    if !l:opt.cond()
+    let opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
+    if !opt.cond()
       return
     endif
     if type(a:plugname) == v:t_list
-      call map(a:plugname, {_, v -> minpac#add(v, l:opt)})
+      call map(a:plugname, {_, v -> minpac#add(v, opt)})
     else
-      call minpac#add(a:plugname, l:opt)
+      call minpac#add(a:plugname, opt)
     endif
   endfunction
 
@@ -614,21 +614,21 @@ let g:lightline = {
       \ }
 
 function! s:lightline_filename() abort
-  let l:fname = expand('%:t')
-  return  l:fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ l:fname !=# '' ? l:fname : '[No Name]'
+  let fname = expand('%:t')
+  return  fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ fname !=# '' ? fname : '[No Name]'
 endfunction
 
 function! s:lightline_mode() abort
-  let l:fname = expand('%:t')
-  return  l:fname ==# 'ControlP' ? 'CtrlP' :
+  let fname = expand('%:t')
+  return  fname ==# 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
 function! s:lightline_branch_name() abort
   if winwidth(0) >= 90 && exists('*gitbranch#name') && &filetype !=# 'help'
-    let l:_ = gitbranch#name()
-    return l:_ !=# '' ? "\ue0a0 " . l:_ : ''
+    let _ = gitbranch#name()
+    return _ !=# '' ? "\ue0a0 " . _ : ''
   else
     return ''
   endif
@@ -636,13 +636,13 @@ endfunction
 
 function! s:lightline_hunk_summary() abort
   if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
-    let l:hunks   = GitGutterGetHunkSummary()
-    let l:symbols = [
-          \   [g:gitgutter_sign_added,    l:hunks[0]],
-          \   [g:gitgutter_sign_modified, l:hunks[1]],
-          \   [g:gitgutter_sign_removed,  l:hunks[2]],
+    let hunks   = GitGutterGetHunkSummary()
+    let symbols = [
+          \   [g:gitgutter_sign_added,    hunks[0]],
+          \   [g:gitgutter_sign_modified, hunks[1]],
+          \   [g:gitgutter_sign_removed,  hunks[2]],
           \ ]
-    return join(map(filter(l:symbols, 'v:val[1] > 0'), 'join(v:val)'))
+    return join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
   else
     return ''
   endif
@@ -650,12 +650,12 @@ endfunction
 
 function! s:lightline_lint_status() abort
   if winwidth(0) >= 90 && exists('b:lint_status')
-    let l:symbols = [
+    let symbols = [
           \   ['🚫', b:lint_status.error],
           \   ['⚠️',  b:lint_status.warning],
           \   ['ℹ️',  b:lint_status.info],
           \ ]
-    return join(map(filter(l:symbols, 'v:val[1] > 0'), 'join(v:val)'))
+    return join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
   else
     return ''
   endif
