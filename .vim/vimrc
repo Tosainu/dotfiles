@@ -104,7 +104,7 @@ autocmd MyVimrc BufWritePost * call s:make_script_executable()
 function! s:make_script_executable() abort
   let b:make_script_executable_checked = get(b:, 'make_script_executable_checked', {})
   let file = expand('<afile>:p')
-  if !get(b:make_script_executable_checked, file, 0)
+  if get(b:make_script_executable_checked, file) == 0
         \ && getline(1) =~# '^#![^[]'
         \ && !executable(file)
         \ && (input(printf('chmod +x %s?[y/n]', file)) ==? 'y')
@@ -354,7 +354,7 @@ syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
 let s:supports_truecolor =
-      \ has('termguicolors') && $COLORTERM =~# '^\(truecolor\|24bit\)$'
+      \ has('termguicolors') && $COLORTERM =~# '^\%(truecolor\|24bit\)$'
 if s:supports_truecolor
   if &t_8f ==# '' || &t_8b ==# ''
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -784,7 +784,7 @@ function! s:update_lint_status_lc() abort
       let b:lint_status.error += 1
     elseif type ==# 'W'
       let b:lint_status.warning += 1
-    elseif type =~# '^\(I\|H\)$'
+    elseif type =~# '^\%(I\|H\)$'
       let b:lint_status.info += 1
     endif
   endfor
@@ -854,7 +854,7 @@ let g:mucomplete#can_complete.rust =
       \ {'omni': {t -> t =~# '\m\%(\k\{' . get(g:, 'mucomplete#minimum_prefix_length', 2) . '\}\|\S\.\|\S::\)$'}}
 
 autocmd MyVimrc FileType *
-      \ if expand('<amatch>') !~# '^\(c\|cpp\)$' |
+      \ if expand('<amatch>') !~# '^\%(c\|cpp\)$' |
       \   silent! MUcompleteAutoOn |
       \ endif
 " }}}
