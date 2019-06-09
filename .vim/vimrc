@@ -703,11 +703,27 @@ xmap <Leader>cw <Plug>(caw:wrap:comment)
 
 " ale {{{
 let g:ale_disable_lsp = 1
+let g:ale_fix_on_save = 1
 let g:ale_linters_explicit = 1
 let g:ale_set_signs = 0
 
 let g:ale_linters = {}
 let g:ale_linters.vim = ['vint']
+
+let g:ale_fixers = {
+      \   'c': ['clang-format'],
+      \   'cpp': ['clang-format'],
+      \   'css': ['prettier'],
+      \   'haskell': ['stylish-haskell'],
+      \   'html': ['prettier'],
+      \   'javascript': ['prettier'],
+      \   'rust': ['rustfmt'],
+      \   'scss': ['prettier'],
+      \ }
+
+" clang-format requires filename when reading from stdin
+autocmd MyVimrc FileType c,cpp
+      \ let b:ale_c_clangformat_options = '-assume-filename=hoge.' . expand('<amatch>')
 
 execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keymappings()'
 function! s:set_ale_keymappings() abort
