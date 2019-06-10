@@ -530,6 +530,8 @@ omap ih <Plug>GitGutterTextObjectInnerPending
 omap ah <Plug>GitGutterTextObjectOuterPending
 xmap ih <Plug>GitGutterTextObjectInnerVisual
 xmap ah <Plug>GitGutterTextObjectOuterVisual
+
+autocmd MyVimrc User GitGutter call s:lightline_update_hunk_summary()
 " }}}
 
 " ctrlp.vim {{{
@@ -635,30 +637,32 @@ function! s:lightline_branch_name() abort
 endfunction
 
 function! s:lightline_hunk_summary() abort
-  if winwidth(0) >= 90 && get(g:, 'gitgutter_enabled')
-    let hunks   = GitGutterGetHunkSummary()
-    let symbols = [
-          \   [g:gitgutter_sign_added,    hunks[0]],
-          \   [g:gitgutter_sign_modified, hunks[1]],
-          \   [g:gitgutter_sign_removed,  hunks[2]],
-          \ ]
-    return join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
-  else
-    return ''
-  endif
+  return winwidth(0) >= 90 ? get(b:, 'hunk_summary', '') : ''
+endfunction
+
+function! s:lightline_update_hunk_summary() abort
+  let hunks   = GitGutterGetHunkSummary()
+  let symbols = [
+        \   [g:gitgutter_sign_added,    hunks[0]],
+        \   [g:gitgutter_sign_modified, hunks[1]],
+        \   [g:gitgutter_sign_removed,  hunks[2]],
+        \ ]
+  let b:hunk_summary = join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
+  silent! call lightline#update()
 endfunction
 
 function! s:lightline_lint_status() abort
-  if winwidth(0) >= 90 && exists('b:lint_status')
-    let symbols = [
-          \   ['🚫', b:lint_status.error],
-          \   ['⚠️',  b:lint_status.warning],
-          \   ['ℹ️',  b:lint_status.info],
-          \ ]
-    return join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
-  else
-    return ''
-  endif
+  return winwidth(0) >= 90 ? get(b:, 'lint_status', '') : ''
+endfunction
+
+function! s:lightline_update_lint_status(error, warning, info) abort
+  let symbols = [
+        \   ['🚫', a:error],
+        \   ['⚠️',  a:warning],
+        \   ['ℹ️',  a:info],
+        \ ]
+  let b:lint_status = join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
+  silent! call lightline#update()
 endfunction
 " }}}
 
@@ -739,13 +743,8 @@ autocmd MyVimrc User ALEFixPost call s:update_lint_status_ale()
 function! s:update_lint_status_ale() abort
   let nr = bufnr('')
   if get(b:, 'ale_linted') > 0 && ale#engine#IsCheckingBuffer(nr) == 0
-    let counts = ale#statusline#Count(nr)
-    let b:lint_status = {
-          \   'error':   counts.error,
-          \   'warning': counts.warning,
-          \   'info':    counts.info,
-          \ }
-    silent! call lightline#update()
+    let c = ale#statusline#Count(nr)
+    call s:lightline_update_lint_status(c.error, c.warning, c.info)
   endif
 endfunction
 " }}}
@@ -793,18 +792,18 @@ endfunction
 
 autocmd MyVimrc User LanguageClientDiagnosticsChanged call s:update_lint_status_lc()
 function! s:update_lint_status_lc() abort
-  let b:lint_status = {'error': 0, 'warning': 0, 'info': 0}
+  let c = {'error': 0, 'warning': 0, 'info': 0}
   for l in getloclist(bufnr(''))
     let type = get(l, 'type', '')
     if type ==# 'E'
-      let b:lint_status.error += 1
+      let c.error += 1
     elseif type ==# 'W'
-      let b:lint_status.warning += 1
+      let c.warning += 1
     elseif type =~# '^\%(I\|H\)$'
-      let b:lint_status.info += 1
+      let c.info += 1
     endif
   endfor
-  silent! call lightline#update()
+  call s:lightline_update_lint_status(c.error, c.warning, c.info)
 endfunction
 " }}}
 
