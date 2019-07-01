@@ -17,7 +17,7 @@ augroup END
 function! s:get_SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_SID$')
 endfunction
-let s:SID = s:get_SID()
+const s:SID = s:get_SID()
 delfunction s:get_SID
 
 set breakindent
@@ -76,7 +76,7 @@ set viminfo& viminfo+=n~/.vim/viminfo
 set nobackup
 
 set swapfile directory&
-let s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
+const s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
       \ $XDG_RUNTIME_DIR . '/vim/swap' : expand('~/.vim/swap')
 let &directory = s:swapdir . ',' . &directory
 call mkdir(s:swapdir, 'p')
@@ -103,7 +103,7 @@ autocmd MyVimrc FileType * call timer_start(0, {->
 autocmd MyVimrc BufWritePost * call s:make_script_executable()
 function! s:make_script_executable() abort
   let b:make_script_executable_checked = get(b:, 'make_script_executable_checked', {})
-  let file = expand('<afile>:p')
+  const file = expand('<afile>:p')
   if get(b:make_script_executable_checked, file) == 0
         \ && getline(1) =~# '^#![^[]'
         \ && !executable(file)
@@ -124,7 +124,7 @@ endif
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
-    silent let engine = systemlist('ibus engine')[0]
+    silent const engine = systemlist('ibus engine')[0]
     if engine !=# a:engine
       silent execute '!ibus engine ' . a:engine
     endif
@@ -242,7 +242,7 @@ function! s:open_terminal(new, args) abort
           \ ]
   endif
 
-  let split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
+  const split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
   if a:new || empty(term_list()) || !empty(a:args)
     execute split 'terminal' '++close' a:args
   else
@@ -266,7 +266,7 @@ autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
 " C++ & Rust {{{
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
 function! s:expand_semicolon() abort
-  let s = getline('.')[0:col('.') - 2]
+  const s = getline('.')[0:col('.') - 2]
   if s =~# '\<b;$'      " b;; => boost::
     return "\<BS>oost::"
   elseif s =~# '\<s;$'  " s;; => std::
@@ -353,7 +353,7 @@ endfunction
 syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
-let s:supports_truecolor =
+const s:supports_truecolor =
       \ has('termguicolors') && $COLORTERM =~# '^\%(truecolor\|24bit\)$'
 if s:supports_truecolor
   if &t_8f ==# '' || &t_8b ==# ''
@@ -370,8 +370,8 @@ function! s:reset_colorscheme() abort
         \   'dark':  ['colorsbox-stbright', 'last256', 'slate'],
         \   'light': ['github', 'github', 'morning'],
         \ }
-  let background = &background
-  let index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
+  const background = &background
+  const index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
   try
     execute 'colorscheme' colorschemes[background][index]
   catch
@@ -420,7 +420,7 @@ function! s:init_minpac() abort
   endif
 
   function! s:plugin(plugname, ...) abort
-    let opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
+    const opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
     if !opt.cond()
       return
     endif
@@ -616,20 +616,20 @@ let g:lightline = {
       \ }
 
 function! s:lightline_filename() abort
-  let fname = expand('%:t')
+  const fname = expand('%:t')
   return  fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
         \ fname !=# '' ? fname : '[No Name]'
 endfunction
 
 function! s:lightline_mode() abort
-  let fname = expand('%:t')
+  const fname = expand('%:t')
   return  fname ==# 'ControlP' ? 'CtrlP' :
         \ lightline#mode()
 endfunction
 
 function! s:lightline_branch_name() abort
   if winwidth(0) >= 90 && exists('*gitbranch#name') && &filetype !=# 'help'
-    let _ = gitbranch#name()
+    const _ = gitbranch#name()
     return _ !=# '' ? "\ue0a0 " . _ : ''
   else
     return ''
@@ -641,8 +641,8 @@ function! s:lightline_hunk_summary() abort
 endfunction
 
 function! s:lightline_update_hunk_summary() abort
-  let hunks   = GitGutterGetHunkSummary()
-  let symbols = [
+  const hunks   = GitGutterGetHunkSummary()
+  const symbols = [
         \   [g:gitgutter_sign_added,    hunks[0]],
         \   [g:gitgutter_sign_modified, hunks[1]],
         \   [g:gitgutter_sign_removed,  hunks[2]],
@@ -656,7 +656,7 @@ function! s:lightline_lint_status() abort
 endfunction
 
 function! s:lightline_update_lint_status(error, warning, info) abort
-  let symbols = [
+  const symbols = [
         \   ['🚫', a:error],
         \   ['⚠️',  a:warning],
         \   ['ℹ️',  a:info],
@@ -741,9 +741,9 @@ autocmd MyVimrc User ALEJobStarted call s:update_lint_status_ale()
 autocmd MyVimrc User ALELintPost call s:update_lint_status_ale()
 autocmd MyVimrc User ALEFixPost call s:update_lint_status_ale()
 function! s:update_lint_status_ale() abort
-  let nr = bufnr('')
+  const nr = bufnr('')
   if get(b:, 'ale_linted') > 0 && ale#engine#IsCheckingBuffer(nr) == 0
-    let c = ale#statusline#Count(nr)
+    const c = ale#statusline#Count(nr)
     call s:lightline_update_lint_status(c.error, c.warning, c.info)
   endif
 endfunction
@@ -794,7 +794,7 @@ autocmd MyVimrc User LanguageClientDiagnosticsChanged call s:update_lint_status_
 function! s:update_lint_status_lc() abort
   let c = {'error': 0, 'warning': 0, 'info': 0}
   for l in getloclist(bufnr(''))
-    let type = get(l, 'type', '')
+    const type = get(l, 'type', '')
     if type ==# 'E'
       let c.error += 1
     elseif type ==# 'W'
