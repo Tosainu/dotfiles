@@ -786,7 +786,7 @@ function! s:set_lc_keymappings() abort
     nmap <buffer><silent> <Leader>gr :<C-u>call LanguageClient#textDocument_references()<CR>
     nmap <buffer><silent> <Leader>t  :<C-u>call LanguageClient#textDocument_hover()<CR>
 
-    command -buffer LCRename call LanguageClient#textDocument_rename()
+    command! -buffer LCRename call LanguageClient#textDocument_rename()
   endif
 endfunction
 
