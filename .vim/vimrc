@@ -77,7 +77,7 @@ silent! call mkdir(expand('~/.vim'), 'p', 0700)
 const s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cache')
 const s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
-set nobackup
+set nobackup nowritebackup
 let &g:backupdir = s:runtime_dir . '/vim/backup//'
 silent! call mkdir(&g:backupdir, 'p', 0700)
 
