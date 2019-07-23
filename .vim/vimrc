@@ -72,18 +72,23 @@ endif
 
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
+silent! call mkdir(expand('~/.vim'), 'p', 0700)
+
+const s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cache')
+const s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
 set nobackup
+let &g:backupdir = s:runtime_dir . '/vim/backup//'
+silent! call mkdir(&g:backupdir, 'p', 0700)
 
-set swapfile directory&
-const s:swapdir = isdirectory($XDG_RUNTIME_DIR) ?
-      \ $XDG_RUNTIME_DIR . '/vim/swap' : expand('~/.vim/swap')
-let &directory = s:swapdir . ',' . &directory
-call mkdir(s:swapdir, 'p')
+set swapfile
+let &g:directory = s:cache_dir . '/vim/swap//'
+silent! call mkdir(&g:directory, 'p', 0700)
 
 if has('persistent_undo')
-  set undofile undodir=~/.vim/undo
-  call mkdir(&undodir, 'p')
+  set undofile
+  let &g:undodir = s:cache_dir . '/vim/undo//'
+  silent! call mkdir(&g:undodir, 'p', 0700)
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
