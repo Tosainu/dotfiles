@@ -516,6 +516,7 @@ endfunction
 command! PackInit   call s:init_minpac()
 command! PackUpdate if s:init_minpac() | call minpac#update('', {'do': 'redraw!'}) | endif
 command! PackClean  if s:init_minpac() | call minpac#clean()  | endif
+command! PackStatus if s:init_minpac() | call minpac#status()  | endif
 " }}}
 
 " vim-gitgutter {{{
