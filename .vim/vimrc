@@ -818,7 +818,11 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
 
 " indentLine {{{
-let g:indentLine_fileType = ['yaml']
+let g:indentLine_fileType = [
+      \   'systemverilog',
+      \   'verilog',
+      \   'yaml',
+      \ ]
 
 nnoremap <silent> <Leader>il :<C-u>IndentLinesToggle<CR>
 " }}}
