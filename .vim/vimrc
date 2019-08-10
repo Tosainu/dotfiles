@@ -208,6 +208,15 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " toggle line number
 nnoremap <silent> <Leader>n :<C-u>setlocal number!<CR>
+
+nnoremap <silent> <Leader>lf :<C-u>lfirst<CR>
+nnoremap <silent> <Leader>ll :<C-u>llast<CR>
+nnoremap <silent> <Leader>ln :<C-u>lnext<CR>
+nnoremap <silent> <Leader>lp :<C-u>lprevious<CR>
+nnoremap <silent> <Leader>lF :<C-u>cfirst<CR>
+nnoremap <silent> <Leader>lL :<C-u>clast<CR>
+nnoremap <silent> <Leader>lN :<C-u>cnext<CR>
+nnoremap <silent> <Leader>lP :<C-u>cprevious<CR>
 " }}}
 
 " commands {{{
@@ -851,6 +860,7 @@ let g:ycm_key_list_previous_completion = []
 let g:ycm_key_list_select_completion   = []
 let g:ycm_key_list_stop_completion     = ['<C-y>']
 let g:ycm_python_binary_path           = 'python'
+let g:ycm_always_populate_location_list = 1
 
 autocmd MyVimrc FileType c,cpp call s:load_ycm()
 function! s:load_ycm() abort
