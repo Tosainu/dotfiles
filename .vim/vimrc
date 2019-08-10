@@ -730,8 +730,6 @@ let g:ale_linters = {}
 let g:ale_linters.vim = ['vint']
 
 let g:ale_fixers = {
-      \   'c': ['clang-format'],
-      \   'cpp': ['clang-format'],
       \   'css': ['prettier'],
       \   'haskell': ['stylish-haskell'],
       \   'html': ['prettier'],
@@ -739,18 +737,6 @@ let g:ale_fixers = {
       \   'rust': ['rustfmt'],
       \   'scss': ['prettier'],
       \ }
-
-" clang-format requires filename when reading from stdin
-autocmd MyVimrc FileType c,cpp
-      \ let b:ale_c_clangformat_options = '-assume-filename=hoge.' . expand('<amatch>')
-
-execute 'autocmd MyVimrc FileType ' . join(keys(g:ale_linters), ',') . ' call s:set_ale_keymappings()'
-function! s:set_ale_keymappings() abort
-  nmap <buffer> <Leader>gg <Plug>(ale_first)
-  nmap <buffer> <Leader>gG <Plug>(ale_last)
-  nmap <buffer> <Leader>gn <Plug>(ale_next_wrap)
-  nmap <buffer> <Leader>gp <Plug>(ale_previous_wrap)
-endfunction
 
 autocmd MyVimrc User ALEJobStarted call s:update_lint_status_ale()
 autocmd MyVimrc User ALELintPost call s:update_lint_status_ale()
@@ -924,17 +910,19 @@ map <Leader>sr <Plug>(operator-surround-replace)
 " }}}
 
 " vim-clang-format {{{
+let g:clang_format#auto_format = 1
 let g:clang_format#auto_formatexpr = 1
-let g:clang_format#style_options = {
-      \   'AccessModifierOffset':             -2,
-      \   'AlignConsecutiveAssignments':      'true',
-      \   'AllowShortFunctionsOnASingleLine': 'Empty',
-      \   'ColumnLimit':                      96,
-      \   'Cpp11BracedListStyle':             'true',
-      \   'DerivePointerAlignment':           'false',
-      \   'SortIncludes':                     'false',
-      \   'SpacesBeforeTrailingComments':     1,
-      \   'Standard':                         'Cpp11',
+let g:clang_format#style_options = #{
+      \   AccessModifierOffset:             -2,
+      \   AlignConsecutiveAssignments:      'false',
+      \   AllowShortFunctionsOnASingleLine: 'Empty',
+      \   ColumnLimit:                      100,
+      \   Cpp11BracedListStyle:             'true',
+      \   DerivePointerAlignment:           'false',
+      \   IndentPPDirectives:               'true',
+      \   SortIncludes:                     'false',
+      \   SpacesBeforeTrailingComments:     1,
+      \   Standard:                         'Cpp11',
       \ }
 " }}}
 
