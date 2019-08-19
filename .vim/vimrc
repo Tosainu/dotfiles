@@ -919,7 +919,7 @@ let g:clang_format#style_options = #{
       \   ColumnLimit:                      100,
       \   Cpp11BracedListStyle:             'true',
       \   DerivePointerAlignment:           'false',
-      \   IndentPPDirectives:               'true',
+      \   IndentPPDirectives:               'AfterHash',
       \   SortIncludes:                     'false',
       \   SpacesBeforeTrailingComments:     1,
       \   Standard:                         'Cpp11',
