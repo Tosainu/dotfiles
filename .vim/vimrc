@@ -800,13 +800,33 @@ let g:ycm_language_server =
       \   },
       \ ]
 
-autocmd MyVimrc FileType c,cpp,rust,haskell call s:load_ycm()
-function! s:load_ycm() abort
-  silent! packadd YouCompleteMe
-  nnoremap <buffer><silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
-  nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
-  nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
-  nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
+function! s:get_ycm_lsp_languages() abort
+  if !exists('s:ycm_lsp_languages')
+    let s:ycm_lsp_languages = []
+    for ls in map(copy(g:ycm_language_server), 'v:val.filetypes')
+      call extend(s:ycm_lsp_languages, ls)
+    endfor
+    call uniq(s:ycm_lsp_languages)
+  endif
+  return s:ycm_lsp_languages
+endfunction
+
+autocmd MyVimrc FileType * call s:set_ycm_keymappings()
+function! s:set_ycm_keymappings() abort
+  const ft = expand('<amatch>')
+  if ft =~# '^\%(c\|cpp\)$'
+    nnoremap <buffer><silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
+    nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
+    nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
+    nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
+  elseif index(s:get_ycm_lsp_languages(), ft) >= 0
+    nnoremap <buffer><silent> <Leader>f  :<C-u>YcmCompleter Format<CR>
+    nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
+    nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
+    nnoremap <buffer><silent> <Leader>gi :<C-u>YcmCompleter GoToImplementation<CR>
+    nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetHover<CR>
+    nnoremap <buffer><silent> <Leader>yr :<C-u>YcmCompleter RefactorRename<CR>
+  endif
 endfunction
 " }}}
 
