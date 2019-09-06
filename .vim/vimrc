@@ -439,7 +439,7 @@ function! s:init_minpac() abort
       return
     endif
     if type(a:plugname) == v:t_list
-      call map(a:plugname, {_, v -> minpac#add(v, opt)})
+      call map(copy(a:plugname), {_, v -> minpac#add(v, opt)})
     else
       call minpac#add(a:plugname, opt)
     endif
