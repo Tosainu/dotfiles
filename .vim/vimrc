@@ -716,14 +716,14 @@ xmap <Leader>cw <Plug>(caw:wrap:comment)
 
 " ale {{{
 let g:ale_disable_lsp = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_linters_explicit = 1
 let g:ale_set_signs = 0
 
 let g:ale_linters = {}
 let g:ale_linters.vim = ['vint']
 
-let g:ale_fixers = {
+let s:ale_fixers = {
       \   'css': ['prettier'],
       \   'haskell': ['stylish-haskell'],
       \   'html': ['prettier'],
@@ -731,6 +731,33 @@ let g:ale_fixers = {
       \   'rust': ['rustfmt'],
       \   'scss': ['prettier'],
       \ }
+let g:ale_fixers = s:ale_fixers
+
+autocmd MyVimrc FileType *
+      \ if has_key(s:ale_fixers, expand('<amatch>')) |
+      \   let b:ale_fix_on_save = 1 |
+      \ endif
+
+command! -bang ALEToggleFix call s:ale_toggle_fix_on_save(<bang>0)
+function! s:ale_toggle_fix_on_save(global) abort
+  if a:global
+    if empty(g:ale_fixers)
+      let g:ale_fixers = s:ale_fixers
+      echo 'Enabled ALE fixers (global)'
+    else
+      let g:ale_fixers = {}
+      echo 'Disabled ALE fixers (global)'
+    endif
+  else
+    if !exists('b:ale_fix_on_save') || !b:ale_fix_on_save
+      let b:ale_fix_on_save = 1
+      echo 'Enabled ALEFix on save'
+    else
+      let b:ale_fix_on_save = 0
+      echo 'Disabled ALEFix on save'
+    endif
+  endif
+endfunction
 
 autocmd MyVimrc User ALEJobStarted call s:update_lint_status_ale()
 autocmd MyVimrc User ALELintPost call s:update_lint_status_ale()
