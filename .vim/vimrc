@@ -597,7 +597,7 @@ let g:lightline = {
       \     'right':  [
       \       ['lineinfo'],
       \       ['filetype', 'fileformat'],
-      \       ['branch_name', 'hunk_summary', 'lint_status']
+      \       ['branch_name', 'hunk_summary']
       \     ],
       \   },
       \   'inactive': {
@@ -614,7 +614,6 @@ let g:lightline = {
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
-      \     'lint_status':  s:SID . 'lightline_lint_status',
       \     'branch_name':  s:SID . 'lightline_branch_name',
       \     'filename':     s:SID . 'lightline_filename',
       \     'hunk_summary': s:SID . 'lightline_hunk_summary',
@@ -657,20 +656,6 @@ function! s:lightline_update_hunk_summary() abort
         \   [g:gitgutter_sign_removed,  hunks[2]],
         \ ]
   let b:hunk_summary = join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
-  silent! call lightline#update()
-endfunction
-
-function! s:lightline_lint_status() abort
-  return winwidth(0) >= 90 ? get(b:, 'lint_status', '') : ''
-endfunction
-
-function! s:lightline_update_lint_status(error, warning, info) abort
-  const symbols = [
-        \   ['🚫', a:error],
-        \   ['⚠️',  a:warning],
-        \   ['ℹ️',  a:info],
-        \ ]
-  let b:lint_status = join(map(filter(symbols, 'v:val[1] > 0'), 'join(v:val)'))
   silent! call lightline#update()
 endfunction
 " }}}
@@ -754,17 +739,6 @@ function! s:ale_toggle_fix_on_save(global) abort
       let b:ale_fix_on_save = 0
       echo 'Disabled ALEFix on save'
     endif
-  endif
-endfunction
-
-autocmd MyVimrc User ALEJobStarted call s:update_lint_status_ale()
-autocmd MyVimrc User ALELintPost call s:update_lint_status_ale()
-autocmd MyVimrc User ALEFixPost call s:update_lint_status_ale()
-function! s:update_lint_status_ale() abort
-  const nr = bufnr('')
-  if get(b:, 'ale_linted') > 0 && ale#engine#IsCheckingBuffer(nr) == 0
-    const c = ale#statusline#Count(nr)
-    call s:lightline_update_lint_status(c.error, c.warning, c.info)
   endif
 endfunction
 " }}}
