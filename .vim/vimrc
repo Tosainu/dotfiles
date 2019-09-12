@@ -62,7 +62,7 @@ set wildignorecase
 
 set timeout timeoutlen=500
 set ttimeout ttimeoutlen=100
-set updatetime=500
+set updatetime=250
 
 if has('unnamedplus')
   set clipboard=unnamedplus
@@ -82,7 +82,7 @@ let &g:backupdir = s:runtime_dir . '/vim/backup//'
 silent! call mkdir(&g:backupdir, 'p', 0700)
 
 set swapfile
-let &g:directory = s:cache_dir . '/vim/swap//'
+let &g:directory = s:runtime_dir . '/vim/swap//'
 silent! call mkdir(&g:directory, 'p', 0700)
 
 if has('persistent_undo')
