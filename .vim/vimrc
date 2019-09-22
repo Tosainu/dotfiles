@@ -1,6 +1,8 @@
 " skip when vim-tiny or vim-small
 if 0 | endif
 
+scriptversion 4
+
 " basic settings {{{
 " encoding
 set encoding=utf-8
@@ -78,16 +80,16 @@ const s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.ca
 const s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
 set nobackup nowritebackup
-let &g:backupdir = s:runtime_dir . '/vim/backup//'
+let &g:backupdir = s:runtime_dir .. '/vim/backup//'
 silent! call mkdir(&g:backupdir, 'p', 0700)
 
 set swapfile
-let &g:directory = s:runtime_dir . '/vim/swap//'
+let &g:directory = s:runtime_dir .. '/vim/swap//'
 silent! call mkdir(&g:directory, 'p', 0700)
 
 if has('persistent_undo')
   set undofile
-  let &g:undodir = s:cache_dir . '/vim/undo//'
+  let &g:undodir = s:cache_dir .. '/vim/undo//'
   silent! call mkdir(&g:undodir, 'p', 0700)
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
@@ -113,7 +115,7 @@ function! s:make_script_executable() abort
         \ && getline(1) =~# '^#![^[]'
         \ && !executable(file)
         \ && (input(printf('chmod +x %s?[y/n]', file)) ==? 'y')
-    silent! execute '!chmod +x ' . shellescape(file)
+    silent! execute '!chmod +x ' .. shellescape(file)
     edit
   endif
   let b:make_script_executable_checked[file] = 1
@@ -121,9 +123,9 @@ endfunction
 
 " cursor shape
 if has('cursorshape') && has('vim_starting') && &term =~# 'xterm'
-  let &t_EI .= "\e[\x30 q"
-  let &t_SI .= "\e[\x35 q"
-  let &t_SR .= "\e[\x33 q"
+  let &t_EI ..= "\e[\x30 q"
+  let &t_SI ..= "\e[\x35 q"
+  let &t_SR ..= "\e[\x33 q"
 endif
 
 " ibus
@@ -131,7 +133,7 @@ if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
     silent const engine = systemlist('ibus engine')[0]
     if engine !=# a:engine
-      silent execute '!ibus engine ' . a:engine
+      silent execute '!ibus engine ' .. a:engine
     endif
   endfunction
   autocmd MyVimrc InsertLeave * call s:switch_ibus_engine('xkb:us::eng')
@@ -193,8 +195,8 @@ nnoremap * *zvzz
 nnoremap # *zvzz
 
 " search in new window
-nnoremap <expr> <C-w>* "\<C-w>" . (winwidth(0) > 160 ? "v" : "s") . "*"
-nnoremap <expr> <C-w># "\<C-w>" . (winwidth(0) > 160 ? "v" : "s") . "#"
+nnoremap <expr> <C-w>* "\<C-w>" .. (winwidth(0) > 160 ? "v" : "s") .. "*"
+nnoremap <expr> <C-w># "\<C-w>" .. (winwidth(0) > 160 ? "v" : "s") .. "#"
 
 " clear search highlights
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
@@ -559,8 +561,8 @@ if executable('ag')
 endif
 
 let g:ctrlp_status_func = {
-      \   'main': s:SID . 'ctrlp_status_func_main',
-      \   'prog': s:SID . 'ctrlp_status_func_prog',
+      \   'main': s:SID .. 'ctrlp_status_func_main',
+      \   'prog': s:SID .. 'ctrlp_status_func_prog',
       \ }
 
 function! s:ctrlp_status_func_main(focus, byfname, regex, prev, item, next, marked) abort
@@ -614,10 +616,10 @@ let g:lightline = {
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
-      \     'branch_name':  s:SID . 'lightline_branch_name',
-      \     'filename':     s:SID . 'lightline_filename',
-      \     'hunk_summary': s:SID . 'lightline_hunk_summary',
-      \     'mode':         s:SID . 'lightline_mode',
+      \     'branch_name':  s:SID .. 'lightline_branch_name',
+      \     'filename':     s:SID .. 'lightline_filename',
+      \     'hunk_summary': s:SID .. 'lightline_hunk_summary',
+      \     'mode':         s:SID .. 'lightline_mode',
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
@@ -638,7 +640,7 @@ endfunction
 function! s:lightline_branch_name() abort
   if winwidth(0) >= 90 && exists('*gitbranch#name') && &filetype !=# 'help'
     const _ = gitbranch#name()
-    return _ !=# '' ? "\ue0a0 " . _ : ''
+    return _ !=# '' ? "\ue0a0 " .. _ : ''
   else
     return ''
   endif
