@@ -119,13 +119,6 @@ function! s:make_script_executable() abort
   let b:make_script_executable_checked[file] = 1
 endfunction
 
-" cursor shape
-if has('cursorshape') && has('vim_starting') && &term =~# 'xterm'
-  let &t_EI .= "\e[\x30 q"
-  let &t_SI .= "\e[\x35 q"
-  let &t_SR .= "\e[\x33 q"
-endif
-
 " ibus
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
@@ -454,6 +447,7 @@ function! s:init_minpac() abort
   call s:plugin('ctrlpvim/ctrlp.vim')
   call s:plugin('itchyny/lightline.vim')
   call s:plugin('itchyny/vim-gitbranch')
+  call s:plugin('jszakmeister/vim-togglecursor')
   call s:plugin('junegunn/vim-easy-align')
   call s:plugin('justinmk/vim-dirvish')
   call s:plugin('rhysd/clever-f.vim')
