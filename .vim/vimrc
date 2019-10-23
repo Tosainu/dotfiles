@@ -43,7 +43,7 @@ set switchbuf=useopen,usetab,newtab
 set showcmd
 
 set backspace=2
-set completeopt=menuone,noinsert,noselect,popup
+set completeopt=menuone,noinsert,noselect
 set nrformats=bin,hex
 
 set expandtab smarttab
