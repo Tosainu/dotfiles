@@ -508,6 +508,7 @@ function! s:init_minpac() abort
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('ap/vim-css-color')
+  call s:plugin('pedrohdz/vim-yaml-folds')
 
   return v:true
 endfunction
