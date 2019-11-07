@@ -746,6 +746,8 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 
 " indentLine {{{
 let g:indentLine_fileType = [
+      \   'haskell',
+      \   'python',
       \   'systemverilog',
       \   'verilog',
       \   'yaml',
