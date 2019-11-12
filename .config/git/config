@@ -1,7 +1,7 @@
 [user]
 	name  = Kenta Sato
 	email = tosainu.maple@gmail.com
-	signingkey = AF213B5F
+	signingkey = A7E43FF0AF213B5F
 
 [core]
 	editor = vim +1
