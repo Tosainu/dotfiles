@@ -33,7 +33,6 @@ set scrolloff=5
 set background=dark
 set fillchars-=vert:\|
 set foldlevel=99 foldmethod=syntax nofoldenable
-set hidden
 set matchpairs& matchpairs+=<:>
 set noerrorbells visualbell t_vb=
 set shortmess& shortmess+=I shortmess+=c
