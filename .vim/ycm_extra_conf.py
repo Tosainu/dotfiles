@@ -43,8 +43,8 @@ def GetSearchList(filetype):
 def GetDefaultFlags(filetype):
     if filetype in filetype_flags:
         return filetype_flags[filetype] + list(
-            chain.from_iterable(
-                zip(repeat('-isystem'), GetSearchList(filetype))))
+            chain.from_iterable(zip(repeat('-isystem'),
+                                    GetSearchList(filetype))))
     return []
 
 
@@ -85,9 +85,12 @@ def Settings(**kwargs):
             return {}
 
         return {
-            'flags': default_flags + list(compilation_info.compiler_flags_),
-            'include_paths_relative_to_dir': compilation_info.compiler_working_dir_,
-            'override_filename': filename
+            'flags':
+                default_flags + list(compilation_info.compiler_flags_),
+            'include_paths_relative_to_dir':
+                compilation_info.compiler_working_dir_,
+            'override_filename':
+                filename
         }
 
     return {}
