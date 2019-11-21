@@ -17,7 +17,7 @@ augroup END
 function! s:get_SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_SID$')
 endfunction
-const s:SID = s:get_SID()
+let s:SID = s:get_SID()
 delfunction s:get_SID
 
 set breakindent
@@ -73,8 +73,8 @@ set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
 silent! call mkdir(expand('~/.vim'), 'p', 0700)
 
-const s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cache')
-const s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
+let s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cache')
+let s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
 set nobackup nowritebackup
 let &g:backupdir = s:runtime_dir . '/vim/backup//'
@@ -361,7 +361,7 @@ endfunction
 syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
-const s:supports_truecolor =
+let s:supports_truecolor =
       \ has('termguicolors') && $COLORTERM =~# '^\%(truecolor\|24bit\)$'
 if s:supports_truecolor
   if &t_8f ==# '' || &t_8b ==# ''
@@ -390,8 +390,6 @@ function! s:reset_colorscheme() abort
   endtry
 endfunction
 
-silent! call s:reset_colorscheme()
-
 function! s:toggle_background_color() abort
   let &background = (&background ==# 'dark' ? 'light' : 'dark')
   call s:reset_colorscheme()
@@ -399,12 +397,14 @@ endfunction
 command! ToggleBackgroundColor call s:toggle_background_color()
 nnoremap <silent> <Leader>bg :<C-u>ToggleBackgroundColor<CR>
 
-autocmd MyVimrc ColorScheme,VimEnter * call s:clear_background_color()
+autocmd MyVimrc ColorScheme * call s:clear_background_color()
 function! s:clear_background_color()
   if !has('gui_running') && &background ==# 'dark'
     highlight Normal ctermbg=NONE guibg=NONE
   endif
 endfunction
+
+silent! call s:reset_colorscheme() | call s:clear_background_color()
 " }}}
 
 " Plugins {{{
