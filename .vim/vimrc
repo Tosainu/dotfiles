@@ -265,6 +265,36 @@ tnoremap <silent> <C-q><Leader>w <C-q>:<C-u>Term<CR>
 tnoremap <silent> <C-q><Leader>W <C-q>:<C-u>Term!<CR>
 " }}}
 
+" format on save {{{
+let g:format_on_save = 1
+
+function! s:format_on_save() abort
+  return get(b:, 'format_on_save', g:format_on_save)
+endfunction
+
+function! s:print_format_on_save_status() abort
+  echo printf('Format on save (buffer/global): %s/%s',
+        \   s:format_on_save() ? 'enabled' : 'disabled',
+        \   g:format_on_save   ? 'enabled' : 'disabled'
+        \ )
+endfunction
+command! FormatOnSaveStatus call s:print_format_on_save_status()
+
+function! s:toggle_format_on_save(global) abort
+  if a:global
+    let g:format_on_save = !g:format_on_save
+    let g:rustfmt_autosave = g:format_on_save
+  else
+    let b:format_on_save = !s:format_on_save()
+    let b:rustfmt_autosave = b:format_on_save
+  endif
+  call s:print_format_on_save_status()
+endfunction
+command! -bang FormatOnSaveToggle call s:toggle_format_on_save(<bang>0)
+nnoremap <silent> <Leader>p :<C-u>FormatOnSaveToggle<CR>
+nnoremap <silent> <Leader>P :<C-u>FormatOnSaveToggle!<CR>
+" }}}
+
 " Filetype {{{
 " C++ {{{
 autocmd MyVimrc FileType c,cpp setlocal cindent cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
@@ -295,10 +325,6 @@ let g:hs_highlight_boolean    = 1
 let g:hs_highlight_delimiters = 1
 let g:hs_highlight_more_types = 1
 let g:hs_highlight_types      = 1
-
-if executable('stylish-haskell')
-  autocmd MyVimrc FileType haskell setlocal formatprg=stylish-haskell
-endif
 " }}}
 
 " Markdown {{{
@@ -456,7 +482,6 @@ function! s:init_minpac() abort
   call s:plugin('rhysd/reply.vim')
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('tyru/caw.vim')
-  call s:plugin('w0rp/ale')
 
   " operator/textobj
   call s:plugin(['kana/vim-operator-user',
@@ -695,50 +720,6 @@ nmap <Leader>cw <Plug>(caw:wrap:toggle:operator)
 xmap <Leader>cw <Plug>(caw:wrap:comment)
 " }}}
 
-" ale {{{
-let g:ale_enabled = 0
-let g:ale_disable_lsp = 1
-let g:ale_fix_on_save = 0
-let g:ale_linters_explicit = 1
-let g:ale_set_signs = 0
-
-let s:ale_fixers = {
-      \   'css': ['prettier'],
-      \   'haskell': ['stylish-haskell'],
-      \   'html': ['prettier'],
-      \   'javascript': ['prettier'],
-      \   'rust': ['rustfmt'],
-      \   'scss': ['prettier'],
-      \ }
-let g:ale_fixers = s:ale_fixers
-
-autocmd MyVimrc FileType *
-      \ if has_key(s:ale_fixers, expand('<amatch>')) |
-      \   let b:ale_fix_on_save = 1 |
-      \ endif
-
-command! -bang ALEToggleFix call s:ale_toggle_fix_on_save(<bang>0)
-function! s:ale_toggle_fix_on_save(global) abort
-  if a:global
-    if empty(g:ale_fixers)
-      let g:ale_fixers = s:ale_fixers
-      echo 'Enabled ALE fixers (global)'
-    else
-      let g:ale_fixers = {}
-      echo 'Disabled ALE fixers (global)'
-    endif
-  else
-    if !exists('b:ale_fix_on_save') || !b:ale_fix_on_save
-      let b:ale_fix_on_save = 1
-      echo 'Enabled ALEFix on save'
-    else
-      let b:ale_fix_on_save = 0
-      echo 'Disabled ALEFix on save'
-    endif
-  endif
-endfunction
-" }}}
-
 " switch.vim {{{
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
@@ -857,8 +838,6 @@ map <Leader>sr <Plug>(operator-surround-replace)
 " }}}
 
 " vim-clang-format {{{
-let g:clang_format#auto_format = 1
-let g:clang_format#auto_formatexpr = 1
 let g:clang_format#style_options = #{
       \   AccessModifierOffset:             -2,
       \   AlignConsecutiveAssignments:      'false',
@@ -871,6 +850,11 @@ let g:clang_format#style_options = #{
       \   SpacesBeforeTrailingComments:     1,
       \   Standard:                         'Cpp11',
       \ }
+
+autocmd MyVimrc BufWritePre *
+      \ if s:format_on_save() && &ft =~# '^\%(c\|cpp\|objc\|proto\|arduino\)$' |
+      \   call clang_format#replace(1, line('$')) |
+      \ endif
 " }}}
 
 " vim-markdown {{{
@@ -884,5 +868,9 @@ let g:vim_markdown_no_default_key_mappings = 1
 " vim-markdown-composer {{{
 let g:markdown_composer_autostart    = 0
 let g:markdown_composer_open_browser = 1
+" }}}
+
+" rust.vim {{{
+let g:rustfmt_autosave = g:format_on_save
 " }}}
 " }}}
