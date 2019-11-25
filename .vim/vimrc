@@ -448,10 +448,13 @@ let g:loaded_zipPlugin        = 1
 " minpac {{{
 function! s:init_minpac() abort
   silent! packadd minpac
-  if !exists('*minpac#init')
-    echomsg 'Failed to load minpac'
-    return v:false
-  endif
+  while !exists('*minpac#init')
+    if input("Failed to load minpac. Would you like to install?[y/n]") !=? 'y'
+      return v:false
+    endif
+    execute '!git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac'
+    silent! packadd minpac
+  endwhile
 
   function! s:plugin(plugname, ...) abort
     const opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
@@ -538,9 +541,31 @@ function! s:init_minpac() abort
 endfunction
 
 command! PackInit   call s:init_minpac()
-command! PackUpdate if s:init_minpac() | call minpac#update('', {'do': 'redraw!'}) | endif
+command! PackUpdate if s:init_minpac() | call minpac#update() | endif
 command! PackClean  if s:init_minpac() | call minpac#clean()  | endif
-command! PackStatus if s:init_minpac() | call minpac#status()  | endif
+command! PackStatus if s:init_minpac() | call minpac#status() | endif
+
+function! s:pack_rebuild() abort
+  for [k, v] in items(filter(copy(minpac#getpluglist()), '!empty(v:val.do)'))
+    noautocmd let pwd = chdir(v.dir)
+    echom 'Rebuilding' k . '...'
+    try
+      if type(v.do) == v:t_func
+        call call(v.do, ['post-update', k])
+      elseif type(v.do) == v:t_string
+        execute v.do
+      endif
+    catch
+      echohl ErrorMsg
+      echom v:throwpoint
+      echom v:exception
+      echohl None
+    finally
+      noautocmd call chdir(pwd)
+    endtry
+  endfor
+endfunction
+command! PackRebuild if s:init_minpac() | call s:pack_rebuild() | endif
 " }}}
 
 " vim-gitgutter {{{
