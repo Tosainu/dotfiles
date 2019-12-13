@@ -537,6 +537,8 @@ function! s:init_minpac() abort
   call s:plugin('ap/vim-css-color')
   call s:plugin('pedrohdz/vim-yaml-folds')
 
+  call s:plugin('vim/killersheep', {'type': 'opt'})
+
   return v:true
 endfunction
 
@@ -752,9 +754,11 @@ nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " indentLine {{{
 let g:indentLine_fileType = [
       \   'haskell',
+      \   'lua',
       \   'python',
       \   'systemverilog',
       \   'verilog',
+      \   'vim',
       \   'yaml',
       \ ]
 
@@ -802,6 +806,8 @@ let g:ycm_language_server =
       \     project_root_files: ['Cargo.toml']
       \   },
       \ ]
+
+command! StartYCM silent! packadd YouCompleteMe
 
 function! s:get_ycm_lsp_languages() abort
   if !exists('s:ycm_lsp_languages')
