@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# DESKTOP_ENVIRONMENT
+export DE=gnome
+
+# https://wiki.archlinux.de/title/GNOME#Zugangshilfen
+export NO_AT_BRIDGE=1
+
+# https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Configuration
+export LIBVA_DRIVER_NAME=i965
+export VDPAU_DRIVER=va_gl
+
+brillo -pc -s intel_backkight -S 2
+
+ibus-daemon -rx &
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+xbindkeys -n &
+
+gnome-screensaver &
+xautolock -detectsleep -locker 'gnome-screensaver-command --lock' &

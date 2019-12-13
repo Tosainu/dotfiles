@@ -1,0 +1,14 @@
+"ponymix decrease 1"
+  XF86AudioLowerVolume
+
+"ponymix increase 1"
+  XF86AudioRaiseVolume
+
+"ponymix toggle"
+  XF86AudioMute
+
+"brillo -q -s intel_backlight -u 100000 -U 1"
+  XF86MonBrightnessDown
+
+"brillo -q -s intel_backlight -u 100000 -A 1"
+  XF86MonBrightnessUp
