@@ -33,6 +33,7 @@
 	ri    = rebase -i
 	rif   = "!git rebase -i $(git graph --color=always | fzy -l 20 | sed 's/\\x1b\\[[0-9;]*[a-zA-Z]//g' | cut -d ' ' -f 2)"
 	st    = status
+	sw    = switch
 	wa    = worktree add
 	wl    = worktree list
 	wp    = worktree prune --verbose
@@ -83,6 +84,5 @@
 
 [ghq]
 	root = ~/work
-	root = ~/.vim/pack/
 
 # vim: ft=gitconfig noet
