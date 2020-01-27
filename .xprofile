@@ -22,7 +22,7 @@ export SSH_AUTH_SOCK
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-xbindkeys -n &
+xbindkeys -f $HOME/.config/xbindkeys/config -n &
 
 gnome-screensaver &
 xautolock -detectsleep -locker 'gnome-screensaver-command --lock' &
