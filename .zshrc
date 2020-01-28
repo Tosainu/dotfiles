@@ -31,22 +31,13 @@ else
 fi
 # }}}
 
-# autoloading functions {{{
-autoload -Uz colors; colors
-autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
-autoload -Uz add-zsh-hook
-autoload -Uz cdr
-autoload -Uz chpwd_recent_dirs
-autoload -Uz chpwd_recent_filehandler
-autoload -Uz smart-insert-last-word
-autoload -Uz vcs_info
-# }}}
-
 # basic settings {{{
 # create ~/.cache/zsh directory
 if [[ ! -d ~/.cache/zsh ]]; then
   mkdir -p ~/.cache/zsh
 fi
+
+autoload -Uz add-zsh-hook
 
 setopt correct
 setopt extended_glob
@@ -75,6 +66,9 @@ setopt inc_append_history
 # prompt {{{
 setopt prompt_subst
 
+autoload -Uz colors; colors
+autoload -Uz vcs_info
+
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' max-exports    1
@@ -102,6 +96,8 @@ PROMPT=$'
 setopt list_packed
 setopt magic_equal_subst
 
+autoload -Uz compinit; compinit -d ~/.cache/zsh/compdump
+
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*:*:*:*:*' menu select=2
 
@@ -125,6 +121,8 @@ zstyle ':completion:*:*:kill:*' insert-ids single
 # }}}
 
 # cdr {{{
+autoload -Uz cdr chpwd_recent_dirs
+
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file    ~/.cache/zsh/recent-dirs
@@ -190,6 +188,7 @@ bindkey '^[[3~' delete-char
 # <S-Tab>
 bindkey '^[[Z'  reverse-menu-complete
 
+autoload -Uz smart-insert-last-word
 zle -N insert-last-word smart-insert-last-word
 bindkey '^]' insert-last-word
 # }}}
@@ -224,7 +223,8 @@ function gr() {
 
 function recent-dirs() {
   local line
-  chpwd_recent_filehandler && for line in $reply; do
+  autoload -Uz chpwd_recent_filehandler && \
+    chpwd_recent_filehandler && for line in $reply; do
     if [[ -d "$line" ]]; then
       echo "$line"
     fi
