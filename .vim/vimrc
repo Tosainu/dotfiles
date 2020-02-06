@@ -121,7 +121,7 @@ function! s:make_script_executable() abort
 endfunction
 
 " cursor shape
-if has('cursorshape') && has('vim_starting') && &term =~# 'xterm'
+if has('cursorshape') && has('vim_starting') && &term =~# '^\%(xterm\|alacritty\)'
   let &t_EI ..= "\e[\x30 q"
   let &t_SI ..= "\e[\x35 q"
   let &t_SR ..= "\e[\x33 q"
