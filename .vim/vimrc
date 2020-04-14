@@ -192,8 +192,6 @@ nnoremap n nzvzz
 nnoremap N Nzvzz
 nnoremap * *zvzz
 nnoremap # *zvzz
-nnoremap { {zvzz
-nnoremap } }zvzz
 
 " search in new window
 nnoremap <expr> <C-w>* "\<C-w>" .. (winwidth(0) > 160 ? "v" : "s") .. "*"
