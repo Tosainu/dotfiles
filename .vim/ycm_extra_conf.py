@@ -1,8 +1,7 @@
-from itertools import chain, repeat
-from subprocess import Popen, PIPE
 import os.path as p
-import re
-import ycm_core
+import sys
+
+database = None
 
 extra_flags = [
     '-Wall',
@@ -23,30 +22,6 @@ filetype_flags = {
 # more details: http://clang.llvm.org/docs/JSONCompilationDatabase.html
 compilation_database_folder = 'build/'
 
-if p.exists(compilation_database_folder):
-    database = ycm_core.CompilationDatabase(compilation_database_folder)
-else:
-    database = None
-
-
-def GetSearchList(filetype):
-    p = Popen(['clang', '-E'] + filetype_flags[filetype] + ['-', '-v'],
-              stdout=PIPE,
-              stderr=PIPE)
-    _, stderr = p.communicate()
-    search_list = re.search(
-        '#include <\.\.\.> search starts here:\n(.+)\nEnd of search list',
-        stderr.decode(), re.DOTALL)
-    return [s.strip() for s in search_list.group(1).splitlines()]
-
-
-def GetDefaultFlags(filetype):
-    if filetype in filetype_flags:
-        return filetype_flags[filetype] + list(
-            chain.from_iterable(zip(repeat('-isystem'),
-                                    GetSearchList(filetype))))
-    return []
-
 
 def IsHeaderFile(filename):
     extension = p.splitext(filename)[1]
@@ -64,18 +39,22 @@ def FindCorrespondingSourceFile(filename):
 
 
 def Settings(**kwargs):
+    import ycm_core
+
     language = kwargs['language']
     client_data = kwargs['client_data']
     filetype = client_data.get('&filetype', '')
 
+    global database
+    if database is None and p.exists(compilation_database_folder):
+        database = ycm_core.CompilationDatabase(compilation_database_folder)
+
     if language == 'cfamily':
         filename = FindCorrespondingSourceFile(kwargs['filename'])
 
-        default_flags = GetDefaultFlags(filetype)
-
         if not database:
             return {
-                'flags': default_flags + extra_flags,
+                'flags': filetype_flags.get(filetype, []) + extra_flags,
                 'include_paths_relative_to_dir': p.dirname(p.abspath(__file__)),
                 'override_filename': filename
             }
@@ -86,7 +65,7 @@ def Settings(**kwargs):
 
         return {
             'flags':
-                default_flags + list(compilation_info.compiler_flags_),
+                list(compilation_info.compiler_flags_),
             'include_paths_relative_to_dir':
                 compilation_info.compiler_working_dir_,
             'override_filename':
