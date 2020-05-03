@@ -273,16 +273,6 @@ function gl() {
     cd "${(q)selected_dir}"
   fi
 }
-
-if (( $+commands[tmux] )); then
-  function tmux() {
-    local tmux_opt=()
-    if [[ -f "$HOME/.config/tmux/tmux.conf" ]]; then
-      tmux_opt+=("-f" "$HOME/.config/tmux/tmux.conf")
-    fi
-    command tmux $tmux_opt $@
-  }
-fi
 # }}}
 
 # plugins {{{
