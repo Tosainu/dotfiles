@@ -1,5 +1,4 @@
 import os.path as p
-import sys
 
 database = None
 
