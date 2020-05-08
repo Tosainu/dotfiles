@@ -62,6 +62,15 @@ setopt extended_history
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt inc_append_history
+
+# https://github.com/mollifier/config/blob/master/dot.zshrc
+function _history_ignore() {
+  local line=${1%%$'\n'}
+  local cmd=${line%% *}
+
+  [[ ${cmd} != tweet && ${cmd} != cd ]]
+}
+add-zsh-hook zshaddhistory _history_ignore
 # }}}
 
 # prompt {{{
