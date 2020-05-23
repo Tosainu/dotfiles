@@ -239,10 +239,6 @@ command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
 " Terminal {{{
-set termwinkey=<C-q>
-tnoremap <silent> <C-z>      <C-q>:<C-u>hide<CR>
-tnoremap <silent> <C-q><C-n> <C-q>N
-
 autocmd MyVimrc TerminalOpen * setlocal nobreakindent nowrap
 
 function! s:open_terminal(new, args) abort
@@ -268,10 +264,15 @@ function! s:open_terminal(new, args) abort
   endif
 endfunction
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
-nnoremap <silent> <Leader>w :<C-u>Term<CR>
-nnoremap <silent> <Leader>W :<C-u>Term!<CR>
+
+set termwinkey=<C-q>
+tnoremap <silent> <C-z>      <C-q>:<C-u>hide<CR>
+tnoremap <silent> <C-q><C-n> <C-\><C-n>
 tnoremap <silent> <C-q><Leader>w <C-q>:<C-u>Term<CR>
 tnoremap <silent> <C-q><Leader>W <C-q>:<C-u>Term!<CR>
+
+nnoremap <silent> <Leader>w :<C-u>Term<CR>
+nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " }}}
 
 " format on save {{{
@@ -581,6 +582,7 @@ command! PackRebuild if s:init_minpac() | call s:pack_rebuild() | endif
 " }}}
 
 " vim-gitgutter {{{
+let g:gitgutter_map_keys = 0
 let g:gitgutter_max_signs     = 1000
 let g:gitgutter_sign_added    = '🞧'
 let g:gitgutter_sign_modified = '🢂'
@@ -588,10 +590,13 @@ let g:gitgutter_sign_removed  = '🞮'
 let g:gitgutter_sign_modified_removed   = g:gitgutter_sign_modified
 let g:gitgutter_sign_removed_first_line = g:gitgutter_sign_removed
 
-nmap <Leader>ha <Plug>(GitGutterStageHunk)
-nmap <Leader>hd <Plug>(GitGutterUndoHunk)
-nmap [c <Plug>(GitGutterPrevHunk)zvzz
-nmap ]c <Plug>(GitGutterNextHunk)zvzz
+noremap        [gitgutter]   <Nop>
+map  <Leader>g [gitgutter]
+nmap [gitgutter]a <Plug>(GitGutterStageHunk)
+nmap [gitgutter]d <Plug>(GitGutterUndoHunk)
+nmap [gitgutter]g <Plug>(GitGutterPreviewHunk)
+nmap [gitgutter]p <Plug>(GitGutterPrevHunk)zvzz
+nmap [gitgutter]n <Plug>(GitGutterNextHunk)zvzz
 
 omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
@@ -639,7 +644,7 @@ function! s:ctrlp_status_func_prog(str) abort
   return lightline#statusline(0)
 endfunction
 
-nnoremap            [ctrlp]   <nop>
+nnoremap            [ctrlp]   <Nop>
 nmap     <Leader><Leader> [ctrlp]
 nnoremap <silent>   [ctrlp]b  :<C-u>CtrlPBuffer<CR>
 nnoremap <silent>   [ctrlp]f  :<C-u>CtrlP<CR>
@@ -737,14 +742,19 @@ let g:clever_f_smart_case     = 1
 let g:caw_no_default_keymappings = 1
 let g:caw_hatpos_skip_blank_line = 1
 
-nmap <Leader>cc <Plug>(caw:hatpos:toggle:operator)
-xmap <Leader>cc <Plug>(caw:hatpos:toggle)
-nmap <Leader>ca <Plug>(caw:dollarpos:comment)
-nmap <Leader>cw <Plug>(caw:wrap:toggle:operator)
-xmap <Leader>cw <Plug>(caw:wrap:comment)
+noremap        [caw]   <Nop>
+map  <Leader>c [caw]
+nmap [caw]c <Plug>(caw:hatpos:toggle:operator)
+xmap [caw]c <Plug>(caw:hatpos:toggle)
+nmap [caw]a <Plug>(caw:dollarpos:comment)
+nmap [caw]w <Plug>(caw:wrap:toggle:operator)
+xmap [caw]w <Plug>(caw:wrap:comment)
 " }}}
 
 " switch.vim {{{
+let g:switch_mapping = ''
+let g:switch_reverse_mapping = ''
+
 nnoremap <silent> <Leader>sw :<C-u>Switch<CR>
 " }}}
 
@@ -812,34 +822,16 @@ let g:ycm_language_server =
 
 command! StartYCM silent! packadd YouCompleteMe
 
-function! s:get_ycm_lsp_languages() abort
-  if !exists('s:ycm_lsp_languages')
-    let s:ycm_lsp_languages = []
-    for ls in map(copy(g:ycm_language_server), 'v:val.filetypes')
-      call extend(s:ycm_lsp_languages, ls)
-    endfor
-    call uniq(s:ycm_lsp_languages)
-  endif
-  return s:ycm_lsp_languages
-endfunction
-
-autocmd MyVimrc FileType * call s:set_ycm_keymappings()
-function! s:set_ycm_keymappings() abort
-  const ft = expand('<amatch>')
-  if ft =~# '^\%(c\|cpp\|rust\)$'
-    nnoremap <buffer><silent> <Leader>f  :<C-u>YcmCompleter FixIt<CR>
-    nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
-    nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
-    nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetType<CR>
-  elseif index(s:get_ycm_lsp_languages(), ft) >= 0
-    nnoremap <buffer><silent> <Leader>f  :<C-u>YcmCompleter Format<CR>
-    nnoremap <buffer><silent> <Leader>gD :<C-u>YcmCompleter GoToDefinition<CR>
-    nnoremap <buffer><silent> <Leader>gd :<C-u>YcmCompleter GoToDeclaration<CR>
-    nnoremap <buffer><silent> <Leader>gi :<C-u>YcmCompleter GoToImplementation<CR>
-    nnoremap <buffer><silent> <Leader>t  :<C-u>YcmCompleter GetHover<CR>
-    nnoremap <buffer><silent> <Leader>yr :<C-u>YcmCompleter RefactorRename<CR>
-  endif
-endfunction
+nnoremap           [ycm]   <Nop>
+nmap     <Leader>x [ycm]
+nmap     <silent>  [ycm]h  <Plug>(YCMHover)
+nnoremap <silent>  [ycm]f  :<C-u>YcmCompleter FixIt<CR>
+nnoremap <silent>  [ycm]p  :<C-u>YcmCompleter Format<CR>
+nnoremap <silent>  [ycm]t  :<C-u>YcmCompleter GetType<CR>
+nnoremap <silent>  [ycm]d  :<C-u>YcmCompleter GoToDeclaration<CR>
+nnoremap <silent>  [ycm]D  :<C-u>YcmCompleter GoToDefinition<CR>
+nnoremap <silent>  [ycm]i  :<C-u>YcmCompleter GoToImplementation<CR>
+nnoremap <silent>  [ycm]r  :<C-u>YcmCompleter RefactorRename<CR>
 " }}}
 
 " UltiSnips {{{
