@@ -290,16 +290,31 @@ command! FormatOnSaveStatus call s:print_format_on_save_status()
 function! s:toggle_format_on_save(global) abort
   if a:global
     let g:format_on_save = !g:format_on_save
-    let g:rustfmt_autosave = g:format_on_save
   else
     let b:format_on_save = !s:format_on_save()
-    let b:rustfmt_autosave = b:format_on_save
   endif
   call s:print_format_on_save_status()
 endfunction
 command! -bang FormatOnSaveToggle call s:toggle_format_on_save(<bang>0)
 nnoremap <silent> <Leader>p :<C-u>FormatOnSaveToggle<CR>
 nnoremap <silent> <Leader>P :<C-u>FormatOnSaveToggle!<CR>
+
+autocmd MyVimrc BufWritePre * if s:format_on_save() | call s:do_format() | endif
+function s:do_format() abort
+  if exists(':YcmCompleter') &&
+        \ (
+        \   (&ft =~# '^\%(c\|cpp\)$' && filereadable('.clang-format')) ||
+        \   &ft =~# '^\%(rust\)$'
+        \ )
+    YcmCompleter Format
+  elseif exists('*clang_format#replace') &&
+        \ &ft =~# '^\%(c\|cpp\|objc\|proto\|arduino\)$'
+    silent! call clang_format#replace(1, line('$'))
+  elseif exists(':RustFmt') &&
+        \ &ft =~# '^\%(rust\)$'
+    RustFmt
+  endif
+endfunction
 " }}}
 
 " Filetype {{{
@@ -873,11 +888,6 @@ let g:clang_format#style_options = #{
       \   SpacesBeforeTrailingComments:     1,
       \   Standard:                         'Cpp11',
       \ }
-
-autocmd MyVimrc BufWritePre *
-      \ if s:format_on_save() && &ft =~# '^\%(c\|cpp\|objc\|proto\|arduino\)$' |
-      \   call clang_format#replace(1, line('$')) |
-      \ endif
 " }}}
 
 " vim-markdown {{{
@@ -891,9 +901,5 @@ let g:vim_markdown_no_default_key_mappings = 1
 " vim-markdown-composer {{{
 let g:markdown_composer_autostart    = 0
 let g:markdown_composer_open_browser = 1
-" }}}
-
-" rust.vim {{{
-let g:rustfmt_autosave = g:format_on_save
 " }}}
 " }}}
