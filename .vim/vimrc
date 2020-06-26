@@ -42,10 +42,11 @@ set equalalways
 set lazyredraw
 set switchbuf=useopen,usetab,newtab
 set showcmd
+set ttimeoutlen=100
 
-set backspace=2
+set backspace=indent,eol,start
 set completeopt=menuone,noinsert,noselect,popup
-set nrformats=bin,hex
+set nrformats=bin,hex,unsigned
 
 set expandtab smarttab
 set smartindent
@@ -60,10 +61,6 @@ set wrapscan
 set cedit=<C-c>
 set wildmenu wildmode=longest,full
 set wildignorecase
-
-set timeout timeoutlen=500
-set ttimeout ttimeoutlen=100
-set updatetime=250
 
 if has('unnamedplus')
   set clipboard=unnamedplus
