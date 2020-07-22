@@ -167,6 +167,10 @@ if (( $+commands[stack] )); then
   alias runhaskell='stack runhaskell --'
 fi
 
+if ! (( $+commands[tac] )); then
+  alias tac='tail -r'
+fi
+
 alias -s jar='java -jar'
 
 open=${commands[open]:-${commands[xdg-open]}}
@@ -271,7 +275,7 @@ if (( $+commands[$FUZZY_FINDER] )); then
   bindkey '^H'  fuzzy-recent-dirs
 
   function fuzzy-select-history() {
-    local selected=$(history -n 1 | ${commands[tac]:-"tail -r"} | fuzzy-finder --query="$LBUFFER")
+    local selected=$(history -n 1 | tac | fuzzy-finder --query="$LBUFFER")
     if [[ -n "$selected" ]]; then
       BUFFER="$selected"
       CURSOR=$#BUFFER
