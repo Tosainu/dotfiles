@@ -61,6 +61,10 @@
 [push]
 	default = simple
 
+[pull]
+	ff = only
+	rebase = false
+
 [url "ssh://git@github.com/"]
 	pushInsteadOf = "git://github.com/"
 	pushInsteadOf = "http://github.com/"
