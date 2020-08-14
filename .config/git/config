@@ -6,6 +6,7 @@
 [core]
 	editor = vim +1
 	preloadindex = true
+	quotepath = false
 
 [color]
 	ui = auto
