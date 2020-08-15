@@ -8,9 +8,7 @@ export FUZZY_FINDER='fzy'
 export FUZZY_FINDER_OPTS=(-p $(tput bold)$'fzy \ue0b1 '$(tput sgr0))
 export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
-if [[ -f $HOME/.config/less ]]; then
-  export LESSKEY=~/.config/less
-fi
+export LESSHISTFILE='/dev/null'
 
 fpath=(
   /usr/share/zsh/site-functions(N-/)
