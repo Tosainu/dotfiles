@@ -725,7 +725,7 @@ endfunction
 
 function! s:lightline_update_hunk_summary() abort
   const hunks   = GitGutterGetHunkSummary()
-  const symbols = [
+  let symbols = [
         \   [g:gitgutter_sign_added,    hunks[0]],
         \   [g:gitgutter_sign_modified, hunks[1]],
         \   [g:gitgutter_sign_removed,  hunks[2]],
