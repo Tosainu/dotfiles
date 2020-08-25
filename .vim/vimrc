@@ -236,7 +236,10 @@ command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
 " Terminal {{{
-autocmd MyVimrc TerminalOpen * setlocal nobreakindent nowrap
+autocmd MyVimrc TerminalOpen *
+      \ if &buftype ==# 'terminal' |
+      \   setlocal nobreakindent nowrap bufhidden=hide |
+      \ endif
 
 function! s:open_terminal(new, args) abort
   if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
@@ -253,11 +256,11 @@ function! s:open_terminal(new, args) abort
   endif
 
   const split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
-  if a:new || empty(term_list()) || !empty(a:args)
+  const terms = term_list()
+  if a:new || empty(terms) || !empty(a:args)
     execute split 'terminal' '++close' a:args
   else
-    execute split 'sbuffer'
-          \ get(filter(term_list(), {_, nr -> bufwinnr(nr) == -1}), 0, term_list()[0])
+    execute split 'sbuffer' get(filter(copy(terms), 'bufwinnr(v:val) == -1'), 0, terms[0])
   endif
 endfunction
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
