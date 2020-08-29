@@ -438,7 +438,9 @@ colors:
 # And optionally:
 #
 # - `mods` (see key bindings)
-mouse_bindings: []
+mouse_bindings:
+#  - { mouse: Middle, action: PasteSelection }
+  - { mouse: Middle, action: ReceiveChar }
 
 # Key bindings
 #
@@ -677,10 +679,9 @@ key_bindings:
 
   - { key: Key0,     mods: Control,       action: ReceiveChar      }
   - { key: Equals,   mods: Control,       action: ResetFontSize    }
-  - { key: Add,      mods: Control,       action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  - { key: Minus,    mods: Control,       action: DecreaseFontSize }
+  - { key: Add,      mods: Control|Shift, action: IncreaseFontSize }
   - { key: T,        mods: Control|Shift, action: SpawnNewInstance }
+  - { key: Insert,   mods: Control,       action: Copy             }
 
 #debug:
   # Display the time it takes to redraw each frame.
