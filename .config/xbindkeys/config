@@ -7,8 +7,8 @@
 "ponymix toggle"
   XF86AudioMute
 
-"brillo -q -s intel_backlight -u 100000 -U 1"
+"xbacklight -time 100 -perceived -dec 1"
   XF86MonBrightnessDown
 
-"brillo -q -s intel_backlight -u 100000 -A 1"
+"xbacklight -time 100 -perceived -inc 1"
   XF86MonBrightnessUp
