@@ -1,6 +1,6 @@
 # exports {{{
 # remove duplicate
-typeset -Ua cdpath fpath manpath path
+typeset -U cdpath CDPATH fpath FPATH manpath MANPATH path PATH
 
 export REPORTTIME=5
 export EDITOR='vim'
