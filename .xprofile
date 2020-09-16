@@ -7,8 +7,8 @@ export DE=gnome
 export NO_AT_BRIDGE=1
 
 # https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Configuration
-export LIBVA_DRIVER_NAME=i965
-export VDPAU_DRIVER=va_gl
+export LIBVA_DRIVER_NAME=radeonsi
+# export VDPAU_DRIVER=va_gl
 
 brillo -pc -s intel_backkight -S 2
 
