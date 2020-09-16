@@ -12,7 +12,7 @@ export LIBVA_DRIVER_NAME=radeonsi
 
 brillo -pc -s intel_backkight -S 2
 
-ibus-daemon -rx &
+ibus-daemon -rxd
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
