@@ -10,8 +10,6 @@ export NO_AT_BRIDGE=1
 export LIBVA_DRIVER_NAME=radeonsi
 # export VDPAU_DRIVER=va_gl
 
-brillo -pc -s intel_backkight -S 2
-
 ibus-daemon -rxd
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
