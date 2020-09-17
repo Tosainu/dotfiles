@@ -2,6 +2,7 @@
 
 # DESKTOP_ENVIRONMENT
 export DE=gnome
+export QT_STYLE_OVERRIDE=kvantum
 
 # https://wiki.archlinux.de/title/GNOME#Zugangshilfen
 export NO_AT_BRIDGE=1
@@ -9,6 +10,8 @@ export NO_AT_BRIDGE=1
 # https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Configuration
 export LIBVA_DRIVER_NAME=radeonsi
 # export VDPAU_DRIVER=va_gl
+
+export GTK2_RC_FILES=$HOME/.config/gtk-2.0/gtkrc
 
 ibus-daemon -rxd
 export GTK_IM_MODULE=ibus
