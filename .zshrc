@@ -147,7 +147,7 @@ alias sudo='sudo '
 alias tree='tree --dirsfirst'
 alias tweet='t update'
 alias vi='vim'
-alias www='ruby -run -ehttpd --'
+alias www='python3 -m http.server'
 
 case $OSTYPE in
 darwin*)
