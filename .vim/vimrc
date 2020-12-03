@@ -478,7 +478,7 @@ let g:loaded_zipPlugin        = 1
 " minpac {{{
 function! s:init_minpac() abort
   silent! packadd minpac
-  while !exists('*minpac#init')
+  while !exists('g:loaded_minpac')
     if input("Failed to load minpac. Would you like to install?[y/n]") !=? 'y'
       return v:false
     endif
