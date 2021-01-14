@@ -51,14 +51,6 @@
 [fetch]
 	prune = true
 
-[pager]
-	diff = /usr/share/git/diff-highlight/diff-highlight | less -x 2
-	log  = /usr/share/git/diff-highlight/diff-highlight | less -x 2
-	show = /usr/share/git/diff-highlight/diff-highlight | less -x 2
-
-[interactive]
-	diffFilter = /usr/share/git/diff-highlight/diff-highlight
-
 [push]
 	default = simple
 
@@ -90,5 +82,9 @@
 [ghq]
 	root = ~/.vim/pack
 	root = ~/work
+
+[include]
+	path = diff-highlight.inc
+	path = private.inc
 
 # vim: ft=gitconfig noet
