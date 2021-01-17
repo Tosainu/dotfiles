@@ -25,5 +25,7 @@ export SSH_AUTH_SOCK
 
 xbindkeys -f $HOME/.config/xbindkeys/config -n &
 
+xset b off
+
 gnome-screensaver &
 xautolock -detectsleep -locker 'gnome-screensaver-command --lock' &
