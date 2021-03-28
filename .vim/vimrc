@@ -535,7 +535,11 @@ function! s:init_minpac() abort
   " code completion
   call s:plugin('ycm-core/YouCompleteMe', {
         \   'cond': {-> has('python3') && executable('cmake')},
-        \   'do':   '!./install.py --clang-completer --system-libclang --ts-completer',
+        \   'do': {->
+        \     executable('npm') ?
+        \       '!./install.py --clang-completer --system-libclang --ts-completer' :
+        \       '!./install.py --clang-completer --system-libclang'
+        \   }(),
         \   'type': 'opt',
         \ })
   call s:plugin('rhysd/github-complete.vim')
