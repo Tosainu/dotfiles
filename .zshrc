@@ -234,13 +234,13 @@ function gr() {
 }
 
 function recent-dirs() {
-  local line
-  autoload -Uz chpwd_recent_filehandler && \
-    chpwd_recent_filehandler && for line in $reply; do
-    if [[ -d "$line" ]]; then
-      echo "$line"
-    fi
-  done
+  local -Ua reply
+  autoload -Uz chpwd_recent_filehandler && chpwd_recent_filehandler
+  integer nr=$#reply
+  reply=(${^reply}(N/))
+  reply=(${reply%/})
+  (( $nr == $#reply )) || chpwd_recent_filehandler $reply
+  printf "%s\n" "${reply[@]}"
 }
 
 function man() {
