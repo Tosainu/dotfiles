@@ -79,10 +79,6 @@
 [github]
 	user = Tosainu
 
-[ghq]
-	root = ~/.vim/pack
-	root = ~/work
-
 [include]
 	path = diff-highlight.inc
 	path = private.inc

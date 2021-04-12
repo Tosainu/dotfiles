@@ -243,6 +243,18 @@ function recent-dirs() {
   printf "%s\n" "${reply[@]}"
 }
 
+function list-git-repos() {
+  local repo_dir=(
+    ~/work(N-/)
+    ~/.vim/pack(N-/)
+  )
+  if (( $+commands[fd] )); then
+    fd --type d --hidden --prune --glob '**/.git' "${repo_dir[@]}"
+  else
+    find  "${repo_dir[@]}" -type d -name '.git'
+  fi | sed 's!/.git$!!'
+}
+
 function man() {
   LESS_TERMCAP_mb=$'\E[01;92m'  \
   LESS_TERMCAP_md=$'\E[01;92m'  \
@@ -285,7 +297,7 @@ if (( $+commands[$FUZZY_FINDER] )); then
   bindkey '^R'  fuzzy-select-history
 
   function gl() {
-    local selected_dir="$(ghq list -p | fuzzy-finder)"
+    local selected_dir="$(list-git-repos 2> /dev/null | fuzzy-finder)"
     if [[ -n "$selected_dir" ]]; then
       cd "${(q)selected_dir}"
     fi
