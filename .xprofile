@@ -27,5 +27,4 @@ xbindkeys -f $HOME/.config/xbindkeys/config -n &
 
 xset b off
 
-gnome-screensaver &
-xautolock -detectsleep -locker 'gnome-screensaver-command --lock' &
+xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
