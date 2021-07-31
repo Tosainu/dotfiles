@@ -27,4 +27,5 @@ xbindkeys -f $HOME/.config/xbindkeys/config -n &
 
 xset b off
 
-xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+XSECURELOCK_BLANK_TIMEOUT=-1 \
+  xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
