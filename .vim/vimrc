@@ -900,7 +900,6 @@ let g:clang_format#style_options = #{
       \   IndentPPDirectives:               'AfterHash',
       \   SortIncludes:                     'false',
       \   SpacesBeforeTrailingComments:     1,
-      \   Standard:                         'Cpp11',
       \ }
 " }}}
 
