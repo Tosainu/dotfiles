@@ -553,7 +553,6 @@ function! s:init_minpac() abort
   call s:plugin('rhysd/vim-clang-format', {'cond': {-> executable('clang-format')}})
 
   " Haskell
-  call s:plugin('Twinside/vim-haskellFold')
   call s:plugin('itchyny/vim-haskell-indent')
 
   " Markdown
@@ -564,12 +563,9 @@ function! s:init_minpac() abort
         \ })
 
   " Rust
-  call s:plugin('cespare/vim-toml')
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('pedrohdz/vim-yaml-folds')
-
-  call s:plugin('vim/killersheep', {'type': 'opt'})
 
   return v:true
 endfunction
@@ -914,5 +910,9 @@ let g:vim_markdown_no_default_key_mappings = 1
 " vim-markdown-composer {{{
 let g:markdown_composer_autostart    = 0
 let g:markdown_composer_open_browser = 1
+" }}}
+
+" rust.vim {{{
+let g:loaded_rust_vim_plugin_cargo = 1
 " }}}
 " }}}
