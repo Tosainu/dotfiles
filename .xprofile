@@ -27,5 +27,13 @@ xbindkeys -f $HOME/.config/xbindkeys/config -n &
 
 xset b off
 
+xrdb -merge <<EOS
+Xcursor.size: 24
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+EOS
+
 XSECURELOCK_BLANK_TIMEOUT=-1 \
   xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
