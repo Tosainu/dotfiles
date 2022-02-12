@@ -66,7 +66,7 @@ function _history_ignore() {
   local line=${1%%$'\n'}
   local cmd=${line%% *}
 
-  [[ ${cmd} != tweet && ${cmd} != cd ]]
+  [[ ${cmd} != t && ${cmd} != cd ]]
 }
 add-zsh-hook zshaddhistory _history_ignore
 # }}}
@@ -145,7 +145,6 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias mv='mv -i -v'
 alias sudo='sudo '
 alias tree='tree --dirsfirst'
-alias tweet='t update'
 alias vi='vim'
 alias www='python3 -m http.server'
 
@@ -158,12 +157,6 @@ esac
 alias la='ls -A'
 alias ll='ls -l'
 alias lla='ls -Al'
-
-if (( $+commands[stack] )); then
-  alias ghc='stack ghc --'
-  alias ghci='stack ghci --'
-  alias runhaskell='stack runhaskell --'
-fi
 
 if ! (( $+commands[tac] )); then
   alias tac='tail -r'
