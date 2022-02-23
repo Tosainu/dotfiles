@@ -1,7 +1,7 @@
 " skip when vim-tiny or vim-small
 if 0 | endif
 
-scriptversion 3
+scriptversion 4
 
 " basic settings {{{
 " encoding
@@ -70,23 +70,23 @@ endif
 
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
-silent! call mkdir(expand('~/.vim'), 'p', 0700)
+silent! call mkdir(expand('~/.vim'), 'p', 0o700)
 
 let s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cache')
 let s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
 set nobackup nowritebackup
 let &g:backupdir = s:runtime_dir .. '/vim/backup//'
-silent! call mkdir(&g:backupdir, 'p', 0700)
+silent! call mkdir(&g:backupdir, 'p', 0o700)
 
 set swapfile
 let &g:directory = s:runtime_dir .. '/vim/swap//'
-silent! call mkdir(&g:directory, 'p', 0700)
+silent! call mkdir(&g:directory, 'p', 0o700)
 
 if has('persistent_undo')
   set undofile
   let &g:undodir = s:cache_dir .. '/vim/undo//'
-  silent! call mkdir(&g:undodir, 'p', 0700)
+  silent! call mkdir(&g:undodir, 'p', 0o700)
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
