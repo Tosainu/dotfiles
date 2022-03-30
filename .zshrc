@@ -266,11 +266,10 @@ if (( $+commands[$FUZZY_FINDER] )); then
 
   function fuzzy-recent-dirs() {
     local selected_dir=$(recent-dirs | fuzzy-finder --query="$LBUFFER")
+    zle reset-prompt
     if [[ -n "$selected_dir" ]]; then
       BUFFER="cd ${(q)selected_dir}"
       zle accept-line
-    else
-      zle reset-prompt
     fi
   }
 
