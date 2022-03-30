@@ -274,7 +274,19 @@ if (( $+commands[$FUZZY_FINDER] )); then
   }
 
   zle -N fuzzy-recent-dirs
-  bindkey '^H'  fuzzy-recent-dirs
+  bindkey '^\[h'  fuzzy-recent-dirs
+
+  function fuzzy-git-dirs() {
+    local selected_dir=$(list-git-repos 2> /dev/null | fuzzy-finder --query="$LBUFFER")
+    zle reset-prompt
+    if [[ -n "$selected_dir" ]]; then
+      BUFFER="cd ${(q)selected_dir}"
+      zle accept-line
+    fi
+  }
+
+  zle -N fuzzy-git-dirs
+  bindkey '^\[g'  fuzzy-git-dirs
 
   function fuzzy-select-history() {
     local selected=$(history -n 1 | tac | fuzzy-finder --query="$LBUFFER")
@@ -284,16 +296,8 @@ if (( $+commands[$FUZZY_FINDER] )); then
     fi
     zle reset-prompt
   }
-
   zle -N fuzzy-select-history
-  bindkey '^R'  fuzzy-select-history
-
-  function gl() {
-    local selected_dir="$(list-git-repos 2> /dev/null | fuzzy-finder)"
-    if [[ -n "$selected_dir" ]]; then
-      cd "${(q)selected_dir}"
-    fi
-  }
+  bindkey '^\[r'  fuzzy-select-history
 fi
 # }}}
 
