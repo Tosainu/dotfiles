@@ -6,6 +6,7 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "disableAnimations": true,
     "profiles": 
     {
         "defaults": 
@@ -35,6 +36,12 @@
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
             }
         ]
     },
@@ -272,6 +279,7 @@
         }
     ],
     "showTabsInTitlebar": false,
+    "showTerminalTitleInTitlebar": false,
     "tabSwitcherMode": "disabled",
     "theme": "dark"
 }

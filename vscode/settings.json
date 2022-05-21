@@ -147,4 +147,5 @@
     "explorer.autoReveal": false,
     "telemetry.telemetryLevel": "off",
     "editor.largeFileOptimizations": false,
+    "workbench.layoutControl.enabled": false,
 }
