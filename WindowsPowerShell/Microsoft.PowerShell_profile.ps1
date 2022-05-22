@@ -1,4 +1,4 @@
-﻿# Put this file in ~/Documents/WindowsPowerShell/ and
+# Put this file in ~/Documents/WindowsPowerShell/ and
 # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 # https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption
