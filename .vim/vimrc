@@ -371,6 +371,10 @@ let g:markdown_fenced_languages = [
 autocmd MyVimrc FileType markdown setlocal tabstop=4 shiftwidth=4 softtabstop=4
 " }}}
 
+" Earthfile {{{
+autocmd MyVimrc FileType Earthfile setlocal tabstop=4 shiftwidth=4 softtabstop=4 nosmartindent autoindent
+" }}}
+
 " Vim {{{
 autocmd MyVimrc FileType vim call s:on_vim_files()
 function! s:on_vim_files() abort
@@ -566,6 +570,8 @@ function! s:init_minpac() abort
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('pedrohdz/vim-yaml-folds')
+
+  call s:plugin('earthly/earthly.vim')
 
   return v:true
 endfunction
