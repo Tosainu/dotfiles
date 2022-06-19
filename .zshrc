@@ -245,7 +245,7 @@ function list-git-repos() {
     fd --type d --hidden --prune --glob '**/.git' "${repo_dir[@]}"
   else
     find  "${repo_dir[@]}" -type d -name '.git'
-  fi | sed 's!/.git$!!'
+  fi | sed 's!/\.git/\?$!!'
 }
 
 function man() {
