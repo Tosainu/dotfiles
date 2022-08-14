@@ -244,11 +244,11 @@ autocmd MyVimrc TerminalOpen *
 function! s:open_terminal(new, args) abort
   if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
     let g:terminal_ansi_colors = [
-          \   '#191919', '#e63250',
+          \   '#4c5359', '#e63250',
           \   '#a5d862', '#e5ae49',
           \   '#66a6cc', '#a370cc',
           \   '#7accc2', '#d9d9d9',
-          \   '#191919', '#ff3759',
+          \   '#82878c', '#ff3759',
           \   '#b9f26e', '#ffc251',
           \   '#73bbe5', '#b77ee5',
           \   '#89e5da', '#f1f1f1',
