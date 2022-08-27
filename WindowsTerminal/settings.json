@@ -11,6 +11,7 @@
     {
         "defaults": 
         {
+            "closeOnExit": "always",
             "colorScheme": "Nyan",
             "cursorShape": "filledBox",
             "font": 
