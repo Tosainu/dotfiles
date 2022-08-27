@@ -98,7 +98,7 @@ autocmd MyVimrc BufReadPost *
       \ endif
 
 " disable automatic comment insertion
-autocmd MyVimrc FileType * call timer_start(0, {->
+autocmd MyVimrc BufEnter,FileType * call timer_start(0, {->
       \   execute('setlocal formatoptions-=r formatoptions-=o')
       \ })
 
@@ -436,9 +436,13 @@ endif
 let g:colorsbox_italic = 1
 
 function! s:reset_colorscheme() abort
+  if exists('g:terminal_ansi_colors')
+    unlet g:terminal_ansi_colors
+  endif
+
   let colorschemes = {
-        \   'dark':  ['colorsbox-stbright', 'last256', 'slate'],
-        \   'light': ['github', 'github', 'morning'],
+        \   'dark':  ['colorsbox-stbright', 'slate', 'desert'],
+        \   'light': ['github', 'github', 'zellner'],
         \ }
   const background = &background
   const index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
@@ -532,7 +536,6 @@ function! s:init_minpac() abort
         \ ])
 
   " colorscheme
-  call s:plugin('Tosainu/last256', {'type': 'opt'})
   call s:plugin('cormacrelf/vim-colors-github', {'type': 'opt'})
   call s:plugin('mkarmona/colorsbox', {'type': 'opt'})
 
@@ -813,6 +816,7 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_hover = ''
 let g:ycm_complete_in_comments = 1
 let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_extra_conf_vim_data = ['&filetype']
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
