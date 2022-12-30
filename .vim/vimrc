@@ -280,7 +280,7 @@ nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " }}}
 
 " format on save {{{
-let g:format_on_save = 1
+let g:format_on_save = 0
 
 function! s:format_on_save() abort
   return get(b:, 'format_on_save', g:format_on_save)
