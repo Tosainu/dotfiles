@@ -556,7 +556,7 @@ function! s:init_minpac() abort
   call s:plugin('rhysd/github-complete.vim')
 
   " snippets
-  call s:plugin(['SirVer/ultisnips', 'honza/vim-snippets'], {
+  call s:plugin('SirVer/ultisnips', {
         \   'cond': {-> has('python3')},
         \ })
 
