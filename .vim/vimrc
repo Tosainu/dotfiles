@@ -580,6 +580,8 @@ function! s:init_minpac() abort
 
   call s:plugin('earthly/earthly.vim')
 
+  call s:plugin('wuelnerdotexe/vim-astro')
+
   return v:true
 endfunction
 
@@ -928,5 +930,9 @@ let g:markdown_composer_open_browser = 1
 
 " rust.vim {{{
 let g:loaded_rust_vim_plugin_cargo = 1
+" }}}
+
+" vim-astro {{{
+let g:astro_typescript = 'enable'
 " }}}
 " }}}
