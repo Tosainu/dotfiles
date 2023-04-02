@@ -80,11 +80,11 @@ zstyle ':vcs_info:*' formats        '%F{blue}%m%u%c%b%f'
 zstyle ':vcs_info:*' actionformats  '%F{blue}%m%u%c%b|%a%f'
 zstyle ':vcs_info:*' stagedstr      '%f%F{red}'
 zstyle ':vcs_info:*' unstagedstr    '%f%F{yellow}'
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
+# https://github.com/zsh-users/zsh/blob/c006d7609703afcfb2162c36d4f745125df45879/Misc/vcs_info-examples#L163-L172
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 function +vi-git-untracked() {
-  local reporoot=$(git rev-parse --show-toplevel)
-  if [[ -n $(git ls-files --others --exclude-standard "$reporoot") ]]; then
+  if [[ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" == 'true' ]] && git status --porcelain | grep -q '^?? ' 2> /dev/null ; then
     hook_com[misc]+='%f%F{yellow}'
   fi
 }
