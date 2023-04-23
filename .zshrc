@@ -11,15 +11,23 @@ export WORDCHARS="${WORDCHARS:s@/@}"
 export LESSHISTFILE='/dev/null'
 
 fpath=(
+  ~/.local/share/zsh/site-functions(N-/)
+  ~/.local/*/share/zsh/site-functions(N-/)
   /usr/share/zsh/site-functions(N-/)
   $fpath
 )
 
 path=(
   ~/.local/bin(N-/)
-  ~/.cargo/bin(N-/)
+  ~/.local/*/bin(N-/)
   /usr/local/bin(N-/)
   $path
+)
+
+manpath=(
+  ~/.local/share/man(N-/)
+  ~/.local/*/share/man(N-/)
+  $manpath
 )
 
 # colors
@@ -173,6 +181,8 @@ fi
 alias -g L="| $PAGER"
 alias -g N='> /dev/null 2>&1'
 alias -g X='| xargs'
+
+hash -d gio="/run/media/$USER"
 # }}}
 
 # bindkeys {{{
@@ -298,6 +308,7 @@ fi
 # plugins {{{
 plugins=(
   /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
   ~/work/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
   ~/.zshrc.local(N-.)
 )
