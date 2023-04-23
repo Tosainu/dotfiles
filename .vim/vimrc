@@ -578,7 +578,7 @@ function! s:init_minpac() abort
 
   call s:plugin('pedrohdz/vim-yaml-folds')
 
-  call s:plugin('earthly/earthly.vim')
+  call s:plugin('Tosainu/earthly.vim', {'branch': 'my-main'})
 
   call s:plugin('wuelnerdotexe/vim-astro')
 
@@ -600,6 +600,7 @@ function! s:pack_rebuild() abort
       elseif type(v.do) == v:t_string
         execute v.do
       endif
+      silent! helptags ./doc
     catch
       echohl ErrorMsg
       echom v:throwpoint
