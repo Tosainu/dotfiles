@@ -14,3 +14,14 @@ snippet ifndef #fndef ... #define ... #endif
 	#ifndef $1
 	#define ${1:SYMBOL} ${2:value}
 	#endif // $1
+snippet noncopyable
+	${1:classname}(const $1&) = delete;
+	$1& operator=(const $1&) = delete;
+snippet nonmovable
+	${1:classname}($1&&) = delete;
+	$1& operator=($1&&) = delete;
+snippet noncopymovable
+	${1:classname}(const $1&) = delete;
+	$1($1&&) = delete;
+	$1& operator=(const $1&) = delete;
+	$1& operator=($1&&) = delete;
