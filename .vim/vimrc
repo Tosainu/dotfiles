@@ -240,40 +240,57 @@ command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
 " Terminal {{{
-autocmd MyVimrc TerminalOpen *
-      \ if &buftype ==# 'terminal' |
-      \   setlocal nobreakindent nowrap bufhidden=hide |
-      \ endif
+autocmd MyVimrc TerminalWinOpen * setlocal nobreakindent nowrap bufhidden=hide
 
-function! s:open_terminal(new, args) abort
-  if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
-    let g:terminal_ansi_colors = [
-          \   '#4c5359', '#e63250',
-          \   '#a5d862', '#e5ae49',
-          \   '#66a6cc', '#a370cc',
-          \   '#7accc2', '#d9d9d9',
-          \   '#82878c', '#ff3759',
-          \   '#b9f26e', '#ffc251',
-          \   '#73bbe5', '#b77ee5',
-          \   '#89e5da', '#f1f1f1',
-          \ ]
-  endif
+def! s:open_terminal(new: bool, args: string)
+  const height = &lines * 2 / 3
+  const width = &columns - 4
 
-  const split = winwidth(0) > 160 ? 'vertical' : 'aboveleft'
-  const terms = term_list()
-  if a:new || empty(terms) || !empty(a:args)
-    execute split 'terminal' '++close' a:args
+  const terminals = filter(term_list(), (idx, val) =>
+    bufwinnr(val) == -1 && term_getstatus(val) =~# 'running' && getbufvar(val, 'terminal_popup_window', 0)
+  )
+
+  var buf = -1
+  if new || empty(terminals) || !empty(args)
+    buf = term_start(empty(args) ? &shell : args, {
+      hidden: 1,
+      norestore: 1,
+      term_cols: width,
+      term_rows: height,
+      term_finish: 'close',
+    })
+    setbufvar(buf, 'terminal_popup_window', 1)
   else
-    execute split 'sbuffer' get(filter(copy(terms), 'bufwinnr(v:val) == -1'), 0, terms[0])
+    buf = terminals[0]
+    term_setsize(buf, height, width)
   endif
-endfunction
+
+  var title = bufname(buf)
+  if !empty(term_gettitle(buf))
+    title ..= $' [{term_gettitle(buf)}]'
+  endif
+
+  const win = popup_create(buf, {
+    border: [],
+    maxheight: height,
+    maxwidth: width,
+    minheight: height,
+    minwidth: width,
+    pos: 'center',
+    title: title,
+    zindex: 200,
+  })
+
+  win_execute(win, 'setlocal nobreakindent nowrap bufhidden=hide')
+  win_execute(win, $'tnoremap <buffer><silent> <C-z> <C-\><C-n>:<C-u>call popup_close({win})<CR>')
+  if term_getstatus(buf) =~# 'normal'
+    win_execute(win, 'normal! i')
+  endif
+enddef
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
 
 set termwinkey=<C-q>
-tnoremap <silent> <C-z>      <C-q>:<C-u>hide<CR>
 tnoremap <silent> <C-q><C-n> <C-\><C-n>
-tnoremap <silent> <C-q><Leader>w <C-q>:<C-u>Term<CR>
-tnoremap <silent> <C-q><Leader>W <C-q>:<C-u>Term!<CR>
 
 nnoremap <silent> <Leader>w :<C-u>Term<CR>
 nnoremap <silent> <Leader>W :<C-u>Term!<CR>
@@ -458,6 +475,19 @@ function! s:reset_colorscheme() abort
     endif
     execute 'colorscheme' colorschemes[background][2]
   endtry
+
+  if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
+    let g:terminal_ansi_colors = [
+          \   '#4c5359', '#e63250',
+          \   '#a5d862', '#e5ae49',
+          \   '#66a6cc', '#a370cc',
+          \   '#7accc2', '#d9d9d9',
+          \   '#82878c', '#ff3759',
+          \   '#b9f26e', '#ffc251',
+          \   '#73bbe5', '#b77ee5',
+          \   '#89e5da', '#f1f1f1',
+          \ ]
+  endif
 endfunction
 
 function! s:toggle_background_color() abort
