@@ -346,25 +346,26 @@ endfunction
 autocmd MyVimrc FileType c,cpp setlocal cindent cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
 autocmd MyVimrc BufNewFile,BufRead .clang-format setlocal filetype=yaml
-
 " }}}
 
 " C++ & Rust {{{
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
-function! s:expand_semicolon() abort
-  const s = getline('.')[0:col('.') - 2]
-  if s =~# '\<b;$'      " b;; => boost::
+def! s:expand_semicolon(): string
+  const s = getline('.')[0 : col('.') - 2]
+  if s =~# '\<b;$'      # b;; => boost::
     return "\<BS>oost::"
-  elseif s =~# '\<s;$'  " s;; => std::
+  elseif s =~# '\<s;$'  # s;; => std::
     return "\<BS>td::"
-  elseif s =~# '\<d;$'  " d;; => detail::
+  elseif s =~# '\<f;$'  # f;; => fmt::
+    return "\<BS>mt::"
+  elseif s =~# '\<d;$'  # d;; => detail::
     return "\<BS>etail::"
-  elseif s =~# ';$'     " ;;  => ::
+  elseif s =~# '\(\<for\s*(\)\@<!;$'  # ;;  => ::, but allows for (;;
     return "\<BS>::"
   else
     return ';'
   endif
-endfunction
+enddef
 autocmd MyVimrc FileType cpp,rust inoremap <silent><buffer><expr> ; <SID>expand_semicolon()
 " }}}
 
