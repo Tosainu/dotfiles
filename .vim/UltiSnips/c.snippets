@@ -1,0 +1,27 @@
+priority -50
+
+snippet main "int main() { ... }"
+int main() {
+	${0}
+}
+endsnippet
+
+snippet mainarg "int main(int argc, char** argv) { ... }"
+int main(int argc, char** argv) {
+	${0}
+}
+endsnippet
+
+snippet inc "#include <...>"
+#include <${1:stdio.h}>
+endsnippet
+
+snippet Inc "#include corresponding header"
+#include "${1:`!v expand('%:t:r')`.h}"
+endsnippet
+
+snippet ifndef "#ifndef ... #define ... #endif"
+#ifndef $1
+#define ${1:SYMBOL} ${2:value}
+#endif // $1
+endsnippet
