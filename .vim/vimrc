@@ -272,6 +272,11 @@ def! s:open_terminal(new: bool, args: string)
 
   const win = popup_create(buf, {
     border: [],
+    callback: (..._) => {
+      if term_getstatus(buf) =~# 'finished'
+        timer_start(0, (..._) => execute($':{buf}bunload'))
+      endif
+    },
     maxheight: height,
     maxwidth: width,
     minheight: height,
@@ -281,11 +286,8 @@ def! s:open_terminal(new: bool, args: string)
     zindex: 200,
   })
 
-  win_execute(win, 'setlocal nobreakindent nowrap bufhidden=hide')
-  win_execute(win, $'tnoremap <buffer><silent> <C-z> <C-\><C-n>:<C-u>call popup_close({win})<CR>')
-  if term_getstatus(buf) =~# 'normal'
-    win_execute(win, 'normal! i')
-  endif
+  setlocal termwinkey=<C-q>
+  execute($'tnoremap <buffer><silent> <C-z> {&termwinkey}:<C-u>call popup_close({win})<CR>')
 enddef
 command! -bang -complete=shellcmd -nargs=* Term call s:open_terminal(<bang>0, <q-args>)
 
