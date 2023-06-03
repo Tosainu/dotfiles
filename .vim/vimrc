@@ -272,6 +272,7 @@ def! s:open_terminal(new: bool, args: string)
 
   const win = popup_create(buf, {
     border: [],
+    borderchars: ['═', ' ', '═', ' ', '═', '═', '═', '═'],
     callback: (..._) => {
       if term_getstatus(buf) =~# 'finished'
         timer_start(0, (..._) => execute($':{buf}bunload'))
