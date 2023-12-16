@@ -1,0 +1,186 @@
+### Variables {{{
+set $mod Mod4
+set $menu wofi -G --show drun | xargs swaymsg exec --
+
+include /etc/sway/config-vars.d/*
+# }}}
+
+### Output configuration {{{
+output * bg ~/Pictures/wall.jpg fill
+
+output DP-1 position -1920 0
+
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
+# }}}
+
+### Idle configuration {{{
+exec swayidle -w \
+  lock 'swaylock -f -c 000000' \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 315 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 000000'
+# }}}
+
+### Input configuration {{{
+input type:touchpad {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+}
+
+input type:keyboard {
+  xkb_options ctrl:nocaps
+}
+# }}}
+
+### Key bindings {{{
+
+#
+# Basics:
+#
+bindsym $mod+Return exec alacritty
+bindsym $mod+Backslash exec google-chrome-stable
+bindsym $mod+Bracketright exec nautilus
+bindsym $mod+Slash exec gimp
+
+# Kill focused window
+bindsym $mod+Shift+c kill
+
+# Start your launcher
+bindsym $mod+p exec $menu
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Ctrl+r reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+#
+# Moving around:
+#
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Ctrl+j focus output left
+bindsym $mod+Ctrl+k focus output right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move right
+
+#
+# Workspaces:
+#
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+Minus workspace number 11
+bindsym $mod+Equal workspace number 12
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+Shift+Minus move container to workspace number 11
+bindsym $mod+Shift+Equal move container to workspace number 12
+
+bindsym $mod+o move container to output left
+bindsym $mod+i move container to output right
+
+bindsym $mod+Escape workspace back_and_forth
+bindsym $mod+Left workspace prev_on_output
+bindsym $mod+Right workspace next_on_output
+
+#
+# Layout stuff:
+#
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Ctrl+space floating toggle
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+# bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+# bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+  bindsym Left resize shrink width 10px
+  bindsym Down resize grow height 10px
+  bindsym Up resize shrink height 10px
+  bindsym Right resize grow width 10px
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec xbacklight -time 100 -perceived -dec 1
+bindsym XF86MonBrightnessUp exec xbacklight -time 100 -perceived -inc 1
+# }}}
+
+exec_always systemctl --user start sway-session.target
+exec_always {
+  gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Darker'
+  gsettings set org.gnome.desktop.interface icon-theme 'Humanity-Dark'
+  gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
+  gsettings set org.gnome.desktop.interface font-name 'Sans 10'
+}
+
+exec fcitx5 -dr
+exec nm-applet --indicator
+exec waybar
+exec wl-paste --watch cliphist store
+
+default_border pixel 1
+xwayland enable
+
+include /etc/sway/config.d/*
+
+# vim: foldmethod=marker
