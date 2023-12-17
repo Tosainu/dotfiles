@@ -1,0 +1,37 @@
+#!/usr/bin/sh
+
+do_screenshot() {
+  outfile=$(xdg-user-dir PICTURES)/$(date '+Screenshot_%Y-%m-%d-%H%M%S.png')
+  err=$(grim "$@" "$outfile" 2>&1 > /dev/null)
+  ret=$?
+  if [ $ret = 0 ]; then
+    notify-send \
+      --icon "$outfile" \
+      --expire-time 5000 \
+      "Screenshot saved!" \
+      "$outfile"
+  else
+    notify-send \
+      --urgency critical \
+      "Failed to save screenshot" \
+      "$err"
+    exit 1
+  fi
+}
+
+mode=${1:-screen}
+case "$mode" in
+  screen)
+    do_screenshot
+    ;;
+  selection)
+    do_screenshot -g "$(slurp)"
+    ;;
+  curwin)
+    do_screenshot -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    ;;
+  *)
+    echo "unknown mode '$mode'" 1>&2
+    exit 1
+    ;;
+esac

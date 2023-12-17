@@ -45,6 +45,10 @@ bindsym $mod+Backslash exec google-chrome-stable
 bindsym $mod+Bracketright exec nautilus
 bindsym $mod+Slash exec gimp
 
+bindsym Print exec ~/.local/bin/take_screenshot screen
+bindsym Ctrl+Print exec ~/.local/bin/take_screenshot curwin
+bindsym Shift+Print exec ~/.local/bin/take_screenshot selection
+
 # Kill focused window
 bindsym $mod+Shift+c kill
 
@@ -168,9 +172,11 @@ bindsym XF86MonBrightnessUp exec xbacklight -time 100 -perceived -inc 1
 exec_always systemctl --user start sway-session.target
 exec_always {
   gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Darker'
-  gsettings set org.gnome.desktop.interface icon-theme 'Humanity-Dark'
-  gsettings set org.gnome.desktop.interface cursor-theme 'phinger-cursors'
+  gsettings set org.gnome.desktop.interface icon-theme 'Arc'
+  gsettings set org.gnome.desktop.interface cursor-theme 'Adwita'
   gsettings set org.gnome.desktop.interface font-name 'Sans 10'
+  gsettings set org.gnome.desktop.interface enable-animations false
+  gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 }
 
 exec fcitx5 -dr
