@@ -427,7 +427,16 @@ autocmd MyVimrc FileType qf nnoremap <buffer><silent> q :<C-u>cclose <bar> lclos
 " }}}
 
 " help {{{
-autocmd MyVimrc FileType help nnoremap <buffer><silent> q :<C-u>q<CR>
+autocmd MyVimrc FileType help {
+  if &columns >= 80 * 2
+    wincmd H
+    if winwidth(0) < 80
+      wincmd K
+    endif
+  endif
+
+  nnoremap <buffer><silent> q :<C-u>q<CR>
+}
 " }}}
 
 " command-line window {{{
@@ -941,10 +950,12 @@ let g:clang_format#style_options = #{
       \   AccessModifierOffset:             -2,
       \   AlignConsecutiveAssignments:      'false',
       \   AllowShortFunctionsOnASingleLine: 'Empty',
+      \   BreakBeforeConceptDeclarations:   'Always',
       \   ColumnLimit:                      100,
       \   Cpp11BracedListStyle:             'true',
       \   DerivePointerAlignment:           'false',
       \   IndentPPDirectives:               'AfterHash',
+      \   IndentRequiresClause:             'true',
       \   SortIncludes:                     'false',
       \   SpacesBeforeTrailingComments:     1,
       \ }
