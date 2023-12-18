@@ -157,8 +157,8 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessDown exec xbacklight -time 100 -perceived -dec 1
-bindsym XF86MonBrightnessUp exec xbacklight -time 100 -perceived -inc 1
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%- -n 1%
+bindsym XF86MonBrightnessUp exec brightnessctl set +1% -n 1%
 # }}}
 
 ### Rules {{{
@@ -183,8 +183,9 @@ exec_always echo "Xcursor.size: 24\nXft.antialias: 1\nXft.hinting: 1\nXft.hintst
 
 exec fcitx5 -dr
 exec nm-applet --indicator
-exec waybar
 exec wl-paste --watch cliphist store
+
+bar swaybar_command waybar
 
 default_border pixel 1
 xwayland enable
