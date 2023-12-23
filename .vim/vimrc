@@ -62,10 +62,36 @@ set cedit=<C-c>
 set wildmenu wildmode=longest,full
 set wildignorecase
 
-if has('unnamedplus')
-  set clipboard=unnamedplus
-elseif has('clipboard')
-  set clipboard=unnamed
+if has('clipboard')
+  if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
+    set clipboard=unnamed
+    autocmd MyVimrc TextYankPost *
+          \ if v:event['regname'] == '' |
+          \   silent call job_start(
+          \     ['wl-copy', '--type', 'text/plain', '--', getreg(v:event['regname'])],
+          \     {"in_io": "null", "out_io": "null", "err_io": "null"}
+          \   ) |
+          \ endif
+    function! s:set_unnamed_from_clipboard() abort
+      silent let @@=system('wl-paste --no-newline')
+    endfunction
+    function! s:set_unnamed_from_clipboard_map(keys) abort
+      call s:set_unnamed_from_clipboard()
+      return a:keys
+    endfunction
+    nnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
+    nnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
+    vnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
+    vnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
+    inoremap <expr> <silent> <C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\"")
+    inoremap <expr> <silent> <C-r><C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-r>\"")
+    inoremap <expr> <silent> <C-r><C-o>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-o>\"")
+    inoremap <expr> <silent> <C-r><C-p>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-p>\"")
+  elseif has('unnamedplus') && !empty($DISPLAY)
+    set clipboard=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
 endif
 
 set history=1000
