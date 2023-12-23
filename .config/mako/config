@@ -1,0 +1,9 @@
+font=Sans 10
+background-color=#2f343fff
+text-color=#e6e6e6ff
+width=448
+border-size=1
+border-color=#262a33ff
+max-icon-size=64
+format=<b>%a ⏵</b> %s\n%b
+default-timeout=10000

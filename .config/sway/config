@@ -170,6 +170,11 @@ for_window [class="(Vivado|ui-PlanAhead)" title="(JidePopup|win0)"] {
 
 # }}}
 
+default_border pixel 1
+xwayland enable
+
+include /etc/sway/config.d/*
+
 exec_always systemctl --user start sway-session.target
 exec_always {
   gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Darker'
@@ -186,10 +191,5 @@ exec nm-applet --indicator
 exec wl-paste --watch cliphist store
 
 bar swaybar_command waybar
-
-default_border pixel 1
-xwayland enable
-
-include /etc/sway/config.d/*
 
 # vim: foldmethod=marker

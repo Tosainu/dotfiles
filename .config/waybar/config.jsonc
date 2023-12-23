@@ -2,7 +2,7 @@
   "height": 22,
   "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
   "modules-center": ["sway/window"],
-  "modules-right": ["tray", "pulseaudio#sink", "cpu", "memory", "temperature", "battery", "clock"],
+  "modules-right": ["tray", "wireplumber", "cpu", "memory", "temperature", "battery", "clock"],
   "sway/mode": {
     "format": "<span style=\"italic\">{}</span>"
   },
@@ -42,9 +42,6 @@
     "format-plugged": " {capacity}%",
     "format-icons": ["", "", "", "", ""]
   },
-  "battery#bat2": {
-    "bat": "BAT2"
-  },
   "network": {
     "format-wifi": " {essid} ({signalStrength}%)",
     "format-ethernet": " {ipaddr}/{cidr}",
@@ -52,8 +49,8 @@
     "format-linked": " {ifname} (No IP)",
     "format-disconnected": "⚠ Disconnected"
   },
-  "pulseaudio#sink": {
+  "wireplumber": {
     "format": " {volume}%",
-    "format-muted": "  {volume}%"
+    "format-muted": " {volume}%"
   }
 }
