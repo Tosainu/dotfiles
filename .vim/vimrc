@@ -63,35 +63,34 @@ set wildmenu wildmode=longest,full
 set wildignorecase
 
 if has('clipboard')
-  if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
-    set clipboard=unnamed
-    autocmd MyVimrc TextYankPost *
-          \ if v:event['regname'] == '' |
-          \   silent call job_start(
-          \     ['wl-copy', '--type', 'text/plain', '--', getreg(v:event['regname'])],
-          \     {"in_io": "null", "out_io": "null", "err_io": "null"}
-          \   ) |
-          \ endif
-    function! s:set_unnamed_from_clipboard() abort
-      silent let @@=system('wl-paste --no-newline')
-    endfunction
-    function! s:set_unnamed_from_clipboard_map(keys) abort
-      call s:set_unnamed_from_clipboard()
-      return a:keys
-    endfunction
-    nnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
-    nnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
-    vnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
-    vnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
-    inoremap <expr> <silent> <C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\"")
-    inoremap <expr> <silent> <C-r><C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-r>\"")
-    inoremap <expr> <silent> <C-r><C-o>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-o>\"")
-    inoremap <expr> <silent> <C-r><C-p>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-p>\"")
-  elseif has('unnamedplus') && !empty($DISPLAY)
-    set clipboard=unnamedplus
-  else
-    set clipboard=unnamed
-  endif
+  set clipboard=unnamed
+endif
+
+if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
+  autocmd MyVimrc TextYankPost *
+        \ if v:event['regname'] == '' |
+        \   silent call job_start(
+        \     ['wl-copy', '--type', 'text/plain', '--', getreg(v:event['regname'])],
+        \     {"in_io": "null", "out_io": "null", "err_io": "null"}
+        \   ) |
+        \ endif
+  function! s:set_unnamed_from_clipboard() abort
+    silent let @@=system('wl-paste --no-newline')
+  endfunction
+  function! s:set_unnamed_from_clipboard_map(keys) abort
+    call s:set_unnamed_from_clipboard()
+    return a:keys
+  endfunction
+  nnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('""p')
+  nnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('""P')
+  vnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('""p')
+  vnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('""P')
+  inoremap <expr> <silent> <C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\"")
+  inoremap <expr> <silent> <C-r><C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-r>\"")
+  inoremap <expr> <silent> <C-r><C-o>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-o>\"")
+  inoremap <expr> <silent> <C-r><C-p>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-p>\"")
+elseif has('unnamedplus') && !empty($DISPLAY)
+  set clipboard^=unnamedplus
 endif
 
 set history=1000
@@ -962,7 +961,11 @@ map <Leader>su <Plug>(operator-sort-uniq)
 " }}
 
 " vim-operator-replace {{{
-map <Leader>r  <Plug>(operator-replace)
+if exists('*s:set_unnamed_from_clipboard_map')
+  map <expr> <silent> <Leader>r  <SID>set_unnamed_from_clipboard_map("\<Plug>(operator-replace)")
+else
+  map <Leader>r  <Plug>(operator-replace)
+endif
 " }}}
 
 " vim-operator-surround {{{
