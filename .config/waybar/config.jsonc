@@ -2,7 +2,7 @@
   "height": 22,
   "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
   "modules-center": ["sway/window"],
-  "modules-right": ["tray", "wireplumber", "cpu", "memory", "temperature", "battery", "clock"],
+  "modules-right": ["tray", "network", "wireplumber", "cpu", "memory", "temperature", "battery", "clock"],
   "sway/mode": {
     "format": "<span style=\"italic\">{}</span>"
   },
@@ -43,11 +43,11 @@
     "format-icons": ["", "", "", "", ""]
   },
   "network": {
-    "format-wifi": " {essid} ({signalStrength}%)",
-    "format-ethernet": " {ipaddr}/{cidr}",
-    "tooltip-format": " {ifname} via {gwaddr}",
+    "format-wifi": " {essid} {signalStrength}%",
+    "format-ethernet": " {ifname}",
     "format-linked": " {ifname} (No IP)",
-    "format-disconnected": "⚠ Disconnected"
+    "format-disconnected": "⚠ --------",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr} via {gwaddr}"
   },
   "wireplumber": {
     "format": " {volume}%",
