@@ -14,6 +14,7 @@ fpath=(
   ~/.local/share/zsh/site-functions(N-/)
   ~/.local/*/share/zsh/site-functions(N-/)
   /usr/share/zsh/site-functions(N-/)
+  /opt/homebrew/completions/zsh(N-/)
   $fpath
 )
 
@@ -21,6 +22,7 @@ path=(
   ~/.local/bin(N-/)
   ~/.local/*/bin(N-/)
   /usr/local/bin(N-/)
+  /opt/homebrew/bin(N-/)
   $path
 )
 
@@ -309,6 +311,7 @@ fi
 plugins=(
   /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
   /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
   ~/work/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N-.)
   ~/.zshrc.local(N-.)
 )

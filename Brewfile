@@ -1,0 +1,11 @@
+tap "homebrew/bundle"
+brew "clang-format"
+brew "cmake"
+brew "fzy"
+brew "gnupg"
+brew "picocom"
+brew "pinentry-mac"
+brew "python@3.12"
+brew "tree"
+brew "vim", args: ["HEAD"]
+brew "zsh-syntax-highlighting"
