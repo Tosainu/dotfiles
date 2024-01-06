@@ -16,12 +16,6 @@ augroup MyVimrc
   autocmd!
 augroup END
 
-function! s:get_SID() abort
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_SID$')
-endfunction
-let s:SID = s:get_SID()
-delfunction s:get_SID
-
 set breakindent
 let &showbreak = '» '
 set colorcolumn=100
@@ -426,25 +420,28 @@ autocmd MyVimrc FileType Earthfile setlocal tabstop=4 shiftwidth=4 softtabstop=4
 " }}}
 
 " Vim {{{
-autocmd MyVimrc FileType vim call s:on_vim_files()
-function! s:on_vim_files() abort
-  " search vim help for word under cursor
-  setlocal keywordprg=:help
-
-  setlocal foldmethod=marker
-endfunction
+autocmd MyVimrc FileType vim setlocal keywordprg=:help foldmethod=marker
 " }}}
 
 " binary files {{{
-autocmd MyVimrc BufReadPost * if &binary | call s:on_binary_files() | endif
-function! s:on_binary_files() abort
-  silent %!xxd -g 1
-  setlocal filetype=xxd
-
-  autocmd MyVimrc BufWritePre  <buffer> %!xxd -r
-  autocmd MyVimrc BufWritePost <buffer> silent %!xxd -g 1
-  autocmd MyVimrc BufWritePost <buffer> setlocal nomodified
-endfunction
+autocmd MyVimrc BufReadPost *
+      \ if &binary |
+      \   execute "silent %!xxd -g 1" |
+      \   setlocal filetype=xxd |
+      \   redraw |
+      \ endif
+autocmd MyVimrc BufWritePre *
+      \ if &binary |
+      \   let b:binary_file_xxd_view = winsaveview() |
+      \   execute "silent %!xxd -r" |
+      \ endif
+autocmd MyVimrc BufWritePost *
+      \ if &binary |
+      \   execute "silent %!xxd -g 1" |
+      \   setlocal nomodified |
+      \   call winrestview(b:binary_file_xxd_view) |
+      \   redraw |
+      \ endif
 " }}}
 
 " quickfix {{{
@@ -465,11 +462,10 @@ autocmd MyVimrc FileType help {
 " }}}
 
 " command-line window {{{
-autocmd MyVimrc CmdwinEnter * call s:on_command_line_window()
-function! s:on_command_line_window() abort
+autocmd MyVimrc CmdwinEnter * {
   nnoremap <buffer><silent> q     :<C-u>q<CR>
   nnoremap <buffer><silent> <Esc> :<C-u>q<CR>
-endfunction
+}
 " }}}
 
 " gitcommit {{{
@@ -666,7 +662,7 @@ function! s:pack_rebuild() abort
       if type(v.do) == v:t_func
         call call(v.do, ['post-update', k])
       elseif type(v.do) == v:t_string
-        execute v.do
+        silent execute v.do
       endif
       silent! helptags ./doc
     catch
@@ -678,6 +674,7 @@ function! s:pack_rebuild() abort
       noautocmd call chdir(pwd)
     endtry
   endfor
+  redraw!
 endfunction
 command! PackRebuild if s:init_minpac() | call s:pack_rebuild() | endif
 " }}}
@@ -723,8 +720,8 @@ if executable('ag')
 endif
 
 let g:ctrlp_status_func = {
-      \   'main': s:SID .. 'ctrlp_status_func_main',
-      \   'prog': s:SID .. 'ctrlp_status_func_prog',
+      \   'main': $"{expand('<SID>')}ctrlp_status_func_main",
+      \   'prog': $"{expand('<SID>')}ctrlp_status_func_prog",
       \ }
 
 function! s:ctrlp_status_func_main(focus, byfname, regex, prev, item, next, marked) abort
@@ -778,10 +775,10 @@ let g:lightline = {
       \     'readonly':   '%{&ro ? "\ue0a2" : ""}',
       \   },
       \   'component_function': {
-      \     'branch_name':  s:SID .. 'lightline_branch_name',
-      \     'filename':     s:SID .. 'lightline_filename',
-      \     'hunk_summary': s:SID .. 'lightline_hunk_summary',
-      \     'mode':         s:SID .. 'lightline_mode',
+      \     'branch_name':  $"{expand('<SID>')}lightline_branch_name",
+      \     'filename':     $"{expand('<SID>')}lightline_filename",
+      \     'hunk_summary': $"{expand('<SID>')}lightline_hunk_summary",
+      \     'mode':         $"{expand('<SID>')}lightline_mode",
       \   },
       \   'separator':    {'left': "\ue0b0", 'right': "\ue0b2"},
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
