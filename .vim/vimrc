@@ -63,7 +63,7 @@ set wildmenu wildmode=longest,full
 set wildignorecase
 
 if has('clipboard')
-  set clipboard=unnamed
+  set clipboard=
 endif
 
 if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
@@ -81,10 +81,10 @@ if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
     call s:set_unnamed_from_clipboard()
     return a:keys
   endfunction
-  nnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('""p')
-  nnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('""P')
-  vnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('""p')
-  vnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('""P')
+  nnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
+  nnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
+  vnoremap <expr> <silent> p <SID>set_unnamed_from_clipboard_map('p')
+  vnoremap <expr> <silent> P <SID>set_unnamed_from_clipboard_map('P')
   inoremap <expr> <silent> <C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\"")
   inoremap <expr> <silent> <C-r><C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-r>\"")
   inoremap <expr> <silent> <C-r><C-o>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-o>\"")
