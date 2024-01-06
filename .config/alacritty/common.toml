@@ -1,0 +1,71 @@
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+[window]
+decorations = "None"
+dynamic_padding = true
+opacity = 0.825
+blur = true
+dynamic_title = true
+
+[scrolling]
+history = 100000
+
+[font]
+
+[font.normal]
+style = "Medium"
+
+[colors.primary]
+foreground = "0xefefef"
+background = "0x000000"
+
+[colors.cursor]
+cursor = "0xefefef"
+text = "0x000000"
+
+[colors.normal]
+black = "0x4c5359"
+blue = "0x66a6cc"
+cyan = "0x7accc2"
+green = "0xa5d862"
+magenta = "0xa370cc"
+red = "0xe63250"
+white = "0xd9d9d9"
+yellow = "0xe5ae49"
+
+[colors.bright]
+black = "0x82878c"
+blue = "0x73bbe5"
+cyan = "0x89e5da"
+green = "0xb9f26e"
+magenta = "0xb77ee5"
+red = "0xff3759"
+white = "0xf1f1f1"
+yellow = "0xffc251"
+
+[bell]
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+
+[terminal]
+
+[[mouse.bindings]]
+action = "ReceiveChar"
+mouse = "Middle"
+
+[hints]
+
+[keyboard]
+bindings = [
+  { key = "Key0",           mods = "Control",               action = "ReceiveChar"              },
+  { key = "=",              mods = "Control",               action = "ResetFontSize"            },
+  { key = "+",              mods = "Control|Shift",         action = "IncreaseFontSize"         },
+  { key = "T",              mods = "Control|Shift",         action = "SpawnNewInstance"         },
+  { key = "Insert",         mods = "Control",               action = "Copy"                     },
+]
+
+[debug]

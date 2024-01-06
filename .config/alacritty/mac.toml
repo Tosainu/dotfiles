@@ -1,0 +1,81 @@
+[window]
+decorations = "Full"
+option_as_alt = "OnlyLeft"
+
+[window.dimensions]
+columns = 160
+lines = 42
+
+[font]
+size = 16
+
+[font.normal]
+family = "Source Code Pro"
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [
+  # ⌘ command as control
+  { key = "A",    mods = "Command", chars = "\u0001" },
+  { key = "B",    mods = "Command", chars = "\u0002" },
+  { key = "C",    mods = "Command", chars = "\u0003" },
+  { key = "D",    mods = "Command", chars = "\u0004" },
+  { key = "E",    mods = "Command", chars = "\u0005" },
+  { key = "F",    mods = "Command", chars = "\u0006" },
+  { key = "G",    mods = "Command", chars = "\u0007" },
+  { key = "H",    mods = "Command", chars = "\u0008" },
+  { key = "I",    mods = "Command", chars = "\u0009" },
+  { key = "J",    mods = "Command", chars = "\u000a" },
+  { key = "K",    mods = "Command", chars = "\u000b" },
+  { key = "L",    mods = "Command", chars = "\u000c" },
+  { key = "M",    mods = "Command", chars = "\u000d" },
+  { key = "N",    mods = "Command", chars = "\u000e" },
+  { key = "O",    mods = "Command", chars = "\u000f" },
+  { key = "P",    mods = "Command", chars = "\u0010" },
+  { key = "Q",    mods = "Command", chars = "\u0011" },
+  { key = "R",    mods = "Command", chars = "\u0012" },
+  { key = "S",    mods = "Command", chars = "\u0013" },
+  { key = "T",    mods = "Command", chars = "\u0014" },
+  { key = "U",    mods = "Command", chars = "\u0015" },
+  { key = "V",    mods = "Command", chars = "\u0016" },
+  { key = "W",    mods = "Command", chars = "\u0017" },
+  { key = "X",    mods = "Command", chars = "\u0018" },
+  { key = "Y",    mods = "Command", chars = "\u0019" },
+  { key = "Z",    mods = "Command", chars = "\u001a" },
+  { key = "[",    mods = "Command", chars = "\u001b" },
+  { key = "\\",   mods = "Command", chars = "\u001c" },
+  { key = "]",    mods = "Command", chars = "\u001d" },
+
+  # control as ⌘ command
+  { key = "K",    mods = "Control",       mode = "~Vi|~Search",  chars  = "\u000c"                },
+  { key = "K",    mods = "Control",       mode = "~Vi|~Search",  action = "ClearHistory"          },
+  { key = "0",    mods = "Control",                              action = "ResetFontSize"         },
+  { key = "+",    mods = "Control",                              action = "IncreaseFontSize"      },
+  { key = "-",    mods = "Control",                              action = "DecreaseFontSize"      },
+  { key = "=",    mods = "Control",                              action = "ResetFontSize"         },
+  { key = "V",    mods = "Control",                              action = "Paste"                 },
+  { key = "C",    mods = "Control",                              action = "Copy"                  },
+  { key = "C",    mods = "Control",       mode = "Vi|~Search",   action = "ClearSelection"        },
+  { key = "H",    mods = "Control",                              action = "Hide"                  },
+  { key = "H",    mods = "Control|Alt",                          action = "HideOtherApplications" },
+  { key = "M",    mods = "Control",                              action = "Minimize"              },
+  { key = "Q",    mods = "Control",                              action = "Quit"                  },
+  { key = "W",    mods = "Control",                              action = "Quit"                  },
+  { key = "N",    mods = "Control",                              action = "SpawnNewInstance"      },
+  { key = "T",    mods = "Control",                              action = "CreateNewTab"          },
+  { key = "F",    mods = "Control",       mode = "~Search",      action = "SearchForward"         },
+  { key = "B",    mods = "Control",       mode = "~Search",      action = "SearchBackward"        },
+  { key = "Tab",  mods = "Control",                              action = "SelectNextTab"         },
+  { key = "Tab",  mods = "Control|Shift",                        action = "SelectPreviousTab"     },
+  { key = "1",    mods = "Control",                              action = "SelectTab1"            },
+  { key = "2",    mods = "Control",                              action = "SelectTab2"            },
+  { key = "3",    mods = "Control",                              action = "SelectTab3"            },
+  { key = "4",    mods = "Control",                              action = "SelectTab4"            },
+  { key = "5",    mods = "Control",                              action = "SelectTab5"            },
+  { key = "6",    mods = "Control",                              action = "SelectTab6"            },
+  { key = "7",    mods = "Control",                              action = "SelectTab7"            },
+  { key = "8",    mods = "Control",                              action = "SelectTab8"            },
+  { key = "9",    mods = "Control",                              action = "SelectLastTab"         },
+]
