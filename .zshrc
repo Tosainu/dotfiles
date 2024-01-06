@@ -248,10 +248,10 @@ function list-git-repos() {
     ~/.vim/pack(N-/)
   )
   if (( $+commands[fd] )); then
-    fd --type d --hidden --prune --glob '**/.git' "${repo_dir[@]}"
+    fd --type d --no-ignore --hidden --prune --glob '**/.git' "${repo_dir[@]}"
   else
-    find  "${repo_dir[@]}" -type d -name '.git'
-  fi | sed 's!/\.git/\?$!!'
+    find "${repo_dir[@]}" -type d -name '.git'
+  fi | sed -E 's!/\.git/?$!!'
 }
 
 function man() {
