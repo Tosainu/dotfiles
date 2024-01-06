@@ -616,8 +616,8 @@ function! s:init_minpac() abort
         \   'cond': {-> has('python3') && executable('cmake')},
         \   'do': {->
         \     executable('npm') ?
-        \       '!./install.py --clang-completer --system-libclang --ts-completer' :
-        \       '!./install.py --clang-completer --system-libclang'
+        \       '!./install.py --ts-completer' :
+        \       '!./install.py'
         \   }(),
         \   'type': 'opt',
         \ })
