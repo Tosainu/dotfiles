@@ -68,9 +68,6 @@ floating_modifier $mod normal
 # Reload the configuration file
 bindsym $mod+Ctrl+r reload
 
-# Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-
 #
 # Moving around:
 #
@@ -152,6 +149,20 @@ mode "resize" {
   bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+# inspired by: https://www.reddit.com/r/swaywm/comments/chi4fr/comment/eutgbct/
+set $mode-power-menu (l)ock, (e)xit, (s)uspend, (r)eboot, (p)oweroff
+mode "$mode-power-menu" {
+  bindsym l exec loginctl lock-session, mode "default"
+  bindsym e exec swaymsg exit, mode "default"
+  bindsym s exec systemctl suspend, mode "default"
+  bindsym r exec systemctl reboot, mode "default"
+  bindsym p exec systemctl poweroff, mode "default"
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+w mode "$mode-power-menu"
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
