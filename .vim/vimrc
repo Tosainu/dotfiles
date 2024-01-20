@@ -63,10 +63,7 @@ endif
 if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
   autocmd MyVimrc TextYankPost *
         \ if v:event['regname'] == '' |
-        \   silent call job_start(
-        \     ['wl-copy', '--type', 'text/plain', '--', getreg(v:event['regname'])],
-        \     {"in_io": "null", "out_io": "null", "err_io": "null"}
-        \   ) |
+        \   silent call system($"wl-copy --type text/plain -- {shellescape(getreg(v:event['regname']))}") |
         \ endif
   function! s:set_unnamed_from_clipboard() abort
     silent let @@=system('wl-paste --no-newline')
