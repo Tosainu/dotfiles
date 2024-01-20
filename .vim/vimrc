@@ -643,6 +643,8 @@ function! s:init_minpac() abort
 
   call s:plugin('wuelnerdotexe/vim-astro')
 
+  call s:plugin('jvirtanen/vim-hcl')
+
   return v:true
 endfunction
 
