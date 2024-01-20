@@ -80,6 +80,8 @@ if !empty($WAYLAND_DISPLAY) && executable('wl-copy') && executable('wl-paste')
   inoremap <expr> <silent> <C-r><C-r>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-r>\"")
   inoremap <expr> <silent> <C-r><C-o>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-o>\"")
   inoremap <expr> <silent> <C-r><C-p>" <SID>set_unnamed_from_clipboard_map("\<C-r>\<C-p>\"")
+elseif has('clipboard') && has('macunix')
+  set clipboard^=unnamed
 elseif has('unnamedplus') && !empty($DISPLAY)
   set clipboard^=unnamedplus
 endif
