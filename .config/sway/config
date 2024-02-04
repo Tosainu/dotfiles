@@ -18,11 +18,16 @@ bindswitch --reload --locked lid:off output eDP-1 enable
 # }}}
 
 ### Idle configuration {{{
+
+# this needs the combination witn logind.conf:
+#   [Login]
+#   IdleAction=lock
+#   IdleActionSec=1min
+exec swayidle \
+  lock ~/.local/bin/lock_with_screen_off \
+  idlehint 240
 exec swayidle -w \
-  lock 'swaylock -f -c 000000' \
-  timeout 300 'swaylock -f -c 000000' \
-  timeout 315 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock -f -c 000000'
+  before-sleep 'loginctl lock-session'
 # }}}
 
 ### Input configuration {{{
@@ -200,6 +205,7 @@ exec_always echo "Xcursor.size: 24\nXft.antialias: 1\nXft.hinting: 1\nXft.hintst
 exec fcitx5 -dr
 exec nm-applet --indicator
 exec wl-paste --watch cliphist store
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 bar swaybar_command waybar
 
