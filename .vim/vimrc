@@ -639,8 +639,6 @@ function! s:init_minpac() abort
   " Rust
   call s:plugin('rust-lang/rust.vim')
 
-  call s:plugin('pedrohdz/vim-yaml-folds')
-
   call s:plugin('Tosainu/earthly.vim', {'branch': 'my-main'})
 
   call s:plugin('wuelnerdotexe/vim-astro')
