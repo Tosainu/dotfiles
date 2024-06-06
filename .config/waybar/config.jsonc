@@ -1,17 +1,12 @@
 {
   "height": 22,
-  "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
-  "modules-center": ["sway/window"],
+  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "modules-center": ["hyprland/window"],
   "modules-right": ["tray", "network", "wireplumber", "cpu", "memory", "temperature", "battery", "clock"],
-  "sway/mode": {
+  "hyprland/mode": {
     "format": "<span style=\"italic\">{}</span>"
   },
-  "sway/scratchpad": {
-    "format": "{icon} {count}",
-    "show-empty": false,
-    "format-icons": ["", ""],
-    "tooltip": true,
-    "tooltip-format": "{app}: {title}"
+  "hyprland/workspaces": {
   },
   "tray": {
     "spacing": 10

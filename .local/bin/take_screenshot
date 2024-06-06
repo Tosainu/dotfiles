@@ -28,7 +28,11 @@ case "$mode" in
     do_screenshot -g "$(slurp)"
     ;;
   curwin)
-    do_screenshot -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    if [ "$XDG_CURRENT_DESKTOP" = Hyprland ]; then
+      do_screenshot -g "$(hyprctl -j activewindow | jq -j '"\(.at.[0]),\(.at.[1]) \(.size.[0])x\(.size.[1])"')"
+    else
+      do_screenshot -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')"
+    fi
     ;;
   *)
     echo "unknown mode '$mode'" 1>&2
