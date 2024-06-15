@@ -418,6 +418,10 @@ autocmd MyVimrc FileType markdown setlocal tabstop=4 shiftwidth=4 softtabstop=4
 autocmd MyVimrc FileType Earthfile setlocal tabstop=4 shiftwidth=4 softtabstop=4 nosmartindent autoindent
 " }}}
 
+" hyprlang {{{
+autocmd MyVimrc FileType hyprlang setlocal tabstop=4 shiftwidth=4 softtabstop=4
+" }}}
+
 " Vim {{{
 autocmd MyVimrc FileType vim setlocal keywordprg=:help foldmethod=marker
 " }}}
