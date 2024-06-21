@@ -153,8 +153,16 @@ if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   autocmd MyVimrc InsertLeave * call s:switch_ibus_engine('xkb:us::eng')
 endif
 
-if $GTK_IM_MODULE ==# 'fcitx' && executable('fcitx5-remote')
-  autocmd MyVimrc InsertLeave * silent execute '!fcitx5-remote -c'
+if executable('fcitx5-remote')
+  def! s:fcitx5_remote_check_exit_cb(_, status: number)
+    if status == 0
+      autocmd MyVimrc InsertLeave * silent execute '!fcitx5-remote -c'
+    endif
+  enddef
+  call job_start(['fcitx5-remote', '--check'], #{
+        \   exit_cb: function('s:fcitx5_remote_check_exit_cb'),
+        \   in_io: 'null', out_io: 'null', err_io: 'null',
+        \ })
 endif
 
 filetype plugin indent on
