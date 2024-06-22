@@ -42,11 +42,6 @@ set backspace=indent,eol,start
 set completeopt=menuone,noinsert,noselect,popup
 set nrformats=bin,hex,unsigned
 
-set expandtab smarttab
-set smartindent
-set shiftwidth=2 softtabstop=2 tabstop=2
-set shiftround
-
 set ignorecase smartcase
 set incsearch
 set hlsearch
@@ -55,6 +50,17 @@ set wrapscan
 set cedit=<C-c>
 set wildmenu wildmode=longest,full
 set wildignorecase
+
+" indent {{{
+set expandtab smarttab
+set smartindent
+set shiftwidth=2 softtabstop=2 tabstop=2
+set shiftround
+
+autocmd MyVimrc FileType
+      \ c,cpp,dockerfile,Earthfile,hyprlang,markdown,rust
+      \ setlocal shiftwidth=4 softtabstop=4 tabstop=4
+" }}}
 
 if has('clipboard')
   set clipboard=
@@ -419,11 +425,10 @@ let g:markdown_fenced_languages = [
       \   'sh',
       \   'vim',
       \ ]
-autocmd MyVimrc FileType markdown setlocal tabstop=4 shiftwidth=4 softtabstop=4
 " }}}
 
 " Earthfile {{{
-autocmd MyVimrc FileType Earthfile setlocal tabstop=4 shiftwidth=4 softtabstop=4 nosmartindent autoindent
+autocmd MyVimrc FileType Earthfile setlocal nosmartindent autoindent
 " }}}
 
 " Vim {{{
