@@ -972,19 +972,11 @@ map <Leader>sr <Plug>(operator-surround-replace)
 " }}}
 
 " vim-clang-format {{{
-let g:clang_format#style_options = #{
-      \   AccessModifierOffset:             -2,
-      \   AlignConsecutiveAssignments:      'false',
-      \   AllowShortFunctionsOnASingleLine: 'Empty',
-      \   BreakBeforeConceptDeclarations:   'Always',
-      \   ColumnLimit:                      100,
-      \   Cpp11BracedListStyle:             'true',
-      \   DerivePointerAlignment:           'false',
-      \   IndentPPDirectives:               'AfterHash',
-      \   IndentRequiresClause:             'true',
-      \   SortIncludes:                     'false',
-      \   SpacesBeforeTrailingComments:     1,
-      \ }
+let g:clang_format#detect_style_file = 0
+let g:clang_format#enable_fallback_style = 0
+let g:clang_format#extra_args = [
+      \   '--style=file',
+      \ ]
 " }}}
 
 " vim-markdown {{{
