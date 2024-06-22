@@ -3,15 +3,13 @@ if 0 | endif
 
 scriptversion 4
 
-" basic settings {{{
-" encoding
+" Basic settings {{{
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,latin1
 set fileformats=unix,dos,mac
 
 scriptencoding utf-8
 
-" vimrc augroup
 augroup MyVimrc
   autocmd!
 augroup END
@@ -51,7 +49,10 @@ set cedit=<C-c>
 set wildmenu wildmode=longest,full
 set wildignorecase
 
-" indent {{{
+filetype plugin indent on
+" }}}
+
+" Indent {{{
 set expandtab smarttab
 set smartindent
 set shiftwidth=2 softtabstop=2 tabstop=2
@@ -62,6 +63,7 @@ autocmd MyVimrc FileType
       \ setlocal shiftwidth=4 softtabstop=4 tabstop=4
 " }}}
 
+" Clipboard integration {{{
 if has('clipboard')
   set clipboard=
 endif
@@ -91,7 +93,9 @@ elseif has('clipboard') && has('macunix')
 elseif has('unnamedplus') && !empty($DISPLAY)
   set clipboard^=unnamedplus
 endif
+" }}}
 
+" Cache/Runtime directories {{{
 set history=1000
 set viminfo& viminfo+=n~/.vim/viminfo
 silent! call mkdir(expand('~/.vim'), 'p', 0o700)
@@ -100,33 +104,36 @@ let s:cache_dir = isdirectory($XDG_CACHE_DIR) ? $XDG_CACHE_DIR : expand('~/.cach
 let s:runtime_dir = isdirectory($XDG_RUNTIME_DIR) ? $XDG_RUNTIME_DIR : s:cache_dir
 
 set nobackup nowritebackup
-let &g:backupdir = s:runtime_dir .. '/vim/backup//'
+let &g:backupdir = s:runtime_dir .. '/vim/backup/'
 silent! call mkdir(&g:backupdir, 'p', 0o700)
 
 set swapfile
-let &g:directory = s:runtime_dir .. '/vim/swap//'
+let &g:directory = s:runtime_dir .. '/vim/swap/'
 silent! call mkdir(&g:directory, 'p', 0o700)
 
 if has('persistent_undo')
   set undofile
-  let &g:undodir = s:cache_dir .. '/vim/undo//'
+  let &g:undodir = s:cache_dir .. '/vim/undo/'
   silent! call mkdir(&g:undodir, 'p', 0o700)
 
   autocmd MyVimrc BufNewFile,BufRead /tmp/*,/var/tmp/* setlocal noundofile
 endif
+" }}}
 
-" jump to the last known cursor position
+" Jump to the last known cursor position {{{
 autocmd MyVimrc BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
       \   exe "normal! g`\"" |
       \ endif
+" }}}
 
-" disable automatic comment insertion
+" Disable automatic comment insertion {{{
 autocmd MyVimrc BufEnter,FileType * call timer_start(0, {->
       \   execute('setlocal formatoptions-=r formatoptions-=o')
       \ })
+" }}}
 
-" add execute permission to script file
+" Add execute permission to script file {{{
 autocmd MyVimrc BufWritePost * call s:make_script_executable()
 function! s:make_script_executable() abort
   let b:make_script_executable_checked = get(b:, 'make_script_executable_checked', {})
@@ -140,15 +147,17 @@ function! s:make_script_executable() abort
   endif
   let b:make_script_executable_checked[file] = 1
 endfunction
+" }}}
 
-" cursor shape
+" Cursor shape {{{
 if has('cursorshape') && has('vim_starting') && &term =~# '^\%(xterm\|alacritty\)'
   let &t_EI ..= "\e[\x30 q"
   let &t_SI ..= "\e[\x35 q"
   let &t_SR ..= "\e[\x33 q"
 endif
+" }}}
 
-" ibus
+" IME integration {{{
 if $GTK_IM_MODULE ==# 'ibus' && executable('ibus')
   function! s:switch_ibus_engine(engine) abort
     silent const engine = systemlist('ibus engine')[0]
@@ -170,11 +179,9 @@ if executable('fcitx5-remote')
         \   in_io: 'null', out_io: 'null', err_io: 'null',
         \ })
 endif
-
-filetype plugin indent on
 " }}}
 
-" keymappings {{{
+" Key mappings {{{
 let g:mapleader = ','
 
 " disable arrow keys
@@ -253,7 +260,7 @@ nnoremap <silent> <Leader>lN :<C-u>cnext<CR>
 nnoremap <silent> <Leader>lP :<C-u>cprevious<CR>
 " }}}
 
-" commands {{{
+" Commands {{{
 " https://sanctum.geek.nz/arabesque/vim-command-typos/
 command! -bang -nargs=? -complete=file E e<bang> <args>
 command! -bang -nargs=? -complete=file W w<bang> <args>
@@ -267,7 +274,6 @@ command! -bang Wa wa<bang>
 command! -bang WQa wqa<bang>
 command! -bang Wqa wqa<bang>
 
-" open .vimrc
 command! Vimrc execute 'tabedit' resolve($MYVIMRC)
 " }}}
 
@@ -331,7 +337,7 @@ nnoremap <silent> <Leader>w :<C-u>Term<CR>
 nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " }}}
 
-" format on save {{{
+" Format on save {{{
 let g:format_on_save = 0
 
 function! s:format_on_save() abort
@@ -377,13 +383,12 @@ endfunction
 " }}}
 
 " Filetype {{{
-" C++ {{{
+" C++
 autocmd MyVimrc FileType c,cpp setlocal cindent cinoptions& cinoptions+=g0,m1,j1,(0,ws,Ws,N-s
 autocmd MyVimrc BufReadPost /usr/include/c++/* setlocal filetype=cpp
 autocmd MyVimrc BufNewFile,BufRead .clang-format setlocal filetype=yaml
-" }}}
 
-" C++ & Rust {{{
+" expand semicolons
 " http://rhysd.hatenablog.com/entry/2013/12/10/233201#namespace
 def! s:expand_semicolon(): string
   const s = getline('.')[0 : col('.') - 2]
@@ -402,16 +407,14 @@ def! s:expand_semicolon(): string
   endif
 enddef
 autocmd MyVimrc FileType cpp,rust inoremap <silent><buffer><expr> ; <SID>expand_semicolon()
-" }}}
 
-" Haskell {{{
+" Haskell
 let g:hs_highlight_boolean    = 1
 let g:hs_highlight_delimiters = 1
 let g:hs_highlight_more_types = 1
 let g:hs_highlight_types      = 1
-" }}}
 
-" Markdown {{{
+" Markdown
 let g:markdown_fenced_languages = [
       \   'c',
       \   'cpp',
@@ -425,17 +428,14 @@ let g:markdown_fenced_languages = [
       \   'sh',
       \   'vim',
       \ ]
-" }}}
 
-" Earthfile {{{
+" Earthfile
 autocmd MyVimrc FileType Earthfile setlocal nosmartindent autoindent
-" }}}
 
-" Vim {{{
+" Vim
 autocmd MyVimrc FileType vim setlocal keywordprg=:help foldmethod=marker
-" }}}
 
-" binary files {{{
+" binary files
 autocmd MyVimrc BufReadPost *
       \ if &binary |
       \   execute "silent %!xxd -g 1" |
@@ -454,13 +454,11 @@ autocmd MyVimrc BufWritePost *
       \   call winrestview(b:binary_file_xxd_view) |
       \   redraw |
       \ endif
-" }}}
 
-" quickfix {{{
+" quickfix
 autocmd MyVimrc FileType qf nnoremap <buffer><silent> q :<C-u>cclose <bar> lclose<CR>
-" }}}
 
-" help {{{
+" help
 autocmd MyVimrc FileType help {
   if &columns >= 80 * 2
     wincmd H
@@ -471,22 +469,19 @@ autocmd MyVimrc FileType help {
 
   nnoremap <buffer><silent> q :<C-u>q<CR>
 }
-" }}}
 
-" command-line window {{{
+" command-line window
 autocmd MyVimrc CmdwinEnter * {
   nnoremap <buffer><silent> q     :<C-u>q<CR>
   nnoremap <buffer><silent> <Esc> :<C-u>q<CR>
 }
-" }}}
 
-" gitcommit {{{
+" gitcommit
 autocmd MyVimrc FileType gitcommit setlocal spell
 autocmd MyVimrc VimEnter COMMIT_EDITMSG if getline(1) ==# '' | execute 1 | startinsert | endif
 " }}}
-" }}}
 
-" colorscheme {{{
+" Colorscheme {{{
 syntax on
 
 " https://gist.github.com/XVilka/8346728#detection
@@ -554,7 +549,7 @@ silent! call s:reset_colorscheme() | call s:clear_background_color()
 " }}}
 
 " Plugins {{{
-" Disable some pre-installed plugins
+
 let g:loaded_getscriptPlugin  = 1
 let g:loaded_gzip             = 1
 let g:loaded_logiPat          = 1
@@ -603,7 +598,6 @@ function! s:init_minpac() abort
   call s:plugin('t9md/vim-textmanip')
   call s:plugin('tyru/caw.vim')
 
-  " operator/textobj
   call s:plugin(['kana/vim-operator-user',
         \   'kana/vim-operator-replace',
         \   'rhysd/vim-operator-surround',
@@ -615,11 +609,9 @@ function! s:init_minpac() abort
         \   'sgur/vim-textobj-parameter',
         \ ])
 
-  " colorscheme
   call s:plugin('cormacrelf/vim-colors-github', {'type': 'opt'})
   call s:plugin('mkarmona/colorsbox', {'type': 'opt'})
 
-  " code completion
   call s:plugin('ycm-core/YouCompleteMe', {
         \   'cond': {-> has('python3') && executable('cmake')},
         \   'do': {->
@@ -631,25 +623,20 @@ function! s:init_minpac() abort
         \ })
   call s:plugin('rhysd/github-complete.vim')
 
-  " snippets
   call s:plugin('SirVer/ultisnips', {
         \   'cond': {-> has('python3')},
         \ })
 
-  " C++
   call s:plugin('rhysd/vim-clang-format', {'cond': {-> executable('clang-format')}})
 
-  " Haskell
   call s:plugin('itchyny/vim-haskell-indent')
 
-  " Markdown
   call s:plugin('plasticboy/vim-markdown')
   call s:plugin('euclio/vim-markdown-composer', {
         \   'cond': {-> executable('cargo')},
         \   'do':   '!cargo build --release --no-default-features --features json-rpc',
         \ })
 
-  " Rust
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('Tosainu/earthly.vim', {'branch': 'my-main'})
@@ -968,7 +955,7 @@ endfunction
 
 map <Leader>sl <Plug>(operator-sort)
 map <Leader>su <Plug>(operator-sort-uniq)
-" }}
+" }}}
 
 " vim-operator-replace {{{
 if exists('*s:set_unnamed_from_clipboard_map')
@@ -1020,4 +1007,5 @@ let g:loaded_rust_vim_plugin_cargo = 1
 " vim-astro {{{
 let g:astro_typescript = 'enable'
 " }}}
+
 " }}}
