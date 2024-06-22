@@ -429,9 +429,6 @@ let g:markdown_fenced_languages = [
       \   'vim',
       \ ]
 
-" Earthfile
-autocmd MyVimrc FileType Earthfile setlocal nosmartindent autoindent
-
 " Vim
 autocmd MyVimrc FileType vim setlocal keywordprg=:help foldmethod=marker
 
@@ -639,7 +636,7 @@ function! s:init_minpac() abort
 
   call s:plugin('rust-lang/rust.vim')
 
-  call s:plugin('Tosainu/earthly.vim', {'branch': 'my-main'})
+  call s:plugin('earthly/earthly.vim')
 
   call s:plugin('wuelnerdotexe/vim-astro')
 
