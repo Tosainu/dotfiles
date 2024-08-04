@@ -558,6 +558,8 @@ let g:loaded_zip              = 1
 let g:loaded_zipPlugin        = 1
 
 " minpac {{{
+let g:no_minpac_maps = 1
+
 function! s:init_minpac() abort
   silent! packadd minpac
   while !exists('g:loaded_minpac')
