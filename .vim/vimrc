@@ -706,6 +706,7 @@ autocmd MyVimrc User GitGutter call s:lightline_update_hunk_summary()
 let g:ctrlp_extensions      = ['line']
 let g:ctrlp_open_new_file   = 't'
 let g:ctrlp_switch_buffer   = 'ET'
+let g:ctrlp_use_caching = 0
 
 let g:ctrlp_user_command = {}
 let g:ctrlp_user_command.types = {
@@ -714,7 +715,8 @@ let g:ctrlp_user_command.types = {
 
 if executable('ag')
   let g:ctrlp_user_command.fallback = 'ag %s --nocolor --nogroup -g ""'
-  let g:ctrlp_use_caching = 0
+elseif executable('fd')
+  let g:ctrlp_user_command.fallback = 'fd --hidden --color never -g "" %s'
 endif
 
 let g:ctrlp_status_func = {
