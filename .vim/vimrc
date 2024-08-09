@@ -547,15 +547,17 @@ silent! call s:reset_colorscheme() | call s:clear_background_color()
 
 " Plugins {{{
 
-let g:loaded_getscriptPlugin  = 1
-let g:loaded_gzip             = 1
-let g:loaded_logiPat          = 1
-let g:loaded_netrwPlugin      = 1
-let g:loaded_tar              = 1
-let g:loaded_tarPlugin        = 1
-let g:loaded_vimballPlugin    = 1
-let g:loaded_zip              = 1
-let g:loaded_zipPlugin        = 1
+let g:loaded_getscriptPlugin = 1
+let g:loaded_gzip = 1
+let g:loaded_logiPat = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_tar = 1
+let g:loaded_tarPlugin = 1
+let g:loaded_vimballPlugin = 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+
+let g:no_plugin_maps = 1
 
 " minpac {{{
 let g:no_minpac_maps = 1
