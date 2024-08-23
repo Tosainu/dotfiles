@@ -415,18 +415,27 @@ let g:hs_highlight_more_types = 1
 let g:hs_highlight_types      = 1
 
 " Markdown
+let g:markdown_minlines = 2000
+let g:markdown_syntax_conceal = 0
 let g:markdown_fenced_languages = [
+      \   'astro',
+      \   'bash',
       \   'c',
       \   'cpp',
       \   'css',
+      \   'docker=dockerfile',
+      \   'dockerfile',
       \   'haskell',
       \   'html',
-      \   'python',
-      \   'ruby',
+      \   'ini=dosini',
+      \   'javascript',
       \   'rust',
-      \   'scss',
       \   'sh',
+      \   'tcl',
+      \   'toml',
+      \   'typescript',
       \   'vim',
+      \   'yaml',
       \ ]
 
 " Vim
@@ -593,7 +602,6 @@ function! s:init_minpac() abort
   call s:plugin('ctrlpvim/ctrlp.vim')
   call s:plugin('itchyny/lightline.vim')
   call s:plugin('itchyny/vim-gitbranch')
-  call s:plugin('junegunn/vim-easy-align')
   call s:plugin('justinmk/vim-dirvish')
   call s:plugin('rhysd/clever-f.vim')
   call s:plugin('t9md/vim-textmanip')
@@ -622,7 +630,6 @@ function! s:init_minpac() abort
         \   }(),
         \   'type': 'opt',
         \ })
-  call s:plugin('rhysd/github-complete.vim')
 
   call s:plugin('SirVer/ultisnips', {
         \   'cond': {-> has('python3')},
@@ -632,7 +639,6 @@ function! s:init_minpac() abort
 
   call s:plugin('itchyny/vim-haskell-indent')
 
-  call s:plugin('plasticboy/vim-markdown')
   call s:plugin('euclio/vim-markdown-composer', {
         \   'cond': {-> executable('cargo')},
         \   'do':   '!cargo build --release --no-default-features --features json-rpc',
@@ -641,8 +647,6 @@ function! s:init_minpac() abort
   call s:plugin('rust-lang/rust.vim')
 
   call s:plugin('earthly/earthly.vim')
-
-  call s:plugin('wuelnerdotexe/vim-astro')
 
   call s:plugin('jvirtanen/vim-hcl')
 
@@ -823,11 +827,6 @@ function! s:lightline_update_hunk_summary() abort
 endfunction
 " }}}
 
-" vim-easy-align {{{
-nmap <Leader>a <Plug>(EasyAlign)
-xmap <Leader>a <Plug>(EasyAlign)
-"}}}
-
 " vim-dirvish {{{
 nmap <Plug>(dirvish_up_) <Plug>(dirvish_up)
 autocmd MyVimrc FileType dirvish nmap <buffer><silent> - <Plug>(dirvish_up)
@@ -980,14 +979,6 @@ let g:clang_format#enable_fallback_style = 0
 let g:clang_format#extra_args = [
       \   '--style=file',
       \ ]
-" }}}
-
-" vim-markdown {{{
-let g:vim_markdown_conceal                 = 0
-let g:vim_markdown_folding_disabled        = 0
-let g:vim_markdown_frontmatter             = 1
-let g:vim_markdown_new_list_item_indent    = 0
-let g:vim_markdown_no_default_key_mappings = 1
 " }}}
 
 " vim-markdown-composer {{{
