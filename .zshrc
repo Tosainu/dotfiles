@@ -72,7 +72,12 @@ function _history_ignore() {
   local line=${1%%$'\n'}
   local cmd=${line%% *}
 
-  [[ ${cmd} != t && ${cmd} != cd ]]
+  [[
+    ${cmd} != cd &&
+    ${cmd} != kill &&
+    ${cmd} != killall &&
+    ${cmd} != rm
+  ]]
 }
 add-zsh-hook zshaddhistory _history_ignore
 # }}}
