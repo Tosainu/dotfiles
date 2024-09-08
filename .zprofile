@@ -1,6 +1,8 @@
 if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   export $(systemctl --user show-environment | xargs)
-  exec systemd-run --user --scope Hyprland
+  systemd-run --user --scope Hyprland
+  systemctl --user start --job-mode=replace-irreversibly hyprland-session-shutdown.target
+  exit
 fi
 
 if [ -n "$SSH_CONNECTION" ]; then
