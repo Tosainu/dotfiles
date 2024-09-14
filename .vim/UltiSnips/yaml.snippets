@@ -1,0 +1,34 @@
+priority -50
+
+snippet actions "GitHub Actions workflow" b
+name: ${1:name}
+on:
+  ${2:push:
+    branches:
+      - main
+  pull_request:}
+
+jobs:
+  ${3:name}:
+    runs-on: ubuntu-22.04
+    steps:
+			${0}
+endsnippet
+
+snippet dependabot "Dependabot" b
+version: 2
+updates:
+  ${3:- package-ecosystem: github-actions
+    ${1:directory: /}
+    schedule:
+      interval: ${2:monthly}}
+  ${6:- package-ecosystem: docker
+    ${4:directory: /}
+    schedule:
+      interval: ${5:monthly}}
+  ${9:- package-ecosystem: cargo
+    ${7:directories:
+      - '*'}
+    schedule:
+      interval: ${8:monthly}}
+endsnippet

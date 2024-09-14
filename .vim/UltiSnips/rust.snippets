@@ -1,0 +1,39 @@
+priority -50
+
+snippet main "fn main() { ... }" b
+fn main() {
+    ${0}
+}
+endsnippet
+
+snippet match "match { ... }"
+match ${1} {
+    ${2:_ => todo!(),}
+}
+endsnippet
+
+snippet pln "pintln!()"
+println!("${1}");
+endsnippet
+
+snippet pln, "pintln!(, ...)"
+println!("{}${2}", ${1});
+endsnippet
+
+snippet pr "pint!()"
+print!("${1}");
+endsnippet
+
+snippet pr, "pint!(, ...)"
+print!("{}${2}", ${1});
+endsnippet
+
+snippet modtest "mod test { ... }" b
+#[cfg(test)]
+mod ${1:tests} {
+    #[test]
+    fn ${2:test_awesome}() {
+        ${0}
+    }
+}
+endsnippet

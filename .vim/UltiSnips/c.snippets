@@ -1,26 +1,26 @@
 priority -50
 
-snippet main "int main() { ... }"
+snippet main "int main() { ... }" b
 int main() {
 	${0}
 }
 endsnippet
 
-snippet mainarg "int main(int argc, char** argv) { ... }"
+snippet mainarg "int main(int argc, char** argv) { ... }" b
 int main(int argc, char** argv) {
 	${0}
 }
 endsnippet
 
-snippet inc "#include <...>"
+snippet inc "#include <...>" b
 #include <${1:stdio.h}>
 endsnippet
 
-snippet Inc "#include corresponding header"
+snippet Inc "#include corresponding header" b
 #include "${1:`!v expand('%:t:r')`.h}"
 endsnippet
 
-snippet ifndef "#ifndef ... #define ... #endif"
+snippet ifndef "#ifndef ... #define ... #endif" b
 #ifndef $1
 #define ${1:SYMBOL} ${2:value}
 #endif // $1

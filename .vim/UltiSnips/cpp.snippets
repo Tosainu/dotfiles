@@ -1,33 +1,33 @@
 priority -49
 extends c
 
-snippet main "auto main() -> int { ... }"
+snippet main "auto main() -> int { ... }" b
 auto main() -> int {
 	${0}
 }
 endsnippet
 
-snippet mainarg "auto main(int argc, char** argv) -> int { ... }"
+snippet mainarg "auto main(int argc, char** argv) -> int { ... }" b
 auto main(int argc, char** argv) -> int {
 	${0}
 }
 endsnippet
 
-snippet inc "#include <...>"
+snippet inc "#include <...>" b
 #include <${1:iostream}>
 endsnippet
 
-snippet noncopyable
+snippet noncopyable "make the class non-copyable" b
 ${1:classname}(const $1&) = delete;
 $1& operator=(const $1&) = delete;
 endsnippet
 
-snippet nonmovable
+snippet nonmovable "make the class non-movable" b
 ${1:classname}($1&&) = delete;
 $1& operator=($1&&) = delete;
 endsnippet
 
-snippet noncopymovable
+snippet noncopymovable "make the class non-copymovable" b
 ${1:classname}(const $1&) = delete;
 $1($1&&) = delete;
 $1& operator=(const $1&) = delete;

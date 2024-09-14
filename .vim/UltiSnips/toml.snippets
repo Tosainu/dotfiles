@@ -1,0 +1,11 @@
+priority -50
+
+snippet dep "Cargo.toml dependency" b
+[dependencies.${1:name}]
+version = "${2:version}"
+endsnippet
+
+snippet wdep "Cargo.toml workspace dependency" b
+[workspace.dependencies.${1:name}]
+version = "${2:version}"
+endsnippet
