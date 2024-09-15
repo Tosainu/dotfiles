@@ -340,46 +340,43 @@ nnoremap <silent> <Leader>W :<C-u>Term!<CR>
 " Format on save {{{
 let g:format_on_save = 0
 
-function! s:format_on_save() abort
+def! s:format_on_save(): bool
   return get(b:, 'format_on_save', g:format_on_save)
-endfunction
+enddef
 
-function! s:print_format_on_save_status() abort
+def! s:print_format_on_save_status()
   echo printf('Format on save (buffer/global): %s/%s',
-        \   s:format_on_save() ? 'enabled' : 'disabled',
-        \   g:format_on_save   ? 'enabled' : 'disabled'
-        \ )
-endfunction
+    s:format_on_save() ? 'enabled' : 'disabled',
+    g:format_on_save   ? 'enabled' : 'disabled')
+enddef
 command! FormatOnSaveStatus call s:print_format_on_save_status()
 
-function! s:toggle_format_on_save(global) abort
-  if a:global
-    let g:format_on_save = !g:format_on_save
+def! s:toggle_format_on_save(global: bool)
+  if global
+    g:format_on_save = !g:format_on_save
   else
-    let b:format_on_save = !s:format_on_save()
+    b:format_on_save = !s:format_on_save()
   endif
-  call s:print_format_on_save_status()
-endfunction
+  s:print_format_on_save_status()
+enddef
 command! -bang FormatOnSaveToggle call s:toggle_format_on_save(<bang>0)
 nnoremap <silent> <Leader>p :<C-u>FormatOnSaveToggle<CR>
 nnoremap <silent> <Leader>P :<C-u>FormatOnSaveToggle!<CR>
 
 autocmd MyVimrc BufWritePre * if s:format_on_save() | call s:do_format() | endif
-function s:do_format() abort
-  if exists(':YcmCompleter') &&
-        \ (
-        \   (&ft =~# '^\%(c\|cpp\)$' && filereadable('.clang-format')) ||
-        \   &ft =~# '^\%(rust\)$'
-        \ )
-    YcmCompleter Format
+def! s:do_format()
+  if exists(':YcmCompleter') == 2 && (
+      (&ft =~# '^\%(c\|cpp\)$' && filereadable('.clang-format')) ||
+      &ft =~# '^\%(rust\)$'
+    )
+    execute('YcmCompleter Format')
   elseif exists('*clang_format#replace') &&
-        \ &ft =~# '^\%(c\|cpp\|objc\|proto\|arduino\)$'
+      &ft =~# '^\%(c\|cpp\|objc\|proto\|arduino\)$'
     silent! call clang_format#replace(1, line('$'))
-  elseif exists(':RustFmt') &&
-        \ &ft =~# '^\%(rust\)$'
-    RustFmt
+  elseif exists(':RustFmt') == 2 && &ft =~# '^\%(rust\)$'
+    execute('RustFmt')
   endif
-endfunction
+enddef
 " }}}
 
 " Filetype {{{
@@ -503,17 +500,17 @@ endif
 
 let g:colorsbox_italic = 1
 
-function! s:reset_colorscheme() abort
+def! s:reset_colorscheme()
   if exists('g:terminal_ansi_colors')
     unlet g:terminal_ansi_colors
   endif
 
-  let colorschemes = {
-        \   'dark':  ['colorsbox-stbright', 'slate', 'desert'],
-        \   'light': ['github', 'github', 'zellner'],
-        \ }
-  const background = &background
-  const index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co == 256 ? 1 : 2
+  var colorschemes = {
+    dark:  ['colorsbox-stbright', 'slate', 'desert'],
+    light: ['github', 'github', 'zellner'],
+  }
+  var background = &background
+  var index = s:supports_truecolor || has('gui_running') ? 0 : &t_Co ==# '256' ? 1 : 2
   try
     execute 'colorscheme' colorschemes[background][index]
   catch
@@ -524,34 +521,34 @@ function! s:reset_colorscheme() abort
   endtry
 
   if (&termguicolors || has('gui_running')) && !exists('g:terminal_ansi_colors')
-    let g:terminal_ansi_colors = [
-          \   '#4c5359', '#e63250',
-          \   '#a5d862', '#e5ae49',
-          \   '#66a6cc', '#a370cc',
-          \   '#7accc2', '#d9d9d9',
-          \   '#82878c', '#ff3759',
-          \   '#b9f26e', '#ffc251',
-          \   '#73bbe5', '#b77ee5',
-          \   '#89e5da', '#f1f1f1',
-          \ ]
+    g:terminal_ansi_colors = [
+      '#4c5359', '#e63250',
+      '#a5d862', '#e5ae49',
+      '#66a6cc', '#a370cc',
+      '#7accc2', '#d9d9d9',
+      '#82878c', '#ff3759',
+      '#b9f26e', '#ffc251',
+      '#73bbe5', '#b77ee5',
+      '#89e5da', '#f1f1f1',
+    ]
   endif
-endfunction
+enddef
 
-function! s:toggle_background_color() abort
-  let &background = (&background ==# 'dark' ? 'light' : 'dark')
+def! s:toggle_background_color()
+  &background = (&background ==# 'dark' ? 'light' : 'dark')
   call s:reset_colorscheme()
-endfunction
+enddef
 command! ToggleBackgroundColor call s:toggle_background_color()
 nnoremap <silent> <Leader>bg :<C-u>ToggleBackgroundColor<CR>
 
 autocmd MyVimrc ColorScheme * call s:clear_background_color()
-function! s:clear_background_color()
+def! s:clear_background_color()
   if !has('gui_running') && &background ==# 'dark'
     highlight Normal ctermbg=NONE guibg=NONE
   endif
-endfunction
+enddef
 
-silent! call s:reset_colorscheme() | call s:clear_background_color()
+call s:reset_colorscheme() | call s:clear_background_color()
 " }}}
 
 " Plugins {{{
@@ -571,7 +568,7 @@ let g:no_plugin_maps = 1
 " minpac {{{
 let g:no_minpac_maps = 1
 
-function! s:init_minpac() abort
+def! s:init_minpac(): bool
   silent! packadd minpac
   while !exists('g:loaded_minpac')
     if input("Failed to load minpac. Would you like to install?[y/n]") !=? 'y'
@@ -581,77 +578,65 @@ function! s:init_minpac() abort
     silent! packadd minpac
   endwhile
 
-  function! s:plugin(plugname, ...) abort
-    const opt = extend(copy(get(a:000, 0, {})), {'cond': {-> v:true}}, 'keep')
-    if !opt.cond()
-      return
+  def Plugin(plugname: string, opt: dict<any> = {})
+    if get(opt, 'cond', () => true)()
+      minpac#add(plugname, opt)
     endif
-    if type(a:plugname) == v:t_list
-      call map(copy(a:plugname), {_, v -> minpac#add(v, opt)})
-    else
-      call minpac#add(a:plugname, opt)
-    endif
-  endfunction
+  enddef
 
-  call minpac#init()
-  call s:plugin('k-takata/minpac', {'type': 'opt'})
+  minpac#init()
 
-  call s:plugin('AndrewRadev/switch.vim')
-  call s:plugin('Yggdroot/indentLine')
-  call s:plugin('airblade/vim-gitgutter')
-  call s:plugin('ctrlpvim/ctrlp.vim')
-  call s:plugin('itchyny/lightline.vim')
-  call s:plugin('itchyny/vim-gitbranch')
-  call s:plugin('justinmk/vim-dirvish')
-  call s:plugin('rhysd/clever-f.vim')
-  call s:plugin('t9md/vim-textmanip')
-  call s:plugin('tyru/caw.vim')
+  Plugin('k-takata/minpac', {type: 'opt'})
 
-  call s:plugin(['kana/vim-operator-user',
-        \   'kana/vim-operator-replace',
-        \   'rhysd/vim-operator-surround',
-        \ ])
-  call s:plugin(['kana/vim-textobj-user',
-        \   'kana/vim-textobj-entire',
-        \   'kana/vim-textobj-line',
-        \   'pocke/vim-textobj-markdown',
-        \   'sgur/vim-textobj-parameter',
-        \ ])
+  Plugin('AndrewRadev/switch.vim')
+  Plugin('Yggdroot/indentLine')
+  Plugin('airblade/vim-gitgutter')
+  Plugin('ctrlpvim/ctrlp.vim')
+  Plugin('itchyny/lightline.vim')
+  Plugin('itchyny/vim-gitbranch')
+  Plugin('justinmk/vim-dirvish')
+  Plugin('rhysd/clever-f.vim')
+  Plugin('t9md/vim-textmanip')
+  Plugin('tyru/caw.vim')
 
-  call s:plugin('cormacrelf/vim-colors-github', {'type': 'opt'})
-  call s:plugin('mkarmona/colorsbox', {'type': 'opt'})
+  Plugin('kana/vim-operator-user')
+  Plugin('kana/vim-operator-replace')
+  Plugin('rhysd/vim-operator-surround')
 
-  call s:plugin('ycm-core/YouCompleteMe', {
-        \   'cond': {-> has('python3') && executable('cmake')},
-        \   'do': {->
-        \     executable('npm') ?
-        \       '!./install.py --ts-completer' :
-        \       '!./install.py'
-        \   }(),
-        \   'type': 'opt',
-        \ })
+  Plugin('kana/vim-textobj-user')
+  Plugin('kana/vim-textobj-entire')
+  Plugin('kana/vim-textobj-line')
+  Plugin('pocke/vim-textobj-markdown')
+  Plugin('sgur/vim-textobj-parameter')
 
-  call s:plugin('SirVer/ultisnips', {
-        \   'cond': {-> has('python3')},
-        \ })
+  Plugin('cormacrelf/vim-colors-github', {type: 'opt'})
+  Plugin('mkarmona/colorsbox', {type: 'opt'})
 
-  call s:plugin('rhysd/vim-clang-format', {'cond': {-> executable('clang-format')}})
+  Plugin('ycm-core/YouCompleteMe', {
+    cond: () => has('python3') && executable('cmake'),
+    do: executable('npm') ? '!./install.py --ts-completer' : '!./install.py',
+    type: 'opt',
+  })
 
-  call s:plugin('itchyny/vim-haskell-indent')
+  Plugin('SirVer/ultisnips', {cond: () => has('python3')})
 
-  call s:plugin('euclio/vim-markdown-composer', {
-        \   'cond': {-> executable('cargo')},
-        \   'do':   '!cargo build --release --no-default-features --features json-rpc',
-        \ })
+  Plugin('rhysd/vim-clang-format', {cond: () => executable('clang-format')})
 
-  call s:plugin('rust-lang/rust.vim')
+  Plugin('itchyny/vim-haskell-indent')
 
-  call s:plugin('earthly/earthly.vim')
+  Plugin('euclio/vim-markdown-composer', {
+    cond: () => executable('cargo'),
+    do: '!cargo build --release --no-default-features --features json-rpc',
+  })
 
-  call s:plugin('jvirtanen/vim-hcl')
+  Plugin('rust-lang/rust.vim')
 
-  return v:true
-endfunction
+  Plugin('earthly/earthly.vim')
+
+  Plugin('jvirtanen/vim-hcl')
+
+  return true
+enddef
 
 command! PackInit   call s:init_minpac()
 command! PackUpdate if s:init_minpac() | call minpac#update() | endif
@@ -790,30 +775,29 @@ let g:lightline = {
       \   'subseparator': {'left': "\ue0b1", 'right': "\ue0b3"},
       \ }
 
-function! s:lightline_filename() abort
-  const fname = expand('%:t')
-  return  fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname !=# '' ? fname : '[No Name]'
-endfunction
+def! s:lightline_filename(): string
+  var fname = expand('%:t')
+  return fname ==# 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+    fname !=# '' ? fname : '[No Name]'
+enddef
 
-function! s:lightline_mode() abort
-  const fname = expand('%:t')
-  return  fname ==# 'ControlP' ? 'CtrlP' :
-        \ lightline#mode()
-endfunction
+def! s:lightline_mode(): string
+  var fname = expand('%:t')
+  return fname ==# 'ControlP' ? 'CtrlP' : lightline#mode()
+enddef
 
-function! s:lightline_branch_name() abort
+def! s:lightline_branch_name(): string
   if winwidth(0) >= 90 && exists('*gitbranch#name') && &filetype !=# 'help'
-    const _ = gitbranch#name()
-    return _ !=# '' ? "\ue0a0 " .. _ : ''
+    var name = gitbranch#name()
+    return name !=# '' ? "\ue0a0 " .. name : ''
   else
     return ''
   endif
-endfunction
+enddef
 
-function! s:lightline_hunk_summary() abort
+def! s:lightline_hunk_summary(): string
   return winwidth(0) >= 90 ? get(b:, 'hunk_summary', '') : ''
-endfunction
+enddef
 
 function! s:lightline_update_hunk_summary() abort
   const hunks   = GitGutterGetHunkSummary()
@@ -898,24 +882,24 @@ let g:ycm_key_list_previous_completion = []
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_stop_completion = ['<C-y>']
 
-function! s:start_ycm() abort
+def! s:start_ycm()
   if executable('clangd')
-    let g:ycm_clangd_binary_path = exepath('clangd')
-    let g:ycm_clangd_uses_ycmd_caching = 0
-    let g:ycm_clangd_args = [
-          \   '--header-insertion=never',
-          \ ]
+    g:ycm_clangd_binary_path = exepath('clangd')
+    g:ycm_clangd_uses_ycmd_caching = 0
+    g:ycm_clangd_args = [
+      '--header-insertion=never',
+    ]
   endif
 
   for l in systemlist('rustup toolchain list -v')
     if l =~# 'nightly'
-      let g:ycm_rust_toolchain_root = split(l)[-1]
+      g:ycm_rust_toolchain_root = split(l)[-1]
       break
     endif
   endfor
 
   silent! packadd YouCompleteMe
-endfunction
+enddef
 command! StartYCM call s:start_ycm()
 
 let g:ycm_language_server =
@@ -948,12 +932,12 @@ let g:UltiSnipsJumpForwardTrigger   = '<C-f>'
 
 " vim-operator-user {{{
 autocmd MyVimrc VimEnter * call s:init_user_defined_operators()
-function! s:init_user_defined_operators() abort
+def! s:init_user_defined_operators()
   if !exists('*operator#user#define_ex_command') | return | endif
 
-  call operator#user#define_ex_command('sort', 'sort')
-  call operator#user#define_ex_command('sort-uniq', 'sort u')
-endfunction
+  operator#user#define_ex_command('sort', 'sort')
+  operator#user#define_ex_command('sort-uniq', 'sort u')
+enddef
 
 map <Leader>sl <Plug>(operator-sort)
 map <Leader>su <Plug>(operator-sort-uniq)
