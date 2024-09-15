@@ -129,7 +129,7 @@ autocmd MyVimrc BufReadPost *
 
 " Disable automatic comment insertion {{{
 autocmd MyVimrc BufEnter,FileType * call timer_start(0, {->
-      \   execute('setlocal formatoptions-=r formatoptions-=o')
+      \   execute('setlocal formatoptions-=r formatoptions-=o formatoptions+=j')
       \ })
 " }}}
 
