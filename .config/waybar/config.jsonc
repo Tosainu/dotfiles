@@ -3,11 +3,8 @@
   "modules-left": ["hyprland/workspaces", "hyprland/submap"],
   "modules-center": ["hyprland/window"],
   "modules-right": ["tray", "network", "wireplumber", "cpu", "memory", "temperature", "battery", "idle_inhibitor", "clock"],
-  "hyprland/mode": {
-    "format": "<span style=\"italic\">{}</span>"
-  },
-  "hyprland/workspaces": {
-  },
+  "hyprland/mode": {},
+  "hyprland/workspaces": {},
   "tray": {
     "spacing": 10
   },
