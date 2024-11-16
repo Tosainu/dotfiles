@@ -268,6 +268,17 @@ function man() {
   command man $@
 }
 
+function gi() {
+  if [[ $# -ge 1 ]] && [[ "${1:0:1}" == 't' ]]; then
+    local argv_1="${1:1}"
+    shift
+    set -x
+    git $argv_1 $@
+  else
+    command gi $@
+  fi
+}
+
 if (( $+commands[$FUZZY_FINDER] )); then
   function fuzzy-finder() {
     command $FUZZY_FINDER $FUZZY_FINDER_OPTS $@
