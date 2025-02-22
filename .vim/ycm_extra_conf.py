@@ -27,4 +27,18 @@ def Settings(**kwargs):
             }
         }
 
+    if language == 'rust':
+        return {
+            'ls': {
+                'completion': {
+                    'autoimport': {
+                        'enable': False,
+                    },
+                    'callable': {
+                        'snippets': 'none',
+                    },
+                }
+            }
+        }
+
     return {}
