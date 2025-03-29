@@ -17,6 +17,11 @@ save_to_clipboard = true
 
 [keyboard]
 bindings = [
+  # In System Settings -> Keyboard -> Keyboatd Shortcuts... -> App Shortcuts:
+  # - Alacritty.app
+  #   - `Quit alacritty`: Option + Command + Q
+  #   - `Hide alacritty`: Option + Command + H
+
   # ⌘ command as control
   { key = "A",    mods = "Command", chars = "\u0001" },
   { key = "B",    mods = "Command", chars = "\u0002" },
