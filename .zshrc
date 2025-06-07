@@ -154,7 +154,7 @@ alias sudo='sudo '
 alias tree='tree --dirsfirst'
 alias vi='vim'
 alias www='python3 -m http.server'
-alias bake='docker buildx bake'
+alias bake='docker buildx bake --progress=plain'
 
 case $OSTYPE in
 darwin*)
