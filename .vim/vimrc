@@ -891,8 +891,8 @@ def! s:start_ycm()
     ]
   endif
 
-  for l in systemlist('rustup toolchain list -v')
-    if l =~# '(default)'
+  for l in systemlist('rustup +stable show active-toolchain -v')
+    if l =~# '^path:'
       g:ycm_rust_toolchain_root = split(l)[-1]
       break
     endif
