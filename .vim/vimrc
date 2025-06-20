@@ -624,11 +624,6 @@ def! s:init_minpac(): bool
 
   Plugin('itchyny/vim-haskell-indent')
 
-  Plugin('euclio/vim-markdown-composer', {
-    cond: () => executable('cargo'),
-    do: '!cargo build --release --no-default-features --features json-rpc',
-  })
-
   Plugin('rust-lang/rust.vim')
 
   Plugin('earthly/earthly.vim')
@@ -963,11 +958,6 @@ let g:clang_format#enable_fallback_style = 0
 let g:clang_format#extra_args = [
       \   '--style=file',
       \ ]
-" }}}
-
-" vim-markdown-composer {{{
-let g:markdown_composer_autostart    = 0
-let g:markdown_composer_open_browser = 1
 " }}}
 
 " rust.vim {{{
