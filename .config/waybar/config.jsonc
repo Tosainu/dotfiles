@@ -1,16 +1,26 @@
 {
-  "height": 22,
+  "reload_style_on_change": true,
   "modules-left": ["hyprland/workspaces", "hyprland/submap"],
   "modules-center": ["hyprland/window"],
   "modules-right": ["tray", "network", "wireplumber", "cpu", "memory", "temperature", "battery", "idle_inhibitor", "clock"],
-  "hyprland/mode": {},
-  "hyprland/workspaces": {},
+  "hyprland/window" : {
+    "icon": true,
+    "separate-outputs": true
+  },
   "tray": {
     "spacing": 10
   },
   "clock": {
     "tooltip-format": "<tt>{calendar}</tt>",
-    "format": "{:%a, %b %d, %H:%M}"
+    "format": "{:%a, %b %d, %H:%M}",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "format": {
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#fb6699'><b>{}</b></span>"
+      }
+    }
   },
   "cpu": {
     "format": " {usage}%",
