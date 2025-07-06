@@ -1,18 +1,39 @@
 {
+  "height": 32,
+  "spacing": 0,
   "reload_style_on_change": true,
-  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": ["tray", "network", "wireplumber", "cpu", "memory", "temperature", "battery", "idle_inhibitor", "clock"],
+  "modules-left": [
+    "custom/archlinux",
+    "hyprland/workspaces",
+    "hyprland/submap"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "tray",
+    "network",
+    "wireplumber",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "idle_inhibitor",
+    "clock"
+  ],
+  "custom/archlinux": {
+    "format": "<span size='xx-large'>󰣇</span>"
+  },
   "hyprland/window" : {
-    "icon": true,
     "separate-outputs": true
   },
   "tray": {
+    "icon-size": 20,
     "spacing": 10
   },
   "clock": {
     "tooltip-format": "<tt>{calendar}</tt>",
-    "format": "{:%a, %b %d, %H:%M}",
+    "format": "{:%a %b %d %H:%M}",
     "calendar": {
       "mode": "year",
       "mode-mon-col": 3,
@@ -23,43 +44,42 @@
     }
   },
   "cpu": {
-    "format": " {usage}%",
+    "format": "<span size='xx-large' rise='-3800'></span> {usage}%",
     "tooltip": true
   },
   "memory": {
-    "format": " {}%"
+    "format": "<span size='xx-large' rise='-3800'>󰍛</span> {used:.2f}G"
   },
   "temperature": {
-    "critical-threshold": 80,
-    "format": "{icon} {temperatureC}°C",
-    "format-icons": ["", "", ""]
+    "format": "<span size='xx-large' rise='-3800'>{icon}</span> {temperatureC}°C",
+    "format-icons": ["", "", ""]
   },
   "battery": {
     "states": {
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-icons": ["", "", "", "", ""]
+    "format": "<span size='xx-large' rise='-3800'>{icon}</span> {capacity}%",
+    "format-charging": "<span size='xx-large' rise='-3800'>󰢝</span> {capacity}%",
+    "format-plugged": "<span size='xx-large' rise='-3800'>󱐥</span> {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
   },
   "network": {
-    "format-wifi": " {essid} {signalStrength}%",
-    "format-ethernet": " {ifname}",
-    "format-linked": " {ifname} (No IP)",
-    "format-disconnected": "⚠ --------",
+    "format-wifi": "<span size='xx-large' rise='-3800'>󰖩</span> {essid} {signalStrength}%",
+    "format-ethernet": "<span size='xx-large' rise='-3800'>󰈀</span> {ifname}",
+    "format-linked": "<span size='xx-large' rise='-3800'>󰈀</span> {ifname} (No IP)",
+    "format-disconnected": "<span size='xx-large' rise='-3800'></span> --------",
     "tooltip-format": "{ifname}: {ipaddr}/{cidr} via {gwaddr}"
   },
   "wireplumber": {
-    "format": " {volume}%",
-    "format-muted": " {volume}%"
+    "format": "<span size='xx-large' rise='-3800'>󰕾</span> {volume}%",
+    "format-muted": "<span size='xx-large' rise='-3800'>󰝟</span> {volume}%"
   },
   "idle_inhibitor": {
-      "format": "{icon}",
+      "format": "<span size='xx-large' rise='-3800'>{icon}</span>",
       "format-icons": {
-          "activated": "",
-          "deactivated": ""
+          "activated": "󱜤",
+          "deactivated": "󰅴"
       }
   }
 }
