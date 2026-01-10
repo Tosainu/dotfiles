@@ -1,12 +1,18 @@
 [user]
 	name  = Kenta Sato
 	email = tosainu.maple@gmail.com
-	signingkey = A7E43FF0AF213B5F
+	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM9pedk5gbKE8K8MxCClMT7yPGNgHu3V3qp1D6Te+KuY
 
 [core]
 	editor = vim +1
 	preloadindex = true
 	quotepath = false
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
 
 [color]
 	ui = auto
