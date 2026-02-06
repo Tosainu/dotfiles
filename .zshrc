@@ -23,6 +23,7 @@ path=(
   ~/.local/*/bin(N-/)
   /usr/local/bin(N-/)
   /opt/homebrew/bin(N-/)
+  /opt/homebrew/sbin(N-/)
   $path
 )
 
