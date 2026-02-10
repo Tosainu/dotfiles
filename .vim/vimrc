@@ -626,7 +626,7 @@ def! s:init_minpac(): bool
 
   Plugin('rust-lang/rust.vim')
 
-  Plugin('earthly/earthly.vim')
+  Plugin('EarthBuild/vim', {name: 'earthfile.vim'})
 
   Plugin('jvirtanen/vim-hcl')
 
