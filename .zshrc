@@ -260,13 +260,8 @@ function list-git-repos() {
 }
 
 function man() {
-  LESS_TERMCAP_mb=$'\E[01;92m'  \
-  LESS_TERMCAP_md=$'\E[01;92m'  \
-  LESS_TERMCAP_me=$'\E[0m'      \
-  LESS_TERMCAP_so=$'\E[7m'      \
-  LESS_TERMCAP_se=$'\E[0m'      \
-  LESS_TERMCAP_us=$'\E[4;96m'   \
-  LESS_TERMCAP_ue=$'\E[0m'      \
+  LESS='-R --use-color -Dd+r -Du+b -j3' \
+  MANROFFOPT='-c' \
   command man $@
 }
 
