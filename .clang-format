@@ -1,23 +1,41 @@
 ---
 BasedOnStyle: Google
+ColumnLimit: 100
+InsertNewlineAtEOF: true
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: false
+  AtStartOfFile: false
+LineEnding: LF
+SortIncludes: false
+SpacesBeforeTrailingComments: 1
+---
+Language: C
+AlignAfterOpenBracket: true
+AllowShortFunctionsOnASingleLine: Empty
+BinPackArguments: false
+DerivePointerAlignment: false
+IndentPPDirectives: AfterHash
+IndentWidth: 4
+PointerAlignment: Left
 ---
 Language: Cpp
 AccessModifierOffset: -4
-AlignAfterOpenBracket: AlwaysBreak
+AlignAfterOpenBracket: true
 AlignConsecutiveAssignments: false
 AllowShortFunctionsOnASingleLine: Empty
 BinPackArguments: false
 BreakBeforeConceptDeclarations: Always
-ColumnLimit: 100
+BreakTemplateDeclarations: Yes
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 IndentPPDirectives: AfterHash
 IndentRequiresClause: true
 IndentWidth: 4
 PackConstructorInitializers: CurrentLine
-SortIncludes: false
-SpacesBeforeTrailingComments: 1
+PointerAlignment: Left
+RequiresClausePosition: OwnLine
+ShortNamespaceLines: 0
 ---
 Language: Proto
 IndentWidth: 2
-ColumnLimit: 100
