@@ -1,7 +1,6 @@
 ---
 BasedOnStyle: Google
 ColumnLimit: 100
-InsertNewlineAtEOF: true
 KeepEmptyLines:
   AtEndOfFile: false
   AtStartOfBlock: false
