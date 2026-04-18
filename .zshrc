@@ -10,6 +10,16 @@ export PAGER='less'
 export WORDCHARS="${WORDCHARS:s@/@}"
 export LESSHISTFILE='/dev/null'
 
+export CABAL_DIR=$HOME/.cache/cabal
+export CARGO_HOME=$HOME/.cache/cargo
+export NPM_CONFIG_CACHE=$HOME/.cache/npm
+export RUSTUP_HOME=$HOME/.cache/rustup
+export STACK_ROOT=$HOME/.cache/stack
+
+export DOCKER_CONFIG=$HOME/.config/docker
+
+export PACL_BASE_DIR=$HOME/work
+
 fpath=(
   ~/.local/share/zsh/site-functions(N-/)
   ~/.local/*/share/zsh/site-functions(N-/)
@@ -21,6 +31,7 @@ fpath=(
 path=(
   ~/.local/bin(N-/)
   ~/.local/*/bin(N-/)
+  $CARGO_HOME/bin(N-/)
   /usr/local/bin(N-/)
   /opt/homebrew/bin(N-/)
   /opt/homebrew/sbin(N-/)
