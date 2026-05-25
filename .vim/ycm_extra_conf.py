@@ -2,7 +2,7 @@ import ycm_core
 
 CFAMILY_FILETYPE_FLAGS = {
     'c': ['-x', 'c', '-std=c11'],
-    'cpp': ['-x', 'c++', '-std=c++20'],
+    'cpp': ['-x', 'c++', '-std=c++23'],
 }
 
 CFAMILY_COMMON_FLAGS = [
