@@ -1,0 +1,3 @@
+{
+  "imagesFormat": "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
+}
